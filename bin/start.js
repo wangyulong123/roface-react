@@ -1,12 +1,12 @@
 var webpack = require('webpack');
 // var path = require('path');
 var config = require('../config/webpack.dev.config.js');
-var host = 'localhost';
-var port = 3004;
-var protocol = 'http';
+var defaultConfig = require('../config/default.config');
+var host = defaultConfig.host;
+var port = defaultConfig.port;
+var protocol = defaultConfig.protocol;
 
 var WebpackDevServer = require('webpack-dev-server');
-var openBrowser = require('react-dev-utils/openBrowser');
 var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
 config.entry.app.unshift(`webpack-dev-server/client?${protocol}://${host}:${port}/`);

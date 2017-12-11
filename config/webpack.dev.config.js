@@ -3,6 +3,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var defaultConfig = require('./default.config');
+
 module.exports = {
     devtool: 'inline-source-map',
     entry: {
@@ -17,7 +19,7 @@ module.exports = {
             inject: true,
             template: path.resolve(__dirname, '../public/index.html')
         }),
-        new OpenBrowserPlugin({ url: 'http://localhost:3004' }),
+        new OpenBrowserPlugin({ url: `${defaultConfig.protocol}://${defaultConfig.host}:${defaultConfig.port}` }),
         new ExtractTextPlugin('style.css')
     ],
     module: {
