@@ -29,6 +29,10 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
+                test: /\.(js|tsx|jsx)$/,
+                loader: "eslint-loader"
+            },
+            {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: "style-loader", use: "css-loader"

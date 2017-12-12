@@ -10,9 +10,9 @@ export default class App extends React.Component {
       <div className="rc-app">
           head
         <Link to="/home">home</Link>
-          <div>
-            {children}
-          </div>
+        <div>
+          {children}
+        </div>
          footer
       </div>
     );
