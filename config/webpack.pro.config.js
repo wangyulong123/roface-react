@@ -4,7 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'inline-source-map',
-    entry: path.resolve(__dirname, '../src/index'),
+    entry: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/index')],
     output: {
         path: path.resolve(__dirname, '../static'),
         filename: "bundle.js"
@@ -21,7 +21,6 @@ module.exports = {
             {
                 test: /\.(js|tsx|jsx)$/,
                 loader: 'babel-loader'
-
             },
             {
                 test: /\.css$/,

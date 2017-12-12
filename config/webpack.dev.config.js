@@ -8,7 +8,7 @@ var defaultConfig = require('./default.config');
 module.exports = {
     devtool: 'inline-source-map',
     entry: {
-        app: [path.resolve(__dirname, '../src/index')]
+        app: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/index')]
     },
     output: {
         path: path.resolve(__dirname, '../static'),
@@ -27,7 +27,6 @@ module.exports = {
             {
                 test: /\.(js|tsx|jsx)$/,
                 loader: 'babel-loader'
-
             },
             {
                 test: /\.css$/,

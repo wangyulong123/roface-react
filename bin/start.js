@@ -33,6 +33,7 @@ compiler.plugin('done', function(stats) {
 });
 
 var devServer = new WebpackDevServer(compiler, {
+    historyApiFallback: true, // 所有的跳转都指向index.html
     stats: { colors: true },
 });
 
