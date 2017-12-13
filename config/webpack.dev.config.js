@@ -6,7 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var defaultConfig = require('./default.config');
 
 module.exports = {
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-eval-source-map',
     entry: {
         app: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/index')]
     },
@@ -35,7 +35,11 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader", use: "css-loader"
+                    fallback: "style-loader",
+                    use: [
+                      { loader: "css-loader", options: { importLoaders: 0 }},
+                      { loader: "postcss-loader", options: { plugins: () => [ require('autoprefixer') ]}}
+                     ]
                 })
             },
             {

@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-var config = require('../config/webpack.dev.config.js');
+var config = require('../config/webpack.pro.config.js');
 
 webpack(config).run((err, stats) => {
     if (err) {

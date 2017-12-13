@@ -1,4 +1,4 @@
-# ro-face
+# roface
 
 ## Requirements
 * node `^6.0.0`
