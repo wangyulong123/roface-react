@@ -1,13 +1,16 @@
 import React from 'react';
 // import 'antd/es/tabs/style';
 
-import Tabs from '../components/tab';
+import { Tabs } from '../components';
+// import Fetch from '../utils/fetch';
 
 const { TabPane } = Tabs;
 
-export default class App extends React.Component {
+export default class Home extends React.Component {
   callback = () => {
-
+    /* Fetch('http://localhost:3001/test1', {}, 'get').then((res) => {
+      console.log(res);
+    }); */
   };
 
   render() {

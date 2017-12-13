@@ -7,10 +7,13 @@
     "es6": true
   },
   "rules": {
+    "arrow-body-style": ["off"],
+    "import/prefer-default-export": ["off"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": ["off"],
     "linebreak-style": ["off"],
     "react/prop-types": ["off"],
-    "jsx-a11y/anchor-is-valid": ["off"]
+    "jsx-a11y/anchor-is-valid": ["off"],
+    "object-curly-newline": ["off"]
   }
 }

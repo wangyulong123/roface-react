@@ -1,20 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
+import { Layout, Menu } from '../components';
+
+import Home from './Home';
 import '../style/app.less';
+
+const { Header, Content, Footer } = Layout;
 
 export default class App extends React.Component {
   render() {
-    const { children } = this.props;
     return (
-      <div className="rc-app">
-          head
-        <Link to="/home">home</Link>
-        <div>
-          {children}
-        </div>
-         footer
-      </div>
+      <Layout>
+        <Header>
+          <Menu />
+        </Header>
+        <Content>
+          <Home />
+        </Content>
+        <Footer>
+          footer
+        </Footer>
+      </Layout>
     );
   }
 }
