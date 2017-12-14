@@ -7,14 +7,17 @@
     "es6": true
   },
   "rules": {
-    "arrow-body-style": ["off"],
-    "import/prefer-default-export": ["off"],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": ["off"],
-    "linebreak-style": ["off"],
-    "react/prop-types": ["off"],
-    "jsx-a11y/anchor-is-valid": ["off"],
-    "object-curly-newline": ["off"],
-    "no-underscore-dangle": ["off"]
+    "arrow-body-style": ["off"], // 箭头函数中，如果函数体里只有一句代码时允许不省略大括号
+    "import/prefer-default-export": ["off"], // 允许一个js文件中导出多个
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], // 允许使用js文件来写react
+    "react/prefer-stateless-function": ["off"], // 允许无状态组件不写成函数组件
+    "linebreak-style": ["off"], // 关闭回车换行格式的检查
+    "react/prop-types": ["off"], // 允许不申明props的类型以及校验而直接使用
+    "jsx-a11y/anchor-is-valid": ["off"], // 允许使用锚点路由
+    "object-curly-newline": ["off"], // 解构对象时允许不换行
+    "no-underscore-dangle": ["off"], //允许标识符中有悬空下划线
+    "react/no-multi-comp": ["off"], // 允许一个js文件中同时存在多个组件
+    "react/no-string-refs": ["off"], // 允许使用ref通过字符串的形式
+    "import/extensions": [1, { "extensions": [".json"] }] // 允许导入json格式的文件
   }
 }

@@ -3,7 +3,6 @@ import React from 'react';
 import { Layout, Menu } from '../components';
 
 import Home from './Home';
-import '../style/app.less';
 
 const { Header, Content, Footer } = Layout;
 
