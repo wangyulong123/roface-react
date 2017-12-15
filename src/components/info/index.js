@@ -6,7 +6,7 @@ import * as restful from '../../system/restful';
 
 import './style/index.less';
 
-const { Form, Col, Anchor } = component;
+const { Form, Divider, Row, Col, Anchor } = component;
 const { Item } = Form;
 const { Link } = Anchor;
 
@@ -22,24 +22,29 @@ export default Form.create()(class Forms extends React.Component {
     };
   }
   componentDidMount() {
-    restful.getDataG('test1', {}).then((res) => {
-      console.log(res);
+    const { dataFormId } = this.props;
+    restful.getMetaP('test1', { dataFormId }).then((res) => {
+      this.setState({
+        dataForm: res,
+      });
     });
   }
   _calculateGroup = (data) => {
     const groups = {};
-    const { elements = [] } = data;
-    if (elements.some(ele => ele.group)) {
-      // 如果有分组存在，根据分组进行过滤
-      elements.forEach((ele) => {
-        if (groups[ele.group]) {
-          groups[ele.group].push(ele);
-        } else {
-          groups[ele.group] = [].concat(ele);
-        }
-      });
-    } else {
-      groups.noGroup = elements;
+    if (Object.keys(data).length > 0) {
+      const { elements = [] } = data;
+      if (elements.some(ele => ele.group)) {
+        // 如果有分组存在，根据分组进行过滤
+        elements.forEach((ele) => {
+          if (groups[ele.group]) {
+            groups[ele.group].push(ele);
+          } else {
+            groups[ele.group] = [].concat(ele);
+          }
+        });
+      } else {
+        groups.noGroup = elements;
+      }
     }
     return groups;
   }
@@ -53,6 +58,7 @@ export default Form.create()(class Forms extends React.Component {
      return com;
    }
   _renderFormItem = (items, data) => {
+    const { formUIHint = {} } = data;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 5 },
@@ -62,7 +68,7 @@ export default Form.create()(class Forms extends React.Component {
       const Com = this._getComponent(item.elementUIHint.editStyle);
       const key = `${index}`;
       return (
-        <Col span={24 / data.columnNumber} key={key}>
+        <Col span={24 / (formUIHint.columnNumber || 1)} key={key}>
           <Item
             {...formItemLayout}
             label={item.name}
@@ -82,11 +88,33 @@ export default Form.create()(class Forms extends React.Component {
     });
   }
   render() {
-    // const { data, prefix = 'rc' } = this.props;
-    // const groups = this._calculateGroup(data);
+    const { prefix = 'rc' } = this.props;
+    const groups = this._calculateGroup(this.state.dataForm);
     return (
-      <div>
-        ss
+      <div className={`${prefix}-info`}>
+        <Form>
+          {Object.keys(groups).map((group, index) => {
+            const key = `${index}`;
+            return (
+              <div key={key}>
+                <Row>
+                  <Col span={24}>
+                    <Divider id={group}>{group.split(':')[1]}</Divider>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={24}>
+                    {this._renderFormItem(groups[group], this.state.dataForm)}
+                  </Col>
+                </Row>
+              </div>);
+          })}
+        </Form>
+        <div className={`${prefix}-info-anchor`}>
+          <Anchor>
+            {this._renderAnchor(groups)}
+          </Anchor>
+        </div>
       </div>
     );
   }

@@ -1,7 +1,5 @@
 const config = {
-  host: 'localhost',
-  port: 3001,
-  protocol: 'http',
+  url: 'http://localhost:3001',
 };
 
 export default config;
