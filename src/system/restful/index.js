@@ -2,7 +2,7 @@ import { GFetch, PFetch } from '../../utils/fetch';
 import config from '../config';
 
 export const getAbsolutelyUrl = (url) => {
-  return `${config.protocol}://${config.host}:${config.port}/${url}`;
+  return `${config.url}/${url}`;
 };
 
 export const getMetaG = (url, id) => {
