@@ -1,18 +1,16 @@
 import React from 'react';
 
-import { Layout, Menu } from '../components';
+import { Layout, MegaMenu } from '../components';
 
 import Home from './Home';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 export default class App extends React.Component {
   render() {
     return (
       <Layout>
-        <Header>
-          <Menu />
-        </Header>
+        <MegaMenu />
         <Content>
           <Home />
         </Content>
