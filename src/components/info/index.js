@@ -1,7 +1,7 @@
 import React from 'react';
 import * as component from 'antd';
 
-import * as restful from '../../system/restful';
+import * as dataform from '../../lib/dataform';
 // import { Form, Input, Icon, Divider } from 'antd';
 
 import './style/index.less';
@@ -24,7 +24,7 @@ export default Form.create()(class Forms extends React.Component {
   }
   componentDidMount() {
     const { dataFormId } = this.props;
-    restful.getMetaP('test1', { dataFormId }).then((res) => {
+    dataform.getWebApiDataFormMeta(dataFormId).then((res) => {
       this.setState({
         dataForm: res,
       });
