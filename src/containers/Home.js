@@ -12,7 +12,8 @@ export default class Home extends React.Component {
     /* Fetch('http://localhost:3001/test1', {}, 'get').then((res) => {
       console.log(res);
     }); */
-    this.props.refs.info.setFieldValue();
+    /* const { info = {} } = this.props.refs;
+    info.setFieldValue(); */
   };
 
   render() {

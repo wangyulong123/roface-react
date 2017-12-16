@@ -6,9 +6,10 @@ import * as restful from '../../system/restful';
 
 import './style/index.less';
 
-const { Form, Divider, Row, Col, Anchor } = component;
+const { Form, Row, Col, Anchor, Collapse } = component;
 const { Item } = Form;
 const { Link } = Anchor;
+const { Panel } = Collapse;
 
 export default Form.create()(class Forms extends React.Component {
   /* static propTypes = {
@@ -84,7 +85,7 @@ export default Form.create()(class Forms extends React.Component {
   }
   _renderAnchor = (groups) => {
     return Object.keys(groups).map((group) => {
-      return <Link href={`#${group}`} title={group.split(':')[1]} />;
+      return <Link href={`#${group}`} key={`#${group}`} title={group.split(':')[1]} />;
     });
   }
   render() {
@@ -96,18 +97,15 @@ export default Form.create()(class Forms extends React.Component {
           {Object.keys(groups).map((group, index) => {
             const key = `${index}`;
             return (
-              <div key={key}>
-                <Row>
-                  <Col span={24}>
-                    <Divider id={group}>{group.split(':')[1]}</Divider>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={24}>
-                    {this._renderFormItem(groups[group], this.state.dataForm)}
-                  </Col>
-                </Row>
-              </div>);
+              <Collapse key={key} bordered={false} defaultActiveKey={Object.keys(groups)}>
+                <Panel header={group.split(':')[1]} id={group} key={group}>
+                  <Row>
+                    <Col span={24}>
+                      {this._renderFormItem(groups[group], this.state.dataForm)}
+                    </Col>
+                  </Row>
+                </Panel>
+              </Collapse>);
           })}
         </Form>
         <div className={`${prefix}-info-anchor`}>
