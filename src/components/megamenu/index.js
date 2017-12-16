@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { Icon } from 'antd';
 
 import './style/index.less';
-import menuData from '../../json/MenuData';
+import menuData from '../../../mock/json/MenuData';
 
 export default class MegaMenu extends React.Component {
   constructor(props) {
