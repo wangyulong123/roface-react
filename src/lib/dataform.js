@@ -1,27 +1,15 @@
-import { get, post } from './rest';
+import * as rest from './rest';
 import config from './config';
 
-export const getWebApiMenu = (param) => {
-  return get(config.webApiMenu, param);
+export const getDataFormMeta = (dataFormId) => {
+    return rest.get(`${config.webApi.dataFormMeta}/${dataFormId}`);
 };
-export const postWebApiMenu = (param) => {
-  return post(config.webApiMenu, param);
-};
-export const getWebApiDataFormMeta = (dataFormId) => {
-  return get(`${config.webApiDataFormMeta}${dataFormId}`);
-};
-export const postWebApiDataFormMeta = (param) => {
-  return post(config.webApiDataFormMeta, param);
-};
-export const getWebApiDataFormDataOne = (param) => {
-  return get(config.webApiDataFormDataOne, param);
-};
-export const postWebApiDataFormDataOne = (param) => {
-  return post(config.webApiDataFormDataOne, param);
-};
-export const getWebApiDataFormDataList = (param) => {
-  return get(config.webApiDataFormDataList, param);
-};
-export const postWebApiDataFormDataList = (param) => {
-  return post(config.webApiDataFormDataList, param);
+/**
+ * 调用dataForm对应Handler上绑定的方法
+ * @param dataFormId
+ * @param func
+ * @param param
+ */
+export const invokeDataFormFunc = (dataFormId, func, param) => {
+    return { dataFormId, func, param };
 };

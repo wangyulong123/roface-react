@@ -7,6 +7,22 @@
     "es6": true
   },
   "rules": {
+    "indent": [1, 4, {"SwitchCase": 1}],//2：不满足要求，提示为1=warn,2=error;4：4个空格
+    "object-shorthand": ["off"],
+    "no-useless-escape":["off"],  //不允许在字符串和正则表达式中使用无意义的换行符
+    "no-cond-assign":["off"],
+    "keyword-spacing":["off"],//if等关键字后面一定要跟空格
+    "object-curly-spacing":["off"],//{}内容开始结束必需要有空格
+    "one-var-declaration-per-line":["off"],//一行只能写一个变量
+    "spaced-comment":["off"],
+    "no-multi-spaces":["off"],
+    "prefer-destructuring":["off"],
+    "semi-spacing":["off"],//分号前必需要有空格（你怎么管得这么细呢，这么多规则，谁记得住）
+    "space-before-blocks": ["off"],
+    "comma-spacing":["off"],
+    "key-spacing":["off"],
+    "prefer-const":["off"],
+    "one-var":["off"],//一行只能有一个变量声明，关闭掉
     "arrow-body-style": ["off"], // 箭头函数中，如果函数体里只有一句代码时允许不省略大括号
     "import/prefer-default-export": ["off"], // 允许一个js文件中导出多个
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], // 允许使用js文件来写react

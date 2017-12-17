@@ -4,8 +4,6 @@ import React from 'react';
 import { Tabs, Info } from '../components';
 
 import * as rest from '../lib/rest';
-// import demo from '../json/demoPerson';
-// import Fetch from '../utils/fetch';
 
 const { TabPane } = Tabs;
 
@@ -16,7 +14,9 @@ export default class Home extends React.Component {
     }); */
     /* const { info = {} } = this.props.refs;
     info.setFieldValue(); */
-    rest.get('/dataform/meta/demoPerson', { username: 'www', aa: 'ssss' });
+    // rest.get('/dataform/meta/demoPerson', { username: 'www', aa: 'ssss' });
+    const obj = rest.get('/abc/def?a=1&b=2' , {b:[4,5],c:3});
+    console.log(obj);
   };
 
   render() {
