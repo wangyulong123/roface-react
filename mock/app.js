@@ -1,6 +1,7 @@
 const http = require('http');
 var util = require('util');
 const express = require('express');
+var moment = require('moment');
 
 //CORS统一设置
 var allowCrossDomain = function(req, res, next) {
@@ -35,7 +36,8 @@ app.use(function (req, res, next) {
 
 app.use(function (err, req, res, next) {
     const url = req.originalUrl;
-    console.log(`${req.method} ${url}`);
+    const timestamp=moment().format("YYYY-MM-DD HH:mm:ss");
+    console.log(`[${timestamp}] ${req.method} ${url}`);
     next();
 });
 

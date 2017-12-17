@@ -6,6 +6,7 @@
     "start": "DEBUG=mock:* node ./app"
   },
   "dependencies": {
-    "express": "~4.15.2"
+    "express": "~4.15.2",
+    "moment":"^2.14.1"
   }
 }
