@@ -23,9 +23,16 @@ router.route('/dataform/meta/:dataFormId')
         // req.body.xxxxx 从post中的变量
 
         const dataFormId = req.params.dataFormId;
-        rep.setHeader('Content-Type','application/json;charset=utf-8');
+        rep.setHeader('Content-Type', 'application/json;charset=utf-8');
         // rep.setHeader("Access-Control-Allow-Origin", "*");//已经统一放到app.js中统一设置
         rep.sendFile(path.resolve(__dirname, `../json/${dataFormId}.json`));
+    });
+
+router.route('/base/menu/userMenu')
+    .get(function (req, rep, next) {
+        const dataFormId = req.params.dataFormId;
+        rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+        rep.sendFile(path.resolve(__dirname, '../json/menuData.json'));
     });
 
 
