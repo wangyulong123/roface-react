@@ -1,15 +1,30 @@
 import * as rest from './rest';
 import config from './config';
 
-export const getDataFormMeta = (dataFormId) => {
-    return rest.get(`${config.webApi.dataFormMeta}/${dataFormId}`);
+/**
+ * 获取模板源数据
+ * 以前API名称为getDataFormMeta,在名称上dataform.js就已经表示DataForm了，已经具备上下文了，因此这里API简化
+ * @param dataFormId
+ * @returns {*}
+ */
+export const getMeta = (id) => {
+    return rest.get(`${config.webApi.dataFormMeta}/${id}`);
 };
+
+export const getDataOne = (id,param) => {
+
+};
+
+export const getDataList = (id,param,sort,index,size) => {
+
+};
+
 /**
  * 调用dataForm对应Handler上绑定的方法
  * @param dataFormId
  * @param func
  * @param param
  */
-export const invokeDataFormFunc = (dataFormId, func, param) => {
+export const invokeFunc = (dataFormId, func, param) => {
     return { dataFormId, func, param };
 };

@@ -28,6 +28,27 @@ router.route('/dataform/meta/:dataFormId')
         rep.sendFile(path.resolve(__dirname, `../json/${dataFormId}.json`));
     });
 
+//例如：/dataform/data/one/demo.PersonInfo/id=1001
+router.route('/dataform/data/one/:dataFormId/:queryParam')
+    .get(function (req, rep, next) {
+        const dataFormId = req.params.dataFormId;
+        const queryParam = req.params.queryParam;
+
+        rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+        rep.sendFile(path.resolve(__dirname, '../json/dataOne.json'));
+    });
+
+//例如：/dataform/data/list/demo.PersonList/staus=A;type=B/;/0-15
+router.route('/dataform/data/list/:dataFormId/:queryParam/:sortExpr/:index-:size')
+    .get(function (req, rep, next) {
+        const dataFormId = req.params.dataFormId;
+        const queryParam = req.params.queryParam;
+
+
+        rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+        rep.sendFile(path.resolve(__dirname, '../json/dataList.json'));
+    });
+
 router.route('/base/menu/userMenu')
     .get(function (req, rep, next) {
         const dataFormId = req.params.dataFormId;

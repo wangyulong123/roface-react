@@ -24,7 +24,7 @@ export default Form.create()(class Forms extends React.Component {
   }
   componentDidMount() {
     const { dataFormId } = this.props;
-    dataform.getDataFormMeta(dataFormId).then((res) => {
+    dataform.getMeta(dataFormId).then((res) => {
       this.setState({
         dataForm: res,
       });
