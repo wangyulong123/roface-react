@@ -12,7 +12,7 @@
     "no-useless-escape":["off"],  //不允许在字符串和正则表达式中使用无意义的换行符
     "no-cond-assign":["off"],
     "keyword-spacing":["off"],//if等关键字后面一定要跟空格
-    "object-curly-spacing":["off"],//{}内容开始结束必需要有空格
+    "object-curly-spacing":["off"],//{  }内容开始结束必需要有空格
     "one-var-declaration-per-line":["off"],//一行只能写一个变量
     "spaced-comment":["off"],
     "no-multi-spaces":["off"],
