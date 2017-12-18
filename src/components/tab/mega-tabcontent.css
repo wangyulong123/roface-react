@@ -21,153 +21,160 @@
     z-index: 800;
 }
 
-.rb-page-content-wrapper #spinner{
-    position: fixed;
-    left:calc(50% - 12px);
-    top:calc(50% - 12px);
-    z-index: 0;
-    text-align: center;
-}
+/*.rb-page-content-wrapper #spinner{*/
+    /*position: fixed;*/
+    /*left:calc(50% - 12px);*/
+    /*top:calc(50% - 12px);*/
+    /*z-index: 0;*/
+    /*text-align: center;*/
+/*}*/
 
-.rb-page-content-wrapper #spinner> .spinner{
-    font-size: x-large !important;
-}
+/*.rb-page-content-wrapper #spinner> .spinner{*/
+    /*font-size: x-large !important;*/
+/*}*/
 
 
-.rb-page-content {
-    padding: 0 1px !important;
-    height:100%;
-}
+/*.rb-page-content {*/
+    /*padding: 0 1px !important;*/
+    /*height:100%;*/
+/*}*/
 
-.rb-main-tabs-container {
-    padding-top: 5px;
-    height: 100%;
-    /*overflow: hidden;*/
-    /*border:1px solid #F00;*/
-}
+/*.rb-main-tabs-container {*/
+    /*padding-top: 5px;*/
+    /*height: 100%;*/
+    /*!*overflow: hidden;*!*/
+    /*!*border:1px solid #F00;*!*/
+/*}*/
 
-.rb-tabsmore {
-    position: relative;
-    list-style: none;
-    margin-top: -22px;
-    padding-right: 20px;
-    display: none;
-    /*margin-right: 37px;*/
-    /*border:1px solid black;*/
+/*.rb-tabsmore {*/
+    /*position: relative;*/
+    /*list-style: none;*/
+    /*margin-top: -22px;*/
+    /*padding-right: 20px;*/
+    /*display: none;*/
+    /*!*margin-right: 37px;*!*/
+    /*!*border:1px solid black;*!*/
 
-}
+/*}*/
 
-.rb-tabsmore>a >.badge{
-    background-color:#ccc;
-    font-size: x-small;
-    padding:3px 5px;
-}
+/*.rb-tabsmore>a >.badge{*/
+    /*background-color:#ccc;*/
+    /*font-size: x-small;*/
+    /*padding:3px 5px;*/
+/*}*/
 
-.rb-tabsmore>a >.caret{
-    color:#777;
-}
+/*.rb-tabsmore a:hover {*/
+    /*color: #777;*/
+/*}*/
 
-.rb-tabsmore a:hover {
-    color: #777;
-}
+/*.rb-tabsmore a {*/
+    /*text-decoration: none;*/
+    /*color: #777;*/
+/*}*/
 
-.rb-tabsmore a {
-    text-decoration: none;
-    color: #777;
-}
+/*.rb-tabsmore a:hover {*/
+    /*cursor: pointer;*/
+/*}*/
 
-.rb-tabsmore a:hover {
-    cursor: pointer;
-}
+/*.rb-tabsmore > ul > li {*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
 
-.rb-tabsmore > ul > li {
-    padding: 0;
-    margin: 0;
-}
+/*.rb-tab-element-copy{*/
+    /*position: fixed;*/
+    /*background-color: #777;*/
+    /*color: white;*/
+    /*opacity: .7;*/
+    /*min-width: 80px;*/
+    /*text-align: center;*/
+    /*padding: 0 10px;*/
+    /*border-radius: 4px;*/
+    /*text-decoration: none;*/
+    /*list-style: none;*/
+    /*font-size: small;*/
+/*}*/
 
-.rb-tab-element-copy{
-    position: fixed;
-    background-color: #777;
-    color: white;
-    opacity: .7;
-    min-width: 80px;
-    text-align: center;
-    padding: 0 10px;
-    border-radius: 4px;
-    text-decoration: none;
-    list-style: none;
-    font-size: small;
-}
+/*.rb-tab-element-copy-replace{*/
+    /*border-color: white!important;*/
+    /*background-color: #777!important;*/
+    /*color: white!important;*/
+    /*transition: all .2s linear;*/
+/*}*/
 
-.rb-tab-element-copy-replace{
-    border-color: white!important;
-    background-color: #777!important;
-    color: white!important;
-    transition: all .2s linear;
-}
+/*.rb-tab-element-copy div{*/
+    /*display: none!important;*/
+/*}*/
 
-.rb-tab-element-copy div{
-    display: none!important;
-}
+/*.rb-tab-element-copy a{*/
+    /*color: white;*/
+/*}*/
 
-.rb-tab-element-copy a{
-    color: white;
-}
+/*.rb-tabdrop {*/
+    /*position: relative;*/
+    /*list-style: none;*/
+    /*margin-top: 5px;*/
+    /*padding-right: 20px;*/
+    /*!*margin-top: -20px;*!*/
+    /*!*margin-right: 10px;*!*/
+    /*!*border:1px solid black;*!*/
+/*}*/
 
-.rb-tabdrop {
-    position: relative;
-    list-style: none;
-    margin-top: 5px;
-    padding-right: 20px;
-    /*margin-top: -20px;*/
+/*.rb-tabdrop a {*/
+    /*text-decoration: none;*/
+    /*color: #777;*/
+    /*cursor: pointer;*/
+    /*z-index:900;*/
+/*}*/
+
+/*.rb-breadcrumb {*/
+    /*color: #555;*/
+    /*font-size: small;*/
+    /*background-color: #ffffff;*/
+    /*border-top: 2px solid transparent;*/
+    /*border-radius: 0;*/
+    /*padding: 5px 12px;*/
+    /*width: 100%;*/
+    /*margin-bottom: 2px !important;*/
+/*}*/
+
+
+/*.rb-breadcrumb>.img{*/
+    /*float: left;*/
+    /*font-size: 15px;*/
     /*margin-right: 10px;*/
-    /*border:1px solid black;*/
-}
+/*}*/
 
-.rb-tabdrop a {
-    text-decoration: none;
-    color: #777;
-    cursor: pointer;
-    z-index:900;
-}
 
-.rb-breadcrumb {
-    color: #555;
-    font-size: small;
-    background-color: #ffffff;
-    border-top: 2px solid transparent;
+/*.rb-breadcrumb > li > i.icon {*/
+    /*margin-left: 5px;*/
+    /*margin-right: 10px;*/
+/*}*/
+
+/*.rb-tab-content {*/
+    /*!*border:2px solid blue;*!*/
+    /*height: 100%;*/
+
+/*}*/
+
+/*.rb-tab-pane {*/
+    /*!* border:1px solid #F00; *!*/
+    /*padding: 0;*/
+    /*width: 100%;*/
+    /*height: 30px;*/
+/*}*/
+.nav-tabs {
+    position: relative;
+    width: 100%;
+    margin-top: -2px;
     border-radius: 0;
-    padding: 5px 12px;
-    width: 100%;
-    margin-bottom: 2px !important;
+    color: black;
+    border: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    top: 2px;
+    display: list-item;
+    /* font-weight: bold; */
 }
-
-
-.rb-breadcrumb>.img{
-    float: left;
-    font-size: 15px;
-    margin-right: 10px;
-}
-
-
-.rb-breadcrumb > li > i.icon {
-    margin-left: 5px;
-    margin-right: 10px;
-}
-
-.rb-tab-content {
-    /*border:2px solid blue;*/
-    height: 100%;
-
-}
-
-.rb-tab-pane {
-    /* border:1px solid #F00; */
-    padding: 0;
-    width: 100%;
-    height: 30px;
-}
-
 
 .rb-main-tabs-container > ul.nav-tabs > li {
     /*width:200px;*/
@@ -179,37 +186,51 @@
     /*z-index:900;*/
 }
 
+.rb-main-tabs-container > ul.nav-tabs > li {
+    top: 1px;
+    font-size: small;
+    color: #777;
+    padding: 0 10px;
+    border: 1px solid #ccc;;
+    border-bottom: 2px solid #e25613;
+    border-radius: 3px;
+    margin-right: 2px;
+}
+
+.li-active {
+    border: 2px solid #e25613!important;
+    border-bottom: 2px solid transparent!important;
+}
+
 .rb-main-tabs-container > ul.nav-tabs > li a {
     top: 1px;
     font-size: small;
     color: #777;
     padding: 0 10px;
-    border: 1px solid transparent;
-    border-bottom: 2px solid transparent;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li.active > a {
-    position: relative;
-    width: 100%;
-    margin-top: -2px;
-    border-radius: 0;
-    color: black;
-    border: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    top: 2px;
-    /*font-weight: bold;*/
-}
+/*.rb-main-tabs-container > ul.nav-tabs > li.active > a {*/
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*margin-top: -2px;*/
+    /*border-radius: 0;*/
+    /*color: black;*/
+    /*border: 2px solid transparent;*/
+    /*border-bottom: 2px solid transparent;*/
+    /*top: 2px;*/
+    /*!*font-weight: bold;*!*/
+/*}*/
 
-.rb-main-tabs-container > ul.nav-tabs > li.active {
-    border-left:1px solid #ddd;
-    border-top:1px solid #ddd;
-    border-right:1px solid #ddd;
-    position: relative;
-}
+/*.rb-main-tabs-container > ul.nav-tabs > li.active {*/
+    /*border-left:1px solid #ddd;*/
+    /*border-top:1px solid #ddd;*/
+    /*border-right:1px solid #ddd;*/
+    /*position: relative;*/
+/*}*/
 
-.rb-main-tabs-container .dropdown-menu> li> a:hover{
-    height:100%;
-}
+/*.rb-main-tabs-container .dropdown-menu> li> a:hover{*/
+    /*height:100%;*/
+/*}*/
 
 /*.tab-cell {
     display: inline;
@@ -227,70 +248,70 @@
     display: none;
 }*/
 
-.rb-tab-close,.rb-tab-refresh{
-    display: none;
-    position:absolute;
-    z-index:990;
-    color:#ccc;
-    -webkit-font-size:xx-small;
-    -moz-font-size:x-small;
-    font-size:xx-small;
-    cursor: pointer;
-}
-.rb-tab-close{
-    top:4px;
-    right:2px;
-}
+/*.rb-tab-close,.rb-tab-refresh{*/
+    /*display: none;*/
+    /*position:absolute;*/
+    /*z-index:990;*/
+    /*color:#ccc;*/
+    /*-webkit-font-size:xx-small;*/
+    /*-moz-font-size:x-small;*/
+    /*font-size:xx-small;*/
+    /*cursor: pointer;*/
+/*}*/
+/*.rb-tab-close{*/
+    /*top:4px;*/
+    /*right:2px;*/
+/*}*/
 
-.rb-tab-close:hover,.rb-tab-refresh:hover{
-    color:#666;
-}
-.rb-tab-refresh{
-    top:5px;
-    left:2px;
-}
+/*.rb-tab-close:hover,.rb-tab-refresh:hover{*/
+    /*color:#666;*/
+/*}*/
+/*.rb-tab-refresh{*/
+    /*top:5px;*/
+    /*left:2px;*/
+/*}*/
 
-li:hover >.rb-tab-close{
-    display: block;
-}
+/*li:hover >.rb-tab-close{*/
+    /*display: block;*/
+/*}*/
 
-li.active >.rb-tab-close {
-    display: block;
-}
+/*li.active >.rb-tab-close {*/
+    /*display: block;*/
+/*}*/
 
-li.active:hover >.rb-tab-refresh {
-    display: block;
-}
-
-
-.rb-nav-tabs {
-    white-space: nowrap;
-}
-
-.rb-collapse-tab {
-    position: relative;
-}
-
-.rb-remove-collapse-tab {
-    color: #ccc;
-    position: absolute;
-    right: 5px;
-    top: 6px;
-}
-
-.rb-content-iframe {
-    width: 100%;
-    height: 100%;
-    /*border:1px solid red;*/
-    overflow: auto;
-}
+/*li.active:hover >.rb-tab-refresh {*/
+    /*display: block;*/
+/*}*/
 
 
-.rb-tab-content > .tab-pane-content {
-    display: none;
-    height: calc(100% - 30px);
-}
+/*.rb-nav-tabs {*/
+    /*white-space: nowrap;*/
+/*}*/
 
-.rb-tab-content > .active {
-    display: block;
-}
+/*.rb-collapse-tab {*/
+    /*position: relative;*/
+/*}*/
+
+/*.rb-remove-collapse-tab {*/
+    /*color: #ccc;*/
+    /*position: absolute;*/
+    /*right: 5px;*/
+    /*top: 6px;*/
+/*}*/
+
+/*.rb-content-iframe {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*!*border:1px solid red;*!*/
+    /*overflow: auto;*/
+/*}*/
+
+
+/*.rb-tab-content > .tab-pane-content {*/
+    /*display: none;*/
+    /*height: calc(100% - 30px);*/
+/*}*/
+
+/*.rb-tab-content > .active {*/
+    /*display: block;*/
+/*}*/

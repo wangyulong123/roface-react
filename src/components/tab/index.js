@@ -2,7 +2,7 @@ import React from 'react';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
-import './mega-tabcontent-orange.css';
+// import './mega-tabcontent-orange.css';
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -40,7 +40,12 @@ export default class Tab extends React.Component {
     console.log('close other');
   };
 
-  _deleteTab = () => {
+  _deleteTab = (currentTab) => {
+    this.setState({
+      tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
+      currentTab.id),
+      activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
+    });
     console.log('_deleteTab');
   };
 
@@ -69,38 +74,26 @@ export default class Tab extends React.Component {
           <div className="rb-page-content" id="rb-main-content-container">
             <div className="rb-main-tabs-container">
               <ul
-                className="nav nav-tabs rb-nav-tabs"
-                id="rb-nav-tabs-visable"
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  marginTop: '-2px',
-                  borderRadius: '0',
-                  color: 'black',
-                  border: '2px solid transparent',
-                  borderBottom: '2px solid transparent',
-                  top: '2px',
-                  display: 'list-item',
-                  /* font-weight: bold; */
-                }}
+                className="nav-tabs"
               >
                 {
                   this.state.tabs && this.state.tabs.map((tabItem) => {
-                    let className = 'li';
+                    let className = '';
                     if (this.state.activeTabId === tabItem.id) {
                       className = 'li-active';
                     }
                     return (
-                      <li style={{ float: 'left' }} className={className} onClick={() => this._clickTab(tabItem)}>
-                        <div className="glyphicon glyphicon-remove rb-tab-close" onClick={this._deleteTab}>
-                          <Icon type="reload" />
-                        </div>
+                      <li
+                        style={{ float: 'left' }}
+                        className={className}
+                        onClick={() => this._clickTab(tabItem)}
+                        key={tabItem.id}
+                      >
+                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)}/>
                         <a style={{ cursor: 'move' }} title={tabItem.title}>
                           {tabItem.title}
                         </a>
-                        <div className="glyphicon glyphicon-refresh rb-tab-refresh" onClick={this._refreshTab}>
-                          <Icon type="close">关闭</Icon>
-                        </div>
+                        <Icon type="close" onClick={() => this._deleteTab(tabItem)} />
                       </li>
                     );
                   })
