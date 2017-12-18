@@ -7,7 +7,7 @@
     "es6": true
   },
   "rules": {
-    "indent": [1, 4, {"SwitchCase": 1}],//2：不满足要求，提示为1=warn,2=error;4：4个空格
+    "indent": ["off"],//关闭缩进检查
     "object-shorthand": ["off"],
     "no-useless-escape":["off"],  //不允许在字符串和正则表达式中使用无意义的换行符
     "no-cond-assign":["off"],

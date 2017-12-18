@@ -1,7 +1,7 @@
 import React from 'react';
 import * as component from 'antd';
 
-import * as dataform from '../../lib/dataform';
+import * as dataForm from '../../lib/dataform';
 // import { Form, Input, Icon, Divider } from 'antd';
 
 import './style/index.less';
@@ -20,13 +20,18 @@ export default Form.create()(class Forms extends React.Component {
     super(props);
     this.state = {
       dataForm: {},
+      dataValue: {},
     };
   }
   componentDidMount() {
     const { dataFormId } = this.props;
-    dataform.getMeta(dataFormId).then((res) => {
-      this.setState({
-        dataForm: res,
+    dataForm.getMeta(dataFormId).then((meta) => {
+      // 获取数据
+      dataForm.getDataOne(dataFormId).then((res) => {
+        this.setState({
+          dataForm: meta,
+          dataValue: res,
+        });
       });
     });
   }
@@ -53,7 +58,7 @@ export default Form.create()(class Forms extends React.Component {
      let com = component.Input;
      switch (editStyle) {
        case 'Text': com = component.Input; break;
-       case 'DatePicker': com = component.DatePicker; break;
+       // case 'DatePicker': com = component.DatePicker; break;
        default: com = component.Input;
      }
      return com;
@@ -69,13 +74,13 @@ export default Form.create()(class Forms extends React.Component {
       const Com = this._getComponent(item.elementUIHint.editStyle);
       const key = `${index}`;
       return (
-        <Col span={24 / (formUIHint.columnNumber || 1)} key={key}>
+        <Col span={(24 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan} key={key}>
           <Item
             {...formItemLayout}
             label={item.name}
           >
             {getFieldDecorator(item.code, {
-              initialValue: item.defaultValue,
+              initialValue: this.state.dataValue[item.code] || item.defaultValue,
               rules: [{ required: item.elementUIHint.required, type: item.dataType.toLocaleLowerCase(), message: `${item.name}是必输字段` }],
             })(<Com disabled={item.readonly} />)}
           </Item>
@@ -89,7 +94,7 @@ export default Form.create()(class Forms extends React.Component {
     });
   }
   render() {
-    const { prefix = 'rc' } = this.props;
+    const { prefix = 'ro' } = this.props;
     const groups = this._calculateGroup(this.state.dataForm);
     return (
       <div className={`${prefix}-info`}>
