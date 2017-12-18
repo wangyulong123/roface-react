@@ -4,11 +4,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  background: #e25613;
+  background: #288CE2;
   height: 50px;
   align-items: center;
   font-size: 15px;
   font-weight: 700
+}
+
+.@{prefix}-nav-left {
+  display: flex;
+  width: 69%;
+  justify-content: flex-start;
 }
 
 .@{prefix}-navbar-logo {
@@ -30,6 +36,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-width: 100px;
   &:hover {
     cursor: pointer;
     background: #eee;
@@ -124,7 +131,13 @@
 }
 
 .@{prefix}-nav-right {
-  width: 130px;
+  width: 18%;
+  display: flex;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-right: 30px;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .@{prefix}-nav-wrapper {
@@ -143,6 +156,8 @@
 .@{prefix}-nav-arrow-left {
   transition: all 0.5s;
   color: #FFFFFF;
+  margin-bottom: auto;
+  margin-top: auto;
   display: none;
   i {
     cursor: pointer;
@@ -153,6 +168,8 @@
 .@{prefix}-nav-arrow-right {
   transition: all 0.5s;
   color: #FFFFFF;
+  margin-bottom: auto;
+  margin-top: auto;
   display: none;
   i {
     cursor: pointer;
@@ -160,4 +177,47 @@
   }
 }
 
+.@{prefix}-personal-portrait {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  border-radius: 100px;
+  margin-bottom: auto;
+  margin-top: auto;
+  background: url("./header.png") no-repeat;
+}
 
+.@{prefix}-personal-box {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  cursor: pointer;
+  margin-left: 6px;
+  margin-top: 3px;
+}
+
+.@{prefix}-vertical-line {
+  width: 1px;
+  height: 18px;
+  background: #FFF;
+}
+
+.@{prefix}-right-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.@{prefix}-right-items span:nth-child(1) {
+  cursor: pointer;
+}
+
+.@{prefix}-right-items span:nth-child(2) {
+  margin-left: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+}
