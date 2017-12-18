@@ -12,11 +12,11 @@ export const getMeta = (id) => {
 };
 
 export const getDataOne = (id,param) => {
-
+    return rest.get(`${config.webApi.dataFormDataOne}/${id}/${param}`);
 };
 
 export const getDataList = (id,param,sort,index,size) => {
-
+    return rest.get(`${config.webApi.dataFormDataList}/${id}/${param}/${sort}/${index}-${size}`);
 };
 
 /**
@@ -25,6 +25,6 @@ export const getDataList = (id,param,sort,index,size) => {
  * @param func
  * @param param
  */
-export const invokeFunc = (dataFormId, func, param) => {
-    return { dataFormId, func, param };
+export const invokeMethod = (dataFormId, funcName, param) => {
+    return rest.post(`${config.webApi.dataFormMethod}/${dataFormId}/${funcName}`,param);
 };
