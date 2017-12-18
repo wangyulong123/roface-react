@@ -1,7 +1,7 @@
 import React from 'react';
 // import 'antd/es/tabs/style';
 
-import { Tabs, DetailInfo } from '../components';
+import { Tabs, DetailInfo, Menu } from '../components';
 
 import * as rest from '../lib/rest';
 
@@ -26,7 +26,7 @@ export default class Home extends React.Component {
         <TabPane tab="Tab 1" key="1">
           <DetailInfo ref="info" dataFormId="demoPerson" />
         </TabPane>
-        <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+        <TabPane tab="Tab 2" key="2"><Menu ref="info" dataFormId="test1">------</Menu></TabPane>
         <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
       </Tabs>
     );
