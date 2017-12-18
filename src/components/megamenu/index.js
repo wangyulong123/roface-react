@@ -17,7 +17,7 @@ export default class MegaMenu extends React.Component {
   }
   componentDidMount() {
     /* eslint-disable */
-    const { prefix = 'rc' } = this.props;
+    const { prefix = 'ro' } = this.props;
     this.dom = ReactDom.findDOMNode(this);
     this.right = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-right`)[0];
     this.wrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-wrapper`)[0];
@@ -166,7 +166,7 @@ export default class MegaMenu extends React.Component {
     this.right.style.display = 'block';
   };
   render() {
-    const { prefix = 'rc' } = this.props;
+    const { prefix = 'ro' } = this.props;
     return (
       <div className={`${prefix}-nav-container`}>
         <div className={`${prefix}-navbar-logo`}>

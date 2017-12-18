@@ -7,7 +7,7 @@
     "es6": true
   },
   "rules": {
-    "indent": [1, 4, {"SwitchCase": 1}],//2：不满足要求，提示为1=warn,2=error;4：4个空格
+    "indent": ["off"],//关闭缩进检查
     "object-shorthand": ["off"],
     "no-useless-escape":["off"],  //不允许在字符串和正则表达式中使用无意义的换行符
     "no-cond-assign":["off"],
@@ -36,6 +36,7 @@
     "react/no-string-refs": ["off"], // 允许使用ref通过字符串的形式
     "import/extensions": [1, { "extensions": [".json"] }], // 允许导入json格式的文件
     "jsx-a11y/click-events-have-key-events": ["off"], // 允许定义点击事件的时候不加上onKeyDown、onKeyUp等来区分
-    "jsx-a11y/no-static-element-interactions": ["off"] // 允许非常用的节点不使用role="button"增加点击事件
+    "jsx-a11y/no-static-element-interactions": ["off"], // 允许非常用的节点不使用role="button"增加点击事件
+    "jsx-a11y/no-noninteractive-element-interactions": ["off"] // 允许非交互性组件增加事件
   }
 }
