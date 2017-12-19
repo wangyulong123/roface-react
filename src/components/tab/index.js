@@ -89,7 +89,7 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)}/>
+                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)} />
                         <a style={{ cursor: 'move' }} title={tabItem.title}>
                           {tabItem.title}
                         </a>

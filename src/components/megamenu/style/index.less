@@ -9,6 +9,7 @@
   align-items: center;
   font-size: 13px;
   font-weight: 500;
+  padding: 0 30px;
 }
 
 .@{prefix}-nav-left {
@@ -21,7 +22,15 @@
 .@{prefix}-navbar-logo {
   text-align: center;
   width: 130px;
-  font-size: 40px
+}
+
+.@{prefix}-navbar-icon {
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+  background: url("./logo.svg") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
 }
 
 .@{prefix}-menu-container {
@@ -134,12 +143,11 @@
 }
 
 .@{prefix}-nav-right {
-  width: 18%;
-  min-width: 283px;
+  width: 15%;
+  min-width: 280px;
   display: flex;
   margin-bottom: auto;
   margin-top: auto;
-  margin-right: 30px;
   align-items: center;
   justify-content: space-around;
 }
@@ -200,7 +208,7 @@
 .@{prefix}-vertical-line {
   width: 1px;
   height: 18px;
-  margin: auto 8px;
+  margin: auto 4px;
   background: #FFF;
 }
 
@@ -215,9 +223,9 @@
 }
 
 .@{prefix}-right-items span:nth-child(2) {
-  margin-left: 8px;
+  margin-left: 4px;
   color: #fff;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
   cursor: pointer;
 }

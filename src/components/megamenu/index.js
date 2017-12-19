@@ -171,7 +171,7 @@ export default class MegaMenu extends React.Component {
             <div className={`${prefix}-nav-container`}>
                 <div className={`${prefix}-nav-left`}>
                     <div className={`${prefix}-navbar-logo`}>
-                        <Icon type="taobao-circle" />
+                        <span className={`${prefix}-navbar-icon`} />
                     </div>
                     <div className={`${prefix}-nav-arrow-left`}><Icon type="left" onClick={this._moveLeft}/></div>
                     <div className={`${prefix}-nav-wrapper`}>
@@ -183,18 +183,18 @@ export default class MegaMenu extends React.Component {
                 </div>
                 <div className={`${prefix}-nav-right`}>
                     <span className={`${prefix}-right-items`}>
-                        <span className={`${prefix}-personal-portrait`}></span>
+                        <span className={`${prefix}-personal-portrait`} />
                         <span>admin</span>
-                        <span className={`${prefix}-personal-box`}></span>
+                        <span className={`${prefix}-personal-box`} />
                     </span>
-                    <span className={`${prefix}-vertical-line`}></span>
+                    <span className={`${prefix}-vertical-line`} />
                     <span className={`${prefix}-right-items`}>
-                        <span className={`${prefix}-personal-information`}></span>
+                        <span className={`${prefix}-personal-information`} />
                         <span className={`${prefix}-personal-information-prompt`}>消息中心</span>
                     </span>
-                    <span className={`${prefix}-vertical-line`}></span>
+                    <span className={`${prefix}-vertical-line`} />
                     <span className={`${prefix}-right-items`}>
-                        <span className={`${prefix}-personal-quit`}></span>
+                        <span className={`${prefix}-personal-quit`} />
                         <span>退出</span>
                     </span>
                 </div>
