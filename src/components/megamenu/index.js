@@ -189,12 +189,12 @@ export default class MegaMenu extends React.Component {
                     </span>
                     <span className={`${prefix}-vertical-line`}></span>
                     <span className={`${prefix}-right-items`}>
-                        <span><Icon type="taobao-circle"/></span>
-                        <span>消息中心</span>
+                        <span className={`${prefix}-personal-information`}></span>
+                        <span className={`${prefix}-personal-information-prompt`}>消息中心</span>
                     </span>
                     <span className={`${prefix}-vertical-line`}></span>
                     <span className={`${prefix}-right-items`}>
-                        <span><Icon type="taobao-circle"/></span>
+                        <span className={`${prefix}-personal-quit`}></span>
                         <span>退出</span>
                     </span>
                 </div>

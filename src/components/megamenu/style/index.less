@@ -7,14 +7,15 @@
   background: #288CE2;
   height: 50px;
   align-items: center;
-  font-size: 15px;
-  font-weight: 700
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .@{prefix}-nav-left {
   display: flex;
   width: 69%;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .@{prefix}-navbar-logo {
@@ -28,15 +29,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  line-height: 50px;
+  //line-height: 30px;
 }
 
 .@{prefix}-menu {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
-  min-width: 100px;
+  height: 50px;
+  min-width: 70px;
   &:hover {
     cursor: pointer;
     background: #eee;
@@ -132,6 +135,7 @@
 
 .@{prefix}-nav-right {
   width: 18%;
+  min-width: 283px;
   display: flex;
   margin-bottom: auto;
   margin-top: auto;
@@ -142,9 +146,7 @@
 
 .@{prefix}-nav-wrapper {
   overflow: hidden;
-  display: flex;
   width: 100%;
-  // position: relative;
 }
 
 .@{prefix}-nav-menu-wrapper {
@@ -161,7 +163,7 @@
   display: none;
   i {
     cursor: pointer;
-    font-size: 30px;
+    font-size: 3px;
   }
 }
 
@@ -173,17 +175,14 @@
   display: none;
   i {
     cursor: pointer;
-    font-size: 30px;
+    font-size: 3px;
   }
 }
 
 .@{prefix}-personal-portrait {
-  display: inline-block;
   width: 44px;
   height: 44px;
   border-radius: 100px;
-  margin-bottom: auto;
-  margin-top: auto;
   background: url("./header.png") no-repeat;
 }
 
@@ -201,6 +200,7 @@
 .@{prefix}-vertical-line {
   width: 1px;
   height: 18px;
+  margin: auto 8px;
   background: #FFF;
 }
 
@@ -220,4 +220,24 @@
   font-size: 15px;
   font-weight: 400;
   cursor: pointer;
+}
+
+.@{prefix}-personal-information {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background: url("./information.png") no-repeat;
+}
+.@{prefix}-personal-information-prompt:after {
+  position: absolute;
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+  background: #F45656;
+}
+.@{prefix}-personal-quit {
+  width: 16px;
+  height: 16px;
+  background: url("./quit.png") no-repeat;
 }
