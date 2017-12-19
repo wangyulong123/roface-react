@@ -16,6 +16,7 @@ export default class Home extends React.Component {
     info.setFieldValue(); */
     // rest.get('/dataform/meta/demoPerson', { username: 'www', aa: 'ssss' });
     const obj = rest.get('/abc/def?a=1&b=2' , {b:[4,5],c:3});
+    ///abc/def?a=1&b=4&b=4&c=3
     console.log(obj);
   };
 

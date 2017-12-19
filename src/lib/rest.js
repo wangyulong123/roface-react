@@ -36,6 +36,7 @@ export const unserializeURLParam = (strPara) => {
 
 /**
  * 把URL中的URL地址和参数部分分解出来
+ * http://www.amasoft.com/abc?a=1&b=2&b=3&c=4 {url:'http://www.amasoft.com/abc',param:{a:1,b[2,3],c:4}}
  * @param url
  * @returns {{url: string, param: {}}}
  */
@@ -68,10 +69,10 @@ export const restAjax = (url, type, data) => {
         }
     }
     let reqData = urlObject.param || {};    //默认URL中参数填充，如果参数列表中有更新的，则使用更新的
-    $.extend(reqData, paramObject) ;
+    $.extend(reqData, paramObject);
     // console.log('url-param:',reqData,$.param(reqData));
-    if(type.toLowerCase() === 'get' || type.toLowerCase() === 'delete'){
-        reqData = $.param(reqData,true);
+    if (type.toLowerCase() === 'get' || type.toLowerCase() === 'delete') {
+        reqData = $.param(reqData, true);
     }
 
     return new Promise((resolve, reject) => {
