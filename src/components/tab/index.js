@@ -2,22 +2,26 @@ import React from 'react';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
-// import './mega-tabcontent-orange.css';
 
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tabs: [],
+      tabsCollapse: [],
+      showTabsCollapse: 'none',
       activeTabId: null,
     };
   }
 
   _createTab = () => {
     const title = Math.random() * 10;
+    const tempCollapseItems = this.state.tabs && this.state.tabs.length > 5 ?
+      this.state.tabs.shift() : [];
     this.setState({
       tabs: this.state.tabs.concat({ title, id: title }),
       activeTabId: title,
+      tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
     });
   };
 
@@ -59,6 +63,33 @@ export default class Tab extends React.Component {
     });
   };
 
+  _dropHiddenDown = () => {
+    if (!this.state.tabsCollapse.length) {
+      Modal.info({
+        title: '没有折叠起来的tab页',
+      });
+      return;
+    }
+    this.setState({
+      showTabsCollapse: this.state.showTabsCollapse === 'list-item' ? '' : 'list-item',
+    });
+  };
+
+  _selectTabCollapse = () => {
+    console.log('_selecttabsCollapse');
+  };
+
+  _deleteTabCollapse = (e, collapseItem) => {
+    e.preventDefault();    // 阻止默认事件
+    e.stopPropagation();
+    this.setState({
+      tabsCollapse: this.state.tabsCollapse
+        .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id),
+    });
+    console.log('_deleteTabCollapse');
+    return false;
+  };
+
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
@@ -89,8 +120,8 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)}/>
-                        <a style={{ cursor: 'move' }} title={tabItem.title}>
+                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)} />
+                        <a style={{ cursor: 'move' }} title={tabItem.title} >
                           {tabItem.title}
                         </a>
                         <Icon type="close" onClick={() => this._deleteTab(tabItem)} />
@@ -99,19 +130,51 @@ export default class Tab extends React.Component {
                   })
                 }
               </ul>
+              <li
+                className="dropdown pull-right ro-tabs-collapse"
+                style={{display: 'list-item' }}
+                onClick={this._dropHiddenDown}
+              >
+                <span>
+                  <span>{this.state.tabsCollapse.length}</span>
+                  <Icon type="caret-down" />
+                </span>
+                <ul
+                  style={{ display: this.state.showTabsCollapse }}
+                  id="rb-nav-tabs-collapse"
+                >
+                  {
+                    this.state.tabsCollapse.length &&
+                    this.state.tabsCollapse && this.state.tabsCollapse.map((collapseItems) => {
+                      return(
+                        <span className="span-no-wrap">
+                          <li
+                            key={collapseItems.id}
+                            onClick={this._selectTabCollapse}
+                          >{collapseItems.title}
+                          </li>
+                          <Icon type="close" onClick={e => this._deleteTabCollapse(e, collapseItems)} />
+                        </span>
+                      );
+                    })
+                  }
+                </ul>
+              </li>
               <li className="dropdown pull-right rb-tabdrop" style={{ float: 'right' }}>
-                <ul className="dropdown-menu dropdown-menu-default" id="rb-tabclose-container">
+                <ul className="dropdown-menu" id="rb-tabclose-container">
                   <li><a id="rb-close-all" onClick={this._closeAllTabs}>关闭所有</a></li>
                   <li><a id="rb-close-other" onClick={this._closeOtherTabs}>关闭其他</a></li>
                 </ul>
               </li>
-              <div style={{ border: '1px solid #e25613', width: '1px', height: '100%' }} />
               <div className="rb-tab-content-container">
-                <div className="rb-tab-pane" id="rb-tab-pane">
-                  {
-                    (showTab && showTab[0] && showTab[0].title) || '无tab页正在查看'
-                  }
-                </div>
+                <ol className="breadcrumb rb-breadcrumb">
+                  <div className="rb-tab-pane" id="rb-tab-pane">
+                    {
+                      (showTab && showTab[0] && showTab[0].title) ?
+                        <span><Icon type="home" /><span>{showTab && showTab[0] && showTab[0].title}</span></span> : '无tab页正在查看'
+                    }
+                  </div>
+                </ol>
               </div>
             </div>
           </div>
