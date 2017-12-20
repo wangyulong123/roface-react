@@ -1,25 +1,92 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import ReactDom from 'react-dom';
+// import { Route } from 'react-router-dom';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
-// import './mega-tabcontent-orange.css';
 
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
+    this.dom = null;
+    this.tabsWrapper = null;
     this.state = {
       tabs: [],
+      tabsCollapse: [],
+      showTabsCollapse: 'none',
       activeTabId: null,
     };
   }
 
+  componentDidMount() {
+    /* eslint-disable */
+    const { prefix = 'ro' } = this.props;
+    this.dom = ReactDom.findDOMNode(this);
+    // tab的固定长度
+    this.tabWidth = 110;
+    this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-page-content-wrapper`)[0];
+    this.offsetWidth = this.tabsWrapper.offsetWidth;
+    this.checkWidth();
+    window.onresize = () => {
+      this.checkWidth();
+    };
+  }
+
+  checkWidth = () => {
+    if (this.tabsWrapper) {
+      const tabsLength = this.state.tabs.length * this.tabWidth;
+      if (this.tabsWrapper.offsetWidth - 5 - 41 < tabsLength) {
+        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) > this.tabWidth;
+        if (isSpace) {
+          console.log('isSpace:' + isSpace);
+        } else {
+          console.log('isSpace:' + isSpace);
+          const tempCollapseItems = this.state.tabs.length ? this.state.tabs.pop() : null;
+          this.setState({
+            tabs: this.state.tabs,
+            activeTabId: this.state.tabs.length && this.state.tabs[this.state.tabs.length -1 ] .id,
+            tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
+          });
+        }
+        console.log('<');
+      } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
+        console.log('>');
+        // console.log((this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) < this.tabWidth);
+        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
+          (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
+        if (isSpace && this.state.tabsCollapse.length) {
+          console.log('isSpace:' + isSpace);
+          const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
+          this.setState({
+            tabsCollapse: this.state.tabsCollapse,
+            activeTabId: tempTabsItems ? tempTabsItems.id : '',
+            tabs: this.state.tabs.concat(tempTabsItems),
+            showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
+          });
+        } else {
+          console.log('isSpace:' + isSpace);
+          console.log('tabsCollapse.length:' + this.state.tabsCollapse.length);
+        }
+      }
+      this.offsetWidth = this.tabsWrapper.offsetWidth;
+    }
+  };
+
   _createTab = (item) => {
-    // const title = Math.random() * 10;
-    this.setState({
-      tabs: this.state.tabs.concat({ title: item.name, id: item.id }),
-      activeTabId: item.id,
-    });
+    this.checkWidth();
+    const isExsitItem = this.state.tabs && this.state.tabs
+        .find(tabsItem => tabsItem.id === item.id );
+    if (isExsitItem) {
+      this.setState({
+        activeTabId: item.id,
+      });
+    } else {
+      this.setState({
+        tabs: this.state.tabs.concat(item),
+        activeTabId: item.id,
+      });
+    }
+
   };
 
   _closeAllTabs = () => {
@@ -41,13 +108,25 @@ export default class Tab extends React.Component {
     console.log('close other');
   };
 
-  _deleteTab = (currentTab) => {
-    this.setState({
-      tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
-      currentTab.id),
-      activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
-    });
+  _deleteTab = (isDeteleTab) => {
+    if (this.state.activeTabId === isDeteleTab.id) {
+      this.setState({
+        tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
+        isDeteleTab.id),
+      }, this.setState({
+        activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
+      }));
+    } else {
+      this.setState({
+        tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
+        isDeteleTab.id),
+        activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 2].id,
+      });
+    }
+    console.log(this.state.tabs[this.state.tabs.length - 2]);
+    console.log(this.state.tabs.length - 2);
     console.log('_deleteTab');
+    this.checkWidth();
   };
 
   _refreshTab = () => {
@@ -62,15 +141,50 @@ export default class Tab extends React.Component {
     });
   };
 
+  _dropHiddenDown = () => {
+    if (!this.state.tabsCollapse.length) {
+      Modal.info({
+        title: '没有折叠起来的tab页',
+      });
+      return;
+    }
+    this.setState({
+      showTabsCollapse: this.state.showTabsCollapse === 'list-item' ? '' : 'list-item',
+    });
+  };
+
+  _selectTabCollapse = (collapseItem) => {
+    const tempTab = this.state.tabs.shift();
+    const tempCollapse = this.state.tabsCollapse
+      .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id);
+    this.setState({
+      tabs: this.state.tabs.concat(collapseItem),
+      activeTabId: collapseItem.id,
+      tabsCollapse: [...tempCollapse, tempTab],
+    });
+    console.log('_selecttabsCollapse');
+  };
+
+  _deleteTabCollapse = (e, collapseItem) => {
+    e.preventDefault();    // 阻止默认事件
+    e.stopPropagation();
+    this.setState({
+      tabsCollapse: this.state.tabsCollapse
+        .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id),
+    });
+    console.log('_deleteTabCollapse');
+    return false;
+  };
+
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
     return (
       <div>
-        <div className="rb-page-content-wrapper" id="rb-main-content">
-          <div className="rb-page-content" id="rb-main-content-container">
-            <div className="rb-main-tabs-container">
+        <div className="ro-page-content-wrapper" id="ro-main-content">
+          <div className="ro-page-content" id="ro-main-content-container">
+            <div className="ro-main-tabs-container">
               <ul
                 className="nav-tabs"
               >
@@ -87,32 +201,57 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)} />
-                        <a style={{ cursor: 'move' }} title={tabItem.title}>
-                          {tabItem.title}
-                        </a>
-                        <Icon type="close" onClick={() => this._deleteTab(tabItem)} />
+                        <span style={{ cursor: 'move' }} title={tabItem.name} >
+                          {tabItem.name}
+                        </span>
+                        <Icon type="close" className="close" onClick={() => this._deleteTab(tabItem)} />
                       </li>
                     );
                   })
                 }
               </ul>
-              <li className="dropdown pull-right rb-tabdrop" style={{ float: 'right' }}>
-                <ul className="dropdown-menu dropdown-menu-default" id="rb-tabclose-container">
-                  <li><a id="rb-close-all" onClick={this._closeAllTabs}>关闭所有</a></li>
-                  <li><a id="rb-close-other" onClick={this._closeOtherTabs}>关闭其他</a></li>
+              <li
+                className="dropdown pull-right ro-tabs-collapse"
+              >
+                <span className="roic-right-operate">
+                  <span className="roic-more" onClick={this._dropHiddenDown} title="打开更多..." />
+                  <span className="roic-close-others" onClick={this._closeOtherTabs} title="关闭其他..." />
+                </span>
+                <ul
+                  style={{ display: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none' }}
+                  id="ro-nav-tabs-collapse"
+                >
+                  {
+                    this.state.tabsCollapse.length &&
+                    this.state.tabsCollapse && this.state.tabsCollapse.map((collapseItems) => {
+                      return(
+                        <span className="span-no-wrap">
+                          <li
+                            key={collapseItems.id}
+                            onClick={() => this._selectTabCollapse(collapseItems)}
+                          >{collapseItems.name}
+                          </li>
+                          <Icon type="close" className="close-collapse" onClick={e => this._deleteTabCollapse(e, collapseItems)} />
+                        </span>
+                      );
+                    })
+                  }
                 </ul>
               </li>
-              <div style={{ border: '1px solid #e25613', width: '1px', height: '100%' }} />
-              <div className="rb-tab-content-container">
-                <div className="rb-tab-pane" id="rb-tab-pane">
-                  {
-                    (showTab && showTab[0] && showTab[0].title) || '无tab页正在查看'
-                  }
-                </div>
-                <div>
-                  <Route path="/" render={p => renderComponent(p, showTab[0])} />
-                </div>
+              <li className="dropdown pull-right ro-tabdrop" style={{ float: 'right' }}>
+                <ul className="dropdown-menu" id="ro-tabclose-container">
+                  <li><a id="ro-close-all" onClick={this._closeAllTabs}>关闭所有</a></li>
+                </ul>
+              </li>
+              <div className="ro-tab-content-container">
+                <ol className="breadcrumb ro-breadcrumb">
+                  <div className="ro-tab-pane" id="ro-tab-pane">
+                    {
+                      (showTab && showTab[0] && showTab[0].name) ?
+                        <span><Icon type="home" /><span>{showTab && showTab[0] && showTab[0].name}</span></span> : '无tab页正在查看'
+                    }
+                  </div>
+                </ol>
               </div>
             </div>
           </div>
