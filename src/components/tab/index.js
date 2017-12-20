@@ -120,11 +120,10 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <Icon type="reload" onClick={() => this._refreshTab(tabItem)} />
-                        <a style={{ cursor: 'move' }} title={tabItem.title} >
+                        <span style={{ cursor: 'move' }} title={tabItem.title} >
                           {tabItem.title}
-                        </a>
-                        <Icon type="close" onClick={() => this._deleteTab(tabItem)} />
+                        </span>
+                        <Icon type="close" className="close" onClick={() => this._deleteTab(tabItem)} />
                       </li>
                     );
                   })
@@ -153,7 +152,7 @@ export default class Tab extends React.Component {
                             onClick={this._selectTabCollapse}
                           >{collapseItems.title}
                           </li>
-                          <Icon type="close" onClick={e => this._deleteTabCollapse(e, collapseItems)} />
+                          <Icon type="close" className="close-collapse" onClick={e => this._deleteTabCollapse(e, collapseItems)} />
                         </span>
                       );
                     })
