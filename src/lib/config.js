@@ -1,5 +1,6 @@
 const config = {
-    baseUrl: 'http://192.168.64.157:8080',
+    baseUrl: 'http://localhost:3003',
+    // baseUrl: 'http://192.168.64.157:8080',
     webApi: {
         i18n: '/base/i18n',
         dictList: '/base/dicts',
