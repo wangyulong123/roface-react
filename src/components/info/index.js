@@ -66,7 +66,7 @@ export default class Forms extends React.Component {
     this._updateElementUIHint(itemId, status, 'readonly', ele => ele.code === itemId);
   };
   setReadingMode = (itemId, status) => {
-    console.log(`${itemId}${status}setReadingMode`);
+    this._updateElementUIHint(itemId, status, 'reading', ele => ele.code === itemId);
   };
   setGroupVisible = (groupId, status) => {
     this._updateElementUIHint(groupId, status, 'visible', ele => ele.group === groupId);
@@ -75,7 +75,7 @@ export default class Forms extends React.Component {
     this._updateElementUIHint(groupId, status, 'readonly', ele => ele.group === groupId);
   };
   setGroupReadingMode = (groupId, status) => {
-    console.log(`${groupId}${status}setGroupReadingMode`);
+    this._updateElementUIHint(groupId, status, 'reading', ele => ele.group === groupId);
   };
   setItemTemplate = (itemId, template) => {
     this._updateElementUIHint(itemId, template, 'editStyle', ele => ele.code === itemId);
