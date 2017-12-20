@@ -3,7 +3,6 @@ import ReactDom from 'react-dom';
 import { Icon } from 'antd';
 
 import './style/index.less';
-import menuData from '../../../mock/json/MenuData';
 import { getUserMenuList } from '../../lib/base';
 
 export default class MegaMenu extends React.Component {
@@ -16,7 +15,7 @@ export default class MegaMenu extends React.Component {
         this.left = null;
         this.offsetWidth = 0;
         this.state = {
-            menuData: this.removeLevelMore(this.flatToTree(menuData.body).data),
+            menuData: [],
         };
     }
     componentDidMount() {
@@ -33,11 +32,10 @@ export default class MegaMenu extends React.Component {
             this.checkWidth();
         };
         getUserMenuList().then(res => {
-            console.log(res);
-            // const dataSource = this.removeLevelMore(this.flatToTree(menuData.body).data);
-            // this.setState({
-            //     menuData: dataSource,
-            // });
+            const dataSource = this.removeLevelMore(this.flatToTree(res).data);
+            this.setState({
+                menuData: dataSource,
+            });
         })
     }
     _menuClick = (e, item) => {
