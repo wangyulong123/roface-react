@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { Icon } from 'antd';
 
 import './style/index.less';
-// import menuData from '../../../mock/json/MenuData';
+import menuData from '../../../mock/json/MenuData';
 import { getUserMenuList } from '../../lib/base';
 
 export default class MegaMenu extends React.Component {
@@ -15,9 +15,9 @@ export default class MegaMenu extends React.Component {
         this.right = null;
         this.left = null;
         this.offsetWidth = 0;
-        this.state = {
-            menuData: [],
-        };
+        // this.state = {
+        //     menuData: [],
+        // };
     }
     componentDidMount() {
         /* eslint-disable */
@@ -33,11 +33,11 @@ export default class MegaMenu extends React.Component {
             this.checkWidth();
         };
         getUserMenuList().then(res => {
-            // console.log(res);
-            const dataSource = this.removeLevelMore(this.flatToTree(res).data);
-            this.setState({
-                menuData: dataSource,
-            });
+            console.log('获取菜单数据');
+            // const dataSource = this.removeLevelMore(this.flatToTree(res).data);
+            // this.setState({
+            //     menuData: dataSource,
+            // });
         })
     }
 
@@ -182,10 +182,10 @@ export default class MegaMenu extends React.Component {
         }
     };
     renderMenu = (prefix) => {
-        const { menuData } = this.state;
+        // const { menuData } = this.state;
         return (
             <div className={`${prefix}-menu-container`}>
-                {menuData.map((menu) => {
+                {menuData.body.map((menu) => {
                     return (
                         <div
                             className={`${prefix}-menu`}
