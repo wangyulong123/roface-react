@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Route } from 'react-router-dom';
+// import { Route } from 'react-router-dom';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
@@ -72,18 +72,21 @@ export default class Tab extends React.Component {
     }
   };
 
-  _createTab = () => {
-    const title = Math.random() * 10;
-    // const tempCollapseItems = this.state.tabs && this.state.tabs.length > 5 ?
-    //   this.state.tabs.shift() : [];
-    this.checkWidth();
   _createTab = (item) => {
-    // const title = Math.random() * 10;
-    this.setState({
-      // tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
-      tabs: this.state.tabs.concat({ title: item.name, id: item.id }),
-      activeTabId: item.id,
-    });
+    this.checkWidth();
+    const isExsitItem = this.state.tabs && this.state.tabs
+        .find(tabsItem => tabsItem.id === item.id );
+    if (isExsitItem) {
+      this.setState({
+        activeTabId: item.id,
+      });
+    } else {
+      this.setState({
+        tabs: this.state.tabs.concat(item),
+        activeTabId: item.id,
+      });
+    }
+
   };
 
   _closeAllTabs = () => {
@@ -173,8 +176,6 @@ export default class Tab extends React.Component {
     return false;
   };
 
-
-
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
@@ -200,8 +201,8 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <span style={{ cursor: 'move' }} title={tabItem.title} >
-                          {tabItem.title}
+                        <span style={{ cursor: 'move' }} title={tabItem.name} >
+                          {tabItem.name}
                         </span>
                         <Icon type="close" className="close" onClick={() => this._deleteTab(tabItem)} />
                       </li>
@@ -228,7 +229,7 @@ export default class Tab extends React.Component {
                           <li
                             key={collapseItems.id}
                             onClick={() => this._selectTabCollapse(collapseItems)}
-                          >{collapseItems.title}
+                          >{collapseItems.name}
                           </li>
                           <Icon type="close" className="close-collapse" onClick={e => this._deleteTabCollapse(e, collapseItems)} />
                         </span>
@@ -246,8 +247,8 @@ export default class Tab extends React.Component {
                 <ol className="breadcrumb ro-breadcrumb">
                   <div className="ro-tab-pane" id="ro-tab-pane">
                     {
-                      (showTab && showTab[0] && showTab[0].title) ?
-                        <span><Icon type="home" /><span>{showTab && showTab[0] && showTab[0].title}</span></span> : '无tab页正在查看'
+                      (showTab && showTab[0] && showTab[0].name) ?
+                        <span><Icon type="home" /><span>{showTab && showTab[0] && showTab[0].name}</span></span> : '无tab页正在查看'
                     }
                   </div>
                 </ol>
