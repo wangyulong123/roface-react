@@ -1,4 +1,4 @@
-import { get, post } from './rest';
+import { get } from './rest';
 import config from './config';
 
 /**
@@ -21,6 +21,6 @@ export const getDictList = () => {
  * 取单个代码项
  * @param dictCode
  */
-export const getDictItem = (dictCode) => {
+export const getDictItem = () => {
     return get(config.webApi.dictItem);
 };
