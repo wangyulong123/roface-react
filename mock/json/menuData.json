@@ -1,5282 +1,1622 @@
-﻿[
-  {
-    "id": "Home",
-    "sortNo": "00",
-    "name": "首页",
-    "url": "Home.jsp?v=1",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-0010home",
-    "enable": "1",
-    "remark": null
-  },
-  {
-    "id": "A010",
-    "sortNo": "A010",
-    "name": "客户管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1300xtgl",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A010-10",
-        "sortNo": "A010-10",
-        "name": "法人客户",
-        "url": "/Modules/Customer/Ent/EntCustomerList.jsp",
-        "param": "dono=EntCustomerList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-1306xtcspz",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      },
-      {
-        "id": "A010-20",
-        "sortNo": "A010-20",
-        "name": "自然人客户",
-        "url": "/Modules/Customer/Ind/IndCustomerList.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1302zcdpz",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      },
-      {
-        "id": "A010-30",
-        "sortNo": "A010-30",
-        "name": "客户关系查询",
-        "url": "/Modules/Customer/CustomerRelationList.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1309zhxxgl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      },
-      {
-        "id": "A010-40",
-        "sortNo": "A010-40",
-        "name": "集团客户",
-        "url": "/Modules/Customer/Group/GroupCustomerList.jsp",
-        "param": "dono=GroupCustomerList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-1307aqsjcx",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      },
-      {
-        "id": "A010-50",
-        "sortNo": "A010-50",
-        "name": "第三方客户",
-        "url": "/Modules/Customer/ThirdPart/ThirdPartCustomerList.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1308jcpz",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      },
-      {
-        "id": "A010-60",
-        "sortNo": "A010-60",
-        "name": "业务机会管理",
-        "url": "/Modules/Customer/BusinessOpportunity/BusinessOpportunityList.jsp",
-        "param": "dono=BusinessOpportunityList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-xitongguanli",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      },
-      {
-        "id": "A010-70",
-        "sortNo": "A010-70",
-        "name": "项目交接",
-        "url": "/Modules/Credit/Project/HandOver/ProjectHandOverList.jsp",
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[1]"
-        },
-        "parentId": "A010"
-      }
-    ]
-  },
-  {
-    "id": "A020",
-    "sortNo": "A020",
-    "name": "授信管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1310zxbg",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A020-10",
-        "sortNo": "A020-10",
-        "name": "客户授信台账",
-        "url": "/Modules/Credit/Customer/CstCreditApplyList.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1309zhxxgl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-20",
-        "sortNo": "A020-20",
-        "name": "项目授信台账",
-        "url": "/Modules/Credit/Project/ProCreditApplyList.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1000xtzygl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-40",
-        "sortNo": "A020-40",
-        "name": "供应商授信",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1302zcdpz",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A020-40-10",
-            "sortNo": "A020-40-10",
-            "name": "进口代理评审",
-            "url": "/Modules/Credit/Supplier/ImportAgentCreditList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[2]"
-            },
-            "parentId": "A020-40"
-          },
-          {
-            "id": "A020-40-20",
-            "sortNo": "A020-40-20",
-            "name": "进口代理特殊评审",
-            "url": "/Modules/Credit/Supplier/SpeImportAgentCreditList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[2]"
-            },
-            "parentId": "A020-40"
-          },
-          {
-            "id": "A020-40-30",
-            "sortNo": "A020-40-30",
-            "name": "供应商授信评审",
-            "url": "/Modules/Credit/Supplier/SupplierCreditList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[2]"
-            },
-            "parentId": "A020-40"
-          },
-          {
-            "id": "A020-40-40",
-            "sortNo": "A020-40-40",
-            "name": "健康ABC级代理商授信",
-            "url": "/Modules/Credit/Supplier/HealthAgentCreditList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[2]"
-            },
-            "parentId": "A020-40"
-          },
-          {
-            "id": "A020-40-050",
-            "sortNo": "A020-40-50",
-            "name": "健康S级代理商授信",
-            "url": "/Modules/Credit/Supplier/HealthSAgentCreditList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[2]"
-            },
-            "parentId": "A020-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-50",
-        "sortNo": "A020-50",
-        "name": "额度管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1310zxbg",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A020-50-10",
-            "sortNo": "A020-50-10",
-            "name": "客户授信额度",
-            "url": "/Modules/Credit/Limit/CstCreditLimitList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[3]"
-            },
-            "parentId": "A020-50"
-          },
-          {
-            "id": "A020-50-20",
-            "sortNo": "A020-50-20",
-            "name": "项目授信额度",
-            "url": "/Modules/Credit/Limit/ProCreditLimitList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[3]"
-            },
-            "parentId": "A020-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-70",
-        "sortNo": "A020-70",
-        "name": "制度突破",
-        "url": "/Modules/Credit/Institutional/InstitutionalBreakthroughList.jsp",
-        "param": "dono=InstitutionalBreakthroughList",
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-80",
-        "sortNo": "A020-80",
-        "name": "框架协议审批",
-        "url": "/Modules/Credit/Outline/OutlineAgreementList.jsp",
-        "param": "dono=OutlineAgreementList",
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-90",
-        "sortNo": "A020-90",
-        "name": "框架协议交接",
-        "url": "/Modules/Credit/Outline/HandDocument/OutlineHandDocList.jsp",
-        "param": "dono=OutlineHandDocList",
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      },
-      {
-        "id": "A020-95",
-        "sortNo": "A020-95",
-        "name": "创新项目管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A020-95-10",
-            "sortNo": "A020-95-10",
-            "name": "创新立项",
-            "url": "/Modules/Credit/Innovation/InnovationSetUp/InnovationApplyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[7]"
-            },
-            "parentId": "A020-95"
-          },
-          {
-            "id": "A020-95-20",
-            "sortNo": "A020-95-20",
-            "name": "方案签报",
-            "url": "/Modules/Credit/Innovation/InnovationSign/InnovationSignApplyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[7]"
-            },
-            "parentId": "A020-95"
-          },
-          {
-            "id": "A020-95-40",
-            "sortNo": "A020-95-40",
-            "name": "台账统计",
-            "url": "/Modules/Credit/Innovation/InnovationShowList/InnoShowTabs.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[2].children[7]"
-            },
-            "parentId": "A020-95"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[2]"
-        },
-        "parentId": "A020"
-      }
-    ]
-  },
-  {
-    "id": "A040",
-    "sortNo": "A040",
-    "name": "合同管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1308jcpz",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A040-10",
-        "sortNo": "A040-10",
-        "name": "合同台账",
-        "url": "/Modules/Contract/Account/ContractAccountList.jsp",
-        "param": "dono=ContractAccountList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-0600dhgl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-20",
-        "sortNo": "A040-20",
-        "name": "合同审批",
-        "url": "/Modules/Contract/Approve/ContractApproveList.jsp",
-        "param": "dono=CtrContractApproveList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-0602fxyjsq",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-30",
-        "sortNo": "A040-30",
-        "name": "合同变更",
-        "url": "/Modules/Contract/Change/ContractChangeList.jsp",
-        "param": "dono=CtrContractChange",
-        "accessType": "iframe",
-        "icon": "raxi raxi-daochu",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-40",
-        "sortNo": "A040-40",
-        "name": "寄送人及票据信息",
-        "url": "/Modules/Contract/SenderBillSetting/SenderBillSettingList.jsp",
-        "param": "dono=SenderBillSettingList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-gonggaoxinxi",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-50",
-        "sortNo": "A040-50",
-        "name": "合同交接",
-        "url": "/Modules/Contract/Transfer/ContractTransferList.jsp",
-        "param": "dono=ContractTransferList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-duixiang",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-60",
-        "sortNo": "A040-60",
-        "name": "合同撤销",
-        "url": "/Modules/Contract/Cancel/ContractCancelList.jsp",
-        "param": "dono=ContractCancelList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-quxiao",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-70",
-        "sortNo": "A040-70",
-        "name": "合同文本作废",
-        "url": "/Modules/Contract/Invalid/ContractInvalidList.jsp",
-        "param": "dono=ContractInvalidList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-shanchu",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-80",
-        "sortNo": "A040-80",
-        "name": "合同打印",
-        "url": "/Modules/Contract/ContractPrint/ContractPrintList.jsp",
-        "param": "dono=ContractPrintList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-1309zhxxgl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      },
-      {
-        "id": "A040-90",
-        "sortNo": "A040-90",
-        "name": "文件用印",
-        "url": "/Modules/Contract/FilePrint/FilePrintList.jsp",
-        "param": "dono=FilePrintList",
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[3]"
-        },
-        "parentId": "A040"
-      }
-    ]
-  },
-  {
-    "id": "A050",
-    "sortNo": "A050",
-    "name": "商务运作",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1000xtzygl",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A050-09",
-        "sortNo": "A050-09",
-        "name": "发票核验",
-        "url": "/Modules/Commerce/Bill/CommerceBillCheckList.jsp",
-        "param": "dono=CmeBillCheckList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-1300xtgl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[4]"
-        },
-        "parentId": "A050"
-      },
-      {
-        "id": "A050-10",
-        "sortNo": "A050-10",
-        "name": "收付款管理",
-        "url": "/u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1300xtgl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A050-10-10",
-            "sortNo": "A050-10-10",
-            "name": "资金计划",
-            "url": "/Modules/Commerce/AdvPmtManage/CapitalSchedule/ContractList.jsp",
-            "param": "dono=CommerceContractList&name=Commerce&MenuId=A050-10-10",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1302zcdpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[1]"
-            },
-            "parentId": "A050-10"
-          },
-          {
-            "id": "A050-10-20",
-            "sortNo": "A050-10-20",
-            "name": "前期款收款核销",
-            "url": "/Modules/Asset/Rental/VeriAccountStatementList.jsp",
-            "param": "module=Commerce",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[1]"
-            },
-            "parentId": "A050-10"
-          },
-          {
-            "id": "A050-10-30",
-            "sortNo": "A050-10-30",
-            "name": "付款申请",
-            "url": "/Modules/Commerce/AdvPmtManage/PayApply/CmePayApplyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[1]"
-            },
-            "parentId": "A050-10"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[4]"
-        },
-        "parentId": "A050"
-      },
-      {
-        "id": "A050-20",
-        "sortNo": "A050-20",
-        "name": "起租确认",
-        "url": "/Modules/Commerce/OnHire/OnHireConfirmList.jsp",
-        "param": "dono=OnHireConfirmList",
-        "accessType": "iframe",
-        "icon": "raxi raxi-1302zcdpz",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[4]"
-        },
-        "parentId": "A050"
-      },
-      {
-        "id": "A050-30",
-        "sortNo": "A050-30",
-        "name": "商务异常",
-        "url": "/Modules/Commerce/Abnormal/CmeAbnomalTab.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1306xtcspz",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[4]"
-        },
-        "parentId": "A050"
-      },
-      {
-        "id": "A050-40",
-        "sortNo": "A050-40",
-        "name": "物流管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1307aqsjcx",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A050-40-10",
-            "sortNo": "A050-40-10",
-            "name": "物流调查",
-            "url": "/Modules/Commerce/Logistical/Inquire/LogisticalInquireList.jsp",
-            "param": "dono=CMELogisticsInquireList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[4]"
-            },
-            "parentId": "A050-40"
-          },
-          {
-            "id": "A050-40-20",
-            "sortNo": "A050-40-20",
-            "name": "物流跟踪",
-            "url": "/Modules/Commerce/Logistical/Track/LogisticalTrackList.jsp",
-            "param": "dono=CMELogisticsTrackList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[4]"
-            },
-            "parentId": "A050-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[4]"
-        },
-        "parentId": "A050"
-      },
-      {
-        "id": "A050-50",
-        "sortNo": "A050-50",
-        "name": "保险管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1310zxbg",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A050-50-10",
-            "sortNo": "A050-50-10",
-            "name": "保险操作",
-            "url": "/Modules/Commerce/Insurance/CommerceAssetCoverList.jsp",
-            "param": "dono=CmeAssetCoverList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-C010-65xitongguanli",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[5]"
-            },
-            "parentId": "A050-50"
-          },
-          {
-            "id": "A050-50-20",
-            "sortNo": "A050-50-20",
-            "name": "投保单下载",
-            "url": "/Modules/Commerce/Insurance/CommerceCoverDownLoadTab.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1000xtzygl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[5]"
-            },
-            "parentId": "A050-50"
-          },
-          {
-            "id": "A050-50-30",
-            "sortNo": "A050-50-30",
-            "name": "保险费率",
-            "url": "/Modules/Commerce/Insurance/CommerceInsuranceSetList.jsp",
-            "param": "dono=CmeInsuranceSetList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[4].children[5]"
-            },
-            "parentId": "A050-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[4]"
-        },
-        "parentId": "A050"
-      }
-    ]
-  },
-  {
-    "id": "A060",
-    "sortNo": "A060",
-    "name": "资产管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1306xtcspz",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A060-10",
-        "sortNo": "A060-10",
-        "name": "起租管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1307aqsjcx",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-10-10",
-            "sortNo": "A060-10-10",
-            "name": "起租管理",
-            "url": "/Modules/Asset/OnHire/OnHireManageList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[0]"
-            },
-            "parentId": "A060-10"
-          },
-          {
-            "id": "A060-10-20",
-            "sortNo": "A060-10-20",
-            "name": "提醒规则设置",
-            "url": "/Modules/Asset/OnHire/SetRuleList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[0]"
-            },
-            "parentId": "A060-10"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-20",
-        "sortNo": "A060-20",
-        "name": "租金管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1300xtgl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-20-10",
-            "sortNo": "A060-20-10",
-            "name": "通知书管理",
-            "url": "/Modules/Asset/NoticeOfManagement/NoticeOfManagementList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-15",
-            "sortNo": "A060-20-15",
-            "name": "租金计划维护",
-            "url": "/Modules/Asset/RentManagement/RentPlanMaintenance/RentPlanMaintenanceMain.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-35",
-            "sortNo": "A060-20-20",
-            "name": "逾期管理",
-            "url": "/Modules/Asset/OverDeu/OverDeuList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1302zcdpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-20",
-            "sortNo": "A060-20-20",
-            "name": "款项核销",
-            "url": "/Modules/Asset/Rental/VeriAccountStatementList.jsp",
-            "param": "module=Asset",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1310zxbg",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-30",
-            "sortNo": "A060-20-30",
-            "name": "代付管理",
-            "url": "/Modules/Asset/PaySetting/PaySettingTab.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1306xtcspz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-40",
-            "sortNo": "A060-20-40",
-            "name": "保证金管理",
-            "url": "/Modules/Asset/Deposit/DepositList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1307aqsjcx",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-50",
-            "sortNo": "A060-20-50",
-            "name": "扣款信息查询",
-            "url": "/Modules/Asset/Rental/RentalVerification.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-60",
-            "sortNo": "A060-20-60",
-            "name": "寄送信息查询",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-65",
-            "sortNo": "A060-20-65",
-            "name": "批扣信息维护/查询",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-70",
-            "sortNo": "A060-20-70",
-            "name": "批扣还款计划导入",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-75",
-            "sortNo": "A060-20-75",
-            "name": "批扣账户维护",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-80",
-            "sortNo": "A060-20-80",
-            "name": "保证金返还计划维护",
-            "url": "/Modules/Commerce/AdvPmtManage/CapitalSchedule/ContractList.jsp",
-            "param": "dono=ContractList&name=Asset&ContractStatus=620",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          },
-          {
-            "id": "A060-20-90",
-            "sortNo": "A060-20-90",
-            "name": "资金计划维护(资产)",
-            "url": "/Modules/Commerce/AdvPmtManage/CapitalSchedule/ContractList.jsp",
-            "param": "dono=ContractList&name=Fund&ContractStatus=620",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[1]"
-            },
-            "parentId": "A060-20"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-30",
-        "sortNo": "A060-30",
-        "name": "资产管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-C010-65xitongguanli",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-30-10",
-            "sortNo": "A060-30-10",
-            "name": "减值计提管理",
-            "url": "/Modules/Asset/Impairment/ImpairmentSetList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1000xtzygl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-20",
-            "sortNo": "A060-30-20",
-            "name": "资产分类及计提历史查询",
-            "url": "/Modules/Asset/AssetManagement/AssetClassifyConfirm/AssetClassifyConfirmList.jsp\n",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-30",
-            "sortNo": "A060-30-30",
-            "name": "资产分类变更",
-            "url": "/Modules/Asset/AssetManagement/AssetClassifyChange/AssetClassifyChangeList.jsp",
-            "param": "dono=AssetClassifyChangeList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1306xtcspz",
-            "enable": "1",
-            "remark": "一旦发现合同的资产分类列表的分类等级改变了，利用该功能随时更改资产列表的分类等级",
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-40",
-            "sortNo": "A060-30-40",
-            "name": "资产巡视",
-            "url": "/Modules/Asset/AssertInspect/AstInspectList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1306xtcspz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-50",
-            "sortNo": "A060-30-50",
-            "name": "资产管理变更",
-            "url": "/Modules/Asset/Change/AssetChangeList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1307aqsjcx",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-096",
-            "sortNo": "A060-30-51",
-            "name": "资产管理变更合同打印",
-            "url": "/Modules/Asset/ChangeContractPrint/AssetChangeContractPrintList.jsp",
-            "param": "dono=AssetChangeContractPrintList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-095",
-            "sortNo": "A060-30-51",
-            "name": "资产管理变更合同交接",
-            "url": "/Modules/Asset/ChangeTransfer/AssetsChangeTransferList.jsp",
-            "param": "dono=AssetsChangeTransferList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-55",
-            "sortNo": "A060-30-55",
-            "name": "所有权转让",
-            "url": "/Modules/Asset/OwnerShipSwitch/OwnershipList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-60",
-            "sortNo": "A060-30-60",
-            "name": "项目核销",
-            "url": "/Modules/Asset/ProjectVerify/ProjectVerifyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-70",
-            "sortNo": "A060-30-70",
-            "name": "重大事项管理",
-            "url": "/Modules/Asset/AssetManagement/MajorMatter/MajorMatterList.jsp",
-            "param": "dono=MajorMatterList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1310zxbg",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-80",
-            "sortNo": "A060-30-80",
-            "name": "项目移交出险",
-            "url": "/Modules/Asset/ClaimTransfer/ClaimTransferList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-90",
-            "sortNo": "A060-30-90",
-            "name": "推票维护",
-            "url": "/Modules/Asset/TicketMaintenance/AstTicketMaintenanceList.jsp",
-            "param": "dono=TicketMaintenance",
-            "accessType": "10",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-95",
-            "sortNo": "A060-30-95",
-            "name": "退款台账",
-            "url": "/Modules/Asset/AssetAccount/AssetAccountList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          },
-          {
-            "id": "A060-30-96",
-            "sortNo": "A060-30-96",
-            "name": "付款申请",
-            "url": "/Modules/Asset/PayLawsuitApply/LawsuitCmePayApplyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[2]"
-            },
-            "parentId": "A060-30"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-40",
-        "sortNo": "A060-40",
-        "name": "资产处置",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-C010-65xitongguanli",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-40-10",
-            "sortNo": "A060-40-10",
-            "name": "出险管理",
-            "url": "/Modules/Asset/Claim/AstClaimList.jsp",
-            "param": "dono=AstClaimList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-20",
-            "sortNo": "A060-40-20",
-            "name": "委外律师管理",
-            "url": "/Modules/Asset/AstDisposal/AstEntrustLawyerList.jsp",
-            "param": "dono=AstEntrustLawyerList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-30",
-            "sortNo": "A060-40-30",
-            "name": "诉讼请示管理",
-            "url": "/Modules/Asset/LawSuit/LawSuitList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-40",
-            "sortNo": "A060-40-40",
-            "name": "案件管理",
-            "url": "/Modules/Asset/LawSuitCase/LawSuitCaseList.jsp",
-            "param": "dono=AstLawSuitCaseList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-50",
-            "sortNo": "A060-40-50",
-            "name": "诉讼台账",
-            "url": "Modules\\Asset\\LawsuitStandingBook\\LawSuitStandingBookInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-60",
-            "sortNo": "A060-40-60",
-            "name": "出险小组会议确认",
-            "url": "/Modules/Asset/RiskMeetting/AstGroupMeettingList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-70",
-            "sortNo": "A060-40-70",
-            "name": "资产处置变更",
-            "url": "/Modules/Asset/AssetDisposalChange/AssetDisposalChangeList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-75",
-            "sortNo": "A060-40-75",
-            "name": "资产处置变更合同打印",
-            "url": "/Modules/Asset/AstContractDocPrint/AstDisChangeContractPrintList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          },
-          {
-            "id": "A060-40-80",
-            "sortNo": "A060-40-80",
-            "name": "资产处置变更合同交接",
-            "url": "/Modules/Asset/AstContractHand/AstDisChangeHandList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[3]"
-            },
-            "parentId": "A060-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-45",
-        "sortNo": "A060-45",
-        "name": "资产台账",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-45-10",
-            "sortNo": "A060-45-10",
-            "name": "资产总表",
-            "url": "/Modules/Asset/AssetAccountRent/AssetAccount/AssetAccountList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[4]"
-            },
-            "parentId": "A060-45"
-          },
-          {
-            "id": "A060-45-20",
-            "sortNo": "A060-45-20",
-            "name": "租金总表",
-            "url": "/Modules/Asset/AssetAccountRent/RentAccount/RentAccountList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[4]"
-            },
-            "parentId": "A060-45"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-50",
-        "sortNo": "A060-50",
-        "name": "物件管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1000xtzygl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-50-040",
-            "sortNo": "A060-50-040",
-            "name": "抵质押物",
-            "url": "/Modules/Asset/Guarantee/GuarantyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[5]"
-            },
-            "parentId": "A060-50"
-          },
-          {
-            "id": "A060-50-10",
-            "sortNo": "A060-50-10",
-            "name": "租赁物",
-            "url": "/Modules/Asset/Leasehold/LeaseholdList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[5]"
-            },
-            "parentId": "A060-50"
-          },
-          {
-            "id": "A060-50-20",
-            "sortNo": "A060-50-20",
-            "name": "保险",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[5]"
-            },
-            "parentId": "A060-50"
-          },
-          {
-            "id": "A060-50-30",
-            "sortNo": "A060-50-30",
-            "name": "物流",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1302zcdpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[5]"
-            },
-            "parentId": "A060-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-60",
-        "sortNo": "A060-60",
-        "name": "操作评价",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1306xtcspz",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A060-60-10",
-            "sortNo": "A060-60-10",
-            "name": "客户经理操作评价",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1307aqsjcx",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[6]"
-            },
-            "parentId": "A060-60"
-          },
-          {
-            "id": "A060-60-20",
-            "sortNo": "A060-60-20",
-            "name": "资产经理操作评价",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[5].children[6]"
-            },
-            "parentId": "A060-60"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-70",
-        "sortNo": "A060-70",
-        "name": "资产文件交接",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1309zhxxgl",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      },
-      {
-        "id": "A060-80",
-        "sortNo": "A060-80",
-        "name": "跟踪事项管理",
-        "url": "/Modules/Asset/MissionSetting/MissionSettingList.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[5]"
-        },
-        "parentId": "A060"
-      }
-    ]
-  },
-  {
-    "id": "A065",
-    "sortNo": "A065",
-    "name": "资金管理",
-    "url": null,
-    "param": null,
-    "accessType": "iframe",
-    "icon": "fa fa-rmb",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A065-05",
-        "sortNo": "A065-05",
-        "name": "渠道管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-05-10",
-            "sortNo": "A065-05-10",
-            "name": "渠道管理",
-            "url": "/Modules/Fund/Channel/ChannelList.jsp",
-            "param": "dono=FundChannelList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[0]"
-            },
-            "parentId": "A065-05"
-          },
-          {
-            "id": "A065-05-20",
-            "sortNo": "A065-05-20",
-            "name": "第三方机构管理",
-            "url": "/Modules/Fund/Channel/FndThirdpartyInfoList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[0]"
-            },
-            "parentId": "A065-05"
-          },
-          {
-            "id": "A065-05-30",
-            "sortNo": "A065-05-30",
-            "name": "担保人管理",
-            "url": "/Modules/Fund/Channel/GuarantorChannelList.jsp",
-            "param": "dono=GuarantorChannelList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[0]"
-            },
-            "parentId": "A065-05"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-10",
-        "sortNo": "A065-10",
-        "name": "融资产品管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-10-10",
-            "sortNo": "A065-10-10",
-            "name": "融资产品论证",
-            "url": "/Modules/Fund/Product/ProductList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[1]"
-            },
-            "parentId": "A065-10"
-          },
-          {
-            "id": "A065-10-20",
-            "sortNo": "A065-10-20",
-            "name": "融资额度维护",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[1]"
-            },
-            "parentId": "A065-10"
-          },
-          {
-            "id": "A065-10-30",
-            "sortNo": "A065-10-30",
-            "name": "融资费用维护",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[1]"
-            },
-            "parentId": "A065-10"
-          },
-          {
-            "id": "A065-10-40",
-            "sortNo": "A065-10-40",
-            "name": "担保事项申请",
-            "url": "/Modules/Fund/Product/GuaranteeMattersLedgerList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[1]"
-            },
-            "parentId": "A065-10"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-15",
-        "sortNo": "A065-15",
-        "name": "融资文件管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-15-10",
-            "sortNo": "A065-15-10",
-            "name": "融资文件管理",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[2]"
-            },
-            "parentId": "A065-15"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-20",
-        "sortNo": "A065-20",
-        "name": "提款管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-20-10",
-            "sortNo": "A065-20-10",
-            "name": "融资测算",
-            "url": "/Modules/Fund/Calculate/FndCalculateList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          },
-          {
-            "id": "A065-20-20",
-            "sortNo": "A065-20-20",
-            "name": "融资提款",
-            "url": "/Modules/Fund/Drawing/DrawingList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          },
-          {
-            "id": "A065-20-30",
-            "sortNo": "A065-20-30",
-            "name": "融资性保函",
-            "url": "/Modules/Fund/Drawing/GuaranteeLetterList.jsp",
-            "param": "dono=FundGuaranteeLetterList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          },
-          {
-            "id": "A065-20-40",
-            "sortNo": "A065-20-40",
-            "name": "还本付息申请",
-            "url": "/Modules/Fund/Drawing/RepayCapitalAndInteresApplytList.jsp",
-            "param": "dono=FundRepayCtAndItApplyList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          },
-          {
-            "id": "A065-20-50",
-            "sortNo": "A065-20-50",
-            "name": "担保费用申请",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          },
-          {
-            "id": "A065-20-60",
-            "sortNo": "A065-20-60",
-            "name": "计提与分担确认",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          },
-          {
-            "id": "A065-20-70",
-            "sortNo": "A065-20-70",
-            "name": "融资项目核销",
-            "url": "/Modules/Fund/Drawing/FinancingProjectVfList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[3]"
-            },
-            "parentId": "A065-20"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-25",
-        "sortNo": "A065-25",
-        "name": "资产包管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-25-020",
-            "sortNo": "A065-25-020",
-            "name": "次级认购台账",
-            "url": "/Modules/Fund/AssetPackage/SecondarySubScribe/SecondarySubScribeList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[4]"
-            },
-            "parentId": "A065-25"
-          },
-          {
-            "id": "A065-25-10",
-            "sortNo": "A065-25-10",
-            "name": "资产包管理",
-            "url": "/Modules/Fund/AssetPackage/AssetPackageManage/AssetPackageList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[4]"
-            },
-            "parentId": "A065-25"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-30",
-        "sortNo": "A065-30",
-        "name": "委贷台账",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-30-10",
-            "sortNo": "A065-30-10",
-            "name": "委托贷款台账",
-            "url": "/Modules/Fund/LoanLedger/LoanLedgerList.jsp",
-            "param": "dono=FndEntrustedLoanList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[5]"
-            },
-            "parentId": "A065-30"
-          },
-          {
-            "id": "A065-30-20",
-            "sortNo": "A065-30-20",
-            "name": "借款协议台账",
-            "url": "/Modules/Fund/LoanAgreementLedger/LoanAgreementLedgerList.jsp",
-            "param": "dono=FNDLoanAgreementList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[5]"
-            },
-            "parentId": "A065-30"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-35",
-        "sortNo": "A065-35",
-        "name": "衍生品台账",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-35-10",
-            "sortNo": "A065-35-10",
-            "name": "远期台账",
-            "url": "/Modules/Fund/Calculate/CalculateInfo.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-20",
-            "sortNo": "A065-35-20",
-            "name": "利率掉期台账",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-30",
-            "sortNo": "A065-35-30",
-            "name": "即期台账",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-40",
-            "sortNo": "A065-35-40",
-            "name": "外汇期权台账",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-50",
-            "sortNo": "A065-35-50",
-            "name": "利率期权台账",
-            "url": "/Modules/Fund/DerivativeLedger/InterestRateOptionLedger/InterestRateLedgerList.jsp",
-            "param": "dono=FNDRateOptionLedger",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-60",
-            "sortNo": "A065-35-60",
-            "name": "外汇掉期台账",
-            "url": "/Modules/Fund/DerivativeLedger/ForeignExchangeSwap/ForeignSwapeLedgerList.jsp",
-            "param": "dono=FNDForeignSwapLedgerList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-70",
-            "sortNo": "A065-35-70",
-            "name": "货币掉期台账",
-            "url": "/Modules/Fund/DerivativeLedger/CurrencySwapeLedger/CurrencySwapeLedgerList.jsp",
-            "param": "dono=FNDCurrencySwapLedgerList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          },
-          {
-            "id": "A065-35-80",
-            "sortNo": "A065-35-80",
-            "name": "公允价值台账",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[6]"
-            },
-            "parentId": "A065-35"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-40",
-        "sortNo": "A065-40",
-        "name": "投资管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-40-10",
-            "sortNo": "A065-40-10",
-            "name": "投资额度管理",
-            "url": "/Modules/Fund/Invest/Quota/InvestQuotaList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[7]"
-            },
-            "parentId": "A065-40"
-          },
-          {
-            "id": "A065-40-20",
-            "sortNo": "A065-40-20",
-            "name": "定期投资收益",
-            "url": "/Modules/Fund/Invest/Term/TermInvestList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[7]"
-            },
-            "parentId": "A065-40"
-          },
-          {
-            "id": "A065-40-30",
-            "sortNo": "A065-40-30",
-            "name": "活期投资收益",
-            "url": "/Modules/Fund/Invest/Current/CurrentInvestList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[7]"
-            },
-            "parentId": "A065-40"
-          },
-          {
-            "id": "A065-40-40",
-            "sortNo": "A065-40-40",
-            "name": "投资赎回",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[7]"
-            },
-            "parentId": "A065-40"
-          },
-          {
-            "id": "A065-40-50",
-            "sortNo": "A065-40-50",
-            "name": "认购赎回列表",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[7]"
-            },
-            "parentId": "A065-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-45",
-        "sortNo": "A065-45",
-        "name": "资金部到账导入",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "glyphicon glyphicon-import",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-45-10",
-            "sortNo": "A065-45-10",
-            "name": "银行流水导入",
-            "url": "/Modules/Fund/AccountTransferredImport/BankAccountImport.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[8]"
-            },
-            "parentId": "A065-45"
-          },
-          {
-            "id": "A065-45-20",
-            "sortNo": "A065-45-20",
-            "name": "票据结算导入",
-            "url": "/Modules/Fund/Bill/BillAccountsImport.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[8]"
-            },
-            "parentId": "A065-45"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-50",
-        "sortNo": "A065-50",
-        "name": "资金部付款",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-50-10",
-            "sortNo": "A065-50-10",
-            "name": "付款申请（非业务款）",
-            "url": "/Modules/Fund/FndDeptPayment/PaymentNaBusiness.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          },
-          {
-            "id": "A065-50-20",
-            "sortNo": "A065-50-20",
-            "name": "付款申请（融资款）",
-            "url": "/Modules/Fund/FndDeptPayment/PaymentFinance.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          },
-          {
-            "id": "A065-50-30",
-            "sortNo": "A065-50-30",
-            "name": "付款申请（投资款）",
-            "url": "/Modules/Fund/FndDeptPayment/PaymentInvest.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          },
-          {
-            "id": "A065-50-40",
-            "sortNo": "A065-50-40",
-            "name": "待付款项列表",
-            "url": "/Modules/Fund/FndDeptPayment/PrePaymentMain.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          },
-          {
-            "id": "A065-50-50",
-            "sortNo": "A065-50-50",
-            "name": "受托支付包管理",
-            "url": "/Modules/Fund/FndDeptPayment/TrusteePaymentList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          },
-          {
-            "id": "A065-50-60",
-            "sortNo": "A065-50-60",
-            "name": "付款确认",
-            "url": "/Modules/Fund/FndDeptPayment/PaymentConfirmMain.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          },
-          {
-            "id": "A065-50-70",
-            "sortNo": "A065-50-70",
-            "name": "付款操作记录",
-            "url": "/Modules/Fund/FndDeptPayment/PaymentOperationRecord.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[9]"
-            },
-            "parentId": "A065-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-55",
-        "sortNo": "A065-55",
-        "name": "票据管理",
-        "url": null,
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-55-10",
-            "sortNo": "A065-55-10",
-            "name": "票据交接（纸票支付）",
-            "url": "/Modules/Fund/Bill/BillJoinPaperPay/PaperPay.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[10]"
-            },
-            "parentId": "A065-55"
-          },
-          {
-            "id": "A065-55-15",
-            "sortNo": "A065-55-15",
-            "name": "银行票据台账",
-            "url": "/Modules/Fund/Bill/BillLedgerOfBank.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[10]"
-            },
-            "parentId": "A065-55"
-          },
-          {
-            "id": "A065-55-50",
-            "sortNo": "A065-55-50",
-            "name": "票据交接（收票）",
-            "url": "/Modules/Fund/Bill/BillJoinReceived/BillJoinReceive.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[10]"
-            },
-            "parentId": "A065-55"
-          },
-          {
-            "id": "A065-55-60",
-            "sortNo": "A065-55-60",
-            "name": "票据池管理",
-            "url": "/Modules/Fund/Bill/BillPool/BillPool.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[10]"
-            },
-            "parentId": "A065-55"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-60",
-        "sortNo": "A065-60",
-        "name": "基础信息设置",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-60-10",
-            "sortNo": "A065-60-10",
-            "name": "银行列表维护",
-            "url": "/Modules/Fund/BaseInfo/CompanyAccountList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[11]"
-            },
-            "parentId": "A065-60"
-          },
-          {
-            "id": "A065-60-20",
-            "sortNo": "A065-60-20",
-            "name": "收租账户设置",
-            "url": "/Modules/Fund/BaseInfo/AccountSetting.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[11]"
-            },
-            "parentId": "A065-60"
-          },
-          {
-            "id": "A065-60-30",
-            "sortNo": "A065-60-30",
-            "name": "利率维护",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[11]"
-            },
-            "parentId": "A065-60"
-          },
-          {
-            "id": "A065-60-40",
-            "sortNo": "A065-60-40",
-            "name": "非业务款类别设置",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[11]"
-            },
-            "parentId": "A065-60"
-          },
-          {
-            "id": "A065-60-50",
-            "sortNo": "A065-60-50",
-            "name": "渠道产品字典维护",
-            "url": "/Modules/Fund/BaseInfo/DictMainten.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[11]"
-            },
-            "parentId": "A065-60"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-65",
-        "sortNo": "A065-65",
-        "name": "BEOS直连查询",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-65-10",
-            "sortNo": "A065-65-10",
-            "name": "余额查询",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[12]"
-            },
-            "parentId": "A065-65"
-          },
-          {
-            "id": "A065-65-20",
-            "sortNo": "A065-65-20",
-            "name": "流水查询",
-            "url": "/u",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[12]"
-            },
-            "parentId": "A065-65"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-70",
-        "sortNo": "A065-70",
-        "name": "资金运营报表",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-70-10",
-            "sortNo": "A065-70-10",
-            "name": "余额表",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[13]"
-            },
-            "parentId": "A065-70"
-          },
-          {
-            "id": "A065-70-20",
-            "sortNo": "A065-70-20",
-            "name": "现金流量表",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[13]"
-            },
-            "parentId": "A065-70"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-75",
-        "sortNo": "A065-75",
-        "name": "对账管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-75-10",
-            "sortNo": "A065-75-10",
-            "name": "付款对账",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[14]"
-            },
-            "parentId": "A065-75"
-          },
-          {
-            "id": "A065-75-20",
-            "sortNo": "A065-75-20",
-            "name": "银行对账单款项认领",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[14]"
-            },
-            "parentId": "A065-75"
-          },
-          {
-            "id": "A065-75-30",
-            "sortNo": "A065-75-30",
-            "name": "银行对账单查询",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[14]"
-            },
-            "parentId": "A065-75"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      },
-      {
-        "id": "A065-80",
-        "sortNo": "A065-80",
-        "name": "资金部查询",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A065-80-10",
-            "sortNo": "A065-80-10",
-            "name": "融资流程查询",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-20",
-            "sortNo": "A065-80-20",
-            "name": "融资额度查询",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-30",
-            "sortNo": "A065-80-30",
-            "name": "联系人查询",
-            "url": "/Modules/Fund/FundInquiry/FundContactList.jsp",
-            "param": "dono=FNDContactQuery",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-40",
-            "sortNo": "A065-80-40",
-            "name": "提款台账",
-            "url": "/Modules/Fund/FundInquiry/DrawMoneyLedger/DrawMoneyLedgerList.jsp",
-            "param": "dono=FNDDrawMoneyLedgerList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-50",
-            "sortNo": "A065-80-50",
-            "name": "还本付息查询",
-            "url": "/Modules/Fund/FundInquiry/RepayCapitalInterQueryList/FundRepayCapInList.jsp",
-            "param": "dono=FNDCapitalQueryList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-60",
-            "sortNo": "A065-80-60",
-            "name": "ABS台账",
-            "url": "/Modules/Fund/AssetPackage/AssetPackageLedger/ABSList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-70",
-            "sortNo": "A065-80-70",
-            "name": "担保费用台账",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "A065-80-80",
-            "sortNo": "A065-80-80",
-            "name": "银票交接查询",
-            "url": "/u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          },
-          {
-            "id": "10",
-            "sortNo": "A065-80-90",
-            "name": "保证金台账",
-            "url": "/Modules/Fund/FundInquiry/MarginAccount/MarginAccList.jsp",
-            "param": "dono=FNDMarginAccList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[6].children[15]"
-            },
-            "parentId": "A065-80"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[6]"
-        },
-        "parentId": "A065"
-      }
-    ]
-  },
-  {
-    "id": "A070",
-    "sortNo": "A070",
-    "name": "财务管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1310zxbg",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A070-20",
-        "sortNo": "A070-20",
-        "name": "票据管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1309zhxxgl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A070-20-030",
-            "sortNo": "A070-20-03",
-            "name": "开票信息设置",
-            "url": "/Modules/Finance/BillingSetting/BillingSetting.jsp",
-            "param": "dono=BillingSettingList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-06",
-            "sortNo": "A070-20-06",
-            "name": "开票计划维护",
-            "url": "/Modules/Finance/BillingSetting/BillingPlanMaintenanceList.jsp",
-            "param": "dono=BillingPlanMaintenanceList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-20",
-            "sortNo": "A070-20-20",
-            "name": "票据维护",
-            "url": "/Modules/Finance/BillingSetting/InvoiceMaintenanceList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-C010-65xitongguanli",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-25",
-            "sortNo": "A070-20-25",
-            "name": "票据台账",
-            "url": "/Modules/Finance/BillingSetting/InvoiceAccountList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-26",
-            "sortNo": "A070-20-26",
-            "name": "票据作废",
-            "url": "/Modules/Finance/BillingSetting/InvoiceNullifyList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-30",
-            "sortNo": "A070-20-30",
-            "name": "进项票交接",
-            "url": "/Modules/Finance/BillingSetting/IncomeInvoiceList.jsp",
-            "param": "dono=IncomeInvoiceList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-40",
-            "sortNo": "A070-20-40",
-            "name": "进项票管理",
-            "url": "/Modules/Finance/BillingSetting/IncomeManageList.jsp",
-            "param": "dono=IncomeManageList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-50",
-            "sortNo": "A070-20-50",
-            "name": "进项票退票",
-            "url": "/Modules/Finance/BillingSetting/IncomeReturnList.jsp",
-            "param": "dono=IncomeReturnList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          },
-          {
-            "id": "A070-20-60",
-            "sortNo": "A070-20-60",
-            "name": "异常查询",
-            "url": "/Modules/Finance/BillingSetting/ExceptionQueryList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[0]"
-            },
-            "parentId": "A070-20"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[7]"
-        },
-        "parentId": "A070"
-      },
-      {
-        "id": "A070-30",
-        "sortNo": "A070-30",
-        "name": "租金测算",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1000xtzygl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A070-300010",
-            "sortNo": "A070-30-10",
-            "name": "租金测算修改",
-            "url": "/Modules/Accounting/LoanList.jsp",
-            "param": "dono=LacLoanList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[1]"
-            },
-            "parentId": "A070-30"
-          },
-          {
-            "id": "A070-300020",
-            "sortNo": "A070-30-20",
-            "name": "租金测算查询",
-            "url": "/Modules/Accounting/LoanList2.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[1]"
-            },
-            "parentId": "A070-30"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[7]"
-        },
-        "parentId": "A070"
-      },
-      {
-        "id": "A070-50",
-        "sortNo": "A070-50",
-        "name": "调息要素",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1302zcdpz",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A070-50-10",
-            "sortNo": "A070-50-10",
-            "name": "调息要素核对",
-            "url": "/Modules/Accounting/InterestAdjustList.jsp",
-            "param": "dono=InterestAdjustList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[2]"
-            },
-            "parentId": "A070-50"
-          },
-          {
-            "id": "A070-50-020",
-            "sortNo": "A070-50-20",
-            "name": "调息要素历史查询",
-            "url": "/Modules/Accounting/AdjustHistoryQueryList.jsp",
-            "param": "dono=AdjustHistoryQueryList",
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[2]"
-            },
-            "parentId": "A070-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[7]"
-        },
-        "parentId": "A070"
-      },
-      {
-        "id": "A070-70",
-        "sortNo": "A070-70",
-        "name": "业务税率维护",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1307aqsjcx",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A070-70-10",
-            "sortNo": "A070-70-10",
-            "name": "税率信息维护",
-            "url": "/Modules/Finance/BusinessTaxMain/TaxInformaService.jsp",
-            "param": "dono=TaxRate",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[3]"
-            },
-            "parentId": "A070-70"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[7]"
-        },
-        "parentId": "A070"
-      },
-      {
-        "id": "A070-80",
-        "sortNo": "A070-80",
-        "name": "预收款管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1300xtgl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A070-800010",
-            "sortNo": "A070-800010",
-            "name": "预收款管理",
-            "url": "/Modules/Finance/PrecollectionMana/PrecollectionManaList.jsp",
-            "param": "dono=PreCollectionManagement",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[7].children[4]"
-            },
-            "parentId": "A070-80"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[7]"
-        },
-        "parentId": "A070"
-      }
-    ]
-  },
-  {
-    "id": "A080",
-    "sortNo": "A080",
-    "name": "法务",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1302zcdpz",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A080-10",
-        "sortNo": "A080-10",
-        "name": "合同一般条款维护",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1306xtcspz",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[8]"
-        },
-        "parentId": "A080"
-      }
-    ]
-  },
-  {
-    "id": "A090",
-    "sortNo": "A090",
-    "name": "报表统计",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1307aqsjcx",
-    "enable": "1",
-    "remark": null
-  },
-  {
-    "id": "A100",
-    "sortNo": "A100",
-    "name": "文档管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1308jcpz",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "A100-090",
-        "sortNo": "A100-090",
-        "name": "文件交接",
-        "url": "Modules/FileManage/documentTransfer/documentTransfer.jsp",
-        "param": "dono=DocumentTransferList",
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-10",
-        "sortNo": "A100-10",
-        "name": "文件管理",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1309zhxxgl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A100-10-01",
-            "sortNo": "A100-10-01",
-            "name": "通知书打印",
-            "url": "/Modules/FileManage/financeInvoice/noticePrintList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[1]"
-            },
-            "parentId": "A100-10"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-20",
-        "sortNo": "A100-20",
-        "name": "财务开票",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1310zxbg",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A100-20-10",
-            "sortNo": "A100-20-10",
-            "name": "收据打印",
-            "url": "/Modules/FileManage/financeInvoice/receiptPrintList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[2]"
-            },
-            "parentId": "A100-20"
-          },
-          {
-            "id": "A100-20-20",
-            "sortNo": "A100-20-20",
-            "name": "增值税发票处理",
-            "url": "/Modules/FileManage/financeInvoice/valueAddedTaxInvoice.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[2]"
-            },
-            "parentId": "A100-20"
-          },
-          {
-            "id": "A100-20-30",
-            "sortNo": "A100-20-30",
-            "name": "发票库管理",
-            "url": "/Modules/FileManage/financeInvoice/invoiceLibraryManage.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[2]"
-            },
-            "parentId": "A100-20"
-          },
-          {
-            "id": "A100-20-40",
-            "sortNo": "A100-20-40",
-            "name": "票据作废",
-            "url": "Modules/FileManage/InvalidBill/InvalidBill.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[2]"
-            },
-            "parentId": "A100-20"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-30",
-        "sortNo": "A100-30",
-        "name": "影像查询",
-        "url": "/Modules/FileManage/Image/ImageFileQuery.jsp",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-C010-65xitongguanli",
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-40",
-        "sortNo": "A100-40",
-        "name": "函件寄送",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1000xtzygl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "A100-40-10",
-            "sortNo": "A100-40-10",
-            "name": "寄送地址打印",
-            "url": "/Modules/FileManage/LetterSend/sendAddressPrintList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[4]"
-            },
-            "parentId": "A100-40"
-          },
-          {
-            "id": "A100-40-20",
-            "sortNo": "A100-40-20",
-            "name": "函件寄送",
-            "url": "/Modules/FileManage/LetterSend/letterSendList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[4]"
-            },
-            "parentId": "A100-40"
-          },
-          {
-            "id": "A100-40-30",
-            "sortNo": "A100-40-30",
-            "name": "配票核对",
-            "url": "/Modules/FileManage/LetterSend/voteAllocationCheck.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[4]"
-            },
-            "parentId": "A100-40"
-          },
-          {
-            "id": "A100-40-40",
-            "sortNo": "A100-40-40",
-            "name": "资料清单打印",
-            "url": "/Modules/FileManage/LetterSend/fileListPrintList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[10].children[4]"
-            },
-            "parentId": "A100-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-50",
-        "sortNo": "A100-50",
-        "name": "条形码下载",
-        "url": "/Modules/FileManage/Barcode/BarcodePrint.jsp",
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-60",
-        "sortNo": "A100-60",
-        "name": "文件管理",
-        "url": "U",
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-70",
-        "sortNo": "A100-70",
-        "name": "调息变更通知书确认",
-        "url": "Modules/FileManage/interestAdjustPrint/interestAdjustPrint.jsp",
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      },
-      {
-        "id": "A100-80",
-        "sortNo": "A100-80",
-        "name": "管理公司文件处理",
-        "url": "Modules/FileManage/Company/manageCompany.jsp",
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[10]"
-        },
-        "parentId": "A100"
-      }
-    ]
-  },
-  {
-    "id": "B010",
-    "sortNo": "B010",
-    "name": "业务配置",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1300xtgl",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "B010-30",
-        "sortNo": "B010-30",
-        "name": "组织管理",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-0208khzzpd",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "B010-30-03",
-            "sortNo": "B010-30-03",
-            "name": "公司维护",
-            "url": "/Config/Company/CompanyList.jsp",
-            "param": "dono=CompanyList",
-            "accessType": "iframe",
-            "icon": "raxi raxi-1302zcdpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[0]"
-            },
-            "parentId": "B010-30"
-          },
-          {
-            "id": "B010-30-05",
-            "sortNo": "B010-30-05",
-            "name": "机构",
-            "url": "/System/Org/OrgTreeSelect.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1306xtcspz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[0]"
-            },
-            "parentId": "B010-30"
-          },
-          {
-            "id": "B010-30-10",
-            "sortNo": "B010-30-10",
-            "name": "用户",
-            "url": "/System/User/UserList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1307aqsjcx",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[0]"
-            },
-            "parentId": "B010-30"
-          },
-          {
-            "id": "B010-30-20",
-            "sortNo": "B010-30-20",
-            "name": "角色",
-            "url": "/System/Role/RoleList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[0]"
-            },
-            "parentId": "B010-30"
-          },
-          {
-            "id": "B010-30-30",
-            "sortNo": "B010-30-30",
-            "name": "权限",
-            "url": "/System/Right/SysRightTab.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[0]"
-            },
-            "parentId": "B010-30"
-          },
-          {
-            "id": "B010-30-40",
-            "sortNo": "B010-30-40",
-            "name": "自定义权限",
-            "url": "/System/RightCustomize/SysCustRightList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[0]"
-            },
-            "parentId": "B010-30"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[11]"
-        },
-        "parentId": "B010"
-      },
-      {
-        "id": "B010-40",
-        "sortNo": "B010-40",
-        "name": "流程配置",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1403jhmssl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "B010-40-10",
-            "sortNo": "B010-40-10",
-            "name": "流程设计",
-            "url": "/Config/Workflow/WorkflowDesign.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[1]"
-            },
-            "parentId": "B010-40"
-          },
-          {
-            "id": "B010-40-12",
-            "sortNo": "B010-40-12",
-            "name": "流程资源",
-            "url": "/Config/Workflow/Resource/WorkflowResource.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-0302sxedjk",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[1]"
-            },
-            "parentId": "B010-40"
-          },
-          {
-            "id": "B010-40-20",
-            "sortNo": "B010-40-20",
-            "name": "流程监控 ",
-            "url": "/Config/Workflow/WorkflowMonitor.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-0302sxedjk",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[1]"
-            },
-            "parentId": "B010-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[11]"
-        },
-        "parentId": "B010"
-      },
-      {
-        "id": "B010-50",
-        "sortNo": "B010-50",
-        "name": "产品及规则",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1300xtgl",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "B010-50-10",
-            "sortNo": "B010-50-10",
-            "name": "决策表",
-            "url": "/Config/DecistionTable/DecisionTableList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[2]"
-            },
-            "parentId": "B010-50"
-          },
-          {
-            "id": "B010-50-20",
-            "sortNo": "B010-50-20",
-            "name": "产品配置",
-            "url": "/Config/Product/ProductDefinitionList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[2]"
-            },
-            "parentId": "B010-50"
-          },
-          {
-            "id": "B010-50-30",
-            "sortNo": "B010-50-30",
-            "name": "核算报价规则",
-            "url": "/Config/AcctRulesTemplate/LACRulesTemplateList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[2]"
-            },
-            "parentId": "B010-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[11]"
-        },
-        "parentId": "B010"
-      },
-      {
-        "id": "B010-70",
-        "sortNo": "B010-70",
-        "name": "业务参数",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1302zcdpz",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "B010-70-10",
-            "sortNo": "B010-70-10",
-            "name": "利率",
-            "url": "/Config/InterestRate/InterestTab.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[3]"
-            },
-            "parentId": "B010-70"
-          },
-          {
-            "id": "B010-70-20",
-            "sortNo": "B010-70-20",
-            "name": "汇率",
-            "url": "/Config/ExchangeRate/ExchangeRateList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[3]"
-            },
-            "parentId": "B010-70"
-          },
-          {
-            "id": "B010-70-30",
-            "sortNo": "B010-70-30",
-            "name": "节假日",
-            "url": "/Config/Vacation/BrcVacationList.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[3]"
-            },
-            "parentId": "B010-70"
-          },
-          {
-            "id": "B010-70-70",
-            "sortNo": "B010-70-70",
-            "name": "业务对象模型",
-            "url": "/Config/Bom/BomList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[3]"
-            },
-            "parentId": "B010-70"
-          },
-          {
-            "id": "B010-70-80",
-            "sortNo": "B010-70-80",
-            "name": "款项类别配置",
-            "url": "/Config/Capital/CapitalScheduleTypeConfig.jsp",
-            "param": null,
-            "accessType": "10",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[3]"
-            },
-            "parentId": "B010-70"
-          },
-          {
-            "id": "B010-70-85",
-            "sortNo": "B010-70-85",
-            "name": "进口代理属性",
-            "url": "/System/RightCustomize/ImportProxyList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[3]"
-            },
-            "parentId": "B010-70"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[11]"
-        },
-        "parentId": "B010"
-      },
-      {
-        "id": "B010-76",
-        "sortNo": "B010-76",
-        "name": "业务模型",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "B010-76-05",
-            "sortNo": "B010-76-05",
-            "name": "业务版块",
-            "url": "/Config/BusinessModule/BusinessModuleList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[4]"
-            },
-            "parentId": "B010-76"
-          },
-          {
-            "id": "B010-76-10",
-            "sortNo": "B010-76-10",
-            "name": "财务报表模型",
-            "url": "/Common/FnaStat/FnastatList.jsp",
-            "param": "dono=BrcFnastat",
-            "accessType": "10",
-            "icon": "raxi raxi-0505zfsp",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[4]"
-            },
-            "parentId": "B010-76"
-          },
-          {
-            "id": "B010-76-20",
-            "sortNo": "B010-76-20",
-            "name": "风险探模型",
-            "url": "/System/Detector/AutoDetect.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-0604fxjc",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[4]"
-            },
-            "parentId": "B010-76"
-          },
-          {
-            "id": "B010-76-30",
-            "sortNo": "B010-76-30",
-            "name": "提醒规则设置",
-            "url": "u",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1306xtcspz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[4]"
-            },
-            "parentId": "B010-76"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[11]"
-        },
-        "parentId": "B010"
-      },
-      {
-        "id": "B010-95",
-        "sortNo": "B010-95",
-        "name": "格式化文档",
-        "url": "u",
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "B010-95-10",
-            "sortNo": "B010-95-10",
-            "name": "调查报告",
-            "url": "/Config/FormatDoc/FDCPandectList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[5]"
-            },
-            "parentId": "B010-95"
-          },
-          {
-            "id": "B010-95-20",
-            "sortNo": "B010-95-20",
-            "name": "资料清单",
-            "url": "/Config/Inquiry/InquireModel/InquireModelList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[5]"
-            },
-            "parentId": "B010-95"
-          },
-          {
-            "id": "B010-95-30",
-            "sortNo": "B010-95-30",
-            "name": "合同模板",
-            "url": null,
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[5]"
-            },
-            "parentId": "B010-95"
-          },
-          {
-            "id": "B010-95-40",
-            "sortNo": "B010-95-40",
-            "name": "文档类型",
-            "url": "/Config/TypeOfDoc/TypeOfDocumentList.jsp",
-            "param": "dono=TypeOfDocumentList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[11].children[5]"
-            },
-            "parentId": "B010-95"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[11]"
-        },
-        "parentId": "B010"
-      }
-    ]
-  },
-  {
-    "id": "C010",
-    "sortNo": "C010",
-    "name": "系统管理",
-    "url": "u",
-    "param": null,
-    "accessType": "iframe",
-    "icon": "raxi raxi-1307aqsjcx",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "C010-06",
-        "sortNo": "C010-06",
-        "name": "系统资源",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1308jcpz",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "C010-06-10",
-            "sortNo": "C010-06-10",
-            "name": "菜单设置",
-            "url": "/System/Menu/MenuList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1308jcpz",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[12].children[0]"
-            },
-            "parentId": "C010-06"
-          },
-          {
-            "id": "C010-06-15",
-            "sortNo": "C010-06-15",
-            "name": "显示模板",
-            "url": "/System/DoLibrary/AweDoLibrary.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1310zxbg",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[12].children[0]"
-            },
-            "parentId": "C010-06"
-          },
-          {
-            "id": "C010-06-20",
-            "sortNo": "C010-06-20",
-            "name": "数据字典",
-            "url": "/System/CodeLibrary/CodeLibrary.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1309zhxxgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[12].children[0]"
-            },
-            "parentId": "C010-06"
-          },
-          {
-            "id": "C010-06-30",
-            "sortNo": "C010-06-30",
-            "name": "数据库模型",
-            "url": "/System/Database/DatabaseMain.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-1300xtgl",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[12].children[0]"
-            },
-            "parentId": "C010-06"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[12]"
-        },
-        "parentId": "C010"
-      },
-      {
-        "id": "C010-09",
-        "sortNo": "C010-09",
-        "name": "系统监控",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "raxi raxi-1308jcpz",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "C010-09-10",
-            "sortNo": "C010-09-10",
-            "name": "日志查看",
-            "url": "/System/RuntimeEnvironment/Log.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-C010-65xitongguanli",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[12].children[1]"
-            },
-            "parentId": "C010-09"
-          },
-          {
-            "id": "C010-09-20",
-            "sortNo": "C010-09-20",
-            "name": "运行环境",
-            "url": "/ping.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": "raxi raxi-C010-65xitongguanli",
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[12].children[1]"
-            },
-            "parentId": "C010-09"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[12]"
-        },
-        "parentId": "C010"
-      },
-      {
-        "id": "C010-80",
-        "sortNo": "C010-80",
-        "name": "内评系统管理",
-        "url": "/Modules/Customer/Rate/RateSystemManager.jsp",
-        "param": null,
-        "accessType": "10",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "parent": {
-          "$ref": "$.body[12]"
-        },
-        "parentId": "C010"
-      }
-    ]
-  },
-  {
-    "id": "D020",
-    "sortNo": "D020",
-    "name": "参考案例",
-    "url": null,
-    "param": null,
-    "accessType": "iframe",
-    "icon": "fa fa-briefcase",
-    "enable": "1",
-    "remark": null,
-    "children": [
-      {
-        "id": "D020-10",
-        "sortNo": "D020-10",
-        "name": "OW列表页面",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "fa fa-table",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-10-10",
-            "sortNo": "D020-10-10",
-            "name": "只读列表-旧版本(下个版本)",
-            "url": "/ShowCase/OWList/OldExamplePersonEditableList.jsp",
-            "param": "dono=ExamplePersonList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-40",
-            "sortNo": "D020-10-40",
-            "name": "只读列表",
-            "url": "/ShowCase/OWList/ExamplePersonReadonlyList.jsp",
-            "param": "dono=ExamplePersonList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-50",
-            "sortNo": "D020-10-50",
-            "name": "可编辑列表",
-            "url": "/ShowCase/OWList/ExamplePersonEditableList.jsp",
-            "param": "dono=ExamplePersonList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-51",
-            "sortNo": "D020-10-51",
-            "name": "可编辑列表有校验",
-            "url": "/ShowCase/OWList/ExamplePersonEditableValidList.jsp",
-            "param": "dono=ExamplePersonValidList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-55",
-            "sortNo": "D020-10-55",
-            "name": "列表功能主要展示",
-            "url": "/ShowCase/OWList/ExamplePersonFuncList.jsp",
-            "param": "dono=ExamplePersonList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-60",
-            "sortNo": "D020-10-60",
-            "name": "搜索器可自定义列表",
-            "url": "/ShowCase/OWList/ExamplePersonCustomizeSearchList.jsp",
-            "param": "dono=ExamplePersonCustomizeSearchList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-65",
-            "sortNo": "D020-10-65",
-            "name": "列表默认无数据",
-            "url": "/ShowCase/OWList/ExamplePersonDefaultNoDataList.jsp",
-            "param": "dono=ExamplePersonList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-67",
-            "sortNo": "D020-10-67",
-            "name": "仅显示登录用户录入的数据",
-            "url": "/ShowCase/OWList/ExamplePersonLimitBySessionUserList.jsp",
-            "param": "dono=ExamplePersonLmtSessionUserList",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-70",
-            "sortNo": "D020-10-70",
-            "name": "列表页面数据或模板独立使用",
-            "url": "/ShowCase/OWList/ExamplePersonDoTempSeparateList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-75",
-            "sortNo": "D020-10-75",
-            "name": "级联钻入匹配搜索",
-            "url": "/ShowCase/OWList/CascadeDrillSearch.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          },
-          {
-            "id": "D020-10-90",
-            "sortNo": "D020-10-90",
-            "name": "树图表格",
-            "url": "/ShowCase/OWList/TreeGridList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[0]"
-            },
-            "parentId": "D020-10"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      },
-      {
-        "id": "D020-20",
-        "sortNo": "D020-20",
-        "name": "OW详情页面",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "fa fa-list-alt",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-20-10",
-            "sortNo": "D020-20-10",
-            "name": "简单详情页面",
-            "url": "/ShowCase/OWInfo/ExamplePersonSimpleInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-20",
-            "sortNo": "D020-20-20",
-            "name": "详情有分组有校验",
-            "url": "/ShowCase/OWInfo/ExamplePersonGroupWithValidInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-22",
-            "sortNo": "D020-20-22",
-            "name": "详情主要功能展示",
-            "url": "/ShowCase/OWInfo/ExamplePersonFuncInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-30",
-            "sortNo": "D020-20-30",
-            "name": "详情页面二列",
-            "url": "/ShowCase/OWInfo/ExamplePersonXColumnsInfo.jsp",
-            "param": "dono=ExamplePersonColumn2Info",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-40",
-            "sortNo": "D020-20-40",
-            "name": "详情页面三列",
-            "url": "/ShowCase/OWInfo/ExamplePersonXColumnsInfo.jsp",
-            "param": "dono=ExamplePersonColumn3Info",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-50",
-            "sortNo": "D020-20-50",
-            "name": "详情页面四列",
-            "url": "/ShowCase/OWInfo/ExamplePersonXColumnsInfo.jsp",
-            "param": "dono=ExamplePersonColumn4Info",
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-70",
-            "sortNo": "D020-20-70",
-            "name": "详情页面局部插入列表组件",
-            "url": "/ShowCase/OWInfo/ExamplePersonListInInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          },
-          {
-            "id": "D020-20-80",
-            "sortNo": "D020-20-80",
-            "name": "详情页面局数据或模板独立使用",
-            "url": "/ShowCase/OWInfo/ExamplePersonSeparateInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[1]"
-            },
-            "parentId": "D020-20"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      },
-      {
-        "id": "D020-30",
-        "sortNo": "D020-30",
-        "name": "布局及组件",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "fa fa-delicious",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-30-10",
-            "sortNo": "D020-30-10",
-            "name": "树图导航",
-            "url": "/ShowCase/LayoutUI/TreeNav/TreeNavIndexTabs.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-20",
-            "sortNo": "D020-30-20",
-            "name": "Tabs导航结合iframe",
-            "url": "/ShowCase/LayoutUI/Tabs/TabsWithIframe/TabsWithIframeIndex.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-30",
-            "sortNo": "D020-30-30",
-            "name": "Tabs导航结合include",
-            "url": "/ShowCase/LayoutUI/Tabs/TabsWithInclude/TabsWithIncludeIndex.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-40",
-            "sortNo": "D020-30-40",
-            "name": "Tabs导航结合dom插入",
-            "url": "/ShowCase/LayoutUI/Tabs/TabsWithDom/TabsWithDomIndex.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-42",
-            "sortNo": "D020-30-42",
-            "name": "调用iframe外面的功能",
-            "url": "/ShowCase/LayoutUI/Tabs/TabsOutterInvoker/TabsOutterInvokerPersonList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-50",
-            "sortNo": "D020-30-50",
-            "name": "选择器",
-            "url": "/ShowCase/LayoutUI/DiversePickers.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-60",
-            "sortNo": "D020-30-60",
-            "name": "交互组件",
-            "url": "/ShowCase/LayoutUI/InteractionUIFaces.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-70",
-            "sortNo": "D020-30-70",
-            "name": "表单组件单独使用",
-            "url": "/ShowCase/LayoutUI/FormComponents.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-80",
-            "sortNo": "D020-30-80",
-            "name": "富文本编辑器",
-            "url": "/ShowCase/RichText/RichTextDemo1.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-84",
-            "sortNo": "D020-30-84",
-            "name": "文件上传下载",
-            "url": "/ShowCase/FileUpload/FileUploadDemo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-88",
-            "sortNo": "D020-30-88",
-            "name": "图标库",
-            "url": "/ShowCase/IconManage/IconLibs.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          },
-          {
-            "id": "D020-30-90",
-            "sortNo": "D020-30-90",
-            "name": "步骤条组件",
-            "url": "/ShowCase/LayoutUI/StepWizard.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[2]"
-            },
-            "parentId": "D020-30"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      },
-      {
-        "id": "D020-40",
-        "sortNo": "D020-40",
-        "name": "基础服务",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "fa fa-pencil",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-40-10",
-            "sortNo": "D020-40-10",
-            "name": "REST同步调用",
-            "url": "/ShowCase/BasicFrame/RestInvoker.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[3]"
-            },
-            "parentId": "D020-40"
-          },
-          {
-            "id": "D020-40-20",
-            "sortNo": "D020-40-20",
-            "name": "REST同步调用和传参",
-            "url": "/ShowCase/BasicFrame/RestWithParameterInvoker.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[3]"
-            },
-            "parentId": "D020-40"
-          },
-          {
-            "id": "D020-40-22",
-            "sortNo": "D020-40-22",
-            "name": "REST异步调用",
-            "url": "/ShowCase/BasicFrame/RestAsyncInvoker.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[3]"
-            },
-            "parentId": "D020-40"
-          },
-          {
-            "id": "D020-40-30",
-            "sortNo": "D020-40-30",
-            "name": "国际化I18N",
-            "url": "/ShowCase/BasicFrame/LanguageI18n.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[3]"
-            },
-            "parentId": "D020-40"
-          },
-          {
-            "id": "D020-40-40",
-            "sortNo": "D020-40-40",
-            "name": "接口集成模块REST",
-            "url": "/ShowCase/BasicFrame/LinkInteraction.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[3]"
-            },
-            "parentId": "D020-40"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      },
-      {
-        "id": "D020-50",
-        "sortNo": "D020-50",
-        "name": "常见解决方案",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "fa fa-book",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-50-00",
-            "sortNo": "D020-50-00",
-            "name": "列表详情联动",
-            "url": "/ShowCase/CommonSolution/ListCascadeInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-02",
-            "sortNo": "D020-50-02",
-            "name": "详情中插入列表",
-            "url": "/ShowCase/CommonSolution/InfoContainsList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-04",
-            "sortNo": "D020-50-04",
-            "name": "页面动态分组",
-            "url": "/ShowCase/CommonSolution/DynamicGroupInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-10",
-            "sortNo": "D020-50-10",
-            "name": "自动风险探测",
-            "url": "/ShowCase/CommonSolution/ExamplePersonDetector.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-14",
-            "sortNo": "D020-50-14",
-            "name": "JS数组功能扩展",
-            "url": "/ShowCase/CommonSolution/JavascriptArrayApi.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-20",
-            "sortNo": "D020-50-20",
-            "name": "格式化报告",
-            "url": "/ShowCase/CommonSolution/FormatDocDemo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-30",
-            "sortNo": "D020-50-30",
-            "name": "在线Office",
-            "url": "/ShowCase/WebOffice/PageOffice/SimpleDemo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-40",
-            "sortNo": "D020-50-40",
-            "name": "核算案例列表",
-            "url": "/ShowCase/CommonSolution/LoanCalulatorList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-50",
-            "sortNo": "D020-50-50",
-            "name": "快速测算工具",
-            "url": "/ShowCase/CommonSolution/LoanCalulator.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-61",
-            "sortNo": "D020-50-61",
-            "name": "从EXCEL导入数据至列表",
-            "url": "/ShowCase/CommonSolution/ImportExcelIntoList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          },
-          {
-            "id": "D020-50-63",
-            "sortNo": "D020-50-63",
-            "name": "从EXCEL导入数据至详情",
-            "url": "/ShowCase/CommonSolution/ImportExcelIntoInfo.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[4]"
-            },
-            "parentId": "D020-50"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      },
-      {
-        "id": "D020-60",
-        "sortNo": "D020-60",
-        "name": "配置及规则",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": "fa fa-sliders",
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-60-10",
-            "sortNo": "D020-60-10",
-            "name": "产品配置",
-            "url": "/Config/Product/ProductDefinitionList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-20",
-            "sortNo": "D020-60-20",
-            "name": "决策表汇总",
-            "url": "/Config/DecistionTable/DecisionTableList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-30",
-            "sortNo": "D020-60-30",
-            "name": "核算报价规则模板",
-            "url": "/Config/AcctRulesTemplate/LACRulesTemplateList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-40",
-            "sortNo": "D020-60-40",
-            "name": "调查报告配置目录",
-            "url": "/Config/FormatDoc/FDCPandectList.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-50",
-            "sortNo": "D020-60-50",
-            "name": "流程设计",
-            "url": "/Config/Workflow/WorkflowDesign.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-60",
-            "sortNo": "D020-60-60",
-            "name": "流程资源",
-            "url": "/Config/Workflow/Resource/WorkflowResource.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-80",
-            "sortNo": "D020-60-70",
-            "name": "系统监控",
-            "url": null,
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          },
-          {
-            "id": "D020-60-70",
-            "sortNo": "D020-60-70",
-            "name": "流程跟踪监控",
-            "url": "/Config/Workflow/WorkflowMonitor.jsp",
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "parent": {
-              "$ref": "$.body[13].children[5]"
-            },
-            "parentId": "D020-60"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      },
-      {
-        "id": "D020-70",
-        "sortNo": "D020-70",
-        "name": "自定义",
-        "url": null,
-        "param": null,
-        "accessType": "iframe",
-        "icon": null,
-        "enable": "1",
-        "remark": null,
-        "children": [
-          {
-            "id": "D020-70-10",
-            "sortNo": "D020-70-10",
-            "name": "前端小程序",
-            "url": null,
-            "param": null,
-            "accessType": "iframe",
-            "icon": null,
-            "enable": "1",
-            "remark": null,
-            "isCollapse": false,
-            "children": [
-              {
-                "id": "D020-70-10-040",
-                "sortNo": "D020-70-10-040",
-                "name": "打字游戏",
-                "url": "/ShowCase/SelfDef/FrontApplet/WordGame.jsp",
-                "param": null,
-                "accessType": "iframe",
-                "icon": null,
-                "enable": "1",
-                "remark": null,
-                "parent": {
-                  "$ref": "$.body[13].children[6].children[0]"
-                },
-                "parentId": "D020-70-10"
-              },
-              {
-                "id": "D020-70-10-10",
-                "sortNo": "D020-70-10-10",
-                "name": "汉诺塔",
-                "url": "/ShowCase/SelfDef/FrontApplet/HanoiTower.jsp",
-                "param": null,
-                "accessType": "iframe",
-                "icon": null,
-                "enable": "1",
-                "remark": null,
-                "parent": {
-                  "$ref": "$.body[13].children[6].children[0]"
-                },
-                "parentId": "D020-70-10"
-              },
-              {
-                "id": "D020-70-10-15",
-                "sortNo": "D020-70-10-15",
-                "name": "动画效果",
-                "url": "/ShowCase/SelfDef/FrontApplet/Animate.jsp",
-                "param": null,
-                "accessType": "iframe",
-                "icon": null,
-                "enable": "1",
-                "remark": null,
-                "parent": {
-                  "$ref": "$.body[13].children[6].children[0]"
-                },
-                "parentId": "D020-70-10"
-              },
-              {
-                "id": "D020-70-10-20",
-                "sortNo": "D020-70-10-20",
-                "name": "排序",
-                "url": "/ShowCase/SelfDef/FrontApplet/SortAnimation.jsp",
-                "param": null,
-                "accessType": "iframe",
-                "icon": null,
-                "enable": "1",
-                "remark": null,
-                "parent": {
-                  "$ref": "$.body[13].children[6].children[0]"
-                },
-                "parentId": "D020-70-10"
-              },
-              {
-                "id": "D020-70-10-30",
-                "sortNo": "D020-70-10-30",
-                "name": "取色器",
-                "url": "/ShowCase/SelfDef/FrontApplet/ColorPicker.jsp",
-                "param": null,
-                "accessType": "iframe",
-                "icon": null,
-                "enable": "1",
-                "remark": null,
-                "parent": {
-                  "$ref": "$.body[13].children[6].children[0]"
-                },
-                "parentId": "D020-70-10"
-              }
-            ],
-            "parent": {
-              "$ref": "$.body[13].children[6]"
-            },
-            "parentId": "D020-70"
-          }
-        ],
-        "parent": {
-          "$ref": "$.body[13]"
-        },
-        "parentId": "D020"
-      }
-    ]
-  }
-]
+﻿[{
+  "id": "00",
+  "name": "首页",
+  "i18nCode": "menu.home",
+  "summary": null,
+  "sortCode": "00",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+
+}, {
+  "id": "A10",
+  "name": "模块1",
+  "i18nCode": "menu.biz.module.1",
+  "summary": null,
+  "sortCode": "A10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A11",
+  "name": "模块2",
+  "i18nCode": "menu.biz.module.2",
+  "summary": null,
+  "sortCode": "A11",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A12",
+  "name": "模块3",
+  "i18nCode": "menu.biz.module.3",
+  "summary": null,
+  "sortCode": "A12",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A13",
+  "name": "模块4",
+  "i18nCode": "menu.biz.module.4",
+  "summary": null,
+  "sortCode": "A13",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A14",
+  "name": "模块5",
+  "i18nCode": "menu.biz.module.5",
+  "summary": null,
+  "sortCode": "A14",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A15",
+  "name": "模块6",
+  "i18nCode": "menu.biz.module.6",
+  "summary": null,
+  "sortCode": "A15",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A16",
+  "name": "模块7",
+  "i18nCode": "menu.biz.module.7",
+  "summary": null,
+  "sortCode": "A16",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A17",
+  "name": "模块8",
+  "i18nCode": "menu.biz.module.8",
+  "summary": null,
+  "sortCode": "A17",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A18",
+  "name": "模块9",
+  "i18nCode": "menu.biz.module.9",
+  "summary": null,
+  "sortCode": "A18",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "A19",
+  "name": "模块10",
+  "i18nCode": "menu.biz.module.10",
+  "summary": null,
+  "sortCode": "A19",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10",
+  "name": "配置",
+  "i18nCode": "menu.biz.props",
+  "summary": null,
+  "sortCode": "B10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-10",
+  "name": "组织架构",
+  "i18nCode": "menu.biz.props.org",
+  "summary": null,
+  "sortCode": "B10-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-10-10",
+  "name": "机构部门",
+  "i18nCode": "menu.biz.props.org.dept",
+  "summary": null,
+  "sortCode": "B10-10-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-10-20",
+  "name": "用户",
+  "i18nCode": "menu.biz.props.org.user",
+  "summary": null,
+  "sortCode": "B10-10-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-10-30",
+  "name": "角色",
+  "i18nCode": "menu.biz.props.org.role",
+  "summary": null,
+  "sortCode": "B10-10-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-10-40",
+  "name": "权限",
+  "i18nCode": "menu.biz.props.org.priv",
+  "summary": null,
+  "sortCode": "B10-10-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-20",
+  "name": "流程",
+  "i18nCode": "menu.biz.props.flow",
+  "summary": null,
+  "sortCode": "B10-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-20-10",
+  "name": "流程设计",
+  "i18nCode": "menu.biz.props.flow.design",
+  "summary": null,
+  "sortCode": "B10-20-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-20-20",
+  "name": "流程资源",
+  "i18nCode": "menu.biz.props.flow.resource",
+  "summary": null,
+  "sortCode": "B10-20-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-30",
+  "name": "模版",
+  "i18nCode": "menu.biz.props.template",
+  "summary": null,
+  "sortCode": "B10-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-30-10",
+  "name": "文档模版",
+  "i18nCode": "menu.biz.props.template.file",
+  "summary": null,
+  "sortCode": "B10-30-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-30-20",
+  "name": "格式化报告",
+  "i18nCode": "menu.biz.props.template.report",
+  "summary": null,
+  "sortCode": "B10-30-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-30-30",
+  "name": "文档清单",
+  "i18nCode": "menu.biz.props.template.list",
+  "summary": null,
+  "sortCode": "B10-30-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B10-40",
+  "name": "风险探测器",
+  "i18nCode": "menu.biz.props.riskdetector",
+  "summary": null,
+  "sortCode": "B10-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B15",
+  "name": "业务监控",
+  "i18nCode": "menu.monitor",
+  "summary": null,
+  "sortCode": "B15",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B15-10",
+  "name": "流程实例",
+  "i18nCode": "menu.monitor.flowinstance",
+  "summary": null,
+  "sortCode": "B15-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B15-20",
+  "name": "流程任务",
+  "i18nCode": "menu.monitor.flowtask",
+  "summary": null,
+  "sortCode": "B15-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "B15-30",
+  "name": "流程任务",
+  "i18nCode": "menu.monitor.operaterecord",
+  "summary": null,
+  "sortCode": "B15-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10",
+  "name": "系统",
+  "i18nCode": "menu.sys",
+  "summary": null,
+  "sortCode": "C10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-10",
+  "name": "系统管理",
+  "i18nCode": "menu.sys.manager",
+  "summary": null,
+  "sortCode": "C10-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-10-10",
+  "name": "菜单",
+  "i18nCode": "menu.sys.manager.menu",
+  "summary": null,
+  "sortCode": "C10-10-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-10-20",
+  "name": "显示报告",
+  "i18nCode": "menu.sys.manager.showreport",
+  "summary": null,
+  "sortCode": "C10-10-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-10-30",
+  "name": "参数字典",
+  "i18nCode": "menu.sys.manager.dictionary",
+  "summary": null,
+  "sortCode": "C10-10-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-10-40",
+  "name": "数据模型",
+  "i18nCode": "menu.sys.manager.datamodel",
+  "summary": null,
+  "sortCode": "C10-10-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-20",
+  "name": "系统监控",
+  "i18nCode": "menu.sys.monitor",
+  "summary": null,
+  "sortCode": "C10-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-20-10",
+  "name": "系统日志",
+  "i18nCode": "menu.sys.monitor.log",
+  "summary": null,
+  "sortCode": "C10-20-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-20-20",
+  "name": "运行环境",
+  "i18nCode": "menu.sys.monitor.runtimeenv",
+  "summary": null,
+  "sortCode": "C10-20-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "C10-20-30",
+  "name": "缓存",
+  "i18nCode": "menu.sys.monitor.cache",
+  "summary": null,
+  "sortCode": "C10-20-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10",
+  "name": "参考案例",
+  "i18nCode": "menu.demo",
+  "summary": null,
+  "sortCode": "A19",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10",
+  "name": "列表",
+  "i18nCode": "menu.demo.list",
+  "summary": null,
+  "sortCode": "D10-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-10",
+  "name": "可编辑列表",
+  "i18nCode": "menu.demo.list.edited",
+  "summary": null,
+  "sortCode": "D10-10-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-15",
+  "name": "可编辑列表有校验",
+  "i18nCode": "menu.demo.list.editedandvalidate",
+  "summary": null,
+  "sortCode": "D10-10-15",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-20",
+  "name": "列表主要功能展示",
+  "i18nCode": "menu.demo.list.majorfunction",
+  "summary": null,
+  "sortCode": "D10-10-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-25",
+  "name": "列表搜索器定制",
+  "i18nCode": "menu.demo.list.customizedsearch",
+  "summary": null,
+  "sortCode": "D10-10-25",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-30",
+  "name": "需搜索才列出数据",
+  "i18nCode": "menu.demo.list.dataneedsearch",
+  "summary": null,
+  "sortCode": "D10-10-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-35",
+  "name": "当前登录用户权限内数据列表",
+  "i18nCode": "menu.demo.list.datawithinpriv",
+  "summary": null,
+  "sortCode": "D10-10-35",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-40",
+  "name": "树图表格",
+  "i18nCode": "menu.demo.list.tree",
+  "summary": null,
+  "sortCode": "D10-10-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-45",
+  "name": "列表展开后打开详情",
+  "i18nCode": "menu.demo.list.opendetail",
+  "summary": null,
+  "sortCode": "D10-10-45",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-5",
+  "name": "基本列表",
+  "i18nCode": "menu.demo.list.base",
+  "summary": null,
+  "sortCode": "D10-10-5",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-50",
+  "name": "条目列表",
+  "i18nCode": "menu.demo.list.entry",
+  "summary": null,
+  "sortCode": "D10-10-50",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-55",
+  "name": "卡片列表",
+  "i18nCode": "menu.demo.list.card",
+  "summary": null,
+  "sortCode": "D10-10-55",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-10-60",
+  "name": "模板和数据分离使用",
+  "i18nCode": "menu.demo.list.separatedataandtempl",
+  "summary": null,
+  "sortCode": "D10-10-60",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20",
+  "name": "详情",
+  "i18nCode": "menu.demo.detail",
+  "summary": null,
+  "sortCode": "D10-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-10",
+  "name": "简单详情",
+  "i18nCode": "menu.demo.detail.simple",
+  "summary": null,
+  "sortCode": "D10-20-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-20",
+  "name": "详情有分组",
+  "i18nCode": "menu.demo.detail.withgroup",
+  "summary": null,
+  "sortCode": "D10-20-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-30",
+  "name": "详情二列",
+  "i18nCode": "menu.demo.detail.twocol",
+  "summary": null,
+  "sortCode": "D10-20-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-40",
+  "name": "详情三列",
+  "i18nCode": "menu.demo.detail.threecol",
+  "summary": null,
+  "sortCode": "D10-20-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-50",
+  "name": "详情四列",
+  "i18nCode": "menu.demo.detail.fourcol",
+  "summary": null,
+  "sortCode": "D10-20-50",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-60",
+  "name": "详情主要功能展示",
+  "i18nCode": "menu.demo.detail.majorfunction",
+  "summary": null,
+  "sortCode": "D10-20-60",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-20-70",
+  "name": "模板和数据分离使用",
+  "i18nCode": "menu.demo.detail.separatedataandtempl",
+  "summary": null,
+  "sortCode": "D10-20-70",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30",
+  "name": "布局及组件",
+  "i18nCode": "menu.demo.layoutandcomponent",
+  "summary": null,
+  "sortCode": "D10-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-10",
+  "name": "步骤条导航",
+  "i18nCode": "menu.demo.layoutandcomponent.stepbarnavigation",
+  "summary": null,
+  "sortCode": "D10-30-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-15",
+  "name": "标签页",
+  "i18nCode": "menu.demo.layoutandcomponent.labelpage",
+  "summary": null,
+  "sortCode": "D10-30-15",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-20",
+  "name": "选择器",
+  "i18nCode": "menu.demo.layoutandcomponent.selector",
+  "summary": null,
+  "sortCode": "D10-30-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-25",
+  "name": "通知以及提示",
+  "i18nCode": "menu.demo.layoutandcomponent.notification",
+  "summary": null,
+  "sortCode": "D10-30-25",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-30",
+  "name": "模态框以及对话框",
+  "i18nCode": "menu.demo.layoutandcomponent.dialog",
+  "summary": null,
+  "sortCode": "D10-30-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-35",
+  "name": "表单组件",
+  "i18nCode": "menu.demo.layoutandcomponent.form",
+  "summary": null,
+  "sortCode": "D10-30-35",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-40",
+  "name": "图标库",
+  "i18nCode": "menu.demo.layoutandcomponent.icon",
+  "summary": null,
+  "sortCode": "D10-30-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-45",
+  "name": "文件及图片的上传下载",
+  "i18nCode": "menu.demo.layoutandcomponent.uploadanddownload",
+  "summary": null,
+  "sortCode": "D10-30-45",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-5",
+  "name": "树图导航",
+  "i18nCode": "menu.demo.layoutandcomponent.treenavigation",
+  "summary": null,
+  "sortCode": "D10-30-5",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-30-50",
+  "name": "IFRAME的使用场景",
+  "i18nCode": "menu.demo.layoutandcomponent.scenewithiframe",
+  "summary": null,
+  "sortCode": "D10-30-50",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-40",
+  "name": "基础服务",
+  "i18nCode": "menu.demo.baseservice",
+  "summary": null,
+  "sortCode": "D10-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-40-10",
+  "name": "rest调用",
+  "i18nCode": "menu.demo.baseservice.restcall",
+  "summary": null,
+  "sortCode": "D10-40-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-40-20",
+  "name": "rest传参场景",
+  "i18nCode": "menu.demo.baseservice.scenewithrest",
+  "summary": null,
+  "sortCode": "D10-40-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-40-30",
+  "name": "国际化支持",
+  "i18nCode": "menu.demo.baseservice.internationalization",
+  "summary": null,
+  "sortCode": "D10-40-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50",
+  "name": "OFFICE",
+  "i18nCode": "menu.demo.office",
+  "summary": null,
+  "sortCode": "D10-50",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-10",
+  "name": "在线编辑",
+  "i18nCode": "menu.demo.office.editeonline",
+  "summary": null,
+  "sortCode": "D10-50-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-20",
+  "name": "转为PDF并展示",
+  "i18nCode": "menu.demo.office.topdfandshow",
+  "summary": null,
+  "sortCode": "D10-50-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-30",
+  "name": "其他格式附件展示",
+  "i18nCode": "menu.demo.office.otherformatfile",
+  "summary": null,
+  "sortCode": "D10-50-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-40",
+  "name": "LIST页面导出EXCEL",
+  "i18nCode": "menu.demo.office.exportexcelonlist",
+  "summary": null,
+  "sortCode": "D10-50-40",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-50",
+  "name": "LIST页面导入EXCEL（前端）",
+  "i18nCode": "menu.demo.office.impexcelonlistfront",
+  "summary": null,
+  "sortCode": "D10-50-50",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-60",
+  "name": "LIST页面导入EXCEL（后台）",
+  "i18nCode": "menu.demo.office.impexcelonlistserver",
+  "summary": null,
+  "sortCode": "D10-50-60",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-70",
+  "name": "INFO页面导出",
+  "i18nCode": "menu.demo.office.expexceloninfo",
+  "summary": null,
+  "sortCode": "D10-50-70",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-50-80",
+  "name": "INFO页面导入(前端）",
+  "i18nCode": "menu.demo.office.impexceloninfoweb",
+  "summary": null,
+  "sortCode": "D10-50-80",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-60",
+  "name": "常见组合",
+  "i18nCode": "menu.demo.commoncombination",
+  "summary": null,
+  "sortCode": "D10-60",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-60-10",
+  "name": "列表详情联动",
+  "i18nCode": "menu.demo.commoncombination.listrelateddetail",
+  "summary": null,
+  "sortCode": "D10-60-10",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-60-20",
+  "name": "详情列表整合",
+  "i18nCode": "menu.demo.commoncombination.listintegrationdetail",
+  "summary": null,
+  "sortCode": "D10-60-20",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-60-30",
+  "name": "动态分组并整合列表详情以及自定义",
+  "i18nCode": "menu.demo.commoncombination.customize",
+  "summary": null,
+  "sortCode": "D10-60-30",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}, {
+  "id": "D10-70",
+  "name": "典型业务场景",
+  "i18nCode": "menu.demo.typicalbizscene",
+  "summary": null,
+  "sortCode": "D10-70",
+  "icon": null,
+  "url": null,
+  "param": null,
+  "enable": "Y",
+  "container": null,
+  "style": null,
+  "template": null,
+  "revision": null,
+  "createdBy": null,
+  "createdTime": 1513736855000,
+  "updatedBy": null,
+  "updatedTime": 1513736855000
+}]

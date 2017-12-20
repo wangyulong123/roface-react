@@ -1,11 +1,10 @@
 const config = {
-    baseUrl: 'http://192.168.64.230:3003',
-    baseUrl: 'http://192.168.64.157:8080',
+    baseUrl: 'http://localhost:3003',
     webApi: {
         i18n: '/base/i18n',
         dictList: '/base/dicts',
         dictItem: '/base/dicts',
-        userMenuList: '/base/base/menu/userMenu',
+        userMenuList: '/base/menu/userMenu',
         dataFormMeta: '/dataform/meta',
         dataFormMethod: '/dataform/method',
         dataFormDataOne: '/dataform/data/one',

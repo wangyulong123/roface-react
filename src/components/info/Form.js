@@ -33,10 +33,14 @@ export default Form.create()(class Forms extends React.Component {
   }
   _getComponent = (editStyle) => {
     let com = component.Input;
-    switch (editStyle) {
-      case 'Text': com = component.Input; break;
-      // case 'DatePicker': com = component.DatePicker; break;
-      default: com = component.Input;
+    if (typeof editStyle === 'string') {
+      switch (editStyle) {
+        case 'Text': com = component.Input; break;
+        // case 'DatePicker': com = component.DatePicker; break;
+        default: com = component.Input;
+      }
+    } else {
+      com = editStyle;
     }
     return com;
   }
@@ -44,6 +48,15 @@ export default Form.create()(class Forms extends React.Component {
     this.setState({
       keys: key,
     });
+  };
+  _getElementUIHint = (item) => {
+    return {
+      reading:item.elementUIHint.reading,
+      readOnly:item.elementUIHint.readonly,
+      prefix:item.elementUIHint.prefix,
+      suffix:item.elementUIHint.suffix,
+      note:item.elementUIHint.note,
+    };
   };
   _renderFormItem = (items, data) => {
     const { formUIHint = {} } = data;
@@ -55,6 +68,7 @@ export default Form.create()(class Forms extends React.Component {
     };
     return (items.filter(item => item.elementUIHint.visible).map((item, index) => {
       const Com = this._getComponent(item.elementUIHint.editStyle);
+      const comProps = this._getElementUIHint(item);
       const key = `${index}`;
       return (
         <Col span={(24 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan} key={key}>
@@ -69,12 +83,7 @@ export default Form.create()(class Forms extends React.Component {
                   initialValue: dataValue[item.code] || item.defaultValue,
                   rules: [{ required: item.elementUIHint.required, type: item.dataType.toLocaleLowerCase(), message: `${item.name}是必输字段` }],
                 })(
-                  <Com
-                    readOnly={item.elementUIHint.readonly}
-                    prefix={item.elementUIHint.prefix}
-                    suffix={item.elementUIHint.suffix}
-                    note={item.elementUIHint.note}
-                  />)}
+                  typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
               </div>
             </Tooltip>
           </Item>

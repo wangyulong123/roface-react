@@ -78,7 +78,7 @@ export default class Forms extends React.Component {
     console.log(`${groupId}${status}setGroupReadingMode`);
   };
   setItemTemplate = (itemId, template) => {
-    console.log(`${itemId}${template}setItemTemplate`);
+    this._updateElementUIHint(itemId, template, 'editStyle', ele => ele.code === itemId);
   };
   setItemPrefix = (itemId, prefix) => {
     this._updateElementUIHint(itemId, prefix, 'prefix', ele => ele.code === itemId);

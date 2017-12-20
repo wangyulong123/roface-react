@@ -10,7 +10,7 @@ export default class Home extends React.Component {
   _didMount = (info) => {
     // console.log(info);
     // info.setData({ name: 'test11111' });
-    info.setItemVisible('chnName', false);
+    info.setItemTemplate('chnName', <div>sdssss</div>);
   };
   render() {
     return (
