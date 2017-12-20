@@ -1,21 +1,12 @@
 import React from 'react';
-import * as component from 'antd';
 
 import * as dataForm from '../../lib/dataform';
-// import { Form, Input, Icon, Divider } from 'antd';
+import Form from './Form';
 
 import './style/index.less';
 
-const { Form, Row, Col, Anchor, Collapse } = component;
-const { Item } = Form;
-const { Link } = Anchor;
-const { Panel } = Collapse;
 
-export default Form.create()(class Forms extends React.Component {
-  /* static propTypes = {
-    data: React.PropTypes.Array.isRequired,
-  }; */
-
+export default class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,102 +15,121 @@ export default Form.create()(class Forms extends React.Component {
     };
   }
   componentDidMount() {
-    const { dataFormId } = this.props;
+    const { dataFormId, didMount } = this.props;
     dataForm.getMeta(dataFormId).then((meta) => {
       // 获取数据
       dataForm.getDataOne(dataFormId).then((res) => {
         this.setState({
           dataForm: meta,
           dataValue: res,
+        }, () => {
+          didMount({
+            setValue: this.setValue,
+            getData: this.getData,
+            setData: this.setData,
+            setItemVisible: this.setItemVisible,
+            setItemRequired: this.setItemRequired,
+            setValueReadonly: this.setValueReadonly,
+            setReadingMode: this.setReadingMode,
+            setGroupVisible: this.setGroupVisible,
+            setGroupReadonly: this.setGroupReadonly,
+            setGroupReadingMode: this.setGroupReadingMode,
+            setItemTemplate: this.setItemTemplate,
+            setItemPrefix: this.setItemPrefix,
+            setItemSuffix: this.setItemSuffix,
+            setItemTips: this.setItemTips,
+            setItemNotes: this.setItemNotes,
+            validate: this.validate,
+            validateItem: this.validateItem,
+            saveData: this.saveData,
+          });
         });
       });
     });
   }
-  _calculateGroup = (data) => {
-    const groups = {};
-    if (Object.keys(data).length > 0) {
-      const { elements = [] } = data;
-      if (elements.some(ele => ele.group)) {
-        // 如果有分组存在，根据分组进行过滤
-        elements.forEach((ele) => {
-          if (groups[ele.group]) {
-            groups[ele.group].push(ele);
-          } else {
-            groups[ele.group] = [].concat(ele);
+  setValue = (itemId, value) => {
+    this.refs.form.setFieldsValue({ [itemId]: value });
+  };
+  getData = () => {
+    return this.refs.form.getFieldsValue();
+  };
+  setData = (data) => {
+    this.refs.form.setFieldsValue(data);
+  };
+  setItemVisible = (itemId, status) => {
+    this._updateElementUIHint(itemId, status, 'visible', ele => ele.code === itemId);
+  };
+  setItemRequired = (itemId, status) => {
+    this._updateElementUIHint(itemId, status, 'required', ele => ele.code === itemId);
+  };
+  setValueReadonly = (itemId, status) => {
+    this._updateElementUIHint(itemId, status, 'readonly', ele => ele.code === itemId);
+  };
+  setReadingMode = (itemId, status) => {
+    console.log(`${itemId}${status}setReadingMode`);
+  };
+  setGroupVisible = (groupId, status) => {
+    this._updateElementUIHint(groupId, status, 'visible', ele => ele.group === groupId);
+  };
+  setGroupReadonly = (groupId, status) => {
+    this._updateElementUIHint(groupId, status, 'readonly', ele => ele.group === groupId);
+  };
+  setGroupReadingMode = (groupId, status) => {
+    console.log(`${groupId}${status}setGroupReadingMode`);
+  };
+  setItemTemplate = (itemId, template) => {
+    console.log(`${itemId}${template}setItemTemplate`);
+  };
+  setItemPrefix = (itemId, prefix) => {
+    this._updateElementUIHint(itemId, prefix, 'prefix', ele => ele.code === itemId);
+  };
+  setItemSuffix = (itemId, suffix) => {
+    this._updateElementUIHint(itemId, suffix, 'suffix', ele => ele.code === itemId);
+  };
+  setItemTips = (itemId, tips) => {
+    this._updateElementUIHint(itemId, tips, 'tips', ele => ele.code === itemId);
+  };
+  setItemNotes = (itemId, notes) => {
+    this._updateElementUIHint(itemId, notes, 'note', ele => ele.code === itemId);
+  };
+  _updateElementUIHint = (itemId, status, name, match) => {
+    this.setState({
+      dataForm: {
+        ...this.state.dataForm,
+        elements: this.state.dataForm.elements.map((ele) => {
+          if (match(ele)) {
+            return {
+              ...ele,
+              elementUIHint: {
+                ...ele.elementUIHint,
+                [name]: status,
+              },
+            };
           }
-        });
-      } else {
-        groups.noGroup = elements;
-      }
-    }
-    return groups;
-  }
-   _getComponent = (editStyle) => {
-     let com = component.Input;
-     switch (editStyle) {
-       case 'Text': com = component.Input; break;
-       // case 'DatePicker': com = component.DatePicker; break;
-       default: com = component.Input;
-     }
-     return com;
-   }
-  _renderFormItem = (items, data) => {
-    const { formUIHint = {} } = data;
-    const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: { span: 5 },
-      wrapperCol: { span: 15 },
-    };
-    return (items.filter(item => item.elementUIHint.visible).map((item, index) => {
-      const Com = this._getComponent(item.elementUIHint.editStyle);
-      const key = `${index}`;
-      return (
-        <Col span={(24 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan} key={key}>
-          <Item
-            {...formItemLayout}
-            label={item.name}
-          >
-            {getFieldDecorator(item.code, {
-              initialValue: this.state.dataValue[item.code] || item.defaultValue,
-              rules: [{ required: item.elementUIHint.required, type: item.dataType.toLocaleLowerCase(), message: `${item.name}是必输字段` }],
-            })(<Com disabled={item.readonly} />)}
-          </Item>
-        </Col>
-      );
-    }));
-  }
-  _renderAnchor = (groups) => {
-    return Object.keys(groups).map((group) => {
-      return <Link href={`#${group}`} key={`#${group}`} title={group.split(':')[1]} />;
+          return ele;
+        }),
+      },
     });
-  }
+  };
+  validate = (cb) => {
+    this.refs.form.validateFields(cb);
+  };
+  validateItem = (itemId, cb) => {
+    this.refs.form.validateFields([itemId], cb);
+  };
+  saveData = () => {
+    console.log('save data');
+  };
   render() {
-    const { prefix = 'ro' } = this.props;
-    const groups = this._calculateGroup(this.state.dataForm);
+    const { prefix = 'ro', defaultKeys = [] } = this.props;
     return (
-      <div className={`${prefix}-info`}>
-        <Form>
-          {Object.keys(groups).map((group, index) => {
-            const key = `${index}`;
-            return (
-              <Collapse key={key} bordered={false} defaultActiveKey={Object.keys(groups)}>
-                <Panel header={group.split(':')[1]} id={group} key={group}>
-                  <Row>
-                    <Col span={24}>
-                      {this._renderFormItem(groups[group], this.state.dataForm)}
-                    </Col>
-                  </Row>
-                </Panel>
-              </Collapse>);
-          })}
-        </Form>
-        <div className={`${prefix}-info-anchor`}>
-          <Anchor>
-            {this._renderAnchor(groups)}
-          </Anchor>
-        </div>
-      </div>
+      <Form
+        ref="form"
+        {...this.state}
+        prefix={prefix}
+        defaultKeys={defaultKeys}
+      />
     );
   }
-});
+}
 

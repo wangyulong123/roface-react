@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: 'http://localhost:3003',
+    baseUrl: 'http://192.168.64.230:3003',
     webApi: {
         i18n: '/base/i18n',
         dictList: '/base/dicts',

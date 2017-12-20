@@ -37,6 +37,7 @@
     "import/extensions": [1, { "extensions": [".json"] }], // 允许导入json格式的文件
     "jsx-a11y/click-events-have-key-events": ["off"], // 允许定义点击事件的时候不加上onKeyDown、onKeyUp等来区分
     "jsx-a11y/no-static-element-interactions": ["off"], // 允许非常用的节点不使用role="button"增加点击事件
-    "jsx-a11y/no-noninteractive-element-interactions": ["off"] // 允许非交互性组件增加事件
+    "jsx-a11y/no-noninteractive-element-interactions": ["off"], // 允许非交互性组件增加事件
+    "function-paren-newline": ["off"] // 允许方法的参数换行
   }
 }

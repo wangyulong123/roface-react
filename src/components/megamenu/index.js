@@ -29,6 +29,18 @@ export default class MegaMenu extends React.Component {
       this.checkWidth();
     };
   }
+  _menuClick = (e, item) => {
+    e.stopPropagation();
+    const { menuClick, prefix = 'ro', history } = this.props;
+    menuClick && menuClick(item, history);
+    // this.changeSecondChildrenMenu(e, `${prefix}-menu-children`, 'none')
+    const childrenMenu = document.getElementsByClassName(`${prefix}-menu-children`);
+    Array.from(childrenMenu).forEach(menu => {
+      if (menu.style.display !== 'none') {
+        menu.style.display = 'none';
+      }
+    })
+  };
   checkWidth = () => {
     if (this.wrapper) {
       if (this.wrapper.offsetWidth < this.wrapper.scrollWidth) {
@@ -61,7 +73,7 @@ export default class MegaMenu extends React.Component {
     }
   };
   renderForthChildrenMenu = (children = []) => {
-    return children.map(item => <li key={item.id}><span>{item.name}</span></li>)
+    return children.map(item => <li key={item.id} onClick={(e) => this._menuClick(e, item)}><span>{item.name}</span></li>)
   };
   renderThirdChildrenMenu = (children = [], prefix) => {
     return (
@@ -81,7 +93,7 @@ export default class MegaMenu extends React.Component {
                 </div>
               }</li>
             }
-            return <li key={item.id}><span>{item.name}</span></li>;
+            return <li key={item.id} onClick={(e) => this._menuClick(e, item)}><span>{item.name}</span></li>;
           })
         }
       </ul>
@@ -95,7 +107,7 @@ export default class MegaMenu extends React.Component {
             children.map(child => {
               return (<div key={child.id} >
                 <div className={`${prefix}-container-wrapper-item`}>
-                  <div className={`${prefix}-container-wrapper-item-menu`}>
+                  <div className={`${prefix}-container-wrapper-item-menu`} onClick={(e) => this._menuClick(e, child)}>
                     <Icon type="pay-circle" className={`${prefix}-container-wrapper-item-menu-icon`} />
                     <span className={`${prefix}-container-wrapper-item-menu-name`}>{child.name}</span>
                   </div>
@@ -123,6 +135,7 @@ export default class MegaMenu extends React.Component {
         {menuData.body.map((menu) => {
         return (
           <div
+            onClick={(e) => this._menuClick(e, menu)}
             className={`${prefix}-menu`}
             key={menu.name}
             onMouseOver={(e) => this.changeSecondChildrenMenu(e, `${prefix}-menu-children`, 'block')}
