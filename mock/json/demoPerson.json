@@ -1671,7 +1671,7 @@
       "dataType":"Date",
       "defaultValue":null,
       "elementUIHint":{
-        "colspan":1,
+        "colspan":3,
         "dataFormat":"String",
         "dictCodeExpr":null,
         "dictCodeMode":null,
@@ -1711,7 +1711,7 @@
   ],
   "filters":[],
   "formUIHint":{
-    "columnNumber":3,
+    "columnNumber":4,
     "formStyle":"DetailInfo"
   },
   "fullName":"demo.PersonInfo",
