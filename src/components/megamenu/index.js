@@ -264,8 +264,8 @@ class MegaMenu extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const { dropDownBox, dropDownState } = this.state;
         const formItemLayout = {
-            labelCol: { span: 6 },
-            wrapperCol:{ span: 15, offset: 1 },
+            labelCol: { span: 4 },
+            wrapperCol:{ span: 14, offset: 1 },
         };
         return (
             <div className={`${prefix}-nav-container`}>
@@ -295,10 +295,11 @@ class MegaMenu extends React.Component {
                                             <span className={`${prefix}-tabPane-headPortrait-tooltip`}>更新头像</span>
                                         </div>
                                         <div className={`${prefix}-tabPane-register`}>
-                                            <FormItem
-                                                {...formItemLayout}
-                                                label="账户"
-                                            >
+                                            <Form>
+                                                <FormItem
+                                                    {...formItemLayout}
+                                                    label="账户"
+                                                >
                                                 {getFieldDecorator('account', {
                                                     rule: [
                                                         {type: 'string'},
@@ -306,36 +307,37 @@ class MegaMenu extends React.Component {
                                                     ],
                                                 })(<Input />)}
                                             </FormItem>
-                                            <FormItem
-                                                {...formItemLayout}
-                                                label="昵称"
-                                            >
-                                                {getFieldDecorator('nickname', {
-                                                    rule: [{type: 'string'}],
-                                                })(<Input />)}
-                                            </FormItem>
-                                            <FormItem
-                                                {...formItemLayout}
-                                                label="邮箱"
-                                            >
-                                                {getFieldDecorator('email', {
-                                                    rule: [{type: 'email'}],
-                                                })(<Input />)}
-                                            </FormItem>
-                                            <FormItem
-                                                {...formItemLayout}
-                                                label="联系方式"
-                                            >
-                                                {getFieldDecorator('联系方式', {
-                                                    rule: [{type: 'number'}],
-                                                })(<Input />)}
-                                            </FormItem>
-                                            <FormItem
+                                                <FormItem
+                                                    {...formItemLayout}
+                                                    label="昵称"
+                                                >
+                                                    {getFieldDecorator('nickname', {
+                                                        rule: [{type: 'string'}],
+                                                    })(<Input />)}
+                                                </FormItem>
+                                                <FormItem
+                                                    {...formItemLayout}
+                                                    label="邮箱"
+                                                >
+                                                    {getFieldDecorator('email', {
+                                                        rule: [{type: 'email'}],
+                                                    })(<Input placeholder="请输入邮箱地址" />)}
+                                                </FormItem>
+                                                <FormItem
+                                                    {...formItemLayout}
+                                                    label="电话"
+                                                >
+                                                    {getFieldDecorator('phone', {
+                                                        rule: [{type: 'number'}],
+                                                    })(<Input placeholder="请输入联系方式" />)}
+                                                </FormItem>
+                                                <FormItem
                                                 {...formItemLayout}
                                                 label="其他"
                                             >
-                                                {getFieldDecorator('其他')(<Input />)}
+                                                {getFieldDecorator('其他')(<Input placeholder="请输入" />)}
                                             </FormItem>
+                                            </Form>
                                         </div>
                                     </div>
                                 </TabPane>
