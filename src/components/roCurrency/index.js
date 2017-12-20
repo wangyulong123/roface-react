@@ -16,9 +16,9 @@ class RoCurrency extends React.Component {
   componentWillReceiveProps(nextProps) {
     let textValue = nextProps.value.toString().replace(/[^0-9.]*/g, '');
     let showValue = this.formatCurrencyInt(textValue);
-    showValue = this.formatCurrencyDecimal(showValue, precision);
+    showValue = this.formatCurrencyDecimal(showValue, nextProps.precision);
     this.state({ value: showValue });
-  };
+  }
 
   /* eslint-disable */
   formatCurrencyInt = (numStr) => {

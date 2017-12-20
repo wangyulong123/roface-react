@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
@@ -13,11 +14,11 @@ export default class Tab extends React.Component {
     };
   }
 
-  _createTab = () => {
-    const title = Math.random() * 10;
+  _createTab = (item) => {
+    // const title = Math.random() * 10;
     this.setState({
-      tabs: this.state.tabs.concat({ title, id: title }),
-      activeTabId: title,
+      tabs: this.state.tabs.concat({ title: item.name, id: item.id }),
+      activeTabId: item.id,
     });
   };
 
@@ -54,6 +55,8 @@ export default class Tab extends React.Component {
   };
 
   _clickTab = (currentTabItem) => {
+    const { history } = this.props;
+    history.replace(`/${currentTabItem.id}`);
     this.setState({
       activeTabId: currentTabItem.id,
     });
@@ -62,14 +65,9 @@ export default class Tab extends React.Component {
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
+    const { renderComponent } = this.props;
     return (
       <div>
-        <button
-          className="btn btn-danger btn-lg"
-          id="tabs-toggle"
-          onClick={this._createTab}
-        >点击弹出tab页
-        </button>
         <div className="rb-page-content-wrapper" id="rb-main-content">
           <div className="rb-page-content" id="rb-main-content-container">
             <div className="rb-main-tabs-container">
@@ -111,6 +109,9 @@ export default class Tab extends React.Component {
                   {
                     (showTab && showTab[0] && showTab[0].title) || '无tab页正在查看'
                   }
+                </div>
+                <div>
+                  <Route path="/" render={p => renderComponent(p, showTab[0])} />
                 </div>
               </div>
             </div>
