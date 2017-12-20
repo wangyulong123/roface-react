@@ -7,3 +7,7 @@ export { default as FlexTabs } from './tab';
 export { default as DetailInfo } from './info';
 export { default as NavMega } from './megamenu';
 export { NotificationWithIcon, ModalConfirm } from './ronotify';
+export { default as Alert } from './alert';
+export { default as Modal } from './modal';
+export * as Message from './message';
+export * as Notification from './notification';
