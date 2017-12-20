@@ -1,7 +1,7 @@
 import React from 'react';
 import * as component from 'antd';
 
-const { Form, Row, Col, Collapse, Anchor, Tooltip } = component;
+const { Form, Collapse, Anchor, Tooltip } = component;
 const { Link } = Anchor;
 const { Item } = Form;
 const { Panel } = Collapse;
@@ -9,8 +9,16 @@ export default Form.create()(class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      keys: props.defaultKeys || [],
+      keys: this._getKeys(props),
     };
+  }
+  componentWillReceiveProps(props) {
+    this.setState({
+      keys: this._getKeys(props),
+    });
+  }
+  _getKeys = (props) => {
+    return Object.keys(this._calculateGroup(props.dataForm)) || [];
   }
   _calculateGroup = (data) => {
     const groups = {};
@@ -58,35 +66,46 @@ export default Form.create()(class Forms extends React.Component {
       note:item.elementUIHint.note,
     };
   };
-  _renderFormItem = (items, data) => {
+  _dataType = (type) => {
+    let dataType = 'string';
+    switch (type) {
+      case 'String':
+      case 'StringArray': dataType = 'string'; break;
+      case 'Integer': dataType = 'integer'; break;
+      case 'Double':
+      case 'Currency': dataType = 'number'; break;
+      case 'Date':
+      case 'DateTime':
+      case 'Time': dataType = 'date'; break;
+      default: dataType = 'string';
+    }
+    return dataType;
+  };
+  _renderFormItem = (items, data, prefix) => {
     const { formUIHint = {} } = data;
     const { dataValue } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: { span: 5 },
-      wrapperCol: { span: 15 },
-    };
     return (items.filter(item => item.elementUIHint.visible).map((item, index) => {
       const Com = this._getComponent(item.elementUIHint.editStyle);
       const comProps = this._getElementUIHint(item);
       const key = `${index}`;
       return (
-        <Col span={(24 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan} key={key}>
-          <Item
-            {...formItemLayout}
-            labelCol={{ span: 5 }}
-            label={item.name}
-          >
-            <Tooltip title={item.elementUIHint.tips}>
-              <div>
-                {getFieldDecorator(item.code, {
-                  initialValue: dataValue[item.code] || item.defaultValue,
-                  rules: [{ required: item.elementUIHint.required, type: item.dataType.toLocaleLowerCase(), message: `${item.name}是必输字段` }],
-                })(typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
-              </div>
-            </Tooltip>
-          </Item>
-        </Col>
+        <Item
+          key={key}
+          className={`${prefix}-item`}
+          style={{ width: `${(100 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan}%` }}
+          label={item.name}
+        >
+          <Tooltip title={item.elementUIHint.tips}>
+            <div>
+              {getFieldDecorator(item.code, {
+                initialValue: dataValue[item.code] || item.defaultValue,
+                rules: [{ required: item.elementUIHint.required, type: this._dataType(item.dataType), message: `${item.name}是必输字段` }],
+              })(
+                typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
+            </div>
+          </Tooltip>
+        </Item>
       );
     }));
   }
@@ -106,9 +125,9 @@ export default Form.create()(class Forms extends React.Component {
             {Object.keys(groups).map((group) => {
               return (
                 <Panel header={group.split(':')[1]} id={group} key={group}>
-                  <Row>
-                    {this._renderFormItem(groups[group], dataForm)}
-                  </Row>
+                  <div className={`${prefix}-info-container`}>
+                    {this._renderFormItem(groups[group], dataForm, `${prefix}-info`)}
+                  </div>
                 </Panel>
               );
             })}
