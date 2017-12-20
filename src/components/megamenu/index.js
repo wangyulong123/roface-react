@@ -20,7 +20,7 @@ export default class MegaMenu extends React.Component {
     }
     componentDidMount() {
         /* eslint-disable */
-        const { prefix = 'ro' } = this.props;
+        const { prefix = 'ro', dataMount } = this.props;
         this.dom = ReactDom.findDOMNode(this);
         this.right = Array.from(this.dom.children[0].children).filter(d => d.className === `${prefix}-nav-arrow-right`)[0];
         this.wrapper = Array.from(this.dom.children[0].children).filter(d => d.className === `${prefix}-nav-wrapper`)[0];
@@ -33,6 +33,7 @@ export default class MegaMenu extends React.Component {
         };
         getUserMenuList().then(res => {
             const dataSource = this.removeLevelMore(this.flatToTree(res).data);
+            dataMount && dataMount(dataSource);
             this.setState({
                 menuData: dataSource,
             });

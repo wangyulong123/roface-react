@@ -1,5 +1,5 @@
 export { default as Layout } from './layout';
-// export { default as NavTree } from './menu';
+export { default as NavTree } from './navtree';
 // export { default as NavMega } from './menu';
 // export { default as NavSubtree } from './menu';
 // export { default as FlexTabs } from './menu';
