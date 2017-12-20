@@ -6,3 +6,4 @@ export { default as Layout } from './layout';
 export { default as FlexTabs } from './tab';
 export { default as DetailInfo } from './info';
 export { default as NavMega } from './megamenu';
+export { NotificationWithIcon, ModalConfirm } from './ronotify';
