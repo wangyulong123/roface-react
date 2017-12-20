@@ -12,7 +12,7 @@
     }
 }
 
-.rb-page-content-wrapper {
+.ro-page-content-wrapper {
     width: 100%;
     height:calc(100% - 78px);
     z-index: 800;
@@ -26,7 +26,7 @@
     float: left;
 }
 
-.rb-tabdrop {
+.ro-tabdrop {
     position: relative;
     list-style: none;
     margin-top: 5px;
@@ -37,7 +37,7 @@
     display: block;
 }
 
-.rb-breadcrumb {
+.ro-breadcrumb {
     color: #555;
     font-size: small;
     background-color: #ffffff;
@@ -48,11 +48,11 @@
     margin-bottom: 2px !important;
 }
 
-.rb-breadcrumb {
+.ro-breadcrumb {
     border-top-color: #288be2;
 }
 
-.rb-tab-pane {
+.ro-tab-pane {
     padding: 0;
     width: 100%;
     height: 30px;
@@ -62,21 +62,21 @@
 .nav-tabs {
     position: relative;
     width: 100%;
-    margin-top: -2px;
     border-radius: 0;
     color: black;
     border: 1px solid transparent;
     border-bottom: 1px solid transparent;
     margin-bottom: 0;
     top: 2px;
+    padding-left: 5px;
     display: inline-flex;
     white-space: nowrap;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li {
+.ro-main-tabs-container > ul.nav-tabs > li {
     max-width:180px;
     text-align: center;
-    min-width: 80px;
+    min-width: 110px;
     width: 110px;
     list-style: none;
 /*    border-top:1px solid #ddd;
@@ -91,7 +91,7 @@
     margin-right: 2px;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li span {
+.ro-main-tabs-container > ul.nav-tabs > li span {
     text-align: center;
     display: inline-flex;
     width: 90px;
@@ -99,7 +99,7 @@
     overflow: hidden;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li .close {
+.ro-main-tabs-container > ul.nav-tabs > li .close {
     text-align: center;
     width: 20px;
 }
@@ -109,12 +109,12 @@
 .li-active {
     /*border: 1px solid #288be2!important;*/
     /*border-bottom: 2px solid transparent!important;*/
-    z-index: 9999;
+    z-index: 2;
     background: #288be2;
     color: #ffffff!important;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li span {
+.ro-main-tabs-container > ul.nav-tabs > li span {
     top: 1px;
     font-size: small;
     color: #777;
@@ -123,13 +123,13 @@
     border-bottom-color: transparent;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li.li-active span{
+.ro-main-tabs-container > ul.nav-tabs > li.li-active span{
     font-weight: bold;
     border: transparent;
     color: #ffffff;
 }
 
-.rb-main-tabs-container > ul.nav-tabs > li:hover {
+.ro-main-tabs-container > ul.nav-tabs > li:hover {
     background-color: #ddd;
     border-bottom: 1px solid transparent!important;
 }
@@ -137,15 +137,44 @@
 .ro-tabs-collapse {
     position: relative;
     list-style: none;
-    margin-top: -22px;
-    padding-right: 20px;
-    display: none;
+    top: -21px;
+    z-index: 999;
+    background-color: #fff;
     border-left: 1px solid #ddd ;
 }
 
 .ro-tabs-collapse:hover {
     cursor: pointer;
     /*color: #ccc;*/
+}
+
+.ro-tabs-collapse .roic-right-operate {
+    align-items: center;
+    display: flex;
+    padding: 3px;
+}
+
+.roic-more {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background: url("./roic_more.svg");
+}
+
+.roic-more:hover {
+    background: url("./roic_more.svg");
+}
+
+.roic-close-others {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    background: url("./roic_close_others.svg");
+}
+
+.roic-close-others:hover {
+    background: url("./roic_close_others.svg");
 }
 
 
@@ -163,8 +192,7 @@
     display: none;
     /*float: right;*/
     min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
+    padding: 6px 10px;
     font-size: 14px;
     text-align: left;
     list-style: none;
@@ -195,23 +223,23 @@
 
 .ro-tabs-collapse ul .span-no-wrap {
     white-space: nowrap;
-    padding: 3px;
+    width: 140px;
     /*display: block;*/
     display: inline-flex;
     justify-content: space-between;
 }
 
-.ro-tabs-collapse ul .span-no-wrap {
-    white-space: nowrap;
-    padding: 3px;
-    /*display: block;*/
-    display: inline-flex;
-    justify-content: space-between;
+.ro-tabs-collapse ul .span-no-wrap li {
+    width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .close-collapse {
     line-height: inherit;
     justify-self: end;
+    width: 20px;
+    margin-left: 5px;
 }
 
 .dropdown-menu li{

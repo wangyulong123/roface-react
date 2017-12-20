@@ -1,11 +1,13 @@
 import React from 'react';
-// import { Tabs } from 'antd';
+import ReactDom from 'react-dom';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
 
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
+    this.dom = null;
+    this.tabsWrapper = null;
     this.state = {
       tabs: [],
       tabsCollapse: [],
@@ -14,14 +16,69 @@ export default class Tab extends React.Component {
     };
   }
 
+  componentDidMount() {
+    /* eslint-disable */
+    const { prefix = 'ro' } = this.props;
+    this.dom = ReactDom.findDOMNode(this);
+    // tab的固定长度
+    this.tabWidth = 110;
+    this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-page-content-wrapper`)[0];
+    this.offsetWidth = this.tabsWrapper.offsetWidth;
+    this.checkWidth();
+    window.onresize = () => {
+      this.checkWidth();
+    };
+  }
+
+  checkWidth = () => {
+    if (this.tabsWrapper) {
+      const tabsLength = this.state.tabs.length * this.tabWidth;
+      if (this.tabsWrapper.offsetWidth - 5 - 41 < tabsLength) {
+        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) > this.tabWidth;
+        if (isSpace) {
+          console.log('isSpace:' + isSpace);
+        } else {
+          console.log('isSpace:' + isSpace);
+          const tempCollapseItems = this.state.tabs.length ? this.state.tabs.pop() : null;
+          this.setState({
+            tabs: this.state.tabs,
+            activeTabId: this.state.tabs.length && this.state.tabs[this.state.tabs.length -1 ] .id,
+            tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
+          });
+        }
+        console.log('<');
+      } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
+        console.log('>');
+        // console.log((this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) < this.tabWidth);
+        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
+          (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
+        if (isSpace && this.state.tabsCollapse.length) {
+          console.log('isSpace:' + isSpace);
+          const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
+          this.setState({
+            tabsCollapse: this.state.tabsCollapse,
+            activeTabId: tempTabsItems ? tempTabsItems.id : '',
+            tabs: this.state.tabs.concat(tempTabsItems),
+            showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
+          });
+        } else {
+          console.log('isSpace:' + isSpace);
+          console.log('tabsCollapse.length:' + this.state.tabsCollapse.length);
+        }
+      }
+      this.offsetWidth = this.tabsWrapper.offsetWidth;
+    }
+  };
+
   _createTab = () => {
     const title = Math.random() * 10;
-    const tempCollapseItems = this.state.tabs && this.state.tabs.length > 5 ?
-      this.state.tabs.shift() : [];
+    // const tempCollapseItems = this.state.tabs && this.state.tabs.length > 5 ?
+    //   this.state.tabs.shift() : [];
+    this.checkWidth();
     this.setState({
       tabs: this.state.tabs.concat({ title, id: title }),
       activeTabId: title,
-      tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
+      // tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
     });
   };
 
@@ -44,13 +101,25 @@ export default class Tab extends React.Component {
     console.log('close other');
   };
 
-  _deleteTab = (currentTab) => {
-    this.setState({
-      tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
-      currentTab.id),
-      activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
-    });
+  _deleteTab = (isDeteleTab) => {
+    if (this.state.activeTabId === isDeteleTab.id) {
+      this.setState({
+        tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
+        isDeteleTab.id),
+      }, this.setState({
+        activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
+      }));
+    } else {
+      this.setState({
+        tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
+        isDeteleTab.id),
+        activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 2].id,
+      });
+    }
+    console.log(this.state.tabs[this.state.tabs.length - 2]);
+    console.log(this.state.tabs.length - 2);
     console.log('_deleteTab');
+    this.checkWidth();
   };
 
   _refreshTab = () => {
@@ -75,7 +144,15 @@ export default class Tab extends React.Component {
     });
   };
 
-  _selectTabCollapse = () => {
+  _selectTabCollapse = (collapseItem) => {
+    const tempTab = this.state.tabs.shift();
+    const tempCollapse = this.state.tabsCollapse
+      .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id);
+    this.setState({
+      tabs: this.state.tabs.concat(collapseItem),
+      activeTabId: collapseItem.id,
+      tabsCollapse: [...tempCollapse, tempTab],
+    });
     console.log('_selecttabsCollapse');
   };
 
@@ -90,6 +167,8 @@ export default class Tab extends React.Component {
     return false;
   };
 
+
+
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
@@ -101,9 +180,9 @@ export default class Tab extends React.Component {
           onClick={this._createTab}
         >点击弹出tab页
         </button>
-        <div className="rb-page-content-wrapper" id="rb-main-content">
-          <div className="rb-page-content" id="rb-main-content-container">
-            <div className="rb-main-tabs-container">
+        <div className="ro-page-content-wrapper" id="ro-main-content">
+          <div className="ro-page-content" id="ro-main-content-container">
+            <div className="ro-main-tabs-container">
               <ul
                 className="nav-tabs"
               >
@@ -131,16 +210,14 @@ export default class Tab extends React.Component {
               </ul>
               <li
                 className="dropdown pull-right ro-tabs-collapse"
-                style={{display: 'list-item' }}
-                onClick={this._dropHiddenDown}
               >
-                <span>
-                  <span>{this.state.tabsCollapse.length}</span>
-                  <Icon type="caret-down" />
+                <span className="roic-right-operate">
+                  <span className="roic-more" onClick={this._dropHiddenDown} title="打开更多..." />
+                  <span className="roic-close-others" onClick={this._closeOtherTabs} title="关闭其他..." />
                 </span>
                 <ul
-                  style={{ display: this.state.showTabsCollapse }}
-                  id="rb-nav-tabs-collapse"
+                  style={{ display: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none' }}
+                  id="ro-nav-tabs-collapse"
                 >
                   {
                     this.state.tabsCollapse.length &&
@@ -149,7 +226,7 @@ export default class Tab extends React.Component {
                         <span className="span-no-wrap">
                           <li
                             key={collapseItems.id}
-                            onClick={this._selectTabCollapse}
+                            onClick={() => this._selectTabCollapse(collapseItems)}
                           >{collapseItems.title}
                           </li>
                           <Icon type="close" className="close-collapse" onClick={e => this._deleteTabCollapse(e, collapseItems)} />
@@ -159,15 +236,14 @@ export default class Tab extends React.Component {
                   }
                 </ul>
               </li>
-              <li className="dropdown pull-right rb-tabdrop" style={{ float: 'right' }}>
-                <ul className="dropdown-menu" id="rb-tabclose-container">
-                  <li><a id="rb-close-all" onClick={this._closeAllTabs}>关闭所有</a></li>
-                  <li><a id="rb-close-other" onClick={this._closeOtherTabs}>关闭其他</a></li>
+              <li className="dropdown pull-right ro-tabdrop" style={{ float: 'right' }}>
+                <ul className="dropdown-menu" id="ro-tabclose-container">
+                  <li><a id="ro-close-all" onClick={this._closeAllTabs}>关闭所有</a></li>
                 </ul>
               </li>
-              <div className="rb-tab-content-container">
-                <ol className="breadcrumb rb-breadcrumb">
-                  <div className="rb-tab-pane" id="rb-tab-pane">
+              <div className="ro-tab-content-container">
+                <ol className="breadcrumb ro-breadcrumb">
+                  <div className="ro-tab-pane" id="ro-tab-pane">
                     {
                       (showTab && showTab[0] && showTab[0].title) ?
                         <span><Icon type="home" /><span>{showTab && showTab[0] && showTab[0].title}</span></span> : '无tab页正在查看'
