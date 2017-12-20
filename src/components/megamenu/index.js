@@ -15,9 +15,9 @@ export default class MegaMenu extends React.Component {
         this.right = null;
         this.left = null;
         this.offsetWidth = 0;
-        // this.state = {
-        //     menuData: [],
-        // };
+        this.state = {
+            menuData: this.removeLevelMore(this.flatToTree(menuData.body).data),
+        };
     }
     componentDidMount() {
         /* eslint-disable */
@@ -33,8 +33,8 @@ export default class MegaMenu extends React.Component {
             this.checkWidth();
         };
         getUserMenuList().then(res => {
-            console.log('获取菜单数据');
-            // const dataSource = this.removeLevelMore(this.flatToTree(res).data);
+            console.log(res);
+            // const dataSource = this.removeLevelMore(this.flatToTree(menuData.body).data);
             // this.setState({
             //     menuData: dataSource,
             // });
@@ -182,10 +182,10 @@ export default class MegaMenu extends React.Component {
         }
     };
     renderMenu = (prefix) => {
-        // const { menuData } = this.state;
+        const { menuData } = this.state;
         return (
             <div className={`${prefix}-menu-container`}>
-                {menuData.body.map((menu) => {
+                {menuData.map((menu) => {
                     return (
                         <div
                             className={`${prefix}-menu`}
