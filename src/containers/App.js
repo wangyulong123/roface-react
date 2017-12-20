@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Layout, MegaMenu } from '../components';
+import { Layout, MegaMenu, RoNumber, RoCurrency } from '../components';
 
 import Home from './Home';
 
@@ -13,6 +13,8 @@ export default class App extends React.Component {
         <MegaMenu />
         <Content>
           <Home />
+          <RoNumber />
+          <RoCurrency />
         </Content>
         <Footer>
           footer
