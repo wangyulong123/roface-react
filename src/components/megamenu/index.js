@@ -3,7 +3,6 @@ import ReactDom from 'react-dom';
 import { Icon } from 'antd';
 
 import './style/index.less';
-import menuData from '../../../mock/json/MenuData';
 import { getUserMenuList } from '../../lib/base';
 
 export default class MegaMenu extends React.Component {
@@ -16,7 +15,7 @@ export default class MegaMenu extends React.Component {
         this.left = null;
         this.offsetWidth = 0;
         this.state = {
-            menuData: this.removeLevelMore(this.flatToTree(menuData.body).data),
+            menuData: [],
         };
     }
     componentDidMount() {
@@ -33,14 +32,24 @@ export default class MegaMenu extends React.Component {
             this.checkWidth();
         };
         getUserMenuList().then(res => {
-            console.log(res);
-            // const dataSource = this.removeLevelMore(this.flatToTree(menuData.body).data);
-            // this.setState({
-            //     menuData: dataSource,
-            // });
+            const dataSource = this.removeLevelMore(this.flatToTree(res).data);
+            this.setState({
+                menuData: dataSource,
+            });
         })
     }
-
+    _menuClick = (e, item) => {
+        e.stopPropagation();
+        const { menuClick, prefix = 'ro', history } = this.props;
+        menuClick && menuClick(item, history);
+        // this.changeSecondChildrenMenu(e, `${prefix}-menu-children`, 'none')
+        const childrenMenu = document.getElementsByClassName(`${prefix}-menu-children`);
+        Array.from(childrenMenu).forEach(menu => {
+          if (menu.style.display !== 'none') {
+            menu.style.display = 'none';
+          }
+        })
+    };
     flatToTree = (data, params) => {
         /*
         * data: 要转换到树形结构的数据，type=array
@@ -125,7 +134,7 @@ export default class MegaMenu extends React.Component {
         }
     };
     renderForthChildrenMenu = (children = []) => {
-        return children.map(item => <li key={item.id}><span>{item.name}</span></li>)
+        return children.map(item => <li key={item.id} onClick={(e) => this._menuClick(e, item)}><span>{item.name}</span></li>)
     };
     renderThirdChildrenMenu = (children = [], prefix) => {
         return (
@@ -145,7 +154,7 @@ export default class MegaMenu extends React.Component {
                                 </div>
                             }</li>
                         }
-                        return <li key={item.id}><span>{item.name}</span></li>;
+                        return <li key={item.id} onClick={(e) => this._menuClick(e, item)}><span>{item.name}</span></li>;
                     })
                 }
             </ul>
@@ -159,7 +168,7 @@ export default class MegaMenu extends React.Component {
                         children.map(child => {
                             return (<div key={child.id} >
                                 <div className={`${prefix}-container-wrapper-item`}>
-                                    <div className={`${prefix}-container-wrapper-item-menu`}>
+                                    <div className={`${prefix}-container-wrapper-item-menu`} onClick={(e) => this._menuClick(e, child)}>
                                         <Icon type="pay-circle" className={`${prefix}-container-wrapper-item-menu-icon`} />
                                         <span className={`${prefix}-container-wrapper-item-menu-name`}>{child.name}</span>
                                     </div>
@@ -188,6 +197,7 @@ export default class MegaMenu extends React.Component {
                 {menuData.map((menu) => {
                     return (
                         <div
+                            onClick={(e) => this._menuClick(e, menu)}
                             className={`${prefix}-menu`}
                             key={menu.name}
                             onMouseOver={(e) => this.changeSecondChildrenMenu(e, `${prefix}-menu-children`, 'block')}
