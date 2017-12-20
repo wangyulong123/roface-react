@@ -258,15 +258,109 @@ class MegaMenu extends React.Component {
                 dropDownBox: 'block',
             });
         }
-    }
+    };
+
+    informationTabPane = (prefix, getFieldDecorator) => {
+        const formItemLayout = {
+            labelCol: { span: 5 },
+            wrapperCol:{ span: 15, offset: 1 },
+        };
+        return (
+            <div className={`${prefix}-tabPane1`}>
+                <div className={`${prefix}-tabPane1-portrait`}>
+                    <span className={`${prefix}-tabPane1-portrait-icon`} />
+                    <span className={`${prefix}-tabPane1-portrait-tooltip`}>更新头像</span>
+                </div>
+                <div className={`${prefix}-tabPane1-register`}>
+                    <Form>
+                        <FormItem
+                            {...formItemLayout}
+                            label="账户"
+                        >
+                            {getFieldDecorator('account', {
+                                rule: [
+                                    {type: 'string'},
+                                    {required: true, message: '请输入个人账户'}
+                                ],
+                            })(<Input placeholder="请输入用户账户" />)}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="昵称"
+                        >
+                            {getFieldDecorator('nickname', {
+                                rule: [{type: 'string'}],
+                            })(<Input placeholder="请输入用户昵称" />)}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="邮箱"
+                        >
+                            {getFieldDecorator('email', {
+                                rule: [{type: 'email'}],
+                            })(<Input placeholder="请输入邮箱地址" />)}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="电话"
+                        >
+                            {getFieldDecorator('phone', {
+                                rule: [{type: 'number'}],
+                            })(<Input placeholder="请输入联系方式" />)}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="其他"
+                        >
+                            {getFieldDecorator('other')(<Input placeholder="请输入" />)}
+                        </FormItem>
+                    </Form>
+                </div>
+            </div>
+        );
+    };
+
+    passwordTabPane = (prefix, getFieldDecorator) => {
+        const formItemLayout = {
+            labelCol: { span: 4 },
+            wrapperCol:{ span: 15, offset: 1 },
+        };
+        return (
+            <div className={`${prefix}-tabPane2`}>
+                <Form>
+                    <FormItem
+                        {...formItemLayout}
+                        label="原密码"
+                    >
+                        {getFieldDecorator('oldPassword', {
+                            rule: [{type: 'password'},{required: true}],
+                        })(<Input placeholder="请输入原密码" />)}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="新密码"
+                    >
+                        {getFieldDecorator('newPasswod', {
+                            rule: [{type: 'password'},{required: true}],
+                        })(<Input placeholder="请输入新密码" />)}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="确认密码"
+                    >
+                        {getFieldDecorator('confirmPassword', {
+                            rule: [{type: 'password'},{required: true}],
+                        })(<Input placeholder="请再输入一遍" />)}
+                    </FormItem>
+                </Form>
+            </div>
+        );
+    };
+
     render() {
         const { prefix = 'ro' } = this.props;
         const { getFieldDecorator } = this.props.form;
         const { dropDownBox, dropDownState } = this.state;
-        const formItemLayout = {
-            labelCol: { span: 4 },
-            wrapperCol:{ span: 14, offset: 1 },
-        };
         return (
             <div className={`${prefix}-nav-container`}>
                 <div className={`${prefix}-nav-left`}>
@@ -289,59 +383,11 @@ class MegaMenu extends React.Component {
                         <div style={{ display: dropDownBox }} className={`${prefix}-personal-box`}>
                             <Tabs defaultActiveKey="1">
                                 <TabPane tab="个人信息" key="1">
-                                    <div className={`${prefix}-tabPane`}>
-                                        <div className={`${prefix}-tabPane-headPortrait`}>
-                                            <span className={`${prefix}-tabPane-headPortrait-icon`} />
-                                            <span className={`${prefix}-tabPane-headPortrait-tooltip`}>更新头像</span>
-                                        </div>
-                                        <div className={`${prefix}-tabPane-register`}>
-                                            <Form>
-                                                <FormItem
-                                                    {...formItemLayout}
-                                                    label="账户"
-                                                >
-                                                {getFieldDecorator('account', {
-                                                    rule: [
-                                                        {type: 'string'},
-                                                        {required: true, message: '请输入个人账户'}
-                                                    ],
-                                                })(<Input />)}
-                                            </FormItem>
-                                                <FormItem
-                                                    {...formItemLayout}
-                                                    label="昵称"
-                                                >
-                                                    {getFieldDecorator('nickname', {
-                                                        rule: [{type: 'string'}],
-                                                    })(<Input />)}
-                                                </FormItem>
-                                                <FormItem
-                                                    {...formItemLayout}
-                                                    label="邮箱"
-                                                >
-                                                    {getFieldDecorator('email', {
-                                                        rule: [{type: 'email'}],
-                                                    })(<Input placeholder="请输入邮箱地址" />)}
-                                                </FormItem>
-                                                <FormItem
-                                                    {...formItemLayout}
-                                                    label="电话"
-                                                >
-                                                    {getFieldDecorator('phone', {
-                                                        rule: [{type: 'number'}],
-                                                    })(<Input placeholder="请输入联系方式" />)}
-                                                </FormItem>
-                                                <FormItem
-                                                {...formItemLayout}
-                                                label="其他"
-                                            >
-                                                {getFieldDecorator('其他')(<Input placeholder="请输入" />)}
-                                            </FormItem>
-                                            </Form>
-                                        </div>
-                                    </div>
+                                    {this.informationTabPane(prefix, getFieldDecorator)}
                                 </TabPane>
-                                <TabPane tab="修改密码"  key="2">修改密码</TabPane>
+                                <TabPane tab="修改密码"  key="2">
+                                    {this.passwordTabPane(prefix, getFieldDecorator)}
+                                </TabPane>
                             </Tabs>
                             <span className={`${prefix}-personal-box-downLine`} />
                             <div className={`${prefix}-personal-box-button`}>
