@@ -82,8 +82,7 @@ export default Form.create()(class Forms extends React.Component {
                 {getFieldDecorator(item.code, {
                   initialValue: dataValue[item.code] || item.defaultValue,
                   rules: [{ required: item.elementUIHint.required, type: item.dataType.toLocaleLowerCase(), message: `${item.name}是必输字段` }],
-                })(
-                  typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
+                })(typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
               </div>
             </Tooltip>
           </Item>

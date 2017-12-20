@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Icon } from 'antd';
+import { Icon, Tabs, Input, Button, Form } from 'antd';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
 
-export default class MegaMenu extends React.Component {
+const TabPane = Tabs.TabPane;
+const FormItem = Form.Item;
+
+class MegaMenu extends React.Component {
     constructor(props) {
         super(props);
         this.dom = null;
@@ -16,6 +19,8 @@ export default class MegaMenu extends React.Component {
         this.offsetWidth = 0;
         this.state = {
             menuData: [],
+            dropDownState: 'top',
+            dropDownBox: 'none',
         };
     }
     componentDidMount() {
@@ -169,8 +174,7 @@ export default class MegaMenu extends React.Component {
                             return (<div key={child.id} >
                                 <div className={`${prefix}-container-wrapper-item`}>
                                     <div className={`${prefix}-container-wrapper-item-menu`} onClick={(e) => this._menuClick(e, child)}>
-                                        <Icon type="pay-circle" className={`${prefix}-container-wrapper-item-menu-icon`} />
-                                        <span className={`${prefix}-container-wrapper-item-menu-name`}>{child.name}</span>
+                                       <span className={`${prefix}-container-wrapper-item-menu-name`}>{child.name}</span>
                                     </div>
                                 </div>
                                 <div>
@@ -240,8 +244,28 @@ export default class MegaMenu extends React.Component {
         }
         this.right.style.display = 'block';
     };
+    _dropDownBox= () => {
+        const { dropDownState, dropDownBox } = this.state;
+        if (dropDownState === 'down') {
+            this.setState({
+                dropDownState: 'top',
+                dropDownBox: 'none',
+            });
+        } else {
+            this.setState({
+                dropDownState: 'down',
+                dropDownBox: 'block',
+            });
+        }
+    }
     render() {
         const { prefix = 'ro' } = this.props;
+        const { getFieldDecorator } = this.props.form;
+        const { dropDownBox, dropDownState } = this.state;
+        const formItemLayout = {
+            labelCol: { span: 6 },
+            wrapperCol:{ span: 15, offset: 1 },
+        };
         return (
             <div className={`${prefix}-nav-container`}>
                 <div className={`${prefix}-nav-left`}>
@@ -259,21 +283,84 @@ export default class MegaMenu extends React.Component {
                 <div className={`${prefix}-nav-right`}>
                     <span className={`${prefix}-right-items`}>
                         <span className={`${prefix}-personal-portrait`} />
-                        <span>admin</span>
-                        <span className={`${prefix}-personal-box`} />
+                        <span className={`${prefix}-navRight-text`}>admin</span>
+                        <span className={`${prefix}-personal-${dropDownState}`} onClick={this._dropDownBox} />
+                        <div style={{ display: dropDownBox }} className={`${prefix}-personal-box`}>
+                            <Tabs defaultActiveKey="1">
+                                <TabPane tab="个人信息" key="1">
+                                    <div className={`${prefix}-tabPane`}>
+                                        <div className={`${prefix}-tabPane-headPortrait`}>
+                                            <span className={`${prefix}-tabPane-headPortrait-icon`} />
+                                            <span className={`${prefix}-tabPane-headPortrait-tooltip`}>更新头像</span>
+                                        </div>
+                                        <div className={`${prefix}-tabPane-register`}>
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="账户"
+                                            >
+                                                {getFieldDecorator('account', {
+                                                    rule: [
+                                                        {type: 'string'},
+                                                        {required: true, message: '请输入个人账户'}
+                                                    ],
+                                                })(<Input />)}
+                                            </FormItem>
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="昵称"
+                                            >
+                                                {getFieldDecorator('nickname', {
+                                                    rule: [{type: 'string'}],
+                                                })(<Input />)}
+                                            </FormItem>
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="邮箱"
+                                            >
+                                                {getFieldDecorator('email', {
+                                                    rule: [{type: 'email'}],
+                                                })(<Input />)}
+                                            </FormItem>
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="联系方式"
+                                            >
+                                                {getFieldDecorator('联系方式', {
+                                                    rule: [{type: 'number'}],
+                                                })(<Input />)}
+                                            </FormItem>
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="其他"
+                                            >
+                                                {getFieldDecorator('其他')(<Input />)}
+                                            </FormItem>
+                                        </div>
+                                    </div>
+                                </TabPane>
+                                <TabPane tab="修改密码"  key="2">修改密码</TabPane>
+                            </Tabs>
+                            <span className={`${prefix}-personal-box-downLine`} />
+                            <div className={`${prefix}-personal-box-button`}>
+                                <Button>取消</Button>
+                                <Button type="primary">保存</Button>
+                            </div>
+                        </div>
                     </span>
                     <span className={`${prefix}-vertical-line`} />
                     <span className={`${prefix}-right-items`}>
                         <span className={`${prefix}-personal-information`} />
-                        <span className={`${prefix}-personal-information-prompt`}>消息中心</span>
+                        <span className={`${prefix}-personal-information-prompt ${prefix}-navRight-text`}>消息中心</span>
                     </span>
                     <span className={`${prefix}-vertical-line`} />
                     <span className={`${prefix}-right-items`}>
                         <span className={`${prefix}-personal-quit`} />
-                        <span>退出</span>
+                        <span className={`${prefix}-navRight-text`}>退出</span>
                     </span>
                 </div>
             </div>
         );
     }
 }
+
+export default MegaMenu = Form.create()(MegaMenu);
