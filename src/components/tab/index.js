@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
+import { addOnResize } from '../../lib/listener';
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -28,9 +29,7 @@ export default class Tab extends React.Component {
     this.offsetWidth = this.tabsWrapper.offsetWidth;
 
     this.checkWidth();
-    window.onresize = () => {
-      this.checkWidth();
-    };
+    addOnResize(this.checkWidth);
   }
 
   componentWillReceiveProps(nextProps) {
