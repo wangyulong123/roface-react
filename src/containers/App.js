@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import { Layout, NavMega, FlexTabs, NavTree, Footer } from '../components';
+import { NavMega, FlexTabs, NavTree } from '../components';
 import Home from './Home';
 
 export default class App extends React.Component {
@@ -33,34 +33,31 @@ export default class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Layout>
-          <Route
-            path="/"
-            render={(props) => {
-              return (
-                <div>
-                  <NavMega
-                    {...props}
-                    menuClick={this._menuClick}
-                    ref={this._getInstance}
-                    dataMount={this._dataMount}
-                  />
-                  <div style={{ display: 'flex' }}>
-                    <NavTree data={this.state.menuData} />
-                    <div style={{ flexGrow: 1 }}>
-                      <FlexTabs
-                        {...props}
-                        data={this.state.menuData}
-                        ref={this._getInstance}
-                        renderComponent={this._renderComponent}
-                      />
-                    </div>
+        <Route
+          path="/"
+          render={(props) => {
+            return (
+              <div>
+                <NavMega
+                  {...props}
+                  menuClick={this._menuClick}
+                  ref={this._getInstance}
+                  dataMount={this._dataMount}
+                />
+                <div style={{ display: 'flex' }}>
+                  <NavTree data={this.state.menuData} />
+                  <div style={{ width: 'calc(100% - 256px)' }}>
+                    <FlexTabs
+                      {...props}
+                      data={this.state.menuData}
+                      ref={this._getInstance}
+                      renderComponent={this._renderComponent}
+                    />
                   </div>
-                </div>);
-            }}
-          />
-          <Footer />
-        </Layout>
+                </div>
+              </div>);
+          }}
+        />
       </BrowserRouter>
     );
   }

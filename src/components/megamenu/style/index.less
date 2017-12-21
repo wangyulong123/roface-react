@@ -43,17 +43,17 @@
 }
 
 .@{prefix}-menu {
+  //position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
   height: 50px;
   min-width: 70px;
   &:hover {
     cursor: pointer;
-    background: #eee;
-    color: #e25613;
+    background: #fff;
+    color: #288CE2;
   }
   &-icon {
     width: 20px;
@@ -67,40 +67,36 @@
   }
   &-children {
     position: absolute;
-    top: 40px;
-    left: 0;
+    top: 50px;
+    left: 20%;
     display: none;
     font-size: 15px;
     z-index: 999;
-    width: 100%;
+    width: 50%;
     box-shadow: 0 5px 5px #888888;
+    border-bottom: 1px solid #f39909;
     &-container {
       overflow: auto;
       max-height: 500px;
       display: flex;
       flex-direction: column;
-      background: #eee;
+      background: #fff;
       &-wrapper {
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
         &-item {
-          // transition: color 1s;
-          // flex-grow: 1;
           min-width: 300px;
-          font-weight: normal;
-          color: #000000;
-          border-bottom: 1px solid #aaaaaa;
+          font-weight: 600;
+          color: #5EA9E9;
           &-menu {
             transition: all 1s;
-            text-align: center;
+            //text-align: center;
+            padding: 10px 44px;
             border-bottom: transparent 2px solid;
             &:hover {
               color: #f39909;
-              border-bottom: #f39909 2px solid;
-            }
-            &-icon {
-              margin-right: 5px;
+              //border-bottom: #f39909 2px solid;
             }
           }
           &-child {
@@ -123,8 +119,7 @@
               transition: all 0.5s;
             }
             li span:hover {
-              color: #FFF;
-              background: #f39909;
+              color: #5EA9E9;
             }
             &-children-container {
               display: none;
@@ -145,6 +140,7 @@
 
 .@{prefix}-nav-right {
   width: 15%;
+  height: 50px;
   min-width: 280px;
   display: flex;
   margin-bottom: auto;
@@ -174,6 +170,10 @@
     cursor: pointer;
     font-size: 3px;
   }
+  &:hover {
+     background: #2878BF;
+     line-height: 50px;
+   }
 }
 
 .@{prefix}-nav-arrow-right {
@@ -186,6 +186,10 @@
     cursor: pointer;
     font-size: 3px;
   }
+  &:hover {
+      background: #2878BF;
+      line-height: 50px;
+  }
 }
 
 .@{prefix}-personal-portrait {
@@ -195,7 +199,7 @@
   background: url("./header.png") no-repeat;
 }
 
-.@{prefix}-personal-box {
+.@{prefix}-personal-top {
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
@@ -206,6 +210,87 @@
   margin-top: 3px;
 }
 
+.@{prefix}-personal-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 6px solid #fff;
+  cursor: pointer;
+  margin-left: 6px;
+  margin-top: 3px;
+}
+
+.@{prefix}-personal-box {
+  border: 1px solid #E3E3E3;
+  position: absolute;
+  top: 50px;
+  right: -14px;
+  width: 340px;
+  height: 440px;
+  background: #FDFEFF;
+  z-index: 100;
+  box-shadow: 0 0 3px rgb(212, 212, 212);
+  &-downLine {
+    display: inline-block;
+    height: 1px;
+    width: 100%;
+    background: #E3E3E3;
+  }
+  &-button {
+    display: flex;
+    justify-content: flex-end;
+    Button {
+      margin-top: 3px;
+      margin-right: 30px;
+    }
+  }
+}
+
+.@{prefix}-tabPane1 {
+  &-portrait {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    margin-bottom: 10px;
+    &-icon {
+      display: inline-block;
+      width: 55px;
+      height: 55px;
+      border-radius: 100px;
+      background: url("./header.png") no-repeat;
+      background-size: 100% 100%;
+      cursor: pointer;
+    }
+    &-tooltip {
+      cursor: pointer;
+      font-size: 12px;
+      color: #6299C3;
+    }
+  }
+  &-register {
+    height: 230px;
+  }
+}
+
+.@{prefix}-tabPane2 {
+  height: 320px;
+  width: 93%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ant-form-item {
+  margin-bottom: 8px;
+}
+
+.ant-form-item-label {
+  width: 77px;
+  min-width: 77px;
+}
+
 .@{prefix}-vertical-line {
   width: 1px;
   height: 18px;
@@ -214,16 +299,14 @@
 }
 
 .@{prefix}-right-items {
+  position: relative;
   display: flex;
+  height: 100%;
   justify-content: space-between;
   align-items: center;
 }
 
-.@{prefix}-right-items span:nth-child(1) {
-  cursor: pointer;
-}
-
-.@{prefix}-right-items span:nth-child(2) {
+.@{prefix}-navRight-text {
   margin-left: 4px;
   color: #fff;
   font-size: 13px;
