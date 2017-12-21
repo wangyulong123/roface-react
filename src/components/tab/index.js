@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import { Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
 import './mega-tabcontent.css';
