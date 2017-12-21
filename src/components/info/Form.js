@@ -41,13 +41,9 @@ export default Form.create()(class Forms extends React.Component {
     return groups;
   }
   _getComponent = (editStyle) => {
-    let com = component.Input;
+    let com = antd.Input;
     if (typeof editStyle === 'string') {
-      switch (editStyle) {
-        case 'Text': com = component.Input || antd.Input; break;
-        // case 'DatePicker': com = component.DatePicker; break;
-        default: com = component.Input || antd.Input;
-      }
+      com = component[editStyle] || antd.Input;
     } else {
       com = editStyle;
     }

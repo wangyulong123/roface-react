@@ -1,6 +1,6 @@
-import { Layout } from 'antd';
+import { Tabs } from 'antd';
 
-export default class La extends Layout {
+export default class RoTabs extends Tabs {
   render() {
     return super.render();
   }
