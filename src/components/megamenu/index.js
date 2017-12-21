@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Icon } from 'antd';
+import { Icon } from '../index';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';

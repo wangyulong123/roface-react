@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon } from '../index';
 
 const { SubMenu } = Menu;
 
