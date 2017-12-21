@@ -1,10 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import { Layout, NavMega, FlexTabs, NavTree } from '../components';
+import { Layout, NavMega, FlexTabs, NavTree, Footer } from '../components';
 import Home from './Home';
-
-const { Footer } = Layout;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -61,9 +59,7 @@ export default class App extends React.Component {
                 </div>);
             }}
           />
-          <Footer>
-            footer
-          </Footer>
+          <Footer />
         </Layout>
       </BrowserRouter>
     );

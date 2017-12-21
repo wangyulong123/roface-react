@@ -11,3 +11,7 @@ export { default as Alert } from './alert';
 export { default as Modal } from './modal';
 export * as Message from './message';
 export * as Notification from './notification';
+export { default as Text } from './rotext';
+export { default as TextArea } from './rotextarea';
+export { default as CheckBox } from './rocheckbox';
+export { default as Footer } from './rofooter';
