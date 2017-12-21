@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Icon, Tabs, Input, Button, Form, Modal } from 'antd';
+import { Icon, Tabs, Text, Button, Form, Modal } from '../index';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
@@ -44,7 +44,7 @@ class MegaMenu extends React.Component {
                 menuData: dataSource,
             });
         });
-        // document.onclick = this._closeDropDown;
+
         const tags = document.querySelectorAll('.' + prefix + '-personal-box');
         if (tags.length > 0) {
             this.tag = tags[tags.length - 1];
@@ -300,7 +300,7 @@ class MegaMenu extends React.Component {
                                     {type: 'string'},
                                     {required: true, message: '请输入个人账户'}
                                 ],
-                            })(<Input placeholder="请输入用户账户" />)}
+                            })(<Text placeholder="请输入用户账户" />)}
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -308,7 +308,7 @@ class MegaMenu extends React.Component {
                         >
                             {getFieldDecorator('nickname', {
                                 rule: [{type: 'string'}],
-                            })(<Input placeholder="请输入用户昵称" />)}
+                            })(<Text placeholder="请输入用户昵称" />)}
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -316,7 +316,7 @@ class MegaMenu extends React.Component {
                         >
                             {getFieldDecorator('email', {
                                 rule: [{type: 'email'}],
-                            })(<Input placeholder="请输入邮箱地址" />)}
+                            })(<Text placeholder="请输入邮箱地址" />)}
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -324,13 +324,13 @@ class MegaMenu extends React.Component {
                         >
                             {getFieldDecorator('phone', {
                                 rule: [{type: 'number'}],
-                            })(<Input placeholder="请输入联系方式" />)}
+                            })(<Text placeholder="请输入联系方式" />)}
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
                             label="其他"
                         >
-                            {getFieldDecorator('other')(<Input placeholder="请输入" />)}
+                            {getFieldDecorator('other')(<Text placeholder="请输入" />)}
                         </FormItem>
                     </Form>
                 </div>
@@ -351,7 +351,7 @@ class MegaMenu extends React.Component {
                     >
                         {getFieldDecorator('oldPassword', {
                             rule: [{type: 'password'},{required: true}],
-                        })(<Input type="password" placeholder="请输入原密码" />)}
+                        })(<Text type="password" placeholder="请输入原密码" />)}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
@@ -359,7 +359,7 @@ class MegaMenu extends React.Component {
                     >
                         {getFieldDecorator('newPasswod', {
                             rule: [{type: 'password'},{required: true}],
-                        })(<Input type="password" placeholder="请输入新密码" />)}
+                        })(<Text type="password" placeholder="请输入新密码" />)}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
@@ -367,7 +367,7 @@ class MegaMenu extends React.Component {
                     >
                         {getFieldDecorator('confirmPassword', {
                             rule: [{type: 'password'},{required: true}],
-                        })(<Input type="password" placeholder="请再输入一遍" />)}
+                        })(<Text type="password" placeholder="请再输入一遍" />)}
                     </FormItem>
                 </Form>
             </div>
