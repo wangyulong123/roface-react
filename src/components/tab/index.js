@@ -26,10 +26,21 @@ export default class Tab extends React.Component {
     this.tabWidth = 110;
     this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-page-content-wrapper`)[0];
     this.offsetWidth = this.tabsWrapper.offsetWidth;
+
     this.checkWidth();
     window.onresize = () => {
       this.checkWidth();
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { history } = this.props;
+    const pathname = history.location && history.location.pathname && history.location.pathname.substr(1);
+    if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname)
+    {
+      const initTab = nextProps.data.filter(menuItem => menuItem.id === pathname)[0];
+      this._createTab(initTab);
+    }
   }
 
   checkWidth = () => {
@@ -51,7 +62,6 @@ export default class Tab extends React.Component {
         console.log('<');
       } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
         console.log('>');
-        // console.log((this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) < this.tabWidth);
         const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
@@ -86,7 +96,6 @@ export default class Tab extends React.Component {
         activeTabId: item.id,
       });
     }
-
   };
 
   _closeAllTabs = () => {
@@ -157,6 +166,8 @@ export default class Tab extends React.Component {
     const tempTab = this.state.tabs.shift();
     const tempCollapse = this.state.tabsCollapse
       .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id);
+    const { history } = this.props;
+    history.replace(`/${collapseItem.id}`);
     this.setState({
       tabs: this.state.tabs.concat(collapseItem),
       activeTabId: collapseItem.id,
