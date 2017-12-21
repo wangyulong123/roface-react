@@ -3,6 +3,8 @@ import ReactDom from 'react-dom';
 import { Route } from 'react-router-dom';
 // import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
+import { addOnResize } from '../../lib/listener';
+import { depthFirstSearch } from '../../lib/menutransform';
 import './mega-tabcontent.css';
 
 export default class Tab extends React.Component {
@@ -10,6 +12,10 @@ export default class Tab extends React.Component {
     super(props);
     this.dom = null;
     this.tabsWrapper = null;
+    this.refStr = new Date().getTime();
+    this.isMoving = false;
+    this.clientX = 0;
+    this.clientY = 0;
     this.state = {
       tabs: [],
       tabsCollapse: [],
@@ -28,9 +34,7 @@ export default class Tab extends React.Component {
     this.offsetWidth = this.tabsWrapper.offsetWidth;
 
     this.checkWidth();
-    window.onresize = () => {
-      this.checkWidth();
-    };
+    addOnResize(this.checkWidth);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,7 +42,11 @@ export default class Tab extends React.Component {
     const pathname = history.location && history.location.pathname && history.location.pathname.substr(1);
     if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname)
     {
-      const initTab = nextProps.data.filter(menuItem => menuItem.id === pathname)[0];
+      let allMenus = [];
+      depthFirstSearch(nextProps.data, (menuItem) => {
+        allMenus.push(menuItem);
+      });
+      const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0];
       this._createTab(initTab);
     }
   }
@@ -59,9 +67,7 @@ export default class Tab extends React.Component {
             tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
           });
         }
-        console.log('<');
       } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
-        console.log('>');
         const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
@@ -75,7 +81,6 @@ export default class Tab extends React.Component {
           });
         } else {
           console.log('isSpace:' + isSpace);
-          console.log('tabsCollapse.length:' + this.state.tabsCollapse.length);
         }
       }
       this.offsetWidth = this.tabsWrapper.offsetWidth;
@@ -104,7 +109,6 @@ export default class Tab extends React.Component {
 
   _closeAllTabs = () => {
     this.setState({ tabs: [] });
-    console.log('close all');
   };
 
   _closeOtherTabs = () => {
@@ -118,7 +122,6 @@ export default class Tab extends React.Component {
       this.state.activeTabId),
       activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
     });
-    console.log('close other');
   };
 
   _deleteTab = (isDeteleTab) => {
@@ -136,9 +139,6 @@ export default class Tab extends React.Component {
         activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 2].id,
       });
     }
-    console.log(this.state.tabs[this.state.tabs.length - 2]);
-    console.log(this.state.tabs.length - 2);
-    console.log('_deleteTab');
     this.checkWidth();
   };
 
@@ -177,7 +177,6 @@ export default class Tab extends React.Component {
       activeTabId: collapseItem.id,
       tabsCollapse: [...tempCollapse, tempTab],
     });
-    console.log('_selecttabsCollapse');
   };
 
   _deleteTabCollapse = (e, collapseItem) => {
@@ -187,14 +186,72 @@ export default class Tab extends React.Component {
       tabsCollapse: this.state.tabsCollapse
         .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id),
     });
-    console.log('_deleteTabCollapse');
     return false;
+  };
+
+  _dragDrop = (cb, name) => {
+    const event = {
+      onMouseDown: (e) => {
+        this.isMoving = true;
+        const tag = window.getComputedStyle(this._getTag());
+        this.tagX = tag.left.substring(0, tag.left.length - 2);
+        this.tagY = tag.top.substring(0, tag.top.length - 2);
+        this.clientX = e.clientX;
+        this.clientY = e.clientY;
+      },
+      onMouseMove: (e) => {
+        if (this.isMoving) {
+          const tag = this._getTag();
+          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
+          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
+        }
+      }
+    };
+
+    event.onMouseUp = event.onMouseOut = (e) => {
+      this.isMoving = false;
+    };
+    return (
+      <div className="title-bar" {...event}>
+        <span>{name}</span>
+        <a style={{ display: '', right: 45 }} ><Icon type="reload" /></a>
+        <a onClick={cb}><Icon type="close" /></a>
+      </div>
+    );
+  };
+
+  _getTag = cssSelector => {
+    if (!cssSelector) {
+      return document.querySelector('.' + this.refStr);
+    }
+    return document.querySelector('.' + this.refStr + ' ' + cssSelector);
   };
 
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
+    const event = {
+      onMouseDown: (e) => {
+        this.isMoving = true;
+        const tag = window.getComputedStyle(this._getTag());
+        this.tagX = tag.left.substring(0, tag.left.length - 2);
+        this.tagY = tag.top.substring(0, tag.top.length - 2);
+        this.clientX = e.clientX;
+        this.clientY = e.clientY;
+      },
+      onMouseMove: (e) => {
+        if (this.isMoving) {
+          const tag = this._getTag();
+          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
+          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
+        }
+      }
+    };
+
+    event.onMouseUp = event.onMouseOut = (e) => {
+      this.isMoving = false;
+    };
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">
@@ -216,7 +273,11 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <span style={{ cursor: 'move' }} title={tabItem.name} >
+                        <span
+                          style={{ cursor: 'move' }}
+                          title={tabItem.name}
+                          {...event}
+                        >
                           {tabItem.name}
                         </span>
                         <Icon type="close" className="close" onClick={() => this._deleteTab(tabItem)} />
