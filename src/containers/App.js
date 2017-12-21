@@ -52,6 +52,7 @@ export default class App extends React.Component {
                     <div style={{ flexGrow: 1 }}>
                       <FlexTabs
                         {...props}
+                        data={this.state.menuData}
                         ref={this._getInstance}
                         renderComponent={this._renderComponent}
                       />

@@ -157,7 +157,7 @@
 }
 
 .roic-more:hover {
-    background: url("./roic_more.svg");
+    background: url("./roic_more_hover.svg");
 }
 
 .roic-close-others {
@@ -169,7 +169,7 @@
 }
 
 .roic-close-others:hover {
-    background: url("./roic_close_others.svg");
+    background: url("./roic_close_others _hover.svg");
 }
 
 
