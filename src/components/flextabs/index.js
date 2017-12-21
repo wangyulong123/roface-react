@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Route } from 'react-router-dom';
-import { Icon, Modal } from 'antd';
+import { Icon, Modal } from '../index';
 import { depthFirstSearch } from '../../lib/menutransform';
 import { addOnResize } from '../../lib/listener';
 
