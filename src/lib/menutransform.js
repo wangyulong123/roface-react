@@ -1,9 +1,10 @@
 /* eslint-disable */
 export const flatToTree = (data, params) => {
-  /*
-  * data: 要转换到树形结构的数据，type=array
-  * params: 树形结构中节点的命名，type=object
-  * return: { data, params }:树结构和节点命名形式
+  /**
+  * 将菜单的扁平结构转化为树状结构
+  * @params data: 要转换到树形结构的数据，type=array
+  * @params params: 树形结构中节点的命名，type=object
+  * @returns: { data, params }:树结构和节点命名形式
   * */
   const menuMap = {};
   const menuData = data.slice(0);
@@ -38,9 +39,10 @@ export const flatToTree = (data, params) => {
 
 
 export const removeLevelMore = (treeData, params) => {
-  /*
+  /**
   * 保留层级为1的树结构
-  * treeData：树结构,type=array
+  * @params treeData：树结构,type=array
+  * @params params: 树形结构中节点的命名，type=object
   * */
     params = {
         sortCodeName: params && params.sortCodeName ? params.sortCodeName : 'sortCode',
@@ -56,10 +58,11 @@ export const removeLevelMore = (treeData, params) => {
 };
 
 export const depthFirstSearch = (_menus, callback, params) => {
-  /*
-  * _menus: 属性结构数组, type=array
-  * callback: 回调方法，用于将遍历到的值传递到调用层,type=function
-  * params：参数,用于说明_menus中父子节点的名称, type=object
+ /**
+  * 深度优先遍历树结构
+  * @params _menus: 树形结构数组数据, type=array
+  * @params callback: 回调方法，用于将遍历到的值传递到调用层,type=function
+  * @params params：参数,用于说明_menus中父子节点的名称, type=object
   * */
   const tempMenus = _menus.slice(0);
   params = {
@@ -81,10 +84,12 @@ export const depthFirstSearch = (_menus, callback, params) => {
   });
 };
 
-/*
- * 树结构广度优先遍历
- * */
 export const breadthFirstRecursion = (treeData, params) => {
+  /**
+   *  树结构广度优先遍历
+   * @param treeData 树形结构数组数据, type=array
+   * @params params：参数,用于说明_menus中父子节点的名称, type=object
+   * */
     params = {
         sortCodeName: params && params.sortCodeName ? params.sortCodeName : 'sortCode',
         parentName: params && params.parentName ? params.parentName : 'parent',
@@ -106,11 +111,13 @@ export const breadthFirstRecursion = (treeData, params) => {
     return nodes;
 };
 
-/*
- * 树结构广度优先遍历
- *   treeData: 树结构数据
- * */
 export const breadthFirstSearch = (treeData, params) => {
+  /**
+   * 树结构广度优先遍历
+   * @param treeData 树形结构数组数据, type=array
+   * @params params：参数,用于说明_menus中父子节点的名称, type=object
+   *
+   */
     params = {
         sortCodeName: params && params.sortCodeName ? params.sortCodeName : 'sortCode',
         parentName: params && params.parentName ? params.parentName : 'parent',

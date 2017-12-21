@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Route } from 'react-router-dom';
-// import { Tabs } from 'antd';
 import { Icon, Modal } from 'antd';
-import { addOnResize } from '../../lib/listener';
 import { depthFirstSearch } from '../../lib/menutransform';
-import './mega-tabcontent.css';
 import { addOnResize } from '../../lib/listener';
+
+import './mega-tabcontent.css';
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -101,11 +100,13 @@ export default class Tab extends React.Component {
     } else if (isExsitCollapseItem && !isExsitTabsItem) {
       this._selectTabCollapse(item);
     } else {
+      // TODO. 新增的时候，当空间不够的时候，应该将第一个收起来，将新增的排列到末尾
       this.setState({
         tabs: this.state.tabs.concat(item),
         activeTabId: item.id,
       });
     }
+    this.checkWidth();
   };
 
   _closeAllTabs = () => {
@@ -190,69 +191,69 @@ export default class Tab extends React.Component {
     return false;
   };
 
-  _dragDrop = (cb, name) => {
-    const event = {
-      onMouseDown: (e) => {
-        this.isMoving = true;
-        const tag = window.getComputedStyle(this._getTag());
-        this.tagX = tag.left.substring(0, tag.left.length - 2);
-        this.tagY = tag.top.substring(0, tag.top.length - 2);
-        this.clientX = e.clientX;
-        this.clientY = e.clientY;
-      },
-      onMouseMove: (e) => {
-        if (this.isMoving) {
-          const tag = this._getTag();
-          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
-          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
-        }
-      }
-    };
+  // _dragDrop = (cb, name) => {
+  //   const event = {
+  //     onMouseDown: (e) => {
+  //       this.isMoving = true;
+  //       const tag = window.getComputedStyle(this._getTag());
+  //       this.tagX = tag.left.substring(0, tag.left.length - 2);
+  //       this.tagY = tag.top.substring(0, tag.top.length - 2);
+  //       this.clientX = e.clientX;
+  //       this.clientY = e.clientY;
+  //     },
+  //     onMouseMove: (e) => {
+  //       if (this.isMoving) {
+  //         const tag = this._getTag();
+  //         tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
+  //         tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
+  //       }
+  //     }
+  //   };
+  //
+  //   event.onMouseUp = event.onMouseOut = (e) => {
+  //     this.isMoving = false;
+  //   };
+  //   return (
+  //     <div className="title-bar" {...event}>
+  //       <span>{name}</span>
+  //       <a style={{ display: '', right: 45 }} ><Icon type="reload" /></a>
+  //       <a onClick={cb}><Icon type="close" /></a>
+  //     </div>
+  //   );
+  // };
 
-    event.onMouseUp = event.onMouseOut = (e) => {
-      this.isMoving = false;
-    };
-    return (
-      <div className="title-bar" {...event}>
-        <span>{name}</span>
-        <a style={{ display: '', right: 45 }} ><Icon type="reload" /></a>
-        <a onClick={cb}><Icon type="close" /></a>
-      </div>
-    );
-  };
-
-  _getTag = cssSelector => {
-    if (!cssSelector) {
-      return document.querySelector('.' + this.refStr);
-    }
-    return document.querySelector('.' + this.refStr + ' ' + cssSelector);
-  };
+  // _getTag = cssSelector => {
+  //   if (!cssSelector) {
+  //     return document.querySelector('.' + this.refStr);
+  //   }
+  //   return document.querySelector('.' + this.refStr + ' ' + cssSelector);
+  // };
 
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
-    const event = {
-      onMouseDown: (e) => {
-        this.isMoving = true;
-        const tag = window.getComputedStyle(this._getTag());
-        this.tagX = tag.left.substring(0, tag.left.length - 2);
-        this.tagY = tag.top.substring(0, tag.top.length - 2);
-        this.clientX = e.clientX;
-        this.clientY = e.clientY;
-      },
-      onMouseMove: (e) => {
-        if (this.isMoving) {
-          const tag = this._getTag();
-          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
-          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
-        }
-      }
-    };
-
-    event.onMouseUp = event.onMouseOut = (e) => {
-      this.isMoving = false;
-    };
+    // const event = {
+    //   onMouseDown: (e) => {
+    //     this.isMoving = true;
+    //     const tag = window.getComputedStyle(this._getTag());
+    //     this.tagX = tag.left.substring(0, tag.left.length - 2);
+    //     this.tagY = tag.top.substring(0, tag.top.length - 2);
+    //     this.clientX = e.clientX;
+    //     this.clientY = e.clientY;
+    //   },
+    //   onMouseMove: (e) => {
+    //     if (this.isMoving) {
+    //       const tag = this._getTag();
+    //       tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
+    //       tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
+    //     }
+    //   }
+    // };
+    //
+    // event.onMouseUp = event.onMouseOut = (e) => {
+    //   this.isMoving = false;
+    // };
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">
