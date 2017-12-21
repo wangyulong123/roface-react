@@ -84,12 +84,16 @@ export default class Tab extends React.Component {
 
   _createTab = (item) => {
     this.checkWidth();
-    const isExsitItem = this.state.tabs && this.state.tabs
-        .find(tabsItem => tabsItem.id === item.id );
-    if (isExsitItem) {
+    const isExsitTabsItem = this.state.tabs && this.state.tabs
+        .find(tabsItem => tabsItem.id === item.id);
+    const isExsitCollapseItem = this.state.tabsCollapse && this.state.tabsCollapse
+        .find(collapseItem => collapseItem.id === item.id);
+    if (isExsitTabsItem && !isExsitCollapseItem) {
       this.setState({
         activeTabId: item.id,
       });
+    } else if (isExsitCollapseItem && !isExsitTabsItem) {
+      this._selectTabCollapse(item);
     } else {
       this.setState({
         tabs: this.state.tabs.concat(item),
@@ -263,6 +267,9 @@ export default class Tab extends React.Component {
                     }
                   </div>
                 </ol>
+              </div>
+              <div>
+                <Route path="/" render={p => renderComponent(p, showTab[0])} />
               </div>
             </div>
           </div>
