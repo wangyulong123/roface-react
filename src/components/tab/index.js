@@ -191,69 +191,43 @@ export default class Tab extends React.Component {
     return false;
   };
 
-  // _dragDrop = (cb, name) => {
-  //   const event = {
-  //     onMouseDown: (e) => {
-  //       this.isMoving = true;
-  //       const tag = window.getComputedStyle(this._getTag());
-  //       this.tagX = tag.left.substring(0, tag.left.length - 2);
-  //       this.tagY = tag.top.substring(0, tag.top.length - 2);
-  //       this.clientX = e.clientX;
-  //       this.clientY = e.clientY;
-  //     },
-  //     onMouseMove: (e) => {
-  //       if (this.isMoving) {
-  //         const tag = this._getTag();
-  //         tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
-  //         tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
-  //       }
-  //     }
-  //   };
-  //
-  //   event.onMouseUp = event.onMouseOut = (e) => {
-  //     this.isMoving = false;
-  //   };
-  //   return (
-  //     <div className="title-bar" {...event}>
-  //       <span>{name}</span>
-  //       <a style={{ display: '', right: 45 }} ><Icon type="reload" /></a>
-  //       <a onClick={cb}><Icon type="close" /></a>
-  //     </div>
-  //   );
-  // };
 
-  // _getTag = cssSelector => {
-  //   if (!cssSelector) {
-  //     return document.querySelector('.' + this.refStr);
-  //   }
-  //   return document.querySelector('.' + this.refStr + ' ' + cssSelector);
-  // };
+  _getTag = cssSelector => {
+    if (!cssSelector) {
+      return document.querySelector('.' + this.refStr);
+    }
+    return document.querySelector('.' + this.refStr + ' ' + cssSelector);
+  };
 
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
-    // const event = {
-    //   onMouseDown: (e) => {
-    //     this.isMoving = true;
-    //     const tag = window.getComputedStyle(this._getTag());
-    //     this.tagX = tag.left.substring(0, tag.left.length - 2);
-    //     this.tagY = tag.top.substring(0, tag.top.length - 2);
-    //     this.clientX = e.clientX;
-    //     this.clientY = e.clientY;
-    //   },
-    //   onMouseMove: (e) => {
-    //     if (this.isMoving) {
-    //       const tag = this._getTag();
-    //       tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
-    //       tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
-    //     }
-    //   }
-    // };
-    //
-    // event.onMouseUp = event.onMouseOut = (e) => {
-    //   this.isMoving = false;
-    // };
+    const event = {
+      onMouseDown: (e) => {
+        this.isMoving = true;
+        // const tag = window.getComputedStyle(this._getTag());
+        const tag = window.getComputedStyle(document.querySelector('.close'));
+        this.tagX = tag.left.substring(0, tag.left.length - 2);
+        this.tagY = tag.top.substring(0, tag.top.length - 2);
+        this.clientX = e.clientX;
+        this.clientY = e.clientY;
+        console.log('onMouseDown:' + e);
+      },
+      onMouseMove: (e) => {
+        if (this.isMoving) {
+          const tag = document.querySelector('.close');
+          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
+          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
+          console.log('onMouseMove:' + e);
+        }
+      }
+    };
+
+    event.onMouseUp = event.onMouseOut = (e) => {
+      this.isMoving = false;
+    };
+
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">
