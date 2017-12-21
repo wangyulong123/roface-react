@@ -24,3 +24,7 @@ export { default as DatePicker } from './rodatepicker';
 export { default as YearMonthPicker } from './royearmonthpicker';
 export { default as YearPicker } from './royearpicker';
 export { default as TimePicker } from './rotimepicker';
+export { default as Text } from './rotext';
+export { default as TextArea } from './rotextarea';
+export { default as CheckBox } from './rocheckbox';
+export { default as Footer } from './rofooter';
