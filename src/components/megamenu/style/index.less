@@ -68,11 +68,11 @@
   &-children {
     position: absolute;
     top: 50px;
-    left: 0;
-    display: none;
+    left: 20%;
+    //display: none;
     font-size: 15px;
     z-index: 999;
-    width: 100%;
+    width: 60%;
     box-shadow: 0 5px 5px #888888;
     &-container {
       overflow: auto;
@@ -80,24 +80,23 @@
       display: flex;
       flex-direction: column;
       background: #fff;
+      border-bottom: 1px solid #f39909;
       &-wrapper {
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
         &-item {
-          // transition: color 1s;
-          // flex-grow: 1;
           min-width: 300px;
           font-weight: normal;
-          color: #000000;
-          border-bottom: 1px solid #aaaaaa;
+          color: #5EA9E9;
           &-menu {
             transition: all 1s;
-            text-align: center;
+            //text-align: center;
+            padding: 10px 44px;
             border-bottom: transparent 2px solid;
             &:hover {
               color: #f39909;
-              border-bottom: #f39909 2px solid;
+              //border-bottom: #f39909 2px solid;
             }
           }
           &-child {

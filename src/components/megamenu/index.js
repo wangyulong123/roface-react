@@ -92,7 +92,6 @@ class MegaMenu extends React.Component {
         }
         return { data: data, params: params };
     };
-
     removeLevelMore = (treeData, params) => {
         /*
         * 保留层级为1的树结构
@@ -107,7 +106,6 @@ class MegaMenu extends React.Component {
             return sortCodeItems && sortCodeItems.length === 1;
         });
     };
-
     checkWidth = () => {
         if (this.wrapper) {
             if (this.wrapper.offsetWidth < this.wrapper.scrollWidth) {
@@ -259,7 +257,6 @@ class MegaMenu extends React.Component {
             });
         }
     };
-
     informationTabPane = (prefix, getFieldDecorator) => {
         const formItemLayout = {
             labelCol: { span: 5 },
@@ -319,7 +316,6 @@ class MegaMenu extends React.Component {
             </div>
         );
     };
-
     passwordTabPane = (prefix, getFieldDecorator) => {
         const formItemLayout = {
             labelCol: { span: 4 },
@@ -356,7 +352,6 @@ class MegaMenu extends React.Component {
             </div>
         );
     };
-
     render() {
         const { prefix = 'ro' } = this.props;
         const { getFieldDecorator } = this.props.form;
@@ -411,5 +406,4 @@ class MegaMenu extends React.Component {
         );
     }
 }
-
 export default MegaMenu = Form.create()(MegaMenu);
