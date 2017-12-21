@@ -43,6 +43,7 @@
 }
 
 .@{prefix}-menu {
+  //position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,25 +70,25 @@
     position: absolute;
     top: 50px;
     left: 20%;
-    //display: none;
+    display: none;
     font-size: 15px;
     z-index: 999;
-    width: 60%;
+    width: 50%;
     box-shadow: 0 5px 5px #888888;
+    border-bottom: 1px solid #f39909;
     &-container {
       overflow: auto;
       max-height: 500px;
       display: flex;
       flex-direction: column;
       background: #fff;
-      border-bottom: 1px solid #f39909;
       &-wrapper {
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
         &-item {
           min-width: 300px;
-          font-weight: normal;
+          font-weight: 600;
           color: #5EA9E9;
           &-menu {
             transition: all 1s;
@@ -119,8 +120,7 @@
               transition: all 0.5s;
             }
             li span:hover {
-              color: #FFF;
-              background: #f39909;
+              color: #5EA9E9;
             }
             &-children-container {
               display: none;
@@ -141,6 +141,7 @@
 
 .@{prefix}-nav-right {
   width: 15%;
+  height: 50px;
   min-width: 280px;
   display: flex;
   margin-bottom: auto;
@@ -224,7 +225,7 @@
 .@{prefix}-personal-box {
   border: 1px solid #E3E3E3;
   position: absolute;
-  top: 47px;
+  top: 50px;
   right: -14px;
   width: 340px;
   height: 440px;
@@ -301,6 +302,7 @@
 .@{prefix}-right-items {
   position: relative;
   display: flex;
+  height: 100%;
   justify-content: space-between;
   align-items: center;
 }

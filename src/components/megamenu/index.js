@@ -18,6 +18,7 @@ class MegaMenu extends React.Component {
         this.right = null;
         this.left = null;
         this.offsetWidth = 0;
+        this.tag = null;
         this.state = {
             menuData: [],
             dropDownState: 'top',
@@ -41,8 +42,20 @@ class MegaMenu extends React.Component {
             this.setState({
                 menuData: dataSource,
             });
-        })
+        });
+        document.onclick = this._closeDropDown;
+        const tags = document.querySelectorAll('.' + prefix + '-personal-box');
+       if (tags.length > 0) {
+            this.tag = tags[tags.length - 1];
+            window.addEventListener('click', this._executeCb);
+       }
     }
+
+    _executeCb = e => {
+        if (this.tag && this.tag.compareDocumentPosition(e.target) === 20) {
+            this._openDropDown();
+        }
+    };
     _menuClick = (e, item) => {
         e.stopPropagation();
         const { menuClick, prefix = 'ro', history } = this.props;
@@ -242,7 +255,7 @@ class MegaMenu extends React.Component {
         }
         this.right.style.display = 'block';
     };
-    _dropDownBox= () => {
+    _dropDownBox = e => {
         const { dropDownState, dropDownBox } = this.state;
         if (dropDownState === 'down') {
             this.setState({
@@ -255,6 +268,21 @@ class MegaMenu extends React.Component {
                 dropDownBox: 'block',
             });
         }
+        e.nativeEvent.stopImmediatePropagation();
+    };
+    _closeDropDown = () => {
+        const { dropDownState, dropDownBox } = this.state;
+        this.setState({
+            dropDownState: 'top',
+            dropDownBox: 'none',
+        });
+    };
+    _openDropDown = () => {
+        const { dropDownState, dropDownBox } = this.state;
+        this.setState({
+            dropDownState: 'down',
+            dropDownBox: 'block',
+        });
     };
     informationTabPane = (prefix, getFieldDecorator) => {
         const formItemLayout = {
@@ -329,7 +357,7 @@ class MegaMenu extends React.Component {
                     >
                         {getFieldDecorator('oldPassword', {
                             rule: [{type: 'password'},{required: true}],
-                        })(<Input placeholder="请输入原密码" />)}
+                        })(<Input type="password" placeholder="请输入原密码" />)}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
@@ -337,7 +365,7 @@ class MegaMenu extends React.Component {
                     >
                         {getFieldDecorator('newPasswod', {
                             rule: [{type: 'password'},{required: true}],
-                        })(<Input placeholder="请输入新密码" />)}
+                        })(<Input type="password" placeholder="请输入新密码" />)}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
@@ -345,7 +373,7 @@ class MegaMenu extends React.Component {
                     >
                         {getFieldDecorator('confirmPassword', {
                             rule: [{type: 'password'},{required: true}],
-                        })(<Input placeholder="请再输入一遍" />)}
+                        })(<Input type="password" placeholder="请再输入一遍" />)}
                     </FormItem>
                 </Form>
             </div>
