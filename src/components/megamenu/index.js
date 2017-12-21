@@ -4,6 +4,7 @@ import { Icon, Tabs, Input, Button, Form } from 'antd';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
+import { addOnResize } from '../../lib/listener';
 
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
@@ -33,9 +34,7 @@ class MegaMenu extends React.Component {
         this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
         this.offsetWidth = this.wrapper.offsetWidth;
         this.checkWidth();
-        window.onresize = () => {
-            this.checkWidth();
-        };
+        addOnResize(this.checkWidth);
         getUserMenuList().then(res => {
             const dataSource = this.removeLevelMore(this.flatToTree(res).data);
             dataMount && dataMount(dataSource);
