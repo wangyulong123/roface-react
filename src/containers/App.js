@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import { Layout, NavMega, FlexTabs, DatePicker, DateTimePicker, YearMonthPicker, YearPicker,TimePicker } from '../components';
-
+import { NavMega, FlexTabs, NavTree } from '../components';
 import Home from './Home';
-
-const { Footer } = Layout;
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.flexTabs = null;
+    this.state = {
+      menuData: [],
+    };
   }
   _menuClick = (item, history) => {
     history.replace(`/${item.id}`);
@@ -25,33 +25,39 @@ export default class App extends React.Component {
   _getInstance = (instance) => {
     this.flexTabs = instance;
   };
+  _dataMount = (data) => {
+    this.setState({
+      menuData: data,
+    });
+  };
   render() {
     return (
       <BrowserRouter>
-        <Layout>
-          <Route
-            path="/"
-            render={(props) => {
-              return (
-                <div>
-                  <NavMega {...props} menuClick={this._menuClick} ref={this._getInstance} />
-                  <FlexTabs
-                    {...props}
-                    ref={this._getInstance}
-                    renderComponent={this._renderComponent}
-                  />
-                </div>);
-            }}
-          />
-          <Footer>
-            footer
-            <DatePicker />
-            <DateTimePicker />
-            <YearPicker />
-            <YearMonthPicker />
-            <TimePicker />
-          </Footer>
-        </Layout>
+        <Route
+          path="/"
+          render={(props) => {
+            return (
+              <div>
+                <NavMega
+                  {...props}
+                  menuClick={this._menuClick}
+                  ref={this._getInstance}
+                  dataMount={this._dataMount}
+                />
+                <div style={{ display: 'flex' }}>
+                  <NavTree data={this.state.menuData} />
+                  <div style={{ width: 'calc(100% - 256px)' }}>
+                    <FlexTabs
+                      {...props}
+                      data={this.state.menuData}
+                      ref={this._getInstance}
+                      renderComponent={this._renderComponent}
+                    />
+                  </div>
+                </div>
+              </div>);
+          }}
+        />
       </BrowserRouter>
     );
   }

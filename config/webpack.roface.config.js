@@ -1,30 +1,28 @@
 var webpack = require('webpack');
 var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
-    entry: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/lib/string'), path.resolve(__dirname, '../src/index')],
+    entry: [path.resolve(__dirname, '../index')],
     output: {
-        path: path.resolve(__dirname, '../static'),
-        filename: "bundle.js"
+        library: 'Roface',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+        path: path.resolve(__dirname, '../roface'),
+        filename: "index.js"
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: path.resolve(__dirname, '../public/index.html')
-        }),
-        new ExtractTextPlugin('style.css'),
-        new webpack.optimize.UglifyJsPlugin({
-          // 使用webpack自带的文件压缩插件
-          compress: {
-            // 去除console.log
-            drop_console: true
-          },
-          // 如果启用了压缩无法生成map文件，需要在此处开启
-          sourceMap: true,
-        })
+      new ExtractTextPlugin('style.css'),
+      new webpack.optimize.UglifyJsPlugin({
+        // 使用webpack自带的文件压缩插件
+        compress: {
+          // 去除console.log
+          drop_console: true
+        },
+        // 如果启用了压缩无法生成map文件，需要在此处开启
+        sourceMap: true,
+      })
     ],
     module: {
         loaders: [

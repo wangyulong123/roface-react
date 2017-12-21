@@ -8,7 +8,7 @@ var defaultConfig = require('./default.config');
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: {
-        app: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/index')]
+        app: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/lib/string'), path.resolve(__dirname, '../src/index')]
     },
     output: {
         path: path.resolve(__dirname, '../static'),
