@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import { Layout, NavMega, FlexTabs } from '../components';
+import { Layout, NavMega, FlexTabs, DatePicker, DateTimePicker, YearMonthPicker, YearPicker,TimePicker } from '../components';
 
 import Home from './Home';
 
@@ -45,6 +45,11 @@ export default class App extends React.Component {
           />
           <Footer>
             footer
+            <DatePicker />
+            <DateTimePicker />
+            <YearPicker />
+            <YearMonthPicker />
+            <TimePicker />
           </Footer>
         </Layout>
       </BrowserRouter>

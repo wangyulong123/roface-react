@@ -16,15 +16,14 @@ class RoNumber extends React.Component {
   }
 
   handleNumberChange = (e) => {
-    const { onChange } = this.props;
+    const { onChange, onValueChange } = this.props;
     let number = e;
     if (isNaN(parseFloat(e)) || !isFinite(parseFloat(e))) {
       number = '';
     }
     this.setState({ value: number });
-    if (onChange) {
-      onChange(e);
-    }
+    onChange && onChange(e);
+    onValueChange && onValueChange(e)
   };
   /* eslint-disable */
 

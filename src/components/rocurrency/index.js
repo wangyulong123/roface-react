@@ -14,7 +14,7 @@ class RoCurrency extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let textValue = nextProps.value.toString().replace(/[^0-9.]*/g, '');
+    let textValue = nextProps.value.toString().replace(/[^0-9.-]*/g, '');
     let showValue = this.formatCurrencyInt(textValue);
     showValue = this.formatCurrencyDecimal(showValue, nextProps.precision);
     this.state({ value: showValue });
@@ -26,19 +26,22 @@ class RoCurrency extends React.Component {
     decimalIndex = decimalIndex === -1 ? numStr.toString().length : decimalIndex;
     let intPart = numStr.toString().slice(0, decimalIndex + 1);
     let decimalPart = numStr.toString().slice(decimalIndex + 1, numStr.toString().length);
-    intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    console.log(intPart + decimalPart);
+    if (intPart.charAt(0) === '-') {
+      intPart = '-' + intPart.replace(/[^0-9.]*/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    } else {
+      intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
     return intPart + decimalPart;
   };
 
   formatCurrencyDecimal = (numStr, precision) => {
-    if (numStr .length === 0) return numStr;
+    if (numStr.replace(/[^0-9]*/g, '') === '') return '';
     const precisionX = !isNaN(precision = Math.abs(precision)) ? precision : 3;
     let decimalIndex = numStr.toString().indexOf('.');
     decimalIndex = decimalIndex === -1 ? numStr.toString().length : decimalIndex;
     let intPart = numStr.toString().slice(0, decimalIndex + 1);
-    let decimalPart = numStr.toString().slice(decimalIndex + 1, numStr.toString().length);console.log(intPart);
-    console.log(decimalPart);
+    let decimalPart = numStr.toString().slice(decimalIndex + 1, numStr.toString().length);
+    decimalPart = decimalPart.replace(/[^0-9]*/g, '');
     if (decimalPart.length < precisionX || decimalPart.length === 0) {
       let zero = '';
       for (let i = 0; i < precisionX - decimalPart.length; i++) {
@@ -47,35 +50,30 @@ class RoCurrency extends React.Component {
       zero = decimalPart.length === 0 && intPart[intPart.length-1] !== '.' ? '.' + zero : zero;
       decimalPart = decimalPart + zero;
     } else {
-      decimalPart = decimalPart.replace(/[^0-9]*/g, '');
       decimalPart = decimalPart.slice(0, precisionX);
     }
-    console.log(intPart + decimalPart);
     return intPart + decimalPart;
   };
   /* eslint-disable */
 
   handleCurrencyChange = (e) => {
-    const { onChange } = this.props;
-    let textValue = e.target.value.toString().replace(/[^0-9,.]*/g, '');
-    let numberValue = e.target.value.toString().replace(/[^0-9.]*/g, '');
+    let textValue = e.target.value.toString().replace(/(?!^[-\d\.][\d,\.]*)[^\d\.,]/g, '');
     this.setState({ value: textValue });
-    if (onChange) {
-      onChange({ event: e, text: textValue, value: parseFloat(numberValue)});
-    }
-    console.log({ event: e, text: textValue, value: parseFloat(numberValue)});
+    // let numberValue = e.target.value.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
+    // console.log({ event: e, text: textValue, value: numberValue});
   };
 
   handleCurrencyBlur = (e) => {
-    const { onBlur, precision } = this.props;
-    let textValue = e.target.value.toString().replace(/[^0-9.]*/g, '');
+    const { onBlur, onChange, onValueChange, precision } = this.props;
+    let textValue = e.target.value.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
     let showValue = this.formatCurrencyInt(textValue);
     showValue = this.formatCurrencyDecimal(showValue, precision);
+    textValue = showValue.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
     this.setState({ value: showValue });
-    if (onBlur) {
-      onBlur({ event: e, text: showValue, value: parseFloat(textValue) });
-    }
-    console.log({ event: e, text: showValue, value: parseFloat(textValue) });
+    onBlur && onBlur(textValue);
+    onChange && onChange(textValue);
+    onValueChange && onValueChange(date);
+    console.log({ event: e, text: showValue, value: textValue });
   };
 
   render() {
