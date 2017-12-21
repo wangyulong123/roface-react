@@ -6,6 +6,7 @@ import { Icon, Modal } from 'antd';
 import { addOnResize } from '../../lib/listener';
 import { depthFirstSearch } from '../../lib/menutransform';
 import './mega-tabcontent.css';
+import { addOnResize } from '../../lib/listener';
 
 export default class Tab extends React.Component {
   constructor(props) {
