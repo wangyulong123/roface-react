@@ -1,10 +1,7 @@
 import React from 'react';
-
 import * as dataForm from '../../lib/dataform';
 import Form from './Form';
-
 import './style/index.less';
-
 
 export default class Forms extends React.Component {
   constructor(props) {
