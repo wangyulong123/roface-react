@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Icon, Tabs, Input, Button, Form } from 'antd';
+import { Icon, Tabs, Input, Button, Form, Modal } from 'antd';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
@@ -23,6 +23,7 @@ class MegaMenu extends React.Component {
             menuData: [],
             dropDownState: 'top',
             dropDownBox: 'none',
+            quitState: false,
         };
     }
     componentDidMount() {
@@ -43,17 +44,17 @@ class MegaMenu extends React.Component {
                 menuData: dataSource,
             });
         });
-        document.onclick = this._closeDropDown;
+        // document.onclick = this._closeDropDown;
         const tags = document.querySelectorAll('.' + prefix + '-personal-box');
-       if (tags.length > 0) {
+        if (tags.length > 0) {
             this.tag = tags[tags.length - 1];
             window.addEventListener('click', this._executeCb);
-       }
+        }
     }
 
     _executeCb = e => {
-        if (this.tag && this.tag.compareDocumentPosition(e.target) === 20) {
-            this._openDropDown();
+        if (this.tag && this.tag.compareDocumentPosition(e.target) !== 20) {
+            this._closeDropDown();
         }
     };
     _menuClick = (e, item) => {
@@ -277,13 +278,6 @@ class MegaMenu extends React.Component {
             dropDownBox: 'none',
         });
     };
-    _openDropDown = () => {
-        const { dropDownState, dropDownBox } = this.state;
-        this.setState({
-            dropDownState: 'down',
-            dropDownBox: 'block',
-        });
-    };
     informationTabPane = (prefix, getFieldDecorator) => {
         const formItemLayout = {
             labelCol: { span: 5 },
@@ -379,10 +373,25 @@ class MegaMenu extends React.Component {
             </div>
         );
     };
+    _showQuitBox = () => {
+        const { quitState } = this.state;
+        this.setState({
+            quitState: true,
+        });
+    };
+    _quitSuccess = () => {
+        console.log('success!');
+    };
+
+    _quitFail = () => {
+        this.setState({
+            quitState: false,
+        });
+    };
     render() {
         const { prefix = 'ro' } = this.props;
         const { getFieldDecorator } = this.props.form;
-        const { dropDownBox, dropDownState } = this.state;
+        const { dropDownBox, dropDownState, quitState } = this.state;
         return (
             <div className={`${prefix}-nav-container`}>
                 <div className={`${prefix}-nav-left`}>
@@ -426,7 +435,20 @@ class MegaMenu extends React.Component {
                     <span className={`${prefix}-vertical-line`} />
                     <span className={`${prefix}-right-items`}>
                         <span className={`${prefix}-personal-quit`} />
-                        <span className={`${prefix}-navRight-text`}>退出</span>
+                        <span className={`${prefix}-navRight-text`} onClick={this._showQuitBox}>退出</span>
+                        <Modal
+                            visible={quitState}
+                            onOk={this._quitSuccess}
+                            onCancel={this._quitFail}
+                            title={'提示'}
+                            footer={[
+                                <Button onClick={this._quitFail}>取消</Button>,
+                                <Button type='primary' onClick={this._quitSuccess}>确定</Button>
+                            ]}
+                        >
+                            <Icon type="warning" />
+                            <span>确认退出系统？</span>
+                        </Modal>
                     </span>
                 </div>
             </div>
