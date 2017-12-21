@@ -73,7 +73,7 @@ export default Form.create()(class Forms extends React.Component {
       case 'Currency': dataType = 'number'; break;
       case 'Date':
       case 'DateTime':
-      case 'Time': dataType = 'date'; break;
+      case 'Time': dataType = 'integer'; break;
       default: dataType = 'string';
     }
     return dataType;
