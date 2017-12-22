@@ -10,7 +10,6 @@ export { default as Form } from './form';
 // export { default as FlexTabs } from './menu';
 export { default as FlexTabs } from './flextabs';
 export { default as NavMega } from './megamenu';
-export { NotificationWithIcon, ModalConfirm } from './ronotify';
 export { default as NumberInput } from './numberInput';
 export { default as Currency } from './currency';
 export { default as Alert } from './alert';
