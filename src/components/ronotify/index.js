@@ -1,4 +1,5 @@
-import { notification, Modal } from 'antd';
+import { notification } from 'antd';
+import { Modal } from '../index';
 
 export const ModalConfirm = (title, content, onOk, onCancel) => {
     const config = {};
