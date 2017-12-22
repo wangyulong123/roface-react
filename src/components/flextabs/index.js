@@ -108,12 +108,14 @@ export default class Tab extends React.Component {
     } else {
       // TODO. 新增的时候，当空间不够的时候，应该将第一个收起来，将新增的排列到末尾
       if (this._isExistSpaceIfAdd) {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
         this.setState({
           tabs: this.state.tabs.concat(item),
           activeTabId: item.id,
         });
       }
       else {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
         // const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
         // this.setState({
         //   tabs: this.state.tabs.concat(item),
