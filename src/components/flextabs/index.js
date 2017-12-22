@@ -47,40 +47,46 @@ export default class Tab extends React.Component {
         allMenus.push(menuItem);
       });
       const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0];
-      this._createTab(initTab);
+      const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
+      this._createTab(initTab ? initTab : indexMenu);
     }
   }
 
+
   checkWidth = () => {
     if (this.tabsWrapper) {
-      const tabsLength = this.state.tabs.length * this.tabWidth;
-      if (this.tabsWrapper.offsetWidth - 5 - 41 < tabsLength) {
-        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) > this.tabWidth;
+      const tabsLength = this.state.tabs.length * (this.tabWidth + 2);
+      if (this.tabsWrapper.offsetWidth - 5 - 42 < tabsLength) {
+        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length) * 2 - tabsLength) > this.tabWidth;
         if (isSpace) {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-1:' + isSpace);
         } else {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-1:' + isSpace);
+          /*
+          * 缩小时空间不足，进行折叠tabs，将最后一个tab页进行折叠
+          * */
           const tempCollapseItems = this.state.tabs.length ? this.state.tabs.pop() : null;
           this.setState({
             tabs: this.state.tabs,
             activeTabId: this.state.tabs.length && this.state.tabs[this.state.tabs.length -1 ] .id,
-            tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
+            tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
           });
         }
       } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-2:' + isSpace);
           const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
           this.setState({
             tabsCollapse: this.state.tabsCollapse,
             activeTabId: tempTabsItems ? tempTabsItems.id : '',
-            tabs: this.state.tabs.concat(tempTabsItems),
+            tabs: tempTabsItems ? this.state.tabs.concat(tempTabsItems) : this.state.tabs,
             showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
           });
         } else {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-2:' + isSpace);
+          // 新增时，空间不够，进行对tabs变更，实现思路和缩小时的原理一致,不同的是折叠的是第一个tab页
         }
       }
       this.offsetWidth = this.tabsWrapper.offsetWidth;
@@ -88,7 +94,7 @@ export default class Tab extends React.Component {
   };
 
   _createTab = (item) => {
-    this.checkWidth();
+    // this.checkWidth();
     const isExsitTabsItem = this.state.tabs && this.state.tabs
         .find(tabsItem => tabsItem.id === item.id);
     const isExsitCollapseItem = this.state.tabsCollapse && this.state.tabsCollapse
@@ -101,12 +107,28 @@ export default class Tab extends React.Component {
       this._selectTabCollapse(item);
     } else {
       // TODO. 新增的时候，当空间不够的时候，应该将第一个收起来，将新增的排列到末尾
-      this.setState({
-        tabs: this.state.tabs.concat(item),
-        activeTabId: item.id,
-      });
+      if (this._isExistSpaceIfAdd) {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
+        this.setState({
+          tabs: this.state.tabs.concat(item),
+          activeTabId: item.id,
+        });
+      }
+      else {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
+        // const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
+        // this.setState({
+        //   tabs: this.state.tabs.concat(item),
+        //   activeTabId: item.id,
+        //   tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+        // });
+      }
     }
-    this.checkWidth();
+    // this.checkWidth();
+  };
+
+  _isExistSpaceIfAdd = () => {
+    return true;
   };
 
   _closeAllTabs = () => {
@@ -253,6 +275,7 @@ export default class Tab extends React.Component {
                           style={{ cursor: 'move' }}
                           title={tabItem.name}
                           {...event}
+                          key={ 'span'+ tabItem.id}
                         >
                           {tabItem.name}
                         </span>
