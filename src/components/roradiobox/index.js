@@ -5,37 +5,54 @@ export default class RadioBox extends React.Component{
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const valueArr = this.props.valueArr || [];
+        const options = this.assembleOptions(this.props.model, this.props.options);
             this.state = {
           // eslint-disable-next-line react/no-unused-state
           value,
-          valueArr,
-          checkedArr: this._constructCheckedArr(value, valueArr),
+          options,
+          checkedArr: this._constructCheckedArr(value, options),
         };
     }
-    _radioChangeCallback = (value) => {
-        console.log(`selected-value:${value}`);
+    assembleOptions = (model, options) => {
+        let newOptions;
+        switch(model) {
+            case 'model':
+                newOptions = options.map(item => item.itemName);
+                break;
+            case 'jsonModel':
+                newOptions = options.map(item => item.v);
+                break;
+            case 'additionModel':
+            default:
+                newOptions = options;
+        }
+        return newOptions;
+    };
+    _radioChangeCallback = (value, index, checked) => {
+        let newValue = checked ? value : '';
+        const newCheckArr = this._constructCheckedArr(newValue, this.state.options);
         this.setState({
             // eslint-disable-next-line react/no-unused-state
-            value,
-            checkedArr: this._constructCheckedArr(value, this.state.valueArr),
+            value: newValue,
+            checkedArr: newCheckArr,
         });
         const { onChange } = this.props;
         if (onChange) {
-            onChange(value);
+            onChange(newValue);
         }
     };
-    _constructCheckedArr = (value, valueArr) => {
-        return valueArr.map(item => item === value);
+    _constructCheckedArr = (value, options) => {
+        return options.map(item => item === value);
     };
     _renderRadioItem = () => {
-      if (this.state.valueArr && this.state.valueArr.length !== 0) {
-         return this.state.valueArr.map((item, index) => {
+      if (this.state.options && this.state.options.length !== 0) {
+         return this.state.options.map((item, index) => {
               return (
                 <Radio
                   value={item}
                   checked={this.state.checkedArr[index]}
                   key={`radio${item}`}
+                  index={index}
                   radioChangeCallback={this._radioChangeCallback}
                 />
               );

@@ -20,7 +20,7 @@ export default class RoRadio extends React.Component{
         this.setState({
            checked: !this.state.checked,
         });
-        this.props.radioChangeCallback(this.state.value);
+        this.props.radioChangeCallback(this.state.value, this.props.index, !this.state.checked);
     };
     render() {
         return (

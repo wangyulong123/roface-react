@@ -28,5 +28,7 @@ export { default as TimePicker } from './timepicker';
 export { default as Text } from './rotext';
 export { default as TextArea } from './rotextarea';
 export { default as CheckBox } from './rocheckbox';
+export { default as RadioBox } from './roradiobox';
+export { default as MultiSelect } from './romultiselect';
 export { default as Footer } from './rofooter';
 export { default as DetailInfo } from './info';
