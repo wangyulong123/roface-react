@@ -7,7 +7,7 @@ export default class MultiSelect extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.value || [],
+            value: this._changeString2Array(this.props.value) || [],
         };
     }
 
