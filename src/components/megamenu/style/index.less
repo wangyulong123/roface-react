@@ -1,6 +1,7 @@
 @import "../../../style/index";
 
 .@{prefix}-nav-container {
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -10,13 +11,6 @@
   font-size: 13px;
   font-weight: 500;
   padding: 0 30px;
-}
-
-.@{prefix}-nav-left {
-  display: flex;
-  width: 69%;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .@{prefix}-navbar-logo {
@@ -38,8 +32,6 @@
   color: #FFFFFF;
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  //line-height: 30px;
 }
 
 .@{prefix}-menu {
@@ -68,13 +60,12 @@
   &-children {
     position: absolute;
     top: 50px;
-    left: 20%;
+    left: 19%;
     display: none;
     font-size: 15px;
     z-index: 999;
-    width: 50%;
+    width: 56%;
     box-shadow: 0 5px 5px #888888;
-    border-bottom: 1px solid #f39909;
     &-container {
       overflow: auto;
       max-height: 500px;
@@ -147,45 +138,48 @@
 }
 
 .@{prefix}-nav-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 63%;
   overflow: hidden;
-  width: 100%;
 }
 
 .@{prefix}-nav-menu-wrapper {
   display: flex;
-  width: 100%;
-  transition: all 0.5s
+  //width: 90%;
+  transition: all 0.5s;
 }
 
 .@{prefix}-nav-arrow-left {
   transition: all 0.5s;
   color: #FFFFFF;
-  margin-bottom: auto;
-  margin-top: auto;
-  display: none;
+  width: 22px;
+  cursor: pointer;
+  height: 50px;
   i {
-    cursor: pointer;
+    display: none;
     font-size: 3px;
+    line-height: 50px;
   }
   &:hover {
      background: #2878BF;
-     line-height: 50px;
    }
 }
 
 .@{prefix}-nav-arrow-right {
   transition: all 0.5s;
   color: #FFFFFF;
-  margin-bottom: auto;
-  margin-top: auto;
-  display: none;
+  width: 22px;
+  cursor: pointer;
+  height: 50px;
   i {
-    cursor: pointer;
+    display: none;
     font-size: 3px;
+    line-height: 50px;
   }
   &:hover {
       background: #2878BF;
-      line-height: 50px;
   }
 }
 
@@ -281,11 +275,6 @@
 
 .ant-form-item {
   margin-bottom: 8px;
-}
-
-.ant-form-item-label {
-  width: 77px;
-  min-width: 77px;
 }
 
 .@{prefix}-vertical-line {

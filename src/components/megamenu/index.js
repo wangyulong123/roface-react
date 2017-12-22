@@ -30,9 +30,9 @@ class MegaMenu extends React.Component {
         /* eslint-disable */
         const { prefix = 'ro', dataMount } = this.props;
         this.dom = ReactDom.findDOMNode(this);
-        this.right = Array.from(this.dom.children[0].children).filter(d => d.className === `${prefix}-nav-arrow-right`)[0];
-        this.wrapper = Array.from(this.dom.children[0].children).filter(d => d.className === `${prefix}-nav-wrapper`)[0];
-        this.left = Array.from(this.dom.children[0].children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
+        this.right = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-right`)[0];
+        this.wrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-wrapper`)[0];
+        this.left = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
         this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
         this.offsetWidth = this.wrapper.offsetWidth;
         this.checkWidth();
@@ -122,17 +122,17 @@ class MegaMenu extends React.Component {
     checkWidth = () => {
         if (this.wrapper) {
             if (this.wrapper.offsetWidth < this.wrapper.scrollWidth) {
-                this.right.style.display = 'block';
+                this.right.children[0].style.display = 'block';
             } else {
-                this.right.style.display = 'none';
+                this.right.children[0].style.display = 'none';
                 const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
                 if (marginLeft >= 0) {
-                    this.left.style.display = 'none';
+                    this.left.children[0].style.display = 'none';
                 }
-                if (this.left.style.display !== 'none' && this.offsetWidth < this.wrapper.offsetWidth) {
+                if (this.left.children[0].style.display !== 'none' && this.offsetWidth < this.wrapper.offsetWidth) {
                     const dValue = (marginLeft + (this.wrapper.offsetWidth - this.offsetWidth));
                     if (dValue >= 0) {
-                        this.left.style.display = 'none';
+                        this.left.children[0].style.display = 'none';
                     }
                     this.menuWrapper.style.marginLeft = (dValue >= 0 ? 0 : dValue) + 'px';
                 }
@@ -236,14 +236,14 @@ class MegaMenu extends React.Component {
         const dValue = this.wrapper.scrollWidth - this.wrapper.offsetWidth + marginLeft;
         if (dValue <= 0) {
             this.menuWrapper.style.marginLeft = marginLeft + (this.wrapper.offsetWidth - this.wrapper.scrollWidth) + 'px';
-            this.right.style.display = 'none';
+            this.right.children[0].style.display = 'none';
         } else if (dValue > this.wrapper.offsetWidth) {
             this.menuWrapper.style.marginLeft = (-(marginLeft + this.wrapper.offsetWidth)) + 'px';
         } else {
             this.menuWrapper.style.marginLeft = (marginLeft - dValue) + 'px';
-            this.right.style.display = 'none';
+            this.right.children[0].style.display = 'none';
         }
-        this.left.style.display = 'block';
+        this.left.children[0].style.display = 'block';
     };
     _moveLeft = () => {
         const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
@@ -252,9 +252,9 @@ class MegaMenu extends React.Component {
             this.menuWrapper.style.marginLeft = (marginLeft + this.wrapper.offsetWidth) + 'px';
         } else {
             this.menuWrapper.style.marginLeft = '0px';
-            this.left.style.display = 'none';
+            this.left.children[0].style.display = 'none';
         }
-        this.right.style.display = 'block';
+        this.right.children[0].style.display = 'block';
     };
     _dropDownBox = e => {
         const { dropDownState, dropDownBox } = this.state;
@@ -280,8 +280,8 @@ class MegaMenu extends React.Component {
     };
     informationTabPane = (prefix, getFieldDecorator) => {
         const formItemLayout = {
-            labelCol: { span: 5 },
-            wrapperCol:{ span: 15, offset: 1 },
+            labelCol: { span: 4 },
+            wrapperCol:{ span: 14, offset: 0 },
         };
         return (
             <div className={`${prefix}-tabPane1`}>
@@ -340,7 +340,7 @@ class MegaMenu extends React.Component {
     passwordTabPane = (prefix, getFieldDecorator) => {
         const formItemLayout = {
             labelCol: { span: 4 },
-            wrapperCol:{ span: 15, offset: 1 },
+            wrapperCol:{ span: 15, offset: 0 },
         };
         return (
             <div className={`${prefix}-tabPane2`}>
@@ -394,18 +394,16 @@ class MegaMenu extends React.Component {
         const { dropDownBox, dropDownState, quitState } = this.state;
         return (
             <div className={`${prefix}-nav-container`}>
-                <div className={`${prefix}-nav-left`}>
-                    <div className={`${prefix}-navbar-logo`}>
-                        <span className={`${prefix}-navbar-icon`} />
-                    </div>
-                    <div className={`${prefix}-nav-arrow-left`}><Icon type="left" onClick={this._moveLeft}/></div>
-                    <div className={`${prefix}-nav-wrapper`}>
-                        <div className={`${prefix}-nav-menu-wrapper`}>
-                            {this.renderMenu(prefix)}
-                        </div>
-                    </div>
-                    <div className={`${prefix}-nav-arrow-right`}><Icon type="right" onClick={this._moveRight}/></div>
+                <div className={`${prefix}-navbar-logo`}>
+                    <span className={`${prefix}-navbar-icon`} />
                 </div>
+                <div className={`${prefix}-nav-arrow-left`}><Icon type="left" onClick={this._moveLeft} /></div>
+                <div className={`${prefix}-nav-wrapper`}>
+                    <div className={`${prefix}-nav-menu-wrapper`}>
+                        {this.renderMenu(prefix)}
+                    </div>
+                </div>
+                <div className={`${prefix}-nav-arrow-right`}><Icon type="right" onClick={this._moveRight}/></div>
                 <div className={`${prefix}-nav-right`}>
                     <span className={`${prefix}-right-items`}>
                         <span className={`${prefix}-personal-portrait`} />
