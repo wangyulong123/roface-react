@@ -16,17 +16,7 @@ class EasyRichText extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-      disabled: nextProps.disabled,
-      pasteFilterStyle: nextProps.pasteFilterStyle,
-    });
-    if (this.editor) {
-      this.editor.$textElem.attr('contenteditable', nextProps.disabled);
-    }
-  }
-
+  /* eslint-disable */
   componentDidMount() {
     const elem = this.refs.editorElem;
     const editor = new Editor(elem);
@@ -40,15 +30,28 @@ class EasyRichText extends React.Component {
     editor.customConfig.linkImgCheck = (src) => this.linkImgCheck(src);
     editor.customConfig.linkCheck = (text, link) => this.linkCheck(text, link);
     editor.customConfig.pasteTextHandle = (constext) => this.handlePasteText(constext);
-    editor.customConfig.menus = menus;
     editor.customConfig.pasteFilterStyle = pasteFilterStyle;
-    editor.$textElem.attr('contenteditable', disabled);
+    if (menus) {
+      editor.customConfig.menus = menus;
+    }
     editor.create();
+    editor.$textElem.attr('contenteditable', disabled);
     this.editor = editor;
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value,
+      disabled: nextProps.disabled,
+      pasteFilterStyle: nextProps.pasteFilterStyle,
+    });
+    if (this.editor) {
+      this.editor.$textElem.attr('contenteditable', nextProps.disabled);
+    }
+  }
+
   handleOnChange = (value) => {
-    this.setState({ value: html });
+    this.setState({ value: value });
     this.props.onChange && this.props.onChange(value);
   };
 
@@ -75,6 +78,7 @@ class EasyRichText extends React.Component {
   handlePasteText = (context) => {
     return this.props.pasteTextHandle && this.props.pasteTextHandle(context);
   };
+  /* eslint-disable */
 
   render() {
     if (this.props.reading) {
@@ -90,9 +94,7 @@ class EasyRichText extends React.Component {
         style={{textAlign: 'left'}}
         {...this.props}
         ref="editorElem"
-      >
-        {this.state.value}
-      </div>
+      />
     );
   }
 }
