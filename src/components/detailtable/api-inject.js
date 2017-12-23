@@ -59,27 +59,41 @@ const _rows = [{
   name: '李雷',
   age: 13,
   address: '01',
+  height: 171,
+  weight: 62,
+  sex: 'M',
 }, {
   name: '韩梅梅',
   age: 12,
   address: '02',
+  height: 165,
+  weight: 48,
+  sex: 'F',
 }, {
   name: 'Polly',
   age: 1,
   address: '03',
+  height: 21,
+  weight: 2.3,
+  sex: 'U',
 }, {
   name: 'Miss Wang',
   age: 29,
   address: '04',
+  height: 161,
+  weight: 52,
+  sex: 'F',
 }];
 
 export default class DataListObject {
   init() {
+    const target = this;
     this.state.gridOptions = {
       searchRenderOnly: false,
       loading: false,
       size: 'default',
       bordered: true,
+      requireType: 'remote',
       // rowSelection: {
 
       // getCheckboxProps: record => ({
@@ -107,15 +121,33 @@ export default class DataListObject {
     };
 
     this.state.paginationConf = {
-      pagination: true,
-      currentPage: 1,
-      totalItems: 0,
-      itemsPerPage: 15,
-      pagesLength: 10,
+      showQuickJumper: true,
+      showSizeChanger: true,
+      defaultPageSize: 10,
+      current: 1,
+      total: 4,
+      pageSize: this.defaultPageSize,
       noItemText: '',
-      perPageOptions: [10, 20, 30, 40, 50, 150, 300],
+      // itemRender: function (page, type, originalElement) {
+      //   console.log(page, type, originalElement);
+      // },
+      pageSizeOptions: ['10', '20', '30', '40', '50', '150', '300'],
       onChange(currentPage, itemsPerPage) {
-        console.log(currentPage + itemsPerPage);
+        target.$set('paginationConf.current', currentPage);
+        if (target.on.pageChanged) {
+          target.on.pageChanged(currentPage, itemsPerPage);
+        }
+      },
+      onShowSizeChange(current, size) {
+        target.$set('paginationConf.pageSize', size);
+        if (target.on.itemPerPageChange) {
+          target.on.itemPerPageChange(current, size);
+        }
+      },
+      // 用作添加删除数据时单页数据条目数超过默认设置时修改单页显示条目数
+      onSizeChange(size) {
+        console.log(this.defaultPageSize, size);
+        target.$set('paginationConf.pageSize', Math.max(this.defaultPageSize, size));
       },
     };
 
@@ -124,12 +156,12 @@ export default class DataListObject {
     this.state.key = '$$key';
 
     // 自定义表footer
-    function setFooter(footerData) {
-      console.log(footerData);
-      return (<h1>111</h1>);
-    }
+    // function setFooter(footerData) {
+    //   console.log(footerData);
+    //   return (<h1>111</h1>);
+    // }
 
-    this.state.footer = setFooter.bind(this);
+    // this.state.footer = setFooter.bind(this);
 
     // 事件监听注册
     this.on = {
@@ -296,6 +328,7 @@ export default class DataListObject {
   }
 
   run() {
+    this.$set('gridOptions.requireType', 'remote');
     const tplPromise = this.queryData('default').then((res) => {
       this.fillData(res);
     });
@@ -487,7 +520,7 @@ export default class DataListObject {
 
       // 更新所有行
       const removeRows = [];
-      const rowCopy = this.state.rows.filter((row) => {
+      const rows = this.state.rows.filter((row) => {
         const idx = keys.indexOf(row[this.state.key]);
         if (idx !== -1) {
           removeRows.push(row);
@@ -503,17 +536,16 @@ export default class DataListObject {
       if (selectedKeys.length !== this.state.rowSelection.selectedRowKeys.length) {
         this.$set('rowSelection.selectedRowKeys', selectedKeys);
 
-        const selectedRows = rowCopy.filter((row) => {
+        const selectedRows = rows.filter((row) => {
           return selectedKeys.indexOf(row[this.state.key]) !== -1;
         });
 
         // 触发行选中监听
         this.state.rowSelection.onChange(selectedKeys, selectedRows);
       }
+      this.state.paginationConf.onSizeChange(rows.length);
 
-      this.setState({
-        rows: rowCopy,
-      });
+      this.setState({ rows });
 
       // 对返回的选中行进行排序
       ret = removeRows.sort((a, b) => {
@@ -525,45 +557,41 @@ export default class DataListObject {
 
   appendRow(row) {
     if (!(row && row instanceof Object)) return;
-    const rowsCopy = this.state.rows.slice(0);
-    rowsCopy.push(this.indexingRow(row));
-    this.setState({
-      rows: rowsCopy,
-    });
+    const rows = this.state.rows.slice(0);
+    rows.push(this.indexingRow(row));
+    this.state.paginationConf.onSizeChange(rows.length);
+    this.setState({ rows });
   }
 
   prependRow(row) {
     if (!(row && row instanceof Object)) return;
-    const rowsCopy = this.state.rows.slice(0);
-    rowsCopy.unshift(this.indexingRow(row));
-    this.setState({
-      rows: rowsCopy,
-    });
+    const rows = this.state.rows.slice(0);
+    rows.unshift(this.indexingRow(row));
+    this.state.paginationConf.onSizeChange(rows.length);
+    this.setState({ rows });
   }
 
 
   insertBefore(currRow, newRow) {
     if (!(currRow && currRow instanceof Object) || !(newRow && newRow instanceof Object)) return;
-    const rowsCopy = this.state.rows;
-    const idx = rowsCopy.indexOf(currRow);
+    const rows = this.state.rows.slice(0);
+    const idx = rows.indexOf(currRow);
     if (idx !== -1) {
-      rowsCopy.splice(idx, 0, this.indexingRow(newRow));
+      rows.splice(idx, 0, this.indexingRow(newRow));
     }
-    this.setState({
-      rows: rowsCopy,
-    });
+    this.state.paginationConf.onSizeChange(rows.length);
+    this.setState({ rows });
   }
 
   insertAfter(currRow, newRow) {
     if (!(currRow && currRow instanceof Object) || !(newRow && newRow instanceof Object)) return;
-    const rowsCopy = this.state.rows;
-    const idx = rowsCopy.indexOf(currRow);
+    const rows = this.state.rows;
+    const idx = rows.indexOf(currRow);
     if (idx !== -1) {
-      rowsCopy.splice(idx + 1, 0, this.indexingRow(newRow));
+      rows.splice(idx + 1, 0, this.indexingRow(newRow));
     }
-    this.setState({
-      rows: rowsCopy,
-    });
+    this.state.paginationConf.onSizeChange(rows.length);
+      this.setState({ rows });
   }
 
   setSize(size) {
@@ -584,7 +612,7 @@ export default class DataListObject {
         const { value } = entry.target;
         val = value;
       }
-      const rowsCopy = target.state.rows.map((r, i) => {
+      const rows = target.state.rows.map((r, i) => {
         const rc = r;
         if (index === i) {
           const oldVal = rc[column.dataIndex];
@@ -595,9 +623,7 @@ export default class DataListObject {
         }
         return rc;
       });
-      target.setState({
-        rows: rowsCopy,
-      });
+      target.setState({ rows });
     }
 
     function onChange(entry) {
@@ -728,6 +754,7 @@ export default class DataListObject {
           linkagesExtend[node.field].visited = true;
         }
 
+        // 使用JSON序列化方法进行环检查
         try {
           JSON.stringify(node);
         } catch (e) {
@@ -738,7 +765,6 @@ export default class DataListObject {
           };
           throw error;
         }
-        // console.log(node, collection.indexOf(node), collection[collection.indexOf(node) + 1]);
         buildTree(collection[collection.indexOf(node) + 1]);
       }
     }
@@ -758,7 +784,6 @@ export default class DataListObject {
           this.linkageTrees.push(linkageTree);
         }
       });
-      // 未做环检查，有环时直接溢出，体验性不佳
     }
   }
 
