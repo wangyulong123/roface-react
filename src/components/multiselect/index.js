@@ -10,7 +10,13 @@ export default class MultiSelect extends React.Component {
             value: this._changeString2Array(this.props.value) || [],
         };
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
     _assembleOptions = (model, options) => {
         let newOptions;
         switch(model) {

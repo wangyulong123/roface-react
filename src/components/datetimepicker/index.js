@@ -7,11 +7,19 @@ import moment from 'moment';
 import { DatePicker } from 'antd';
 
 class RoDateTimePicker extends React.Component {
+  static defaultProps = {
+    format: 'YYYY-MM-DD HH:mm:ss',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
   }
 
   /* eslint-disable */
@@ -43,15 +51,14 @@ class RoDateTimePicker extends React.Component {
     const { reading, format } = this.props;
     if (reading) {
       return (
-        <div {...this.props}>
-          {value && moment(new Date(this.state.value)).format(format)}
+        <div>
+          {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
     }
     return (
       <DatePicker
         placeholder="Select time"
-        format="YYYY-MM-DD HH:mm:ss"
         {...this.props}
         showTime
         value={this.handleMillisecondValue(this.state.value)}

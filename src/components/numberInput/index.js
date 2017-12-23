@@ -15,6 +15,13 @@ class RoNumber extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const valueNum = parseFloat(nextProps.value);
+    this.setState({
+      value: isNaN(valueNum) ? '' : isFinite(valueNum) ? valueNum : '',
+    });
+  }
+
   handleNumberChange = (e) => {
     const { onChange, onValueChange } = this.props;
     let number = e;
@@ -27,18 +34,10 @@ class RoNumber extends React.Component {
   };
   /* eslint-disable */
 
-  focus = () => {
-    this.refs.InputNumber.focus();
-  };
-
-  blur = () => {
-    this.refs.InputNumber.blur();
-  };
-
   render() {
     if (this.props.reading) {
       return (
-        <div {...this.props}>
+        <div>
           {this.props.value}
         </div>
       );
@@ -47,7 +46,6 @@ class RoNumber extends React.Component {
     return (
       <InputNumber
         {...this.props}
-        ref="InputNumber"
         onChange={this.handleNumberChange}
         value={this.state.value}
       />

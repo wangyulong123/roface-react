@@ -23,7 +23,8 @@ export default Form.create()(class Forms extends React.Component {
   _calculateGroup = (data) => {
     const groups = {};
     if (Object.keys(data).length > 0) {
-      const { elements = [] } = data;
+      let { elements = [] } = data;
+      elements = elements.filter(item => item.elementUIHint.visible);
       if (elements.some(ele => ele.group)) {
         // 如果有分组存在，根据分组进行过滤
         elements.forEach((ele) => {
@@ -117,23 +118,34 @@ export default Form.create()(class Forms extends React.Component {
     return (
       <div className={`${prefix}-info`}>
         <Form>
-          <Collapse activeKey={keys} onChange={this._panelChange}>
-            {Object.keys(groups).map((group) => {
-              return (
-                <Panel header={group.split(':')[1]} id={group} key={group}>
-                  <div className={`${prefix}-info-container`}>
-                    {this._renderFormItem(groups[group], dataForm, `${prefix}-info`)}
-                  </div>
-                </Panel>
-              );
-            })}
-          </Collapse>
+          {
+            !groups.noGroup ? (
+              <Collapse activeKey={keys} onChange={this._panelChange}>
+                {Object.keys(groups).map((group) => {
+                  return (
+                    groups[group].length !== 0 ?
+                      <Panel header={group.split(':')[1]} id={group} key={group}>
+                        <div className={`${prefix}-info-container`}>
+                          {this._renderFormItem(groups[group], dataForm, `${prefix}-info`)}
+                        </div>
+                      </Panel> : null
+                  );
+                })}
+              </Collapse>) : (
+                <div className={`${prefix}-info-container`}>
+                  {this._renderFormItem(groups.noGroup, dataForm, `${prefix}-info`)}
+                </div>)
+          }
         </Form>
-        <div className={`${prefix}-info-anchor`}>
-          <Anchor>
-            {this._renderAnchor(groups)}
-          </Anchor>
-        </div>
+        {
+          !groups.noGroup ? (
+            <div className={`${prefix}-info-anchor`}>
+              <Anchor>
+                {this._renderAnchor(groups)}
+              </Anchor>
+            </div>
+          ) : null
+        }
       </div>
     );
   }
