@@ -33,10 +33,15 @@ export default class RoText extends React.Component {
               <div>{this.props.value}</div>
             );
         }
+        const nullStr = '';
         return (
           <Input
             {...this.props}
             value={this.state.value}
+            addonBefore={this.props.prefix}
+            addonAfter={this.props.suffix}
+            prefix={nullStr}
+            suffix={nullStr}
             onChange={this.handleChange}
           />
         );
