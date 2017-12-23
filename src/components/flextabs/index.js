@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Route } from 'react-router-dom';
-import { Icon, Modal } from '../index';
+import { Icon, Notification } from '../index';
 import TabPanel from './TabPanel';
 import { depthFirstSearch } from '../../lib/menutransform';
 import { addOnResize } from '../../lib/listener';
@@ -110,14 +110,12 @@ export default class Tab extends React.Component {
     } else {
       // 新增的时候，当空间不够的时候，应该将第一个tab折叠起来，将新增的tab排列到末尾
       if (this._isExistSpaceIfAdd()) {
-        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd());
         this.setState({
           tabs: this.state.tabs.concat(item),
           activeTabId: item.id,
         });
       }
       else {
-        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
         const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
         this.setState({
           tabs: this.state.tabs.concat(item),
@@ -142,8 +140,9 @@ export default class Tab extends React.Component {
 
   _closeOtherTabs = () => {
     if (!this.state.activeTabId) {
-      Modal.info({
-        title: '当前没有可用的tab',
+      Notification.info({
+        description: '当前没有可用的tab',
+        duration: 3,
       });
     }
     this.setState({
@@ -186,8 +185,9 @@ export default class Tab extends React.Component {
 
   _dropHiddenDown = () => {
     if (!this.state.tabsCollapse.length) {
-      Modal.info({
-        title: '没有折叠起来的tab页',
+      Notification.info({
+        description: '没有折叠起来的tab页',
+        duration: 3,
       });
       return;
     }
@@ -228,35 +228,23 @@ export default class Tab extends React.Component {
     return document.querySelector('.' + this.refStr + ' ' + cssSelector);
   };
 
+  _dragStart = (ev, tabItem) => {
+    ev.dataTransfer.setData('Text',ev.target.id);
+    console.log(ev.target.id);
+    console.log(ev.target);
+    console.log(tabItem);
+    const dragIndex = this.state.tabs.findIndex(valueItem => tabItem.id === valueItem.id);
+    console.log('dragIndex:' + dragIndex);
+    if (this.tabsWrapper) {
+      const tabsLength = (this.state.tabs.length) * (this.tabWidth + 2);
+      return this.tabsWrapper.offsetWidth - 5 - 42 > tabsLength;
+    }
+  };
+
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
-    const event = {
-      onMouseDown: (e) => {
-        this.isMoving = true;
-        // const tag = window.getComputedStyle(this._getTag());
-        const tag = window.getComputedStyle(document.querySelector('.close'));
-        this.tagX = tag.left.substring(0, tag.left.length - 2);
-        this.tagY = tag.top.substring(0, tag.top.length - 2);
-        this.clientX = e.clientX;
-        this.clientY = e.clientY;
-        console.log('onMouseDown:' + e);
-      },
-      onMouseMove: (e) => {
-        if (this.isMoving) {
-          const tag = document.querySelector('.close');
-          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
-          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
-          console.log('onMouseMove:' + e);
-        }
-      }
-    };
-
-    event.onMouseUp = event.onMouseOut = (e) => {
-      this.isMoving = false;
-    };
-
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">
@@ -279,6 +267,7 @@ export default class Tab extends React.Component {
                         deleteTab={this._deleteTab}
                         clickTab={this._clickTab}
                         isCollapse={this.state.isCollapse}
+                        dragStart={this._dragStart}
                       />
                     );
                   })
