@@ -176,12 +176,15 @@ export default class Tab extends React.Component {
   };
 
   _clickTab = (currentTabItem) => {
-    const { history } = this.props;
-    history.replace(`/${currentTabItem.id}`);
-    this.setState({
-      activeTabId: currentTabItem.id,
-      isCollapse: false
-    });
+    const { activeTabId } = this.state;
+    if (activeTabId !== currentTabItem.id) {
+      const {history} = this.props;
+      history.replace(`/${currentTabItem.id}`);
+      this.setState({
+        activeTabId: currentTabItem.id,
+        isCollapse: false
+      });
+    }
   };
 
   _dropHiddenDown = () => {

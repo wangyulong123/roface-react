@@ -15,8 +15,8 @@ export default class Forms extends React.Component {
     const { dataFormId, didMount } = this.props;
     dataForm.getMeta(dataFormId).then((res) => {
       this.setState({
-        dataForm: res.meta,
-        dataValue: res.body,
+        dataForm: res.meta || res,
+        dataValue: res.body || {},
       }, () => {
         didMount({
           setValue: this.setValue,

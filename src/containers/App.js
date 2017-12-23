@@ -15,6 +15,7 @@ export default class App extends React.Component {
     this.state = {
       menuData: [],
     };
+    this.cache = {};
   }
   _menuClick = (item, history) => {
     history.replace(`/${item.id}`);
@@ -29,9 +30,11 @@ export default class App extends React.Component {
   };
   _renderComponent = (props, tab) => {
     if (tab && tab.url) {
-      /* eslint-disable */
-      const Com = this._getObject(app, tab.url.split('/')) || NotFound;
-      return <Com />;
+      if (!this.cache[tab.id]) {
+        const Com = this._getObject(app, tab.url.split('/')) || NotFound;
+        this.cache[tab.id] = <Com />;
+      }
+      return this.cache[tab.id];
     }
     return <NotFound />;
   };
