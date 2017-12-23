@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Route } from 'react-router-dom';
 import { Icon, Modal } from '../index';
+import TabPanel from './TabPanel';
 import { depthFirstSearch } from '../../lib/menutransform';
 import { addOnResize } from '../../lib/listener';
 
@@ -21,6 +22,7 @@ export default class Tab extends React.Component {
       tabsCollapse: [],
       showTabsCollapse: 'none',
       activeTabId: null,
+      isCollapse: false,
     };
   }
 
@@ -30,7 +32,7 @@ export default class Tab extends React.Component {
     this.dom = ReactDom.findDOMNode(this);
     // tab的固定长度
     this.tabWidth = 110;
-    this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-page-content-wrapper`)[0];
+    this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-page-content-wrapper`)[0];
     this.offsetWidth = this.tabsWrapper.offsetWidth;
 
     this.checkWidth();
@@ -106,9 +108,9 @@ export default class Tab extends React.Component {
     } else if (isExsitCollapseItem && !isExsitTabsItem) {
       this._selectTabCollapse(item);
     } else {
-      // TODO. 新增的时候，当空间不够的时候，应该将第一个收起来，将新增的排列到末尾
-      if (this._isExistSpaceIfAdd) {
-        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
+      // 新增的时候，当空间不够的时候，应该将第一个tab折叠起来，将新增的tab排列到末尾
+      if (this._isExistSpaceIfAdd()) {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd());
         this.setState({
           tabs: this.state.tabs.concat(item),
           activeTabId: item.id,
@@ -116,19 +118,22 @@ export default class Tab extends React.Component {
       }
       else {
         console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
-        // const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
-        // this.setState({
-        //   tabs: this.state.tabs.concat(item),
-        //   activeTabId: item.id,
-        //   tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
-        // });
+        const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
+        this.setState({
+          tabs: this.state.tabs.concat(item),
+          activeTabId: item.id,
+          tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+        });
       }
     }
     // this.checkWidth();
   };
 
   _isExistSpaceIfAdd = () => {
-    return true;
+    if (this.tabsWrapper) {
+      const tabsLength = (this.state.tabs.length + 1) * (this.tabWidth + 2);
+      return this.tabsWrapper.offsetWidth - 5 - 42 > tabsLength;
+    }
   };
 
   _closeAllTabs = () => {
@@ -175,6 +180,7 @@ export default class Tab extends React.Component {
     history.replace(`/${currentTabItem.id}`);
     this.setState({
       activeTabId: currentTabItem.id,
+      isCollapse: false
     });
   };
 
@@ -200,6 +206,7 @@ export default class Tab extends React.Component {
       tabs: this.state.tabs.concat(collapseItem),
       activeTabId: collapseItem.id,
       tabsCollapse: [...tempCollapse, tempTab],
+      isCollapse: true
     });
   };
 
@@ -265,22 +272,14 @@ export default class Tab extends React.Component {
                       className = 'li-active';
                     }
                     return (
-                      <li
-                        style={{ float: 'left' }}
+                      <TabPanel
+                        tabItem={tabItem}
+                        activeTabId={this.state.activeTabId}
                         className={className}
-                        onClick={() => this._clickTab(tabItem)}
-                        key={tabItem.id}
-                      >
-                        <span
-                          style={{ cursor: 'move' }}
-                          title={tabItem.name}
-                          {...event}
-                          key={ 'span'+ tabItem.id}
-                        >
-                          {tabItem.name}
-                        </span>
-                        <Icon type="close" className="close" onClick={() => this._deleteTab(tabItem)} />
-                      </li>
+                        deleteTab={this._deleteTab}
+                        clickTab={this._clickTab}
+                        isCollapse={this.state.isCollapse}
+                      />
                     );
                   })
                 }
