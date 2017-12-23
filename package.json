@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node bin/build.js",
-    "start": "node bin/start.js"
+    "start": "node bin/start.js",
+    "roface": "node bin/roface"
   },
   "repository": {
     "type": "git",
@@ -15,11 +16,12 @@
   "author": "qliu1@amarsoft.com",
   "license": "ISC",
   "dependencies": {
+    "antd": "^3.0.1",
+    "jquery": "^3.2.1",
+    "moment": "^2.20.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "antd": "^3.0.1",
-    "react-router-dom": "^4.2.2",
-    "jquery": "^3.2.1"
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.2",

@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import { Route } from 'react-router-dom';
-// import { Tabs } from 'antd';
-import { Icon, Modal } from 'antd';
+import { Route } from 'react-router-dom';
+import { Icon, Modal } from '../index';
+import { depthFirstSearch } from '../../lib/menutransform';
+import { addOnResize } from '../../lib/listener';
+
 import './mega-tabcontent.css';
 
 export default class Tab extends React.Component {
@@ -10,6 +12,10 @@ export default class Tab extends React.Component {
     super(props);
     this.dom = null;
     this.tabsWrapper = null;
+    this.refStr = new Date().getTime();
+    this.isMoving = false;
+    this.clientX = 0;
+    this.clientY = 0;
     this.state = {
       tabs: [],
       tabsCollapse: [],
@@ -26,46 +32,61 @@ export default class Tab extends React.Component {
     this.tabWidth = 110;
     this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-page-content-wrapper`)[0];
     this.offsetWidth = this.tabsWrapper.offsetWidth;
+
     this.checkWidth();
-    window.onresize = () => {
-      this.checkWidth();
-    };
+    addOnResize(this.checkWidth);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { history } = this.props;
+    const pathname = history.location && history.location.pathname && history.location.pathname.substr(1);
+    if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname)
+    {
+      let allMenus = [];
+      depthFirstSearch(nextProps.data, (menuItem) => {
+        allMenus.push(menuItem);
+      });
+      const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0];
+      const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
+      this._createTab(initTab ? initTab : indexMenu);
+    }
+  }
+
 
   checkWidth = () => {
     if (this.tabsWrapper) {
-      const tabsLength = this.state.tabs.length * this.tabWidth;
-      if (this.tabsWrapper.offsetWidth - 5 - 41 < tabsLength) {
-        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) > this.tabWidth;
+      const tabsLength = this.state.tabs.length * (this.tabWidth + 2);
+      if (this.tabsWrapper.offsetWidth - 5 - 42 < tabsLength) {
+        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length) * 2 - tabsLength) > this.tabWidth;
         if (isSpace) {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-1:' + isSpace);
         } else {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-1:' + isSpace);
+          /*
+          * 缩小时空间不足，进行折叠tabs，将最后一个tab页进行折叠
+          * */
           const tempCollapseItems = this.state.tabs.length ? this.state.tabs.pop() : null;
           this.setState({
             tabs: this.state.tabs,
             activeTabId: this.state.tabs.length && this.state.tabs[this.state.tabs.length -1 ] .id,
-            tabsCollapse: this.state.tabsCollapse.concat(tempCollapseItems),
+            tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
           });
         }
-        console.log('<');
       } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
-        console.log('>');
-        // console.log((this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length -1) * 2 - tabsLength) < this.tabWidth);
         const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
-          console.log('isSpace:' + isSpace);
+          console.log('isSpace-2:' + isSpace);
           const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
           this.setState({
             tabsCollapse: this.state.tabsCollapse,
             activeTabId: tempTabsItems ? tempTabsItems.id : '',
-            tabs: this.state.tabs.concat(tempTabsItems),
+            tabs: tempTabsItems ? this.state.tabs.concat(tempTabsItems) : this.state.tabs,
             showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
           });
         } else {
-          console.log('isSpace:' + isSpace);
-          console.log('tabsCollapse.length:' + this.state.tabsCollapse.length);
+          console.log('isSpace-2:' + isSpace);
+          // 新增时，空间不够，进行对tabs变更，实现思路和缩小时的原理一致,不同的是折叠的是第一个tab页
         }
       }
       this.offsetWidth = this.tabsWrapper.offsetWidth;
@@ -73,25 +94,45 @@ export default class Tab extends React.Component {
   };
 
   _createTab = (item) => {
-    this.checkWidth();
-    const isExsitItem = this.state.tabs && this.state.tabs
-        .find(tabsItem => tabsItem.id === item.id );
-    if (isExsitItem) {
+    // this.checkWidth();
+    const isExsitTabsItem = this.state.tabs && this.state.tabs
+        .find(tabsItem => tabsItem.id === item.id);
+    const isExsitCollapseItem = this.state.tabsCollapse && this.state.tabsCollapse
+        .find(collapseItem => collapseItem.id === item.id);
+    if (isExsitTabsItem && !isExsitCollapseItem) {
       this.setState({
         activeTabId: item.id,
       });
+    } else if (isExsitCollapseItem && !isExsitTabsItem) {
+      this._selectTabCollapse(item);
     } else {
-      this.setState({
-        tabs: this.state.tabs.concat(item),
-        activeTabId: item.id,
-      });
+      // TODO. 新增的时候，当空间不够的时候，应该将第一个收起来，将新增的排列到末尾
+      if (this._isExistSpaceIfAdd) {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
+        this.setState({
+          tabs: this.state.tabs.concat(item),
+          activeTabId: item.id,
+        });
+      }
+      else {
+        console.log('_isExistSpaceIfAdd:' + this._isExistSpaceIfAdd);
+        // const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
+        // this.setState({
+        //   tabs: this.state.tabs.concat(item),
+        //   activeTabId: item.id,
+        //   tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+        // });
+      }
     }
+    // this.checkWidth();
+  };
 
+  _isExistSpaceIfAdd = () => {
+    return true;
   };
 
   _closeAllTabs = () => {
     this.setState({ tabs: [] });
-    console.log('close all');
   };
 
   _closeOtherTabs = () => {
@@ -105,7 +146,6 @@ export default class Tab extends React.Component {
       this.state.activeTabId),
       activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
     });
-    console.log('close other');
   };
 
   _deleteTab = (isDeteleTab) => {
@@ -123,9 +163,6 @@ export default class Tab extends React.Component {
         activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 2].id,
       });
     }
-    console.log(this.state.tabs[this.state.tabs.length - 2]);
-    console.log(this.state.tabs.length - 2);
-    console.log('_deleteTab');
     this.checkWidth();
   };
 
@@ -157,12 +194,13 @@ export default class Tab extends React.Component {
     const tempTab = this.state.tabs.shift();
     const tempCollapse = this.state.tabsCollapse
       .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id);
+    const { history } = this.props;
+    history.replace(`/${collapseItem.id}`);
     this.setState({
       tabs: this.state.tabs.concat(collapseItem),
       activeTabId: collapseItem.id,
       tabsCollapse: [...tempCollapse, tempTab],
     });
-    console.log('_selecttabsCollapse');
   };
 
   _deleteTabCollapse = (e, collapseItem) => {
@@ -172,14 +210,46 @@ export default class Tab extends React.Component {
       tabsCollapse: this.state.tabsCollapse
         .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id),
     });
-    console.log('_deleteTabCollapse');
     return false;
+  };
+
+
+  _getTag = cssSelector => {
+    if (!cssSelector) {
+      return document.querySelector('.' + this.refStr);
+    }
+    return document.querySelector('.' + this.refStr + ' ' + cssSelector);
   };
 
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
+    const event = {
+      onMouseDown: (e) => {
+        this.isMoving = true;
+        // const tag = window.getComputedStyle(this._getTag());
+        const tag = window.getComputedStyle(document.querySelector('.close'));
+        this.tagX = tag.left.substring(0, tag.left.length - 2);
+        this.tagY = tag.top.substring(0, tag.top.length - 2);
+        this.clientX = e.clientX;
+        this.clientY = e.clientY;
+        console.log('onMouseDown:' + e);
+      },
+      onMouseMove: (e) => {
+        if (this.isMoving) {
+          const tag = document.querySelector('.close');
+          tag.style.left = Number(this.tagX) + e.clientX - this.clientX + 'px';
+          tag.style.top = Number(this.tagY) + e.clientY - this.clientY + 'px';
+          console.log('onMouseMove:' + e);
+        }
+      }
+    };
+
+    event.onMouseUp = event.onMouseOut = (e) => {
+      this.isMoving = false;
+    };
+
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">
@@ -201,7 +271,12 @@ export default class Tab extends React.Component {
                         onClick={() => this._clickTab(tabItem)}
                         key={tabItem.id}
                       >
-                        <span style={{ cursor: 'move' }} title={tabItem.name} >
+                        <span
+                          style={{ cursor: 'move' }}
+                          title={tabItem.name}
+                          {...event}
+                          key={ 'span'+ tabItem.id}
+                        >
                           {tabItem.name}
                         </span>
                         <Icon type="close" className="close" onClick={() => this._deleteTab(tabItem)} />
@@ -252,6 +327,9 @@ export default class Tab extends React.Component {
                     }
                   </div>
                 </ol>
+              </div>
+              <div>
+                <Route path="/" render={p => renderComponent(p, showTab[0])} />
               </div>
             </div>
           </div>

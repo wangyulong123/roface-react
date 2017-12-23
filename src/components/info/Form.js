@@ -1,5 +1,5 @@
 import React from 'react';
-import * as component from 'antd';
+import * as component from '../index';
 
 const { Form, Collapse, Anchor, Tooltip } = component;
 const { Link } = Anchor;
@@ -40,13 +40,9 @@ export default Form.create()(class Forms extends React.Component {
     return groups;
   }
   _getComponent = (editStyle) => {
-    let com = component.Input;
+    let com = component.Text;
     if (typeof editStyle === 'string') {
-      switch (editStyle) {
-        case 'Text': com = component.Input; break;
-        // case 'DatePicker': com = component.DatePicker; break;
-        default: com = component.Input;
-      }
+      com = component[editStyle] || component.Text;
     } else {
       com = editStyle;
     }
@@ -76,7 +72,7 @@ export default Form.create()(class Forms extends React.Component {
       case 'Currency': dataType = 'number'; break;
       case 'Date':
       case 'DateTime':
-      case 'Time': dataType = 'date'; break;
+      case 'Time': dataType = 'integer'; break;
       default: dataType = 'string';
     }
     return dataType;
