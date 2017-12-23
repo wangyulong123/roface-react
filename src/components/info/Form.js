@@ -1,5 +1,4 @@
 import React from 'react';
-import * as antd from 'antd';
 import * as component from '../index';
 
 const { Form, Collapse, Anchor, Tooltip } = component;
@@ -41,9 +40,9 @@ export default Form.create()(class Forms extends React.Component {
     return groups;
   }
   _getComponent = (editStyle) => {
-    let com = antd.Input;
+    let com = component.Text;
     if (typeof editStyle === 'string') {
-      com = component[editStyle] || antd.Input;
+      com = component[editStyle] || component.Text;
     } else {
       com = editStyle;
     }
