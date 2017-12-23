@@ -7,11 +7,19 @@ import moment from 'moment';
 import { DatePicker } from 'antd';
 
 class RoDatePicker extends React.Component {
+  static defaultProps = {
+    format: 'YYYY-MM-DD',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
   }
 
   /* eslint-disable */
@@ -39,8 +47,8 @@ class RoDatePicker extends React.Component {
     const { reading, format } = this.props;
     if (reading) {
       return (
-        <div {...this.props}>
-          {value && moment(new Date(this.state.value)).format(format)}
+        <div>
+          {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
     }

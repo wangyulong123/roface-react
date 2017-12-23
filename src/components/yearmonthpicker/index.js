@@ -10,11 +10,19 @@ import { DatePicker } from 'antd';
 const { MonthPicker } = DatePicker;
 
 class RoYearMonthPicker extends React.Component {
+  static defaultProps = {
+    format: 'YYYY-MM',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
   }
 
   /* eslint-disable */
@@ -42,8 +50,8 @@ class RoYearMonthPicker extends React.Component {
     const { scene, reading, format } = this.props;
     if (reading) {
       return (
-        <div {...this.props}>
-          {value && moment(new Date(this.state.value)).format(format)}
+        <div>
+          {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
     }

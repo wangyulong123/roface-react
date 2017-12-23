@@ -13,6 +13,13 @@ export default class RadioBox extends React.Component{
           checkedArr: this._constructCheckedArr(value, options),
         };
     }
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
     assembleOptions = (model, options) => {
         let newOptions;
         switch(model) {

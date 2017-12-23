@@ -11,6 +11,13 @@ export default class RoTextArea extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
     onChange = (e) => {
         const value = e.target.value || '';
         const { onChange } = this.props;

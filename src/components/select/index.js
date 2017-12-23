@@ -9,10 +9,17 @@ const Option = Select.Option;
 class RoSelect extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      value: props.value
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
   }
 
   handleChange = (value) => {
+    this.setState({ value: value });
     this.props.onChange && this.props.onChange(value);
   };
 
@@ -36,11 +43,20 @@ class RoSelect extends React.Component {
   };
 
   render() {
+    if (this.props.reading) {
+      return (
+        <div>
+          {this.state.value}
+        </div>
+      );
+    }
+
     return (
       <Select
         style={{ width: 120 }}
         {...this.props}
         onChange={this.handleChange}
+        value={this.state.value}
       >
         {this.renderOption()}
       </Select>
