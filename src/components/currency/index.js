@@ -79,7 +79,7 @@ class RoCurrency extends React.Component {
   render() {
     if (this.props.reading) {
       return (
-        <div {...this.props}>
+        <div>
           {this.state.value}
         </div>
       );
@@ -88,7 +88,6 @@ class RoCurrency extends React.Component {
     return (
       <Input
         {...this.props}
-        ref="Input"
         value={this.state.value}
         onChange={this.handleCurrencyChange}
         onBlur={this.handleCurrencyBlur}
