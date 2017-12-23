@@ -273,6 +273,7 @@ export default class Tab extends React.Component {
                     }
                     return (
                       <TabPanel
+                        key={tabItem.id}
                         tabItem={tabItem}
                         activeTabId={this.state.activeTabId}
                         className={className}

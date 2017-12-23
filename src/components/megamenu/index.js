@@ -58,15 +58,17 @@ class MegaMenu extends React.Component {
     };
     _menuClick = (e, item) => {
         e.stopPropagation();
-        const { menuClick, prefix = 'ro', history } = this.props;
-        menuClick && menuClick(item, history);
-        // this.changeSecondChildrenMenu(e, `${prefix}-menu-children`, 'none')
-        const childrenMenu = document.getElementsByClassName(`${prefix}-menu-children`);
-        Array.from(childrenMenu).forEach(menu => {
-          if (menu.style.display !== 'none') {
-            menu.style.display = 'none';
-          }
-        })
+        if (!item.children || item.children.length === 0) {
+          const { menuClick, prefix = 'ro', history } = this.props;
+          menuClick && menuClick(item, history);
+          // this.changeSecondChildrenMenu(e, `${prefix}-menu-children`, 'none')
+          const childrenMenu = document.getElementsByClassName(`${prefix}-menu-children`);
+          Array.from(childrenMenu).forEach(menu => {
+            if (menu.style.display !== 'none') {
+              menu.style.display = 'none';
+            }
+          })
+        }
     };
     flatToTree = (data, params) => {
         /*

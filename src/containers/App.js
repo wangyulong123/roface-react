@@ -1,8 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import { NavMega, FlexTabs, NavTree } from '../components';
-import Home from './Home';
+import * as app from '../../app';
+
+import { NavMega, FlexTabs } from '../components';
+import NotFound from './NotFound';
+// import * as showcase from '../../app/showcase';
+// import Home from './Home';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,9 +22,18 @@ export default class App extends React.Component {
       this.flexTabs._createTab(item);
     }
   };
+  _getObject = (obj, fields) => {
+    return fields.reduce((a, b) => {
+      return a[b];
+    }, obj);
+  };
   _renderComponent = (props, tab) => {
-    console.log(tab);
-    return <Home />;
+    if (tab && tab.url) {
+      /* eslint-disable */
+      const Com = this._getObject(app, tab.url.split('/')) || NotFound;
+      return <Com />;
+    }
+    return <NotFound />;
   };
   _getInstance = (instance) => {
     this.flexTabs = instance;
@@ -44,17 +57,12 @@ export default class App extends React.Component {
                   ref={this._getInstance}
                   dataMount={this._dataMount}
                 />
-                <div style={{ display: 'flex' }}>
-                  <NavTree data={this.state.menuData} />
-                  <div style={{ width: 'calc(100% - 256px)' }}>
-                    <FlexTabs
-                      {...props}
-                      data={this.state.menuData}
-                      ref={this._getInstance}
-                      renderComponent={this._renderComponent}
-                    />
-                  </div>
-                </div>
+                <FlexTabs
+                  {...props}
+                  data={this.state.menuData}
+                  ref={this._getInstance}
+                  renderComponent={this._renderComponent}
+                />
               </div>);
           }}
         />
