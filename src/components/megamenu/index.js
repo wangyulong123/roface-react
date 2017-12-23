@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Icon, Tabs, Text, Button, Form, Modal } from '../index';
+import { Form, Icon, Tabs, Text, Button, Modal } from '../index';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
