@@ -14,6 +14,13 @@ export default class RoCascader extends React.Component{
             options,
         };
     }
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
     handleChange = (value) => {
         this.setState({
            value,

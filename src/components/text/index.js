@@ -9,6 +9,13 @@ export default class RoText extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
     handleChange = (e) => {
         const value = e.target.value || '';
         this.setState({
