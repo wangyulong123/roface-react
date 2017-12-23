@@ -57,12 +57,17 @@ export default class App extends React.Component {
                   ref={this._getInstance}
                   dataMount={this._dataMount}
                 />
-                <FlexTabs
-                  {...props}
-                  data={this.state.menuData}
-                  ref={this._getInstance}
-                  renderComponent={this._renderComponent}
-                />
+                <div style={{ display: 'flex' }}>
+                  <NavTree data={this.state.menuData} />
+                  <div style={{ width: 'calc(100% - 256px)' }}>
+                    <FlexTabs
+                      {...props}
+                      data={this.state.menuData}
+                      ref={this._getInstance}
+                      renderComponent={this._renderComponent}
+                    />
+                  </div>
+                </div>
               </div>);
           }}
         />
