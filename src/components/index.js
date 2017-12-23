@@ -29,5 +29,6 @@ export { default as TextArea } from './textarea';
 export { default as CheckBox } from './checkbox';
 export { default as RadioBox } from './radiobox';
 export { default as MultiSelect } from './multiselect';
+export { default as Cascader } from './cascader';
 export { default as Footer } from './footer';
 export { default as DetailInfo } from './info';
