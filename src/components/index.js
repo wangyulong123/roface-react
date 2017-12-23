@@ -32,3 +32,4 @@ export { default as MultiSelect } from './multiselect';
 export { default as Cascader } from './cascader';
 export { default as Footer } from './footer';
 export { default as DetailInfo } from './info';
+export { default as Transfer } from './transfer';

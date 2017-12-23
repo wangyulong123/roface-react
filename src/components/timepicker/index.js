@@ -14,6 +14,10 @@ class RoTimePicker extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
+  }
+
   /* eslint-disable */
   handleMillisecondValue = (value) => {
     const { locale } = this.props;
@@ -39,7 +43,7 @@ class RoTimePicker extends React.Component {
     const { reading, format } = this.props;
     if (reading) {
       return (
-        <div {...this.props}>
+        <div>
           {value && moment(new Date(this.state.value)).format(format)}
         </div>
       );

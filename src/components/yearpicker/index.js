@@ -8,6 +8,10 @@ import moment from 'moment';
 import { DatePicker } from 'antd';
 
 class RoYearPicker extends React.Component {
+  static defaultProps = {
+    format: 'YYYY',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +19,10 @@ class RoYearPicker extends React.Component {
       mode: 'year',
       open: props.open || false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.value });
   }
 
   /* eslint-disable */
@@ -55,8 +63,8 @@ class RoYearPicker extends React.Component {
     const { reading, format } = this.props;
     if (reading) {
       return (
-        <div {...this.props}>
-          {value && moment(new Date(this.state.value)).format(format)}
+        <div>
+          {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
     }
@@ -66,7 +74,6 @@ class RoYearPicker extends React.Component {
         {...this.props}
         mode={this.state.mode}
         open={this.state.open}
-        format="YYYY"
         value={this.handleMillisecondValue(this.state.value)}
         onChange={this.handleYearChange}
         onOpenChange={this.handleOpenChange}
