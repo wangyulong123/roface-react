@@ -13,45 +13,42 @@ export default class Forms extends React.Component {
   }
   componentDidMount() {
     const { dataFormId, didMount } = this.props;
-    dataForm.getMeta(dataFormId).then((meta) => {
-      // 获取数据
-      dataForm.getDataOne(dataFormId).then((res) => {
-        this.setState({
-          dataForm: meta,
-          dataValue: res,
-        }, () => {
-          didMount({
-            setValue: this.setValue,
-            getData: this.getData,
-            setData: this.setData,
-            setItemVisible: this.setItemVisible,
-            setItemRequired: this.setItemRequired,
-            setValueReadonly: this.setValueReadonly,
-            setReadingMode: this.setReadingMode,
-            setGroupVisible: this.setGroupVisible,
-            setGroupReadonly: this.setGroupReadonly,
-            setGroupReadingMode: this.setGroupReadingMode,
-            setItemTemplate: this.setItemTemplate,
-            setItemPrefix: this.setItemPrefix,
-            setItemSuffix: this.setItemSuffix,
-            setItemTips: this.setItemTips,
-            setItemNotes: this.setItemNotes,
-            validate: this.validate,
-            validateItem: this.validateItem,
-            saveData: this.saveData,
-          });
+    dataForm.getMeta(dataFormId).then((res) => {
+      this.setState({
+        dataForm: res.meta,
+        dataValue: res.body,
+      }, () => {
+        didMount({
+          setValue: this.setValue,
+          getData: this.getData,
+          setData: this.setData,
+          setItemVisible: this.setItemVisible,
+          setItemRequired: this.setItemRequired,
+          setValueReadonly: this.setValueReadonly,
+          setReadingMode: this.setReadingMode,
+          setGroupVisible: this.setGroupVisible,
+          setGroupReadonly: this.setGroupReadonly,
+          setGroupReadingMode: this.setGroupReadingMode,
+          setItemTemplate: this.setItemTemplate,
+          setItemPrefix: this.setItemPrefix,
+          setItemSuffix: this.setItemSuffix,
+          setItemTips: this.setItemTips,
+          setItemNotes: this.setItemNotes,
+          validate: this.validate,
+          validateItem: this.validateItem,
+          saveData: this.saveData,
         });
       });
     });
   }
   setValue = (itemId, value) => {
-    this.refs.form.setFieldsValue({ [itemId]: value });
+    this.form.setFieldsValue({ [itemId]: value });
   };
   getData = () => {
-    return this.refs.form.getFieldsValue();
+    return this.form.getFieldsValue();
   };
   setData = (data) => {
-    this.refs.form.setFieldsValue(data);
+    this.form.setFieldsValue(data);
   };
   setItemVisible = (itemId, status) => {
     this._updateElementUIHint(itemId, status, 'visible', ele => ele.code === itemId);
@@ -109,10 +106,10 @@ export default class Forms extends React.Component {
     });
   };
   validate = (cb) => {
-    this.refs.form.validateFields(cb);
+    this.form.validateFields(cb);
   };
   validateItem = (itemId, cb) => {
-    this.refs.form.validateFields([itemId], cb);
+    this.form.validateFields([itemId], cb);
   };
   saveData = () => {
     console.log('save data');
@@ -121,7 +118,7 @@ export default class Forms extends React.Component {
     const { prefix = 'ro', defaultKeys = [] } = this.props;
     return (
       <Form
-        ref="form"
+        ref={form => this.form = form}
         {...this.state}
         prefix={prefix}
         defaultKeys={defaultKeys}
