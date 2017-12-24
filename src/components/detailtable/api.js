@@ -58,9 +58,9 @@ const listenerAPI = {
   'onSelectionChange': onSelectionChange,
   //★ ***数据查询成功后的监听***[ok]U
   'onBeforeRenderData': onBeforeRenderData,
-  // ***分页切换监听***[ok]U
+  //★ ***分页切换监听***[ok]U
   'onPageChanged': onPageChanged,
-  // ***单页数据条数监听***[ok]U,
+  //★ ***单页数据条数监听***[ok]U,
   'onItemsPerPageChanged': itemsPerPageChanged
 }
 
@@ -95,11 +95,11 @@ const rowAPI = {
 // 对列的操作
 const columnAPI = {
   // 设置只读列隐藏展示[ok]
-  'columnDisplay': setColumnVisible,
+  'setColumnVisible': setColumnVisible,
   // 设置指定列只读 [ok]
   'setColumnReadOnly': setColumnReadOnly,
   // 设置列样式[ok]
-  'setStyleChangeColumns': setColumnStyle,
+  'setColumnStyle': setColumnStyle,
   // 设置列模板[ok]
   'setColumnTemplate': setColumnTemplate,
   // 统一替换指定列的值
@@ -185,12 +185,14 @@ const searcherAPI = {
 
 // 对分页器的操作
 const paginationAPI = {
-  // 设置分页单页显示条目数[ok]
+  //★ 设置分页单页显示条目数[ok]
   'setPageSize': setPageSize,
   // 设置分页器显示隐藏[ok]
   'setPagination': setPagination,
   // 获取当前分页状态[ok]
-  'isPagination': isPagination
+  'isPagination': isPagination,
+  //★ 关闭分页
+  'closePagination': closePagination,
 }
 
 export default Object.assign({}, listAPI, listenerAPI, rowAPI, columnAPI, headerAPI, selectedAPI, elementAPI, buttonsAPI, searcherAPI, paginationAPI)

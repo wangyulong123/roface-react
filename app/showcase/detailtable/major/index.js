@@ -174,6 +174,18 @@ function setLinkage() {
   message.success('联动设置成功！请随意改变值观察变化');
 }
 
+function closePagination() {
+  vm.closePagination();
+}
+
+function setPageSize() {
+  vm.setPageSize(2);
+}
+
+function setColumnReadonly() {
+  vm.setColumnReadonly();
+}
+
 function onMounted(api) {
   vm = api;
   // debugger;
@@ -215,6 +227,10 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={removeRows}>移除行</Button>
           <Button type="primary" onClick={setValue}>设值</Button>
           <Button type="primary" onClick={setLinkage}>设置行联动</Button>
+          <Button type="primary" onClick={closePagination}>关闭分页</Button>
+          <Button type="primary" onClick={setPageSize}>设置每页显示条目数</Button>
+          <Button type="primary" onClick={setColumnReadonly}>设置列只读</Button>
+
         </div>
         <DetailTable onMounted={onMounted} />
       </div>
