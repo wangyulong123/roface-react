@@ -9,6 +9,7 @@ const _columns = [{
   title: '姓名',
   dataIndex: 'name',
   type: 'input',
+  readonly: true,
 }, {
   title: '年龄',
   dataIndex: 'age',
@@ -121,6 +122,7 @@ export default class DataListObject {
     };
 
     this.state.paginationConf = {
+      pagination: false,
       showQuickJumper: true,
       showSizeChanger: true,
       defaultPageSize: 10,
@@ -139,6 +141,7 @@ export default class DataListObject {
         }
       },
       onShowSizeChange(current, size) {
+        console.log(current, size);
         target.$set('paginationConf.pageSize', size);
         if (target.on.itemPerPageChange) {
           target.on.itemPerPageChange(current, size);
@@ -192,6 +195,45 @@ export default class DataListObject {
     this.changeValueCollection = [];
     this.linkages = [];
     this.linkageTrees = [];
+    this.rowsHint = [{
+      field: '$$all',
+      execute: {
+        readonly: true,
+        style: {
+          color: 'red',
+        },
+      },
+    }];
+
+    this.columnsHint = [
+      {
+        field: '$$all',
+        execute() {
+          return {
+            readonly: true,
+          };
+        },
+      }, {
+        field: 'name',
+        execute: {
+          readonly: false,
+        },
+      }, {
+        field: 'height',
+        execute: {
+          style: {
+            width: 200,
+            backgroundColor: '#ddd',
+          },
+        },
+      }, {
+        field: 'weight',
+        execute: {
+          render(text) {
+            return (<h2>{text}</h2>);
+          },
+        },
+      }];
   }
 
   // 事件监听方法
@@ -293,20 +335,54 @@ export default class DataListObject {
   }
 
   rend() {
-    this.renderUI();
     this.fillData();
+    this.renderUI();
+  }
+
+  static paramHint(hints, data, key) {
+    const columnsHint = {};
+    data.forEach((tpl) => {
+      columnsHint[tpl[key]] = {};
+    });
+    hints.forEach((hint) => {
+      let execute = {};
+      if (hint.execute) {
+        if (hint.execute instanceof Function) {
+          execute = hint.execute();
+        } else if (!(hint.execute instanceof Array) &&
+          hint.execute instanceof Object) {
+          execute = hint.execute;
+        }
+      }
+      if (hint.field === '$$all') {
+        Object.keys(columnsHint).forEach((field) => {
+          Object.assign(columnsHint[field], execute);
+        });
+        columnsHint.$$all = Object.assign(columnsHint.$$all || {}, execute);
+      } else if (columnsHint[hint.field]) {
+        Object.assign(columnsHint[hint.field], execute);
+      }
+    });
+    return columnsHint;
   }
 
   renderUI(tplData) {
-    const tplDataCopy = tplData.map((column) => {
-      const columnCopy = { ...column };
+    const columnsHint = DataListObject.paramHint(this.columnsHint, tplData, 'dataIndex');
+    let rowsHint = null;
+    const columns = tplData.map((column) => {
+      const columnCopy = Object.assign({ ...column }, columnsHint[column.dataIndex]);
       function render(text, row, index) {
-        return this.getTemplate(columnCopy, row, index, text);
+        if (!rowsHint) {
+          rowsHint = DataListObject.paramHint(this.rowsHint, this.state.rows, '$$key');
+          console.log(rowsHint);
+        }
+        const rowHint = Object.assign({}, rowsHint.$$all || {}, rowsHint[row.$$key]);
+        return this.getTemplate(columnCopy, row, index, text, rowHint);
       }
-      columnCopy.render = render.bind(this);
+      columnCopy.render = columnCopy.render ? columnCopy.render.bind(this) : render.bind(this);
       return columnCopy;
     });
-    this.setState({ columns: tplDataCopy });
+    this.setState({ columns });
   }
 
   static getKey() {
@@ -591,7 +667,7 @@ export default class DataListObject {
       rows.splice(idx + 1, 0, this.indexingRow(newRow));
     }
     this.state.paginationConf.onSizeChange(rows.length);
-      this.setState({ rows });
+    this.setState({ rows });
   }
 
   setSize(size) {
@@ -603,7 +679,7 @@ export default class DataListObject {
     this.$set('gridOptions.bordered', bool === false);
   }
 
-  getTemplate(column, row, index) {
+  getTemplate(column, row, index, text, rowHint) {
     let tpl = null;
     const target = this;
     function changed(entry) {
@@ -638,17 +714,31 @@ export default class DataListObject {
     switch (column.type) {
       case 'input': {
         tpl = (
-          <Input value={row[column.dataIndex]} onChange={onChange} onBlur={onBlur} />
+          <Input
+            value={row[column.dataIndex]}
+            readOnly={rowHint.readonly || column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
         );
         break;
       }
       case 'select': {
         tpl = (
-          <Select value={row[column.dataIndex]} onChange={onChange} onBlur={onBlur}>
+          <Select
+            value={row[column.dataIndex]}
+            readOnly={rowHint.readonly || column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          >
             <Select.Option value="">-- 请选择 --</Select.Option>
             {column.codeDict.map((cd) => {
               return (
-                <Select.Option key={cd.id} value={cd.id} disabled={cd.disabled}>
+                <Select.Option
+                  key={cd.id}
+                  value={cd.id}
+                  disabled={rowHint.readonly || column.readonly || cd.disabled}
+                >
                   {cd.label}
                 </Select.Option>
               );
@@ -659,25 +749,45 @@ export default class DataListObject {
       }
       case 'number': {
         tpl = (
-          <InputNumber value={row[column.dataIndex]} onChange={onChange} onBlur={onBlur} />
+          <InputNumber
+            value={row[column.dataIndex]}
+            readOnly={rowHint.readonly || column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
         );
         break;
       }
       case 'date': {
         tpl = (
-          <DatePicker value={row[column.dataIndex]} onChange={onChange} onBlur={onBlur} />
+          <DatePicker
+            value={row[column.dataIndex]}
+            readOnly={rowHint.readonly || column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
         );
         break;
       }
       case 'time': {
         tpl = (
-          <TimePicker value={row[column.dataIndex]} onChange={onChange} onBlur={onBlur} />
+          <TimePicker
+            value={row[column.dataIndex]}
+            readOnly={rowHint.readonly || column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
         );
         break;
       }
       default: {
         tpl = (
-          <Input value={row[column.dataIndex]} onChange={onChange} onBlur={onBlur} />
+          <Input
+            value={row[column.dataIndex]}
+            readOnly={column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
         );
         break;
       }
@@ -849,6 +959,75 @@ export default class DataListObject {
   //
   //   });
   //   this.setState({ rows });
+  // }
+
+  closePagination() {
+    this.$set('paginationConf', false);
+  }
+
+  setPageSize(size) {
+    if (size && Number(size) && this.state.paginationConf) {
+      const sz = parseInt(Number(size), 10);
+      if (sz > 0) {
+        this.$set('paginationConf.defaultPageSize', sz);
+        this.$set('paginationConf.pageSize', sz);
+        if (this.state.paginationConf.onShowSizeChange) {
+          this.state.paginationConf.onShowSizeChange(this.state.paginationConf.current, sz);
+        }
+      }
+    }
+  }
+
+  columnEntryUtil(columnEntry, field, callback) {
+    let columns = this.state.columns.slice(0);
+    if (columnEntry !== undefined && field && callback !== undefined) {
+      if (typeof columnEntry === 'string') {
+        if (callback) {
+          callback(columns[columnEntry], columnEntry);
+        }
+      } else if (columnEntry instanceof Function) {
+        columns = columns.map((column, index) => {
+          const _column = column;
+          if (columnEntry(_column)) {
+            if (callback) {
+              callback(_column, index);
+            }
+          }
+          return _column;
+        });
+      }
+    }
+    return columns;
+  }
+
+
+  // setColumnAttr() {
+  //   if (this.state.columns && this.state.columns.length) {
+  //
+  //   }
+  // }
+  //
+  // setColumnReadonly() {
+  //
+  // }
+
+
+  // setColumnVisible(field, bool) {
+  //   if (typeof field === 'string') {
+  //     this.columnsHint.push({ field, execute: { colSpan: Number(bool !== false) } });
+  //   }
+  // }
+  //
+  // setColumnStyle() {
+  //
+  // }
+  //
+  // setColumnTemplate() {
+  //
+  // }
+  //
+  // replaceColumnValue() {
+  //
   // }
 }
 
