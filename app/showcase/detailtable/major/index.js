@@ -189,7 +189,7 @@ function setColumnReadonly() {
 function onMounted(api) {
   vm = api;
   // debugger;
-
+  vm.setCellReadonly(true, true);
 
   api.run().then(() => {
     // debugger;

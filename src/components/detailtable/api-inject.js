@@ -3,7 +3,8 @@
  */
 
 import React from 'react';
-import { Input, InputNumber, Select, DatePicker, TimePicker } from 'antd';
+// import { Input, InputNumber, Select, DatePicker, TimePicker } from 'antd';
+import { Text, NumberInput, Currency, Select, DatePicker, DateTimePicker } from '../../components';
 
 const _columns = [{
   title: '姓名',
@@ -22,6 +23,10 @@ const _columns = [{
   title: '体重',
   dataIndex: 'weight',
   type: 'number',
+}, {
+  title: '生日',
+  dataIndex: 'birth',
+  type: 'date',
 }, {
   title: '地址',
   dataIndex: 'address',
@@ -62,6 +67,7 @@ const _rows = [{
   address: '01',
   height: 171,
   weight: 62,
+  birth: new Date('1992/06/16').getTime(),
   sex: 'M',
 }, {
   name: '韩梅梅',
@@ -69,6 +75,7 @@ const _rows = [{
   address: '02',
   height: 165,
   weight: 48,
+  birth: new Date('1994/01/16').getTime(),
   sex: 'F',
 }, {
   name: 'Polly',
@@ -76,6 +83,7 @@ const _rows = [{
   address: '03',
   height: 21,
   weight: 2.3,
+  birth: new Date('2001/02/30').getTime(),
   sex: 'U',
 }, {
   name: 'Miss Wang',
@@ -83,6 +91,7 @@ const _rows = [{
   address: '04',
   height: 161,
   weight: 52,
+  birth: new Date('1985/03/01').getTime(),
   sex: 'F',
 }];
 
@@ -198,7 +207,7 @@ export default class DataListObject {
     this.rowsHint = [{
       field: '$$all',
       execute: {
-        readonly: true,
+        readonly: false,
         style: {
           color: 'red',
         },
@@ -210,7 +219,7 @@ export default class DataListObject {
         field: '$$all',
         execute() {
           return {
-            readonly: true,
+            readonly: false,
           };
         },
       }, {
@@ -714,9 +723,9 @@ export default class DataListObject {
     switch (column.type) {
       case 'input': {
         tpl = (
-          <Input
+          <Text
             value={row[column.dataIndex]}
-            readOnly={rowHint.readonly || column.readonly}
+            reading={rowHint.readonly || column.readonly}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -727,31 +736,32 @@ export default class DataListObject {
         tpl = (
           <Select
             value={row[column.dataIndex]}
-            readOnly={rowHint.readonly || column.readonly}
+            reading={rowHint.readonly || column.readonly}
             onChange={onChange}
             onBlur={onBlur}
-          >
-            <Select.Option value="">-- 请选择 --</Select.Option>
-            {column.codeDict.map((cd) => {
-              return (
-                <Select.Option
-                  key={cd.id}
-                  value={cd.id}
-                  disabled={rowHint.readonly || column.readonly || cd.disabled}
-                >
-                  {cd.label}
-                </Select.Option>
-              );
-            })}
-          </Select>
+            optionData={column.codeDict}
+            optionName="label"
+            optionField="id"
+          />
         );
         break;
       }
       case 'number': {
         tpl = (
-          <InputNumber
+          <NumberInput
             value={row[column.dataIndex]}
-            readOnly={rowHint.readonly || column.readonly}
+            reading={rowHint.readonly || column.readonly}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        );
+        break;
+      }
+      case 'currency': {
+        tpl = (
+          <Currency
+            value={row[column.dataIndex]}
+            reading={rowHint.readonly || column.readonly}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -762,7 +772,7 @@ export default class DataListObject {
         tpl = (
           <DatePicker
             value={row[column.dataIndex]}
-            readOnly={rowHint.readonly || column.readonly}
+            reading={rowHint.readonly || column.readonly}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -771,9 +781,9 @@ export default class DataListObject {
       }
       case 'time': {
         tpl = (
-          <TimePicker
+          <DateTimePicker
             value={row[column.dataIndex]}
-            readOnly={rowHint.readonly || column.readonly}
+            reading={rowHint.readonly || column.readonly}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -782,7 +792,7 @@ export default class DataListObject {
       }
       default: {
         tpl = (
-          <Input
+          <Text
             value={row[column.dataIndex]}
             readOnly={column.readonly}
             onChange={onChange}
@@ -999,6 +1009,24 @@ export default class DataListObject {
     }
     return columns;
   }
+
+  setCellReadonly(bool, isRow) {
+    const hint = {
+      field: '$$all',
+      execute: {
+        readonly: bool !== false,
+      },
+    };
+    if (isRow) {
+      this.rowsHint.push(hint);
+    } else {
+      this.columnsHint.push(hint);
+    }
+  }
+  //
+  // setColumnReadonly(columnEntry, bool) {
+  //
+  // }
 
 
   // setColumnAttr() {
