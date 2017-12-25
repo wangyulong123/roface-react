@@ -4,13 +4,14 @@
 
 import React from 'react';
 import { Select } from 'antd';
+
 const Option = Select.Option;
 
 class RoSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value
+      value: props.value,
     };
   }
 
@@ -18,6 +19,7 @@ class RoSelect extends React.Component {
     this.setState({ value: nextProps.value });
   }
 
+  /* eslint-disable */
   handleChange = (value) => {
     this.setState({ value: value });
     this.props.onChange && this.props.onChange(value);
@@ -41,6 +43,7 @@ class RoSelect extends React.Component {
     }
     return children;
   };
+  /* eslint-disable */
 
   render() {
     if (this.props.reading) {
