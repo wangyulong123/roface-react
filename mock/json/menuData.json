@@ -609,7 +609,7 @@
   },
   {
     "id": "C10-10-20",
-    "name": "显示报告",
+    "name": "显示模板",
     "i18nCode": "menu.sys.manager.showreport",
     "summary": null,
     "sortCode": "C10-10-20",
