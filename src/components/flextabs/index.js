@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Route } from 'react-router-dom';
+import Sortable from 'sortablejs';
 import { Icon, Notification } from '../index';
 import TabPanel from './TabPanel';
 import { depthFirstSearch } from '../../lib/menutransform';
@@ -30,6 +31,7 @@ export default class Tab extends React.Component {
     /* eslint-disable */
     const { prefix = 'ro' } = this.props;
     this.dom = ReactDom.findDOMNode(this);
+    // this.ul = ReactDom.findDOMNode('ul');
     // tab的固定长度
     this.tabWidth = 110;
     this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-page-content-wrapper`)[0];
@@ -223,24 +225,35 @@ export default class Tab extends React.Component {
     return false;
   };
 
+  _sortableGroupDecorator = (componentBackingInstance) => {
+    // check if backing instance not null
+    if (componentBackingInstance) {
+      // const ghostClass = ;
+      const options = {
+        animation: 150,
+        draggable: 'li', // Specifies which items inside the element should be sortable
+        // group: "shared",
+        ghostClass: 'rc-draggable-attribute-ghost', // Class name for the drop placeholder
+        chosenClass: 'rc-draggable-attribute-chosen',  // Class name for the chosen item
+        dragClass: 'rc-draggable-attribute-drag',  // Class name for the dragging item
+        onUpdate: (evt) => {
+          console.log('onUpdate');
+          // 处理拖动后的页面
+          // const originFields = this.props.dataSource.filter(item => (this.state.show || (item.operator === false)) &&
+          // (item.name && item.name.includes(this.state.value)));
+          // const { newIndex, oldIndex } = evt;
+          // const newName = originFields[newIndex].name;
+          // const oldName = originFields[oldIndex].name;
+          // const tempOldIndex = this.props.entityAllFields.findIndex((field) => field.name === oldName);
+          // const tempNewIndex = this.props.entityAllFields.findIndex((field) => field.name === newName);
+          // const finalFields = [...this.props.entityAllFields];
+          // const olderField = finalFields.splice(tempOldIndex, 1)[0];
+          // finalFields.splice(tempNewIndex, 0, olderField);
 
-  _getTag = cssSelector => {
-    if (!cssSelector) {
-      return document.querySelector('.' + this.refStr);
-    }
-    return document.querySelector('.' + this.refStr + ' ' + cssSelector);
-  };
-
-  _dragStart = (ev, tabItem) => {
-    ev.dataTransfer.setData('Text',ev.target.id);
-    console.log(ev.target.id);
-    console.log(ev.target);
-    console.log(tabItem);
-    const dragIndex = this.state.tabs.findIndex(valueItem => tabItem.id === valueItem.id);
-    console.log('dragIndex:' + dragIndex);
-    if (this.tabsWrapper) {
-      const tabsLength = (this.state.tabs.length) * (this.tabWidth + 2);
-      return this.tabsWrapper.offsetWidth - 5 - 42 > tabsLength;
+         // this.props.onUpdateProperties(finalFields, 'sort');
+        },
+      };
+      Sortable.create(componentBackingInstance, options);
     }
   };
 
@@ -248,6 +261,7 @@ export default class Tab extends React.Component {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
     const { renderComponent } = this.props;
+
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">
@@ -255,6 +269,8 @@ export default class Tab extends React.Component {
             <div className="ro-main-tabs-container">
               <ul
                 className="nav-tabs"
+                id="nav-tabs"
+                ref={this._sortableGroupDecorator}
               >
                 {
                   this.state.tabs && this.state.tabs.map((tabItem) => {
@@ -271,7 +287,6 @@ export default class Tab extends React.Component {
                         deleteTab={this._deleteTab}
                         clickTab={this._clickTab}
                         isCollapse={this.state.isCollapse}
-                        dragStart={this._dragStart}
                       />
                     );
                   })
