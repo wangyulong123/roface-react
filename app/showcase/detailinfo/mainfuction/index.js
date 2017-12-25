@@ -26,19 +26,19 @@ export default class MainFunction extends React.Component {
   };
   _setData = () => {
     const { info } = this.state;
-    info.setData({name: 'test1'});
+    info.setData({engName: 'test1'});
   };
   _setItemVisible = () => {
     const { info } = this.state;
-    info.setItemVisible('name', false);
+    info.setItemVisible('gender', false);
   };
   _setItemRequired = () => {
     const { info } = this.state;
-    info.setItemRequired('name', true);
+    info.setItemRequired('birth', true);
   };
   _setValueReadonly = () => {
     const { info } = this.state;
-    info.setValueReadonly('name', true);
+    info.setValueReadonly('birth', true);
   };
   _setReadingMode = () => {
     const { info } = this.state;
@@ -46,15 +46,15 @@ export default class MainFunction extends React.Component {
   };
   _setGroupVisible = () => {
     const { info } = this.state;
-    info.setGroupVisible('10:基本信息', false);
+    info.setGroupVisible('20:联系信息', false);
   };
   _setGroupReadonly = () => {
     const { info } = this.state;
-    info.setGroupReadonly('10:基本信息', true);
+    info.setGroupReadonly('40:经济状况', true);
   };
   _setGroupReadingMode = () => {
     const { info } = this.state;
-    info.setGroupReadingMode('10:基本信息', true);
+    info.setGroupReadingMode('30:职业信息', true);
   };
   _setItemTemplate = () => {
     const { info } = this.state;
@@ -66,7 +66,7 @@ export default class MainFunction extends React.Component {
   };
   _setItemSuffix = () => {
     const { info } = this.state;
-    info.setItemPrefix('name', 'Suffix');
+    info.setItemSuffix('name', 'Suffix');
   };
   _setItemTips = () => {
     const { info } = this.state;
@@ -137,7 +137,7 @@ export default class MainFunction extends React.Component {
             disabled={this.state.disabled}
             onClick={this._setValue}
           >
-            setValue
+            setValue(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
@@ -149,78 +149,78 @@ export default class MainFunction extends React.Component {
             disabled={this.state.disabled}
             onClick={this._setData}
           >
-            setData
+            setData(英文名)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemVisible}
           >
-            setItemVisible
+            setItemVisible(性别)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemRequired}
           >
-            setItemRequired
+            setItemRequired(生日)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setValueReadonly}
           >
-            setValueReadonly
+            setValueReadonly(生日)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setReadingMode}
           >
-            setReadingMode
+            setReadingMode(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setGroupVisible}
           >
-            setGroupVisible
+            setGroupVisible(联系信息)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setGroupReadonly}
           >
-            setGroupReadonly
+            setGroupReadonly(经济状况)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setGroupReadingMode}
           >
-            setGroupReadingMode
+            setGroupReadingMode(职业信息)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemTemplate}
           >
-            setItemTemplate
+            setItemTemplate(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemPrefix}
           >
-            setItemPrefix
+            setItemPrefix(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemSuffix}
           >
-            setItemSuffix
+            setItemSuffix(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemTips}
           >
-            setItemTips
+            setItemTips(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
             onClick={this._setItemNotes}
-          >setItemNotes
+          >setItemNotes(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
@@ -232,7 +232,7 @@ export default class MainFunction extends React.Component {
             disabled={this.state.disabled}
             onClick={this._validateItem}
           >
-            validateItem
+            validateItem(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}

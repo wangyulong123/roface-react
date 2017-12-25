@@ -82,7 +82,7 @@ export default Form.create()(class Forms extends React.Component {
     const { formUIHint = {} } = data;
     const { dataValue } = this.props;
     const { getFieldDecorator } = this.props.form;
-    return (items.map((item, index) => {
+    return (items.filter(item => item.elementUIHint.visible).map((item, index) => {
       const Com = this._getComponent(item.elementUIHint.editStyle);
       const comProps = this._getElementUIHint(item);
       const key = `${index}`;
