@@ -9,6 +9,7 @@ export default class Forms extends React.Component {
     this.state = {
       dataForm: {},
       dataValue: {},
+      dict: {},
     };
   }
   componentDidMount() {
@@ -17,6 +18,7 @@ export default class Forms extends React.Component {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
+        dict: res.dict || {},
       }, () => {
         didMount({
           setValue: this.setValue,

@@ -7,7 +7,7 @@ import React from 'react';
 import moment from 'moment';
 import { DatePicker } from 'antd';
 
-const { MonthPicker } = DatePicker;
+const { MonthPicker, Input, Icon } = DatePicker;
 
 class RoYearMonthPicker extends React.Component {
   static defaultProps = {
@@ -47,22 +47,34 @@ class RoYearMonthPicker extends React.Component {
   /* eslint-disable */
 
   render() {
-    const { scene, reading, format } = this.props;
+    const { reading, format, readOnly, placeholder, className, style } = this.props;
     if (reading) {
       return (
         <div>
           {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
+    } else if (readOnly) {
+      return (
+        <Input
+          readOnly={readOnly}
+          placeholder={placeholder}
+          className={className}
+          style={style}
+          suffix={<Icon type="calendar" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          value={this.state.value && moment(new Date(this.state.value)).format(format)}
+        />
+      );
+    } else {
+      return (
+        <MonthPicker
+          placeholder="Select month"
+          {...this.props}
+          value={this.handleMillisecondValue(this.state.value)}
+          onChange={this.handleMonthChange}
+        />
+      );
     }
-    return (
-      <MonthPicker
-        placeholder="Select month"
-        {...this.props}
-        value={this.handleMillisecondValue(this.state.value)}
-        onChange={this.handleMonthChange}
-      />
-    );
   }
 }
 

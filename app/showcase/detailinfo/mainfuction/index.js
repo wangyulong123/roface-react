@@ -12,7 +12,7 @@ export default class MainFunction extends React.Component {
   }
   _setValue = () => {
     const { info } = this.state;
-    info.setValue('name', 'test');
+    info.setValue('name', 'test' + parseInt(Math.random() * 100)); // eslint-disable-line
   };
   _getData = () => {
     const { info } = this.state;
@@ -26,35 +26,35 @@ export default class MainFunction extends React.Component {
   };
   _setData = () => {
     const { info } = this.state;
-    info.setData({engName: 'test1'});
+    info.setData({engName: 'test' + parseInt(Math.random() * 100)}); // eslint-disable-line
   };
-  _setItemVisible = () => {
+  _setItemVisible = (bool) => {
     const { info } = this.state;
-    info.setItemVisible('gender', false);
+    info.setItemVisible('gender', bool);
   };
   _setItemRequired = () => {
     const { info } = this.state;
     info.setItemRequired('birth', true);
   };
-  _setValueReadonly = () => {
+  _setValueReadonly = (bool) => {
     const { info } = this.state;
-    info.setValueReadonly('birth', true);
+    info.setValueReadonly('birth', bool);
   };
-  _setReadingMode = () => {
+  _setReadingMode = (bool) => {
     const { info } = this.state;
-    info.setReadingMode('name', true);
+    info.setReadingMode('name', bool);
   };
-  _setGroupVisible = () => {
+  _setGroupVisible = (bool) => {
     const { info } = this.state;
-    info.setGroupVisible('20:联系信息', false);
+    info.setGroupVisible('20:联系信息', bool);
   };
   _setGroupReadonly = () => {
     const { info } = this.state;
     info.setGroupReadonly('40:经济状况', true);
   };
-  _setGroupReadingMode = () => {
+  _setGroupReadingMode = (bool) => {
     const { info } = this.state;
-    info.setGroupReadingMode('30:职业信息', true);
+    info.setGroupReadingMode('30:职业信息', bool);
   };
   _setItemTemplate = () => {
     const { info } = this.state;
@@ -153,9 +153,15 @@ export default class MainFunction extends React.Component {
           </Button>
           <Button
             disabled={this.state.disabled}
-            onClick={this._setItemVisible}
+            onClick={() => this._setItemVisible(false)}
           >
             setItemVisible(性别)
+          </Button>
+          <Button
+            disabled={this.state.disabled}
+            onClick={() => this._setItemVisible(true)}
+          >
+            setItemVisibleTrue(性别)
           </Button>
           <Button
             disabled={this.state.disabled}
@@ -165,21 +171,39 @@ export default class MainFunction extends React.Component {
           </Button>
           <Button
             disabled={this.state.disabled}
-            onClick={this._setValueReadonly}
+            onClick={() => this._setValueReadonly(true)}
           >
             setValueReadonly(生日)
           </Button>
           <Button
             disabled={this.state.disabled}
-            onClick={this._setReadingMode}
+            onClick={() => this._setValueReadonly(false)}
+          >
+            setValueReadonlyFalse(生日)
+          </Button>
+          <Button
+            disabled={this.state.disabled}
+            onClick={() => this._setReadingMode(true)}
           >
             setReadingMode(姓名)
           </Button>
           <Button
             disabled={this.state.disabled}
-            onClick={this._setGroupVisible}
+            onClick={() => this._setReadingMode(false)}
+          >
+            setReadingModeFalse(姓名)
+          </Button>
+          <Button
+            disabled={this.state.disabled}
+            onClick={() => this._setGroupVisible(false)}
           >
             setGroupVisible(联系信息)
+          </Button>
+          <Button
+            disabled={this.state.disabled}
+            onClick={() => this._setGroupVisible(true)}
+          >
+            setGroupVisibleTrue(联系信息)
           </Button>
           <Button
             disabled={this.state.disabled}
@@ -189,9 +213,15 @@ export default class MainFunction extends React.Component {
           </Button>
           <Button
             disabled={this.state.disabled}
-            onClick={this._setGroupReadingMode}
+            onClick={() => this._setGroupReadingMode(true)}
           >
             setGroupReadingMode(职业信息)
+          </Button>
+          <Button
+            disabled={this.state.disabled}
+            onClick={() => this._setGroupReadingMode(false)}
+          >
+            setGroupReadingModeFalse(职业信息)
           </Button>
           <Button
             disabled={this.state.disabled}

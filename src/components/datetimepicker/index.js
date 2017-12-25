@@ -4,7 +4,7 @@
 
 import React from 'react';
 import moment from 'moment';
-import { DatePicker } from 'antd';
+import { DatePicker, Input, Icon } from 'antd';
 
 class RoDateTimePicker extends React.Component {
   static defaultProps = {
@@ -48,24 +48,36 @@ class RoDateTimePicker extends React.Component {
   };
 
   render() {
-    const { reading, format } = this.props;
+    const { reading, format, readOnly, placeholder, className, style } = this.props;
     if (reading) {
       return (
         <div>
           {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
+    } else if (readOnly) {
+      return (
+        <Input
+          readOnly={readOnly}
+          placeholder={placeholder}
+          className={className}
+          style={style}
+          suffix={<Icon type="calendar" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          value={this.state.value && moment(new Date(this.state.value)).format(format)}
+        />
+      );
+    } else {
+      return (
+        <DatePicker
+          placeholder="Select time"
+          {...this.props}
+          showTime
+          value={this.handleMillisecondValue(this.state.value)}
+          onChange={this.handleTimeChange}
+          onOk={this._onOk}
+        />
+      );
     }
-    return (
-      <DatePicker
-        placeholder="Select time"
-        {...this.props}
-        showTime
-        value={this.handleMillisecondValue(this.state.value)}
-        onChange={this.handleTimeChange}
-        onOk={this._onOk}
-      />
-    );
   }
 }
 
