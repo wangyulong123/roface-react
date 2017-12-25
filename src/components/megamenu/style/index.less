@@ -1,6 +1,7 @@
 @import "../../../style/index";
 
 .@{prefix}-nav-container {
+  //min-width: 1366px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -56,17 +57,16 @@
     white-space: nowrap;
   }
   &-children {
+    overflow: auto;
     position: absolute;
     top: 50px;
-    left: 17%;
+    left: 15%;
     display: none;
     font-size: 15px;
     z-index: 999;
-    width: 55%;
     box-shadow: 0 5px 5px #888888;
     &-container {
       overflow: auto;
-      max-height: 500px;
       display: flex;
       flex-direction: column;
       background: #fff;
@@ -75,7 +75,7 @@
         justify-content: start;
         flex-wrap: wrap;
         &-item {
-          min-width: 300px;
+          min-width: 248px;
           font-weight: 600;
           color: #5EA9E9;
           &-menu {

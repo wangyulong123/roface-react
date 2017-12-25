@@ -5,6 +5,7 @@ import * as app from '../../app';
 
 import { NavMega, FlexTabs } from '../components';
 import NotFound from './NotFound';
+import { compose } from './compose';
 // import * as showcase from '../../app/showcase';
 // import Home from './Home';
 
@@ -28,15 +29,18 @@ export default class App extends React.Component {
       return a[b];
     }, obj);
   };
-  _renderComponent = (props, tab) => {
+  _getCom = (props, tab) => {
     if (tab && tab.url) {
       if (!this.cache[tab.id]) {
-        const Com = this._getObject(app, tab.url.split('/')) || NotFound;
-        this.cache[tab.id] = <Com />;
+        this.cache[tab.id] = this._getObject(app, tab.url.split('/')) || NotFound;
       }
       return this.cache[tab.id];
     }
-    return <NotFound />;
+    return NotFound;
+  };
+  _renderComponent = (props, tab) => {
+    const Com = compose(this._getCom(props, tab));
+    return <Com />;
   };
   _getInstance = (instance) => {
     this.flexTabs = instance;
@@ -53,7 +57,7 @@ export default class App extends React.Component {
           path="/"
           render={(props) => {
             return (
-              <div>
+              <div style={{ overflow: 'hidden' }}>
                 <NavMega
                   {...props}
                   menuClick={this._menuClick}

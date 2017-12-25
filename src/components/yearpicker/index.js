@@ -5,7 +5,7 @@
 
 import React from 'react';
 import moment from 'moment';
-import { DatePicker } from 'antd';
+import { DatePicker, Input, Icon } from 'antd';
 
 class RoYearPicker extends React.Component {
   static defaultProps = {
@@ -60,26 +60,39 @@ class RoYearPicker extends React.Component {
   };
 
   render() {
-    const { reading, format } = this.props;
+    const { reading, format, readOnly, placeholder, className, style } = this.props;
     if (reading) {
       return (
         <div>
           {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
+    } else if (readOnly) {
+      return (
+        <Input
+          readOnly={readOnly}
+          placeholder={placeholder}
+          className={className}
+          style={style}
+          suffix={<Icon type="calendar" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          value={this.state.value && moment(new Date(this.state.value)).format(format)}
+        />
+      );
+    } else {
+      return (
+        <DatePicker
+          placeholder="Select year"
+          {...this.props}
+          mode={this.state.mode}
+          open={this.state.open}
+          value={this.handleMillisecondValue(this.state.value)}
+          onChange={this.handleYearChange}
+          onOpenChange={this.handleOpenChange}
+          onPanelChange={this.handlePanelChange}
+        />
+      );
     }
-    return (
-      <DatePicker
-        placeholder="Select year"
-        {...this.props}
-        mode={this.state.mode}
-        open={this.state.open}
-        value={this.handleMillisecondValue(this.state.value)}
-        onChange={this.handleYearChange}
-        onOpenChange={this.handleOpenChange}
-        onPanelChange={this.handlePanelChange}
-      />
-    );
+
   }
 }
 
