@@ -26,18 +26,35 @@ class RoSelect extends React.Component {
   };
 
   renderOption = () => {
-    const children = [];
-    const { optionData, optionName, optionField, optionProps } = this.props;
-    if (optionData.charAt(0) instanceof Object) {
+    const optionDefault = (
+      <Option key='' value=''>
+        { '--请选择--' }
+      </Option>
+      );
+    const children = [optionDefault];
+    const { optionData, optionName, optionField, optionDisabled } = this.props;
+    if (optionData[0] instanceof Object) {
       for (let i = 0; i < optionData.length; i++) {
         children.push(
-          <Option key={i} {...optionProps} value={optionData[i][optionField]}>{ optionData[i][optionName] }</Option>
+          <Option
+            key={optionData[i][optionField]}
+            disabled={optionDisabled && optionDisabled.includes(optionData[i][optionField])}
+            value={optionData[i][optionField]}
+          >
+            { optionData[i][optionName] }
+          </Option>
         );
       }
     } else {
       for (let i = 0; i < optionData.length; i++) {
         children.push(
-          <Option key={i} {...optionProps} value={optionData[i]}>{ optionData[i] }</Option>
+          <Option
+            key={optionData[i]}
+            value={optionData[i]}
+            disabled={optionDisabled.includes(optionData[i])}
+          >
+            { optionData[i] }
+          </Option>
         );
       }
     }
@@ -46,7 +63,20 @@ class RoSelect extends React.Component {
   /* eslint-disable */
 
   render() {
-    if (this.props.reading) {
+    const { reading, optionData, optionField, optionName } = this.props;
+    if (reading) {
+      if (optionData[0] instanceof Object) {
+        for (let i = 0; i < optionData.length; i++) {
+          if (optionData[i][optionField] === this.state.value) {
+            return (
+              <div>
+                {optionData[i][optionName]}
+              </div>
+            );
+          }
+        }
+      }
+
       return (
         <div>
           {this.state.value}
