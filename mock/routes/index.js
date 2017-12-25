@@ -56,5 +56,20 @@ router.route('/base/menu/userMenu')
         rep.sendFile(path.resolve(__dirname, '../json/menuData.json'));
     });
 
+router.route('/base/dicts')
+  .get(function (req, rep, next) {
+    const dataFormId = req.params.dataFormId;
+    rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+    rep.sendFile(path.resolve(__dirname, '../json/menuData.json'));
+  });
+
+router.route('/base/dict/:dict')
+  .get(function (req, rep, next) {
+    const dataFormId = req.params.dataFormId;
+    rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+    rep.sendFile(path.resolve(__dirname, '../json/menuData.json'));
+  });
+
+
 
 module.exports = router;
