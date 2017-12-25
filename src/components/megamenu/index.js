@@ -206,6 +206,7 @@ class MegaMenu extends React.Component {
         const secondMenu = Array.from(menu.children).filter(dom => dom.className === prefix)[0];
         if (secondMenu) {
             secondMenu.style.display = status;
+            secondMenu.style.width = this.menuWrapper.clientWidth + 'px';
         }
     };
     renderMenu = (prefix) => {
@@ -384,7 +385,6 @@ class MegaMenu extends React.Component {
     _quitSuccess = () => {
         console.log('success!');
     };
-
     _quitFail = () => {
         this.setState({
             quitState: false,
