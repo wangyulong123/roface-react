@@ -8,7 +8,7 @@ import {addOnResize} from '../../lib/listener';
 export default class MenuChildren extends React.Component {
   constructor(props){
     super(props);
-    this.height = 200;
+    this.height = 100;
     this.flag = true;
   }
   componentDidMount(){
