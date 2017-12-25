@@ -37,7 +37,7 @@ class DetailTable extends React.Component {
       <Table
         columns={this.state.columns}
         dataSource={this.state.rows}
-        loading={this.state.gridOptions.loading}
+        loading={this.state.gridOptions.tplLoading && this.state.gridOptions.dataLoading}
         rowSelection={this.state.rowSelection}
         size={this.state.gridOptions.size}
         bordered={this.state.gridOptions.bordered}
