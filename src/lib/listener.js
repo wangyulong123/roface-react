@@ -10,15 +10,24 @@ const debounce = (fn, delay) => {
     };
 };
 
-export const addOnResize = (fuc) => {
+export const addOnResize = (fuc, flag = false) => {
   let resize;
   if (window.onresize) {
     resize = window.onresize;
   }
-  window.onresize = debounce(() => {
-      if (resize) {
-          resize();
-      }
-      fuc();
-  }, 1000);
+  if (flag) {
+      window.onresize = debounce(() => {
+          if (resize) {
+              resize();
+          }
+          fuc();
+      }, 1000);
+  } else {
+      window.onresize = () => {
+          if (resize) {
+              resize();
+          }
+          fuc();
+      };
+  }
 };
