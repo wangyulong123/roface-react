@@ -35,7 +35,9 @@ class MegaMenu extends React.Component {
         this.left = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
         this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
         this.offsetWidth = this.wrapper.offsetWidth;
-        this.checkWidth();
+        setTimeout(() => {
+            this.checkWidth();
+        }, 0);
         addOnResize(this.checkWidth);
         getUserMenuList().then(res => {
             const dataSource = this.removeLevelMore(this.flatToTree(res).data);
@@ -51,7 +53,6 @@ class MegaMenu extends React.Component {
             window.addEventListener('click', this._executeCb);
         }
     }
-
     _executeCb = e => {
         if (this.tag && this.tag.compareDocumentPosition(e.target) !== 20) {
             this._closeDropDown();
@@ -437,6 +438,7 @@ class MegaMenu extends React.Component {
                         <span className={`${prefix}-personal-quit`} />
                         <span className={`${prefix}-navRight-text`} onClick={this._showQuitBox}>退出</span>
                         <Modal
+                            key={'notification'}
                             visible={quitState}
                             onOk={this._quitSuccess}
                             onCancel={this._quitFail}
