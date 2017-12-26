@@ -74,7 +74,7 @@ class RoSelect extends React.Component {
 
     if (reading) {
       return (
-        <div>{ valueX } </div>
+        <div>{ valueX }</div>
       );
     } else {
       return (

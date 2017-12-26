@@ -9,28 +9,27 @@ class RoNumber extends React.Component {
   /* eslint-disable */
   constructor(props) {
     super(props);
-    const valueNum = parseFloat(props.value);
+    const valueNum = props.value && props.value.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
     this.state = {
-      value: isNaN(valueNum) ? '' : isFinite(valueNum) ? valueNum : '',
+      value: valueNum,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const valueNum = parseFloat(nextProps.value);
+    const valueNum = nextProps.value && nextProps.value.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
     this.setState({
-      value: isNaN(valueNum) ? '' : isFinite(valueNum) ? valueNum : '',
+      value: valueNum,
     });
   }
 
   handleNumberChange = (e) => {
     const { onChange, onValueChange } = this.props;
-    let number = e;
-    if (isNaN(parseFloat(e)) || !isFinite(parseFloat(e))) {
-      number = '';
-    }
-    this.setState({ value: number });
-    onChange && onChange(e);
-    onValueChange && onValueChange(e)
+    const numStr = e.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
+    console.log(e);
+    console.log(numStr);
+    this.setState({ value: numStr });
+    onChange && onChange(numStr);
+    onValueChange && onValueChange(numStr)
   };
   /* eslint-disable */
 
@@ -45,6 +44,7 @@ class RoNumber extends React.Component {
 
     return (
       <InputNumber
+        style={{ width: 120 }}
         {...this.props}
         onChange={this.handleNumberChange}
         value={this.state.value}
