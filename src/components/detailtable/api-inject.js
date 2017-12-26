@@ -259,6 +259,21 @@ export default class DataListObject {
         },
       },
     };
+
+    function renderGrandTotalFooter() {
+      return Object.keys(this.grandTotal).map((key) => {
+        return (
+          <section key={key}>
+            <b>{key}:</b>
+            <span>{this.grandTotal[key].result}</span>
+          </section>
+        );
+      });
+    }
+
+    this.renderGrandTotalFooter = renderGrandTotalFooter.bind(this);
+
+
     this.rowsHint = [{
       field: '$$all',
       execute: {
@@ -294,7 +309,7 @@ export default class DataListObject {
         field: 'weight',
         execute: {
           render(text) {
-            return (<h2>{text}</h2>);
+            return (<b>{text}</b>);
           },
         },
       }];
@@ -866,6 +881,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly}
               onChange={onChange}
               onBlur={onBlur}
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -880,6 +896,7 @@ export default class DataListObject {
               optionData={column.codeDict}
               optionName="label"
               optionField="id"
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -891,6 +908,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly}
               onChange={onChange}
               onBlur={onBlur}
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -902,6 +920,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly}
               onChange={onChange}
               onBlur={onBlur}
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -913,6 +932,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly}
               onChange={onChange}
               onBlur={onBlur}
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -924,6 +944,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly}
               onChange={onChange}
               onBlur={onBlur}
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -935,6 +956,7 @@ export default class DataListObject {
               readOnly={column.readonly}
               onChange={onChange}
               onBlur={onBlur}
+              size={this.state.gridOptions.size}
             />
           );
           break;
@@ -1341,6 +1363,7 @@ export default class DataListObject {
   }
   setGrandTotalVisible(bool) {
     this.grandTotalVisible = bool !== false;
+    this.toggleGrandFooter();
   }
 
   getGrandTotalResult(field) {
@@ -1351,19 +1374,17 @@ export default class DataListObject {
     return result;
   }
 
+  toggleGrandFooter() {
+    let footer = this.grandTotalVisible === false ?
+      undefined : this.renderGrandTotalFooter;
+
+    this.setState({
+      footer,
+    });
+  }
+
   executeGrandTotal(field, rowsData) {
     let rows = rowsData || this.state.rows;
-    function renderGrandTotalFooter() {
-      return Object.keys(this.grandTotal).map((key) => {
-        return (
-          <section key={key}>
-            <b>{key}:</b>
-            <span>{this.grandTotal[key].result}</span>
-          </section>
-        );
-      });
-    }
-
     if (rows && rows.length) {
       rows = rows.slice(0);
       if (field && this.grandTotal[field] && this.grandTotal[field].action) {
@@ -1371,11 +1392,7 @@ export default class DataListObject {
           return row[field];
         }).reduce(this.grandTotal[field].action);
         this.grandTotal[field].result = result;
-        if (this.grandTotalVisible !== false) {
-          this.setState({
-            footer: renderGrandTotalFooter.bind(this),
-          });
-        }
+        this.toggleGrandFooter();
         if (this.grandTotal[field].callback) {
           this.grandTotal[field].callback(result);
         }

@@ -301,6 +301,18 @@ function setGrandTotal() {
   message.success('设置小计成功！请查看表格页脚处');
 }
 
+function setGrandTotalVisible() {
+  vm.setGrandTotalVisible(false);
+}
+
+function getGrandTotalResult() {
+  const field = 'age';
+  notification.open({
+    message: `字段${field}的平均值`,
+    description: vm.getGrandTotalResult(field) || null,
+  });
+}
+
 function onMounted(api) {
   vm = api;
   vm.setEditable(true);
@@ -357,6 +369,9 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={getRemembers}>获取跨查询选中的数据</Button>
           <Button type="primary" onClick={getSelectionMode}>获取选中模式</Button>
           <Button type="primary" onClick={setGrandTotal}>设置小计</Button>
+          <Button type="primary" onClick={setGrandTotalVisible}>隐藏页脚小计</Button>
+          <Button type="primary" onClick={getGrandTotalResult}>获取小计值</Button>
+
         </div>
         <DetailTable onMounted={onMounted} />
       </div>
