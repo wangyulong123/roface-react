@@ -31,7 +31,7 @@ export default class RadioBox extends React.Component{
                 break;
             case 'additionModel':
             default:
-                newOptions = options.map(item => item.name);
+                newOptions = options;
         }
         return newOptions;
     };
@@ -56,9 +56,10 @@ export default class RadioBox extends React.Component{
          return this.state.options.map((item, index) => {
               return (
                 <Radio
-                  value={item}
+                  value={item.code}
+                  displayValue={item.name}
                   checked={this.state.checkedArr[index]}
-                  key={`radio${item}`}
+                  key={`radio${item.code}`}
                   index={index}
                   radioChangeCallback={this._radioChangeCallback}
                 />
