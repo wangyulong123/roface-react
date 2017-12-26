@@ -59,6 +59,7 @@ export default class RadioBox extends React.Component{
                 <Radio
                   value={item.code}
                   displayValue={item.name}
+                  disabled={this.props.disabled}
                   checked={this.state.checkedArr[index]}
                   key={`radio${item.code}`}
                   index={index}
