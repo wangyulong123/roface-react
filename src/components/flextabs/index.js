@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Route } from 'react-router-dom';
+// import { Route } from 'react-router-dom';
 import Sortable from 'sortablejs';
 import { Icon, Notification } from '../index';
 import TabPanel from './TabPanel';
+import TabContent from './TabContent';
 import { depthFirstSearch } from '../../lib/menutransform';
 import { addOnResize } from '../../lib/listener';
 
@@ -14,10 +15,6 @@ export default class Tab extends React.Component {
     super(props);
     this.dom = null;
     this.tabsWrapper = null;
-    this.refStr = new Date().getTime();
-    this.isMoving = false;
-    this.clientX = 0;
-    this.clientY = 0;
     this.state = {
       tabs: [],
       tabsCollapse: [],
@@ -31,7 +28,6 @@ export default class Tab extends React.Component {
     /* eslint-disable */
     const { prefix = 'ro' } = this.props;
     this.dom = ReactDom.findDOMNode(this);
-    // this.ul = ReactDom.findDOMNode('ul');
     // tab的固定长度
     this.tabWidth = 110;
     this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-page-content-wrapper`)[0];
@@ -44,8 +40,7 @@ export default class Tab extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { history } = this.props;
     const pathname = history.location && history.location.pathname && history.location.pathname.substr(1);
-    if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname)
-    {
+    if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname) {
       let allMenus = [];
       depthFirstSearch(nextProps.data, (menuItem) => {
         allMenus.push(menuItem);
@@ -336,7 +331,13 @@ export default class Tab extends React.Component {
                 </ol>
               </div>
               <div>
-                <Route path="/" render={p => renderComponent(p, showTab[0])} />
+                {
+                  <TabContent>
+                    {
+                      this.state.tabs.forEach(tabItem => tabItem.Com)
+                    }
+                  </TabContent>
+                }
               </div>
             </div>
           </div>
