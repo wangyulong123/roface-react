@@ -29,6 +29,7 @@ export default class RoRadio extends React.Component{
             value={this.state.value}
             onClick={this.handleClick}
             checked={this.state.checked}
+            disabled={this.props.disabled}
           >
             {this.state.displayValue}
           </Radio>

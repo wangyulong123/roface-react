@@ -8,7 +8,7 @@ import {addOnResize} from '../../lib/listener';
 export default class MenuChildren extends React.Component {
   constructor(props){
     super(props);
-    this.height = 100;
+    // this.height = 100;
     this.flag = true;
   }
   componentDidMount(){
@@ -26,7 +26,7 @@ export default class MenuChildren extends React.Component {
     })
   };
   _setComHeight = () => {
-    this.dom.style.maxHeight = (document.documentElement.clientHeight - this.height) + 'px';
+    this.dom.style.maxHeight = (document.documentElement.clientHeight * 9 / 20) + 'px';
   };
   renderForthChildrenMenu = (children = []) => {
     const { menuClick } = this.props;
