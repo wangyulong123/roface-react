@@ -4,7 +4,7 @@
 * node `^6.0.0`
 * npm `^3.8.6`
 
-## Getting Started hhshhs
+## Getting Started
 
  You can follow these steps to get the project up and running:
 
