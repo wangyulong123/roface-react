@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Select } from 'antd';
+import { Select, Input, Icon } from 'antd';
 
 const Option = Select.Option;
 
@@ -62,27 +62,37 @@ class RoSelect extends React.Component {
   };
   /* eslint-disable */
 
-  render() {
-    const { reading, optionData, optionField, optionName } = this.props;
-    if (reading) {
-      if (optionData[0] instanceof Object) {
-        for (let i = 0; i < optionData.length; i++) {
-          if (optionData[i][optionField] === this.state.value) {
-            return (
-              <div>
-                {optionData[i][optionName]}
-              </div>
-            );
-          }
-        }
-      }
+  renderReadingAndReadOnly = () => {
+    const { reading, optionData, optionField, optionName, readOnly, placeholder, className, style } = this.props;
+    let valueX = this.state.value;
 
+    if (optionData[0] instanceof Object) {
+      for (let i = 0; i < optionData.length; i++) {
+        if (optionData[i][optionField] === this.state.value) { valueX = optionData[i][optionName] }
+      }
+    }
+
+    if (reading) {
       return (
-        <div>
-          {this.state.value}
-        </div>
+        <div>{ valueX } </div>
+      );
+    } else {
+      return (
+        <Input
+          style={{ width: 120, ...style}}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          className={className}
+          suffix={<Icon type="down" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          value={valueX}
+        />
       );
     }
+  };
+
+  render() {
+    const { reading, readOnly } = this.props;
+    if (reading || readOnly) { return this.renderReadingAndReadOnly() }
 
     return (
       <Select

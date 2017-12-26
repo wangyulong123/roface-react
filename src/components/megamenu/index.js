@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Form, Icon, Tabs, Text, Button, Modal } from '../index';
+import MenuChildren from './MenuChildren';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
@@ -35,7 +36,9 @@ class MegaMenu extends React.Component {
         this.left = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
         this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
         this.offsetWidth = this.wrapper.offsetWidth;
-        this.checkWidth();
+        setTimeout(() => {
+            this.checkWidth();
+        }, 0);
         addOnResize(this.checkWidth);
         getUserMenuList().then(res => {
             const dataSource = this.removeLevelMore(this.flatToTree(res).data);
@@ -51,7 +54,6 @@ class MegaMenu extends React.Component {
             window.addEventListener('click', this._executeCb);
         }
     }
-
     _executeCb = e => {
         if (this.tag && this.tag.compareDocumentPosition(e.target) !== 20) {
             this._closeDropDown();
@@ -152,55 +154,6 @@ class MegaMenu extends React.Component {
             icon.style.transform = display === 'none' ? 'rotate(90deg)' : 'rotate(0deg)';
         }
     };
-    renderForthChildrenMenu = (children = []) => {
-        return children.map(item => <li key={item.id} onClick={(e) => this._menuClick(e, item)}><span>{item.name}</span></li>)
-    };
-    renderThirdChildrenMenu = (children = [], prefix) => {
-        return (
-            <ul className={`${prefix}-child`}>
-                {
-                    children.map(item => {
-                        if (item.children) {
-                            return <li key={item.id}>{
-                                <div>
-                                    <span onClick={(e) => this.thirdChildrenMenuShow(e, `${prefix}-child-children-container`)}>{item.name}</span>
-                                    <span className={`${prefix}-child-children-container-icon`}><Icon type="caret-right"/></span>
-                                    <div className={`${prefix}-child-children-container`}>
-                                        <ul className={`${prefix}-child-children`}>
-                                            {this.renderForthChildrenMenu(item.children)}
-                                        </ul>
-                                    </div>
-                                </div>
-                            }</li>
-                        }
-                        return <li key={item.id} onClick={(e) => this._menuClick(e, item)}><span>{item.name}</span></li>;
-                    })
-                }
-            </ul>
-        );
-    };
-    renderSecondChildrenMenu = (children = [], prefix) => {
-        return (
-            <div className={`${prefix}-container`}>
-                <div className={`${prefix}-container-wrapper`}>
-                    {
-                        children.map(child => {
-                            return (<div key={child.id} >
-                                <div className={`${prefix}-container-wrapper-item`}>
-                                    <div className={`${prefix}-container-wrapper-item-menu`} onClick={(e) => this._menuClick(e, child)}>
-                                       <span className={`${prefix}-container-wrapper-item-menu-name`}>{child.name}</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    {this.renderThirdChildrenMenu(child.children, `${prefix}-container-wrapper-item`)}
-                                </div>
-                            </div>);
-                        })
-                    }
-                </div>
-            </div>
-        );
-    };
     changeSecondChildrenMenu = (e, prefix, status) => {
         const menu = e.currentTarget;
         const secondMenu = Array.from(menu.children).filter(dom => dom.className === prefix)[0];
@@ -224,9 +177,7 @@ class MegaMenu extends React.Component {
                         >
                             <Icon type="pay-circle" className={`${prefix}-menu-icon`} />
                             <span className={`${prefix}-menu-name`}>{menu.name}</span>
-                            <div className={`${prefix}-menu-children`}>
-                                {this.renderSecondChildrenMenu(menu.children, `${prefix}-menu-children`)}
-                            </div>
+                            <MenuChildren prefix={prefix} menu={menu} menuClick={this._menuClick}/>
                         </div>);
                 })}
             </div>);
@@ -437,6 +388,7 @@ class MegaMenu extends React.Component {
                         <span className={`${prefix}-personal-quit`} />
                         <span className={`${prefix}-navRight-text`} onClick={this._showQuitBox}>退出</span>
                         <Modal
+                            key={'notification'}
                             visible={quitState}
                             onOk={this._quitSuccess}
                             onCancel={this._quitFail}

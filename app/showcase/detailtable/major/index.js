@@ -53,9 +53,10 @@ function onSelectRow() {
 
 function onSelectionChange() {
   vm.onSelectionChange((record, selected, selectedRows) => {
+    console.log(record);
     notification.open({
       message: '单行选中状态已变更',
-      description: `行号：${record.key}
+      description: `行号：${vm.getData().indexOf(record)}
       行数据：${JSON.stringify(selectedRows)}
 当前行已${selected ? '选中' : '取消'}`,
     });
@@ -183,14 +184,120 @@ function setPageSize() {
 }
 
 function setColumnReadonly() {
-  vm.setColumnReadonly();
+  vm.setColumnReadonly((column) => { return column.dataIndex.length <= 4; }, false);
+}
+
+function setRowReadonly() {
+  vm.setRowReadonly((row) => { return row.weight < 50; }, true);
+}
+
+function setReadonlyByRow() {
+  vm.setCellReadonly(true, true);
+}
+
+function setReadonlyByCol() {
+  vm.setCellReadonly(true);
+}
+
+function setElement() {
+  vm.setElement((row) => {
+    return row.weight < 10;
+  }, 'height', (row, column, index, value) => {
+    return (
+      <div style={{ backgroundColor: 'red', color: 'white', padding: '10px' }}>{value}</div>
+    );
+  });
+
+  vm.setElement((row) => {
+    return Number(row.address) > 1;
+  }, 'name', (row, column, index, value) => {
+    return (
+      <div style={{ backgroundColor: 'blue', color: 'white', padding: '10px' }}>{value}</div>
+    );
+  });
+}
+
+function setEditable(){
+  vm.setEditable(true);
+}
+
+function getColumnDict() {
+  const field = 'address';
+  notification.open({
+    message: `${field}字段码表`,
+    description: JSON.stringify(vm.getColumnDict(field)),
+  });
+}
+
+function setColumnDict() {
+  const field = 'address';
+  vm.setColumnDict(field, [{
+    id: '00',
+    label: '苏州',
+  }, {
+    id: '01',
+    label: '北京',
+  }, {
+    id: '02',
+    label: '上海',
+    disabled: true,
+  }, {
+    id: '03',
+    label: '广州',
+  }, {
+    id: '04',
+    label: '深圳',
+  }]);
+  message.success(`设置${field}字段码表成功，请查看`);
+}
+
+function setColumnTemplate() {
+  vm.setColumnTemplate('age', (row, column, index, text) => {
+    return (<h2 style={{ backgroundColor: 'green' }}>{text}</h2>);
+  });
+  vm.setColumnTemplate('birth', (row, column, index, text) => {
+    return (<h3 style={{ backgroundColor: 'red', color: 'white' }}>{text}</h3>);
+  });
+}
+
+function replaceColumnValue() {
+  vm.replaceColumnValue('birth', new Date('2000/01/01').getTime());
+}
+
+function setSelectionAll() {
+  vm.setSelectionAll(true);
+}
+
+function getSelectionMode() {
+  notification.open({
+    message: '选中模式',
+    description: `当前选中模式为：${vm.getSelectionMode()}`,
+  });
+}
+
+function setRemember() {
+  if (vm.getSelectionMode() !== 'multiple') {
+    message.warning('非多选模式下不能设置跨查询选中，请设置为多选模式后重试');
+  } else {
+    vm.setRemember(true);
+    message.success('设置跨查询选中数据成功，请查询数据后尝试');
+  }
+}
+
+function getRemembers() {
+  if (vm.getSelectionMode() !== 'multiple') {
+    message.warning('非多选模式下不能设置跨查询选中，请设置为多选模式后重试');
+  } else {
+    notification.open({
+      message: '跨查询选中的数据',
+      description: JSON.stringify(vm.getRemembers()),
+    });
+  }
 }
 
 function onMounted(api) {
   vm = api;
-  // debugger;
-  vm.setCellReadonly(true, true);
-
+  vm.setEditable(true);
   api.run().then(() => {
     // debugger;
     // console.log('hahah');
@@ -230,7 +337,19 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={closePagination}>关闭分页</Button>
           <Button type="primary" onClick={setPageSize}>设置每页显示条目数</Button>
           <Button type="primary" onClick={setColumnReadonly}>设置列只读</Button>
-
+          <Button type="primary" onClick={setRowReadonly}>设置行只读</Button>
+          <Button type="primary" onClick={setReadonlyByRow}>按行设置列表只读</Button>
+          <Button type="primary" onClick={setReadonlyByCol}>按列设置列表只读</Button>
+          <Button type="primary" onClick={setEditable}>打开列表编辑模式</Button>
+          <Button type="primary" onClick={setElement}>重置单元格</Button>
+          <Button type="primary" onClick={getColumnDict}>获取码表</Button>
+          <Button type="primary" onClick={setColumnDict}>设置码表</Button>
+          <Button type="primary" onClick={setColumnTemplate}>替换列模板</Button>
+          <Button type="primary" onClick={replaceColumnValue}>统一替换列值</Button>
+          <Button type="primary" onClick={setSelectionAll}>设置所有行选中</Button>
+          <Button type="primary" onClick={setRemember}>设置跨查询选中数据</Button>
+          <Button type="primary" onClick={getRemembers}>获取跨查询选中的数据</Button>
+          <Button type="primary" onClick={getSelectionMode}>获取选中模式</Button>
         </div>
         <DetailTable onMounted={onMounted} />
       </div>

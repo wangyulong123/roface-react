@@ -10,14 +10,14 @@ const listAPI = {
   'run': fillTplAndData,
   // ***同步渲染(同步渲染包括过滤器、分页、排序功能等将自动变更为前端模式) ***
   'runSync': runSync,
-  // 设置只读模式，按列只读，按行只读
+  //★ 设置只读模式，按列只读，按行只读
   'setCellReadOnly': setCellReadOnly,
   //★ 设置单选、多选、非选择模式[ok] U
   'setSelectionMode': setSelectionMode,
   // 单选时控制radio显示隐藏[ok]
   'setRadioBox': useRadioOnSingle,
-  // 设置是否打开编辑模式[ok] U
-  'setListEditMode': setEditable,
+  //★ 设置是否打开编辑模式[ok] U
+  'setEditable': setEditable,
   // 全量保存数据[ok] U
   'saveData': saveData,
   // 删除一行或多行数据[ok] U
@@ -28,10 +28,10 @@ const listAPI = {
   'validate': validate,
   //★ 获取当前表格数据的拷贝[ok]U
   'getData': getData,
-  // 获取指定列的代码表[ok]
-  'getColCodeMap': getColumnDict,
-  // 设置指定列的代码表[ok]
-  'setColCodeMap': setColumnDict,
+  //★ 获取指定列的代码表[ok]
+  'getColumnDict': getColumnDict,
+  //★ 设置指定列的代码表[ok]
+  'setColumnDict': setColumnDict,
   // 自定义表尾	[ok]
   'customizeFooter': setFooterTemplate,
   //★ ***设置列表尺寸***
@@ -42,6 +42,8 @@ const listAPI = {
   'rowSelections': rowSelections,
   // ***设置树形表格模式下的缩进 ***[ok]
   'setIndentSize': setTreeIndent,
+  //★ ***设置列表简单操作模式，只有选中只读数据的功能，其他操作全部屏蔽 ***[ok]
+  'setSimpleMode': setSimpleMode,
 
 }
 
@@ -67,11 +69,11 @@ const listenerAPI = {
 
 // 对行的操作
 const rowAPI = {
-  // 设置行只读[ok]U
+  //★ 设置行只读[ok]U
   'setRowReadOnly': setRowReadOnly,
   //★ 设置不可选中行[ok]
   'setDisabledRows': setDisabledRows,
-  // 设置指定行样式[ok]
+  //★ 设置指定行样式[ok]
   'setStyleChangeRows': setRowStyle,
   //★ 设置首屏选中的行[ok]
   'setSelectedRows': setSelectedRows,
@@ -79,12 +81,12 @@ const rowAPI = {
   'appendRow': appendRow,
   //★在表首末尾新增一行数据[ok]
   'prependRow': prependRow,
-  // 设置全局跨页跨选择器选中 [ok]
-  'setUniversalSelect': setRememberSelected,
-  // 获取全局跨页跨选择器选中行[ok]
-  'getUniSelectedRows': getRememberSelected,
-  // 设置首屏所有行是否选中[ok]
-  'toggleSelectionAll': toggleSelectionAll,
+  //★ 设置全局跨页跨选择器选中 [ok]
+  'setRemember': setRemember,
+  //★ 获取全局跨页跨选择器选中行[ok]
+  'getRemembers': getRemembers,
+  //★ 设置所有行是否选中[ok]
+  'setSelectionAll': setSelectionAll,
   // ***设置行合并规则***
   'setRowMerge': setRowMerge,
   // ***设置行可展开***[ok]
@@ -94,15 +96,15 @@ const rowAPI = {
 
 // 对列的操作
 const columnAPI = {
-  // 设置只读列隐藏展示[ok]
+  //★ 设置只读列隐藏展示[ok]
   'setColumnVisible': setColumnVisible,
-  // 设置指定列只读 [ok]
+  //★ 设置指定列只读 [ok]
   'setColumnReadOnly': setColumnReadOnly,
-  // 设置列样式[ok]
+  //★ 设置列样式[ok]
   'setColumnStyle': setColumnStyle,
-  // 设置列模板[ok]
+  //★ 设置列模板[ok]
   'setColumnTemplate': setColumnTemplate,
-  // 统一替换指定列的值
+  //★  统一替换指定列的值
   'replaceColumnValue': replaceColumnValue,
   // ***设置列固定
   'setColumnFixed': setColumnFixed,
@@ -150,7 +152,7 @@ const selectedAPI = {
 const elementAPI = {
   //★ 设置单元格值[ok]U
   "setValue": setValue,
-  // 对单元格进行操作[ok]U
+  //★ 对单元格进行操作[ok]U
   'setElement': setElement,
 }
 

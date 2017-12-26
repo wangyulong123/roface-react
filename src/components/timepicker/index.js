@@ -4,7 +4,7 @@
 
 import React from 'react';
 import moment from 'moment';
-import { TimePicker } from 'antd';
+import { TimePicker, Input, Icon } from 'antd';
 
 class RoTimePicker extends React.Component {
   constructor(props) {
@@ -40,22 +40,34 @@ class RoTimePicker extends React.Component {
   /* eslint-disable */
 
   render() {
-    const { reading, format } = this.props;
+    const { reading, format, readOnly, placeholder, className, style } = this.props;
     if (reading) {
       return (
         <div>
           {value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
+    } else if (readOnly) {
+      return (
+        <Input
+          readOnly={readOnly}
+          placeholder={placeholder}
+          className={className}
+          style={style}
+          suffix={<Icon type="clock-circle-o" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          value={this.state.value && moment(new Date(this.state.value)).format(format)}
+        />
+      );
+    } else {
+      return (
+        <TimePicker
+          placeholder="Select time"
+          {...this.props}
+          value={this.handleMillisecondValue(this.state.value)}
+          onChange={this.handleTimeChange}
+        />
+      );
     }
-    return (
-      <TimePicker
-        placeholder="Select time"
-        {...this.props}
-        value={this.handleMillisecondValue(this.state.value)}
-        onChange={this.handleTimeChange}
-      />
-    );
   }
 }
 
