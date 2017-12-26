@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
+import * as rest from '../lib/rest';
+
 import { addOnResize } from '../lib/listener';
 
-export const compose = (Com) => {
+export const compose = (Com, flexTabs, comProps) => {
   class ComposeCom extends React.Component {
     constructor(props){
       super(props);
@@ -30,7 +32,7 @@ export const compose = (Com) => {
     render() {
       return (
         <div style={{ overflow: 'auto' }}>
-          <Com />
+          <Com flexTabs={flexTabs} {...comProps} rest={rest} />
         </div>
       );
     }
