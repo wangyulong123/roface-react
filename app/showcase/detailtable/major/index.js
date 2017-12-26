@@ -295,6 +295,12 @@ function getRemembers() {
   }
 }
 
+function setGrandTotal() {
+  vm.setGrandTotal('age', 'sum');
+  vm.setGrandTotal('height', 'average');
+  message.success('设置小计成功！请查看表格页脚处');
+}
+
 function onMounted(api) {
   vm = api;
   vm.setEditable(true);
@@ -350,6 +356,7 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={setRemember}>设置跨查询选中数据</Button>
           <Button type="primary" onClick={getRemembers}>获取跨查询选中的数据</Button>
           <Button type="primary" onClick={getSelectionMode}>获取选中模式</Button>
+          <Button type="primary" onClick={setGrandTotal}>设置小计</Button>
         </div>
         <DetailTable onMounted={onMounted} />
       </div>

@@ -7,7 +7,7 @@ import React from 'react';
 import { Text, NumberInput, Currency, Select, DatePicker, DateTimePicker } from '../../components';
 
 const _columns = [{
-  title: '',
+  title: '#',
   dataIndex: 'index',
   render(text, record, index) {
     return index + 1;
@@ -102,9 +102,9 @@ let _rows = [{
   sex: 'F',
 }];
 
-// for (let i = 0; i < 7; i += 1) {
-//   _rows = _rows.concat(_rows);
-// }
+for (let i = 0; i < 2; i += 1) {
+  _rows = _rows.concat(_rows);
+}
 
 export default class DataListObject {
   init() {
@@ -126,6 +126,7 @@ export default class DataListObject {
     this.state.rowSelection = {
       selectedRowKeys: [],
       hideDefaultSelections: true,
+      // fixed: true,
       type: 'radio',
       onChange: (selectedRowKeys, selectedRows) => {
         if (this.remember && this.state.rowSelection.type === 'checkbox') {
@@ -215,7 +216,11 @@ export default class DataListObject {
     };
 
     function valueChanged(rowIndex, field, value, oldValue) {
+      // DataListObject
+      //   .debounce(target.on.valueChanged, 200, i, column.dataIndex, val, oldVal)();
+      // console.warn(rowIndex, field, value, oldValue);
       this.executeLinkages(rowIndex, field, value, oldValue);
+      this.executeGrandTotal(field);
       // console.log(rowIndex, field, value, oldValue);
     }
 
@@ -232,6 +237,28 @@ export default class DataListObject {
     this.changeValueCollection = [];
     this.linkages = [];
     this.linkageTrees = [];
+
+    this.grandTotal = {};
+    this.grandTotalLibrary = {
+      average: {
+        name: '平均值',
+        method(preV, currV, index, array) {
+          let ret = 0;
+          if (index === array.length - 1) {
+            ret = (preV + currV) / (index + 1);
+          } else {
+            ret = preV + currV;
+          }
+          return ret;
+        },
+      },
+      sum: {
+        name: '总数',
+        method(preV, currV) {
+          return Number(preV) + Number(currV);
+        },
+      },
+    };
     this.rowsHint = [{
       field: '$$all',
       execute: {
@@ -360,15 +387,22 @@ export default class DataListObject {
       promise = this.queryDataDefault(p);
     }
     if (type.trim() === 'filter') {
-      // promise = this.queryDataByFilter(p);
+      promise = this.queryDataByFilter(p);
     }
 
     if (promise && promise.then) {
       this.$set('gridOptions.dataLoading', true);
-      promise.then(() => {
-        if (this.on.beforeRenderData) {
-          this.on.beforeRenderData(this);
-        }
+      promise = new Promise((resolve) => {
+        promise.then((rows) => {
+          // 数据查询后执行小计
+          Object.keys(this.grandTotal).forEach((key) => {
+            this.executeGrandTotal(key, rows);
+          });
+          if (this.on.beforeRenderData) {
+            this.on.beforeRenderData(this);
+          }
+          resolve(rows);
+        });
       });
     }
     return promise;
@@ -777,6 +811,16 @@ export default class DataListObject {
     this.$set('gridOptions.bordered', bool === false);
   }
 
+  static debounce(action, idle, ...args) {
+    let last;
+    return () => {
+      const ctx = this;
+      clearTimeout(last);
+      last = setTimeout(() => {
+        action.apply(ctx, args);
+      }, idle);
+    };
+  }
   getTemplate(column, row, index, text, rowHint) {
     let tpl = null;
     const target = this;
@@ -786,7 +830,7 @@ export default class DataListObject {
         const { value } = entry.target;
         val = value;
       }
-      const rows = target.state.rows.map((r, i) => {
+      target.state.rows.map((r, i) => {
         const rc = r;
         if (index === i) {
           const oldVal = rc[column.dataIndex];
@@ -797,7 +841,8 @@ export default class DataListObject {
         }
         return rc;
       });
-      target.setState({ rows });
+
+      // target.setState({ rows });
     }
 
     function onChange(entry) {
@@ -1274,6 +1319,68 @@ export default class DataListObject {
       rows = this.rememberRows;
     }
     return rows;
+  }
+
+  setGrandTotal(field, reduceAction, callback) {
+    let action = null;
+    if (typeof reduceAction === 'string') {
+      action = this.grandTotalLibrary[reduceAction].method;
+    } else if (reduceAction instanceof Function) {
+      action = reduceAction;
+    }
+    if (action) {
+      this.grandTotal[field] = this.grandTotal[field] || {};
+      this.grandTotal[field].action = action;
+      this.grandTotal[field].callback = callback;
+      if (!this.state.gridOptions.dataLoading &&
+        !this.state.gridOptions.tplLoading
+      ) {
+        this.executeGrandTotal(field);
+      }
+    }
+  }
+  setGrandTotalVisible(bool) {
+    this.grandTotalVisible = bool !== false;
+  }
+
+  getGrandTotalResult(field) {
+    let result = null;
+    if (this.grandTotal[field]) {
+      result = this.grandTotal[field].result;
+    }
+    return result;
+  }
+
+  executeGrandTotal(field, rowsData) {
+    let rows = rowsData || this.state.rows;
+    function renderGrandTotalFooter() {
+      return Object.keys(this.grandTotal).map((key) => {
+        return (
+          <section key={key}>
+            <b>{key}:</b>
+            <span>{this.grandTotal[key].result}</span>
+          </section>
+        );
+      });
+    }
+
+    if (rows && rows.length) {
+      rows = rows.slice(0);
+      if (field && this.grandTotal[field] && this.grandTotal[field].action) {
+        const result = rows.map((row) => {
+          return row[field];
+        }).reduce(this.grandTotal[field].action);
+        this.grandTotal[field].result = result;
+        if (this.grandTotalVisible !== false) {
+          this.setState({
+            footer: renderGrandTotalFooter.bind(this),
+          });
+        }
+        if (this.grandTotal[field].callback) {
+          this.grandTotal[field].callback(result);
+        }
+      }
+    }
   }
 }
 
