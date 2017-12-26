@@ -128,16 +128,21 @@ export default class DataListObject {
       hideDefaultSelections: true,
       type: 'radio',
       onChange: (selectedRowKeys, selectedRows) => {
-        this.$set('rowSelection.selectedRowKeys', selectedRowKeys);
-        this.selectedRows = selectedRows;
         if (this.remember && this.state.rowSelection.type === 'checkbox') {
-          this.setRememberedRows(selectedRows);
+          this.updateRemembered(selectedRows);
         }
+
+        this.$set('rowSelection.selectedRowKeys', selectedRowKeys);
+
+        this.selectedRows = selectedRows;
         if (this.on.selectRow) {
           this.on.selectRow(selectedRowKeys, selectedRows);
         }
       },
       onSelect: (record, selected, selectedRows) => {
+        // if (this.remember && this.state.rowSelection.type === 'checkbox') {
+        //   this.toggleRememberedRows(record, selected);
+        // }
         if (this.on.selectionChange) {
           this.on.selectionChange(record, selected, selectedRows);
         }
@@ -160,7 +165,7 @@ export default class DataListObject {
       onChange(currentPage, itemsPerPage) {
         target.$set('paginationConf.current', currentPage);
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
-          target.updateRemembered();
+          target.setRememberedRows();
         }
         if (target.on.pageChanged) {
           target.on.pageChanged(currentPage, itemsPerPage);
@@ -170,7 +175,7 @@ export default class DataListObject {
         console.log(current, size);
         target.$set('paginationConf.pageSize', size);
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
-          target.updateRemembered();
+          target.setRememberedRows();
         }
         if (target.on.itemPerPageChange) {
           target.on.itemPerPageChange(current, size);
@@ -645,13 +650,9 @@ export default class DataListObject {
         keys = [keys.pop()];
       }
 
-      const selectedRows = this.state.rows.map((row) => {
+      const selectedRows = this.state.rows.filter((row) => {
         return keys.indexOf(row[this.state.key]) !== -1;
       });
-
-      if (this.remember && this.state.rowSelection.type === 'checkbox') {
-        this.setRememberedRows(selectedRows);
-      }
       this.$set('rowSelection.selectedRowKeys', keys);
       this.state.rowSelection.onChange(keys, selectedRows.slice(0));
     }
@@ -1205,23 +1206,54 @@ export default class DataListObject {
       this.remember = bool !== false;
       if (!this.remember) {
         this.rememberRows.length = 0;
+      } else {
+        const keys = this.rememberRows.map((row) => {
+          return row.$$key;
+        });
+
+        this.selectedRows.forEach((row) => {
+          if (keys.indexOf(row.$$key) === -1) {
+            this.rememberRows.push(row);
+          }
+        });
       }
     }
   }
 
-  setRememberedRows(rows) {
-    const keys = this.rememberRows.map((row) => {
-      return row.$$key;
+  toggleRememberedRows(record, selected) {
+    if (!selected) {
+      for (let i = 0; i < this.rememberRows.length; i += 1) {
+        if (this.rememberRows[i].$$key === record.$$key) {
+          this.rememberRows.splice(i, 1);
+          break;
+        }
+      }
+    } else {
+      this.rememberRows.push(record);
+    }
+  }
+
+  updateRemembered(selectedRows) {
+    const oldSelectedRow = this.selectedRows.slice(0);
+    const newSelectedEntrys = {};
+    selectedRows.forEach((row) => {
+      newSelectedEntrys[row.$$key] = row;
     });
 
-    rows.forEach((row) => {
-      if (keys.indexOf(row.$$key) === -1) {
-        this.rememberRows.push(row);
+    oldSelectedRow.forEach((row) => {
+      if (!newSelectedEntrys[row.$$key]) {
+        this.toggleRememberedRows(row, false);
+      } else {
+        delete newSelectedEntrys[row.$$key];
       }
+    });
+
+    Object.keys(newSelectedEntrys).forEach((key) => {
+      this.toggleRememberedRows(newSelectedEntrys[key], true);
     });
   }
 
-  updateRemembered() {
+  setRememberedRows() {
     const keys = this.rememberRows.map((row) => {
       return row.$$key;
     });
