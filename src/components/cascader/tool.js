@@ -54,7 +54,7 @@ export const transformIntoTree = (data, attributes) => {
                         j--;
                     }
                 }
-                run(childArr[i].children);
+                arguments.callee(childArr[i].children);
             }
         }
     }
