@@ -1,0 +1,70 @@
+{
+  "gender": [
+    {
+      "code": "0",
+      "name": "未知的性别",
+      "nameI18nCode": null,
+      "sortCode": "1",
+      "hotspot": 0,
+      "correlation": null,
+      "enable": "Y",
+      "summary": ""
+    },
+    {
+      "code": "1",
+      "name": "男",
+      "nameI18nCode": null,
+      "sortCode": "2",
+      "hotspot": 0,
+      "correlation": null,
+      "enable": "Y",
+      "summary": ""
+    },
+    {
+      "code": "2",
+      "name": "女",
+      "nameI18nCode": null,
+      "sortCode": "3",
+      "hotspot": 0,
+      "correlation": null,
+      "enable": "Y",
+      "summary": ""
+    },
+    {
+      "code": "5",
+      "name": "女性改（变）为男性",
+      "nameI18nCode": null,
+      "sortCode": "4",
+      "hotspot": 0,
+      "correlation": null,
+      "enable": "Y",
+      "summary": ""
+    },
+    {
+      "code": "6",
+      "name": "男性改（变）为女性",
+      "nameI18nCode": null,
+      "sortCode": "5",
+      "hotspot": 0,
+      "correlation": null,
+      "enable": "Y",
+      "summary": ""
+    },
+    {
+      "code": "9",
+      "name": "未说明的性别",
+      "nameI18nCode": null,
+      "sortCode": "6",
+      "hotspot": 0,
+      "correlation": null,
+      "enable": "Y",
+      "summary": ""
+    }
+  ],
+  "political": [],
+  "marital": [],
+  "educationLevel": [],
+  "jobTitle": [],
+  "companyIndustry": [],
+  "hobby": []
+}

@@ -7,7 +7,7 @@ export default class RoCheckBox extends React.Component {
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const options = this.assembleOptions(this.props.model, this.props.options);
+        const options = this.assembleOptions(this.props.model, this.props.dict);
         this.state = {
             value,
             options,
@@ -31,7 +31,7 @@ export default class RoCheckBox extends React.Component {
                 break;
             case 'additionModel':
             default:
-                newOptions = options;
+                newOptions = options.map(item => item.name);
         }
         return newOptions;
     };

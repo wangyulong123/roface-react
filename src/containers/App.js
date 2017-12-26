@@ -39,7 +39,7 @@ export default class App extends React.Component {
     return NotFound;
   };
   _renderComponent = (props, tab) => {
-    const Com = compose(this._getCom(props, tab));
+    const Com = compose(this._getCom(props, tab), this.flexTabs, props, tab);
     return <Com />;
   };
   _getInstance = (instance) => {
