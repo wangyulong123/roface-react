@@ -60,14 +60,21 @@ router.route('/base/dicts')
   .get(function (req, rep, next) {
     const dataFormId = req.params.dataFormId;
     rep.setHeader('Content-Type', 'application/json;charset=utf-8');
-    rep.sendFile(path.resolve(__dirname, '../json/menuData.json'));
+    rep.sendFile(path.resolve(__dirname, '../json/demo-Dict.json'));
   });
 
-router.route('/base/dict/:dict')
+router.route('/base/dicts/:dict')
   .get(function (req, rep, next) {
     const dataFormId = req.params.dataFormId;
     rep.setHeader('Content-Type', 'application/json;charset=utf-8');
-    rep.sendFile(path.resolve(__dirname, '../json/menuData.json'));
+    rep.sendFile(path.resolve(__dirname, '../json/demo-Dict.json'));
+  });
+
+router.route('/templateList')
+  .get(function (req, rep, next) {
+    const dataFormId = req.params.dataFormId;
+    rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+    rep.sendFile(path.resolve(__dirname, '../json/demo-TemplateList.json'));
   });
 
 

@@ -56,10 +56,10 @@ export const parseURL = (url) => {
     return ret;
 };
 
-export const restAjax = (url, type, data) => {
+export const restAjax = (url, type, data, stats) => {
     // 网络请求
     const urlObject = parseURL(url);
-    const reqURL = getRequestURL(urlObject.url);
+    const reqURL = stats ? urlObject.url : getRequestURL(urlObject.url);
     let paramObject = {};
     if (data) {
         if (typeof data !== 'object') {

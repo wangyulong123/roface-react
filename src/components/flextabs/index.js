@@ -178,7 +178,7 @@ export default class Tab extends React.Component {
     const { activeTabId } = this.state;
     if (activeTabId !== currentTabItem.id) {
       const {history} = this.props;
-      history.replace(`/${currentTabItem.id}`);
+      history.replace(`/${currentTabItem.id}`, {...(currentTabItem.state || {})});
       this.setState({
         activeTabId: currentTabItem.id,
         isCollapse: false
@@ -204,7 +204,7 @@ export default class Tab extends React.Component {
     const tempCollapse = this.state.tabsCollapse
       .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id);
     const { history } = this.props;
-    history.replace(`/${collapseItem.id}`);
+    history.replace(`/${collapseItem.id}`, {...(collapseItem.state || {})});
     this.setState({
       tabs: this.state.tabs.concat(collapseItem),
       activeTabId: collapseItem.id,

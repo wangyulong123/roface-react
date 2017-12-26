@@ -36,3 +36,6 @@ export { default as DetailInfo } from './info';
 export { default as DetailTable } from './detailtable';
 export { default as Transfer } from './transfer';
 export { default as EasyRichText } from './easyrichtext';
+export { default as Table } from './table';
+export { default as Pagination } from './pagination';
+export { default as LocaleProvider } from './localeprovider';

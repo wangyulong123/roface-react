@@ -614,7 +614,7 @@
     "summary": null,
     "sortCode": "C10-10-20",
     "icon": null,
-    "url": null,
+    "url": "system/systemManage/DisplayTemplate",
     "param": null,
     "enable": "Y",
     "container": null,
