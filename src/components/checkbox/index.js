@@ -7,7 +7,7 @@ export default class RoCheckBox extends React.Component {
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const options = this.assembleOptions(this.props.model, this.props.options);
+        const options = this.assembleOptions(this.props.model, this.props.dict);
         this.state = {
             value,
             options,
@@ -36,6 +36,7 @@ export default class RoCheckBox extends React.Component {
         return newOptions;
     };
     handleChange = (value) => {
+        console.log(value);
         const { onChange } = this.props;
         if (onChange) {
             const v = this._changeArray2String(value);
@@ -60,7 +61,22 @@ export default class RoCheckBox extends React.Component {
         }
         return ary && ary.join && ary.join(',');
     };
-
+    _renderCheckBoxItem = () => {
+        if (this.state.options && this.state.options.length !== 0) {
+            return this.state.options.map((item) => {
+                return (
+                  <Checkbox
+                    value={item.code}
+                    disabled={this.props.disabled}
+                    key={item.code}
+                  >
+                    {item.name}
+                  </Checkbox>
+                );
+            });
+        }
+        return null;
+    };
     render() {
         if (this.props.reading) {
             return (
@@ -68,12 +84,15 @@ export default class RoCheckBox extends React.Component {
             );
         }
         return (
-          <CheckboxGroup
-            {...this.props}
-            value={this._changeString2Array(this.state.value)}
-            options={this.state.options}
-            onChange={this.handleChange}
-          />
+          <div>
+            <CheckboxGroup
+              {...this.props}
+              value={this._changeString2Array(this.state.value)}
+              onChange={this.handleChange}
+            >
+              {this._renderCheckBoxItem()}
+            </CheckboxGroup>
+          </div>
         );
     }
 }

@@ -7,6 +7,7 @@ export default class RoRadio extends React.Component{
         this.state = {
             checked: this.props.checked,
             value: this.props.value,
+            displayValue: this.props.displayValue,
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -25,10 +26,12 @@ export default class RoRadio extends React.Component{
     render() {
         return (
           <Radio
+            value={this.state.value}
             onClick={this.handleClick}
             checked={this.state.checked}
+            disabled={this.props.disabled}
           >
-            {this.state.value}
+            {this.state.displayValue}
           </Radio>
         );
     }

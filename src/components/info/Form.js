@@ -55,12 +55,15 @@ export default Form.create()(class Forms extends React.Component {
     });
   };
   _getElementUIHint = (item) => {
+    const { dict } = this.props;
+    console.log(dict[item.code]);
     return {
-      reading:item.elementUIHint.reading,
-      readOnly:item.elementUIHint.readonly,
-      prefix:item.elementUIHint.prefix,
-      suffix:item.elementUIHint.suffix,
-      note:item.elementUIHint.note,
+      reading: item.elementUIHint.reading,
+      readOnly: item.elementUIHint.readonly,
+      prefix: item.elementUIHint.prefix,
+      suffix: item.elementUIHint.suffix,
+      note: item.elementUIHint.note,
+      dict: dict[item.code],
     };
   };
   _dataType = (type) => {

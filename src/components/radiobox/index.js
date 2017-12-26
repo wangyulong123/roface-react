@@ -5,7 +5,7 @@ export default class RadioBox extends React.Component{
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const options = this.assembleOptions(this.props.model, this.props.options);
+        const options = this.assembleOptions(this.props.model, this.props.dict);
             this.state = {
           // eslint-disable-next-line react/no-unused-state
           value,
@@ -17,6 +17,7 @@ export default class RadioBox extends React.Component{
         if (this.state.value !== nextProps.value) {
             this.setState({
                 value: nextProps.value,
+                checkedArr: this._constructCheckedArr(nextProps.value, this.props.dict),
             });
         }
     }
@@ -49,16 +50,18 @@ export default class RadioBox extends React.Component{
         }
     };
     _constructCheckedArr = (value, options) => {
-        return options.map(item => item === value);
+        return options.map(item => item.code === value);
     };
     _renderRadioItem = () => {
       if (this.state.options && this.state.options.length !== 0) {
          return this.state.options.map((item, index) => {
               return (
                 <Radio
-                  value={item}
+                  value={item.code}
+                  displayValue={item.name}
+                  disabled={this.props.disabled}
                   checked={this.state.checkedArr[index]}
-                  key={`radio${item}`}
+                  key={`radio${item.code}`}
                   index={index}
                   radioChangeCallback={this._radioChangeCallback}
                 />
