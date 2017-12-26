@@ -332,11 +332,10 @@ export default class Tab extends React.Component {
               </div>
               <div>
                 {
-                  <TabContent>
-                    {
-                      this.state.tabs.forEach(tabItem => tabItem.Com)
-                    }
-                  </TabContent>
+                  <TabContent
+                    activeTabId={this.state.activeTabId}
+                    tabs={this.state.tabs}
+                  />
                 }
               </div>
             </div>
