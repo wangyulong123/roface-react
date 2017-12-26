@@ -36,15 +36,14 @@ class MegaMenu extends React.Component {
         this.left = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
         this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
         this.offsetWidth = this.wrapper.offsetWidth;
-        setTimeout(() => {
-            this.checkWidth();
-        }, 0);
         addOnResize(this.checkWidth, true);
         getUserMenuList().then(res => {
             const dataSource = this.removeLevelMore(this.flatToTree(res).data);
             dataMount && dataMount(dataSource);
             this.setState({
                 menuData: dataSource,
+            }, () => {
+                this.checkWidth();
             });
         });
         const tags = document.querySelectorAll('.' + prefix + '-personal-box');
@@ -141,7 +140,6 @@ class MegaMenu extends React.Component {
                 }
             }
             this.offsetWidth = this.wrapper.offsetWidth;
-            console.log('执行次数');
         }
     };
     thirdChildrenMenuShow = (e, prefix) => {
