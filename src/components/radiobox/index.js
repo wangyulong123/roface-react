@@ -5,7 +5,7 @@ export default class RadioBox extends React.Component{
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const options = this.assembleOptions(this.props.model, this.props.options);
+        const options = this.assembleOptions(this.props.model, this.props.dict);
             this.state = {
           // eslint-disable-next-line react/no-unused-state
           value,
@@ -31,7 +31,7 @@ export default class RadioBox extends React.Component{
                 break;
             case 'additionModel':
             default:
-                newOptions = options;
+                newOptions = options.map(item => item.name);
         }
         return newOptions;
     };
