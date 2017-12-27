@@ -50,7 +50,10 @@ export default class RadioBox extends React.Component{
         }
     };
     _constructCheckedArr = (value, options) => {
-        return options.map(item => item.code === value);
+        if (options) {
+            return options.map(item => item.code === value);
+        }
+        return [];
     };
     _renderRadioItem = () => {
       if (this.state.options && this.state.options.length !== 0) {
