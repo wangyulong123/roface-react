@@ -51,6 +51,11 @@ export default class Tab extends React.Component {
     }
   }
 
+  _initCom = (tab, props) => {
+    const { renderComponent } = this.props;
+    return renderComponent(props, tab);
+  }
+
 
   checkWidth = () => {
     if (this.tabsWrapper) {
@@ -94,6 +99,7 @@ export default class Tab extends React.Component {
 
   _createTab = (item) => {
     // this.checkWidth();
+    const Com = this._initCom(item, this.props);
     const isExsitTabsItem = this.state.tabs && this.state.tabs
         .find(tabsItem => tabsItem.id === item.id);
     const isExsitCollapseItem = this.state.tabsCollapse && this.state.tabsCollapse
@@ -103,19 +109,19 @@ export default class Tab extends React.Component {
         activeTabId: item.id,
       });
     } else if (isExsitCollapseItem && !isExsitTabsItem) {
-      this._selectTabCollapse(item);
+      this._selectTabCollapse({...item, Com: Com});
     } else {
       // 新增的时候，当空间不够的时候，应该将第一个tab折叠起来，将新增的tab排列到末尾
       if (this._isExistSpaceIfAdd()) {
         this.setState({
-          tabs: this.state.tabs.concat(item),
+          tabs: this.state.tabs.concat({...item, Com: Com}),
           activeTabId: item.id,
         });
       }
       else {
         const tempCollapseItems = this.state.tabs.length ? this.state.tabs.shift() : null;
         this.setState({
-          tabs: this.state.tabs.concat(item),
+          tabs: this.state.tabs.concat({...item, Com: Com}),
           activeTabId: item.id,
           tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
         });
@@ -255,8 +261,6 @@ export default class Tab extends React.Component {
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
-    const { renderComponent } = this.props;
-
     return (
       <div>
         <div className="ro-page-content-wrapper" id="ro-main-content">

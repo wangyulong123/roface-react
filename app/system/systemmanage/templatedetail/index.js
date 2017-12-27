@@ -91,7 +91,8 @@ export default Form.create()(class TemplateDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest, location, closeLoading, openLoading } = this.props;
+    const { rest, history, closeLoading, openLoading } = this.props;
+    const { location } = history;
     if (location && location.state && location.state.id) {
       openLoading && openLoading();
       rest.get('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelement',
