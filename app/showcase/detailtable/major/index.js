@@ -226,7 +226,7 @@ function setEditable(){
 }
 
 function getColumnDict() {
-  const field = 'hoppy';
+  const field = 'hobby';
   notification.open({
     message: `${field}字段码表`,
     description: JSON.stringify(vm.getColumnDict(field)),
@@ -234,24 +234,9 @@ function getColumnDict() {
 }
 
 function setColumnDict() {
-  const field = 'address';
-  vm.setColumnDict(field, [{
-    id: '00',
-    label: '苏州',
-  }, {
-    id: '01',
-    label: '北京',
-  }, {
-    id: '02',
-    label: '上海',
-    disabled: true,
-  }, {
-    id: '03',
-    label: '广州',
-  }, {
-    id: '04',
-    label: '深圳',
-  }]);
+  const field = 'hobby';
+  const dict = vm.getColumnDict(field).concat([{ code: '00', name: '改bug' }]);
+  vm.setColumnDict(field, dict);
   message.success(`设置${field}字段码表成功，请查看`);
 }
 
@@ -301,7 +286,7 @@ function getRemembers() {
 }
 
 function setGrandTotal() {
-  vm.setGrandTotal('age', 'sum');
+  vm.setGrandTotal('weight', 'sum');
   vm.setGrandTotal('height', 'average');
   message.success('设置小计成功！请查看表格页脚处');
 }
@@ -311,7 +296,7 @@ function setGrandTotalVisible() {
 }
 
 function getGrandTotalResult() {
-  const field = 'age';
+  const field = 'height';
   notification.open({
     message: `字段${field}的平均值`,
     description: vm.getGrandTotalResult(field) || null,
@@ -320,7 +305,7 @@ function getGrandTotalResult() {
 
 function onMounted(api) {
   vm = api;
-  vm.setEditable(true);
+  // vm.setEditable(true);
   api.run().then(() => {
     // debugger;
     // console.log('hahah');
@@ -344,6 +329,7 @@ export default class DataListTest extends React.Component {
         <div className="button-group">
           <Button type="primary" onClick={setSize}>设置表格尺寸</Button>
           <Button type="primary" onClick={setBorder}>设置表格边框</Button>
+          <Button type="primary" onClick={setEditable}>打开列表编辑模式</Button>
           <Button type="primary" onClick={toggleSelection}>切换选中状态</Button>
           <Button type="primary" onClick={setDisabledRows}>设置行禁止选中</Button>
           <Button type="primary" onClick={setSelectedRows}>设置默认选中行</Button>
@@ -363,10 +349,9 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={setRowReadonly}>设置行只读</Button>
           <Button type="primary" onClick={setReadonlyByRow}>按行设置列表只读</Button>
           <Button type="primary" onClick={setReadonlyByCol}>按列设置列表只读</Button>
-          <Button type="primary" onClick={setEditable}>打开列表编辑模式</Button>
           <Button type="primary" onClick={setElement}>重置单元格</Button>
-          <Button type="primary" onClick={getColumnDict}>获取码表</Button>
-          <Button type="primary" onClick={setColumnDict}>设置码表</Button>
+          <Button type="primary" onClick={getColumnDict}>获取代码表</Button>
+          <Button type="primary" onClick={setColumnDict}>设置代码表</Button>
           <Button type="primary" onClick={setColumnTemplate}>替换列模板</Button>
           <Button type="primary" onClick={replaceColumnValue}>统一替换列值</Button>
           <Button type="primary" onClick={setSelectionAll}>设置所有行选中</Button>
