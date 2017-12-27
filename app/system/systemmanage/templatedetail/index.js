@@ -94,7 +94,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { rest, location, closeLoading, openLoading } = this.props;
     if (location && location.state && location.state.id) {
       openLoading && openLoading();
-      rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelement', 'get',
+      rest.get('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelement',
         {
           id: location.state.id,
         }).then((res) => {
@@ -169,7 +169,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/savedataform', 'post',
+        rest.post('http://192.168.64.246:8080/dataform/admin/dataform/savedataform',
           {
             ...this.state.data,
             ...this._filterField(values, 'columnNumber'),

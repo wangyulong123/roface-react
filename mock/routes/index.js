@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var request = require('request');
+
+var redirect = require('../config');
 
 /* GET home page. */
 
@@ -76,6 +79,38 @@ router.route('/templateList')
     rep.setHeader('Content-Type', 'application/json;charset=utf-8');
     rep.sendFile(path.resolve(__dirname, '../json/demo-TemplateList.json'));
   });
+
+var setRedirect = function (options, cb) {
+  request(options, function (error, response, body) {
+    cb(body);
+  });
+}
+
+var reqPath = redirect.path;
+var url = redirect.url;
+
+for(let i = 0; i< reqPath.length; i ++) {
+  router.route(reqPath[i]).get(function (req, rep, next) {
+    setRedirect({
+      headers: req.headers,
+      uri: url + req.url,
+      method: 'get',
+    }, function (body) {
+      rep.json(JSON.parse(body));
+    })
+  })
+  router.route(reqPath[i]).post(function (req, rep, next) {
+    setRedirect({
+      headers: req.headers,
+      uri: url + reqPath[i],
+      method: 'post',
+      json: req.body
+    }, function (body) {
+      rep.json(JSON.parse(body));
+    })
+  })
+}
+
 
 
 

@@ -33,7 +33,7 @@ export default class DisplayTemplate extends React.Component {
   componentDidMount(){
     const { rest, closeLoading, openLoading } = this.props;
     openLoading && openLoading();
-    rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/getdataform', 'get').then((res) => {
+    rest.get('/dataform/admin/dataform/getdataform').then((res) => {
       this.setState({
         data: res,
       }, () => {
