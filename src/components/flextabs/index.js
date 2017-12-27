@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // import { Route } from 'react-router-dom';
 import Sortable from 'sortablejs';
-import { Icon, Notification } from '../index';
+import { Icon, Notification, Tooltip } from '../index';
 import TabPanel from './TabPanel';
 import TabContent from './TabContent';
 import { depthFirstSearch } from '../../lib/menutransform';
@@ -291,8 +291,12 @@ export default class Tab extends React.Component {
                 className="dropdown pull-right ro-tabs-collapse"
               >
                 <span className="roic-right-operate">
-                  <span className="roic-more" onClick={this._dropHiddenDown} title="打开更多..." />
-                  <span className="roic-close-others" onClick={this._closeOtherTabs} title="关闭其他..." />
+                   <Tooltip placement="leftTop" title={'打开更多...'}>
+                     <span className="roic-more" onClick={this._dropHiddenDown} />
+                   </Tooltip>
+                   <Tooltip placement="leftTop" title={'关闭其他...'}>
+                     <span className="roic-close-others" onClick={this._closeOtherTabs} />
+                   </Tooltip>
                 </span>
                 <ul
                   style={{ display: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none' }}
