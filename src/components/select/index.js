@@ -32,28 +32,28 @@ class RoSelect extends React.Component {
       </Option>
       );
     const children = [optionDefault];
-    const { optionData, optionName, optionField, optionDisabled } = this.props;
-    if (optionData[0] instanceof Object) {
-      for (let i = 0; i < optionData.length; i++) {
+    const { options=[], optionName, optionField, optionDisabled } = this.props;
+    if (options && options[0] instanceof Object) {
+      for (let i = 0; i < options.length; i++) {
         children.push(
           <Option
-            key={optionData[i][optionField]}
-            disabled={optionDisabled && optionDisabled.includes(optionData[i][optionField])}
-            value={optionData[i][optionField]}
+            key={options[i][optionField]}
+            disabled={optionDisabled && optionDisabled.includes(options[i][optionField])}
+            value={options[i][optionField]}
           >
-            { optionData[i][optionName] }
+            { options[i][optionName] }
           </Option>
         );
       }
     } else {
-      for (let i = 0; i < optionData.length; i++) {
+      for (let i = 0; i < options.length; i++) {
         children.push(
           <Option
-            key={optionData[i]}
-            value={optionData[i]}
-            disabled={optionDisabled.includes(optionData[i])}
+            key={options[i]}
+            value={options[i]}
+            disabled={optionDisabled && optionDisabled.includes(options[i])}
           >
-            { optionData[i] }
+            { options[i] }
           </Option>
         );
       }
@@ -63,12 +63,12 @@ class RoSelect extends React.Component {
   /* eslint-disable */
 
   renderReadingAndReadOnly = () => {
-    const { reading, optionData, optionField, optionName, readOnly, placeholder, className, style } = this.props;
+    const { reading, options, optionField, optionName, readOnly, placeholder, className, style } = this.props;
     let valueX = this.state.value;
 
-    if (optionData[0] instanceof Object) {
-      for (let i = 0; i < optionData.length; i++) {
-        if (optionData[i][optionField] === this.state.value) { valueX = optionData[i][optionName] }
+    if (options[0] instanceof Object) {
+      for (let i = 0; i < options.length; i++) {
+        if (options[i][optionField] === this.state.value) { valueX = options[i][optionName] }
       }
     }
 
