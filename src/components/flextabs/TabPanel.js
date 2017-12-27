@@ -2,7 +2,7 @@
  * Created by jkwu on 17-12-22.
  */
 import React from 'react';
-import { Icon } from '../index';
+import { Icon, Tooltip } from '../index';
 
 class TabPanel extends React.Component {
   // shouldComponentUpdate(nextProps) {
@@ -20,12 +20,14 @@ class TabPanel extends React.Component {
         onClick={() => clickTab(tabItem)}
         key={tabItem.id}
       >
-        <span
-          style={{ cursor: 'move' }}
-          key={`span ${tabItem.id}`}
-        >
-          {tabItem.name}
-        </span>
+        <Tooltip placement="bottom" title={tabItem.name} mouseEnterDelay={2}>
+          <span
+            style={{ cursor: 'move' }}
+            key={`span ${tabItem.id}`}
+          >
+            {tabItem.name}
+          </span>
+        </Tooltip>
         <Icon type="close" className="close" onClick={() => deleteTab(tabItem)} />
       </li>);
   }
