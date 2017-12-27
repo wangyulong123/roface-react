@@ -15,6 +15,7 @@ export default class Tab extends React.Component {
     super(props);
     this.dom = null;
     this.tabsWrapper = null;
+    // this.minHeight = '10px';
     this.state = {
       tabs: [],
       tabsCollapse: [],
@@ -34,7 +35,11 @@ export default class Tab extends React.Component {
     this.offsetWidth = this.tabsWrapper.offsetWidth;
 
     this.checkWidth();
+    const _this = this;
     addOnResize(this.checkWidth);
+    // addOnResize(function () {
+    //   _this.minHeight = (document.documentElement.clientHeight * 9 / 20) + 'px';
+    // });
   }
 
   componentWillReceiveProps(nextProps) {
