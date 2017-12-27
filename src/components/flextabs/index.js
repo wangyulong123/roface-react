@@ -48,6 +48,13 @@ export default class Tab extends React.Component {
       const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0];
       const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
       this._createTab(initTab ? initTab : indexMenu);
+    } else if (!pathname) {
+      let allMenus = [];
+      depthFirstSearch(nextProps.data, (menuItem) => {
+        allMenus.push(menuItem);
+      });
+      const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
+      this._createTab(indexMenu);
     }
   }
 

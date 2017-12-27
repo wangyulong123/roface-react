@@ -2,6 +2,7 @@
  * Created by jkwu on 17-12-25.
  */
 import React from 'react';
+import NotFound from '../../containers/NotFound';
 
 class TabContent extends React.Component {
   render() {
@@ -23,7 +24,7 @@ class TabContent extends React.Component {
             const show = activeTabId === tabItem.id ? '' : 'none';
             return (
               <div style={{ display: show }} key={tabItem.id}>
-                {tabItem.Com}
+                {tabItem.Com || <NotFound />}
               </div>
             );
           })
