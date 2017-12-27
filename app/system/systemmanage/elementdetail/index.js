@@ -145,16 +145,16 @@ export default Form.create()(class ElementDetail extends React.Component {
                     && this.state.data.elementUIHint.editStyle,
                   })(<Select options={[
                     {code: 'Text', name: '文本框'},
-                    {code: "Textarea", name: '多行文本框'},
-                    {code: "Select", name: '下拉框'},
-                    {code: "Checkbox", name: '复选框'},
-                    {code: "DatePicker", name: '日期选择'},
-                    {code: "Radiobox", name: '单选框'},
-                    {code: "YearMonthPicker", name: '月份选择'},
-                    {code: "Password", name: '密码框'},
-                    {code: "DateRange", name: '区间日期'},
-                    {code: "Address", name: '地址'},
-                    {code: "Star", name: '五星评分'},
+                    {code: 'Textarea', name: '多行文本框'},
+                    {code: 'Select', name: '下拉框'},
+                    {code: 'Checkbox', name: '复选框'},
+                    {code: 'DatePicker', name: '日期选择'},
+                    {code: 'Radiobox', name: '单选框'},
+                    {code: 'YearMonthPicker', name: '月份选择'},
+                    {code: 'Password', name: '密码框'},
+                    {code: 'DateRange', name: '区间日期'},
+                    {code: 'Address', name: '地址'},
+                    {code: 'Star', name: '五星评分'},
                   ]}
                              optionName="name"
                              optionField="code"
