@@ -64,7 +64,7 @@ export default class MultiSelect extends React.Component {
         });
         const { onChange } = this.props;
         if (onChange) {
-            onChange(this.props._changeArray2String(value));
+            onChange(this._changeArray2String(value));
         }
     };
     _changeString2Array = (str) => {
