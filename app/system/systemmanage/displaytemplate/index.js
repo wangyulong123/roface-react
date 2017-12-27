@@ -31,10 +31,13 @@ export default class DisplayTemplate extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest } = this.props;
-    rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/getdataform', 'get', {}, true).then((res) => {
+    const { rest, closeLoading, openLoading } = this.props;
+    openLoading && openLoading();
+    rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/getdataform', 'get').then((res) => {
       this.setState({
         data: res,
+      }, () => {
+        closeLoading && closeLoading();
       });
     });
   }
@@ -42,7 +45,7 @@ export default class DisplayTemplate extends React.Component {
     const { flexTabs, history } = this.props;
     history.replace(`/system/systemManage/TemplateDetail/${record.id}`, { id: record.id });
     flexTabs._createTab({
-      id: `system/systemManage/TemplateDetail${record.id}`,
+      id: `system/systemManage/TemplateDetail/${record.id}`,
       name: `模板:${record.name}`,
       url: 'system/systemManage/TemplateDetail',
       state: {

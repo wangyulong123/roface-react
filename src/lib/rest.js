@@ -56,10 +56,10 @@ export const parseURL = (url) => {
     return ret;
 };
 
-export const restAjax = (url, type, data, stats) => {
+export const restAjax = (url, type, data) => {
     // 网络请求
     const urlObject = parseURL(url);
-    const reqURL = stats ? urlObject.url : getRequestURL(urlObject.url);
+    const reqURL = url.startsWith('http') ? urlObject.url : getRequestURL(urlObject.url);
     let paramObject = {};
     if (data) {
         if (typeof data !== 'object') {
@@ -74,11 +74,13 @@ export const restAjax = (url, type, data, stats) => {
     if (type.toLowerCase() === 'get' || type.toLowerCase() === 'delete') {
         reqData = $.param(reqData, true);
     }
+    console.log('reqData:', reqData);
 
     return new Promise((resolve, reject) => {
         $.ajax({
+            contentType: 'application/json',
             url: reqURL,
-            data: reqData,
+            data: typeof reqData === 'string' ? reqData : JSON.stringify(reqData),
             cache: false,
             type,
             error: (xhr, status, err) => {
