@@ -31,7 +31,7 @@ function setDisabledRows() {
 
 function setSelectedRows() {
   vm.setSelectedRows((row) => {
-    return row.key !== '2';
+    return row.age <= 13;
   });
 }
 
@@ -53,7 +53,6 @@ function onSelectRow() {
 
 function onSelectionChange() {
   vm.onSelectionChange((record, selected, selectedRows) => {
-    console.log(record);
     notification.open({
       message: '单行选中状态已变更',
       description: `行号：${vm.getData().indexOf(record)}
@@ -184,7 +183,7 @@ function setPageSize() {
 }
 
 function setColumnReadonly() {
-  vm.setColumnReadonly((column) => { return column.dataIndex.length <= 4; }, false);
+  vm.setColumnReadonly((column) => { return column.dataIndex.length <= 4; }, true);
 }
 
 function setRowReadonly() {
@@ -288,11 +287,30 @@ function getRemembers() {
   if (vm.getSelectionMode() !== 'multiple') {
     message.warning('非多选模式下不能设置跨查询选中，请设置为多选模式后重试');
   } else {
+    const remembers = vm.getRemembers();
     notification.open({
-      message: '跨查询选中的数据',
-      description: JSON.stringify(vm.getRemembers()),
+      message: `跨查询选中的数据${remembers.length}条`,
+      description: JSON.stringify(remembers),
     });
   }
+}
+
+function setGrandTotal() {
+  vm.setGrandTotal('age', 'sum');
+  vm.setGrandTotal('height', 'average');
+  message.success('设置小计成功！请查看表格页脚处');
+}
+
+function setGrandTotalVisible() {
+  vm.setGrandTotalVisible(false);
+}
+
+function getGrandTotalResult() {
+  const field = 'age';
+  notification.open({
+    message: `字段${field}的平均值`,
+    description: vm.getGrandTotalResult(field) || null,
+  });
 }
 
 function onMounted(api) {
@@ -350,6 +368,10 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={setRemember}>设置跨查询选中数据</Button>
           <Button type="primary" onClick={getRemembers}>获取跨查询选中的数据</Button>
           <Button type="primary" onClick={getSelectionMode}>获取选中模式</Button>
+          <Button type="primary" onClick={setGrandTotal}>设置小计</Button>
+          <Button type="primary" onClick={setGrandTotalVisible}>隐藏页脚小计</Button>
+          <Button type="primary" onClick={getGrandTotalResult}>获取小计值</Button>
+
         </div>
         <DetailTable onMounted={onMounted} />
       </div>

@@ -36,18 +36,16 @@ class MegaMenu extends React.Component {
         this.left = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
         this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
         this.offsetWidth = this.wrapper.offsetWidth;
-        setTimeout(() => {
-            this.checkWidth();
-        }, 0);
-        addOnResize(this.checkWidth);
+        addOnResize(this.checkWidth, true);
         getUserMenuList().then(res => {
             const dataSource = this.removeLevelMore(this.flatToTree(res).data);
             dataMount && dataMount(dataSource);
             this.setState({
                 menuData: dataSource,
+            }, () => {
+                this.checkWidth();
             });
         });
-
         const tags = document.querySelectorAll('.' + prefix + '-personal-box');
         if (tags.length > 0) {
             this.tag = tags[tags.length - 1];
@@ -268,7 +266,7 @@ class MegaMenu extends React.Component {
                             {...formItemLayout}
                             label="邮箱"
                         >
-                            {getFieldDecorator('email', {
+                            {getFieldDecorator('user_email', {
                                 rule: [{type: 'email'}],
                             })(<Text placeholder="请输入邮箱地址" />)}
                         </FormItem>
@@ -388,14 +386,13 @@ class MegaMenu extends React.Component {
                         <span className={`${prefix}-personal-quit`} />
                         <span className={`${prefix}-navRight-text`} onClick={this._showQuitBox}>退出</span>
                         <Modal
-                            key={'notification'}
                             visible={quitState}
                             onOk={this._quitSuccess}
                             onCancel={this._quitFail}
                             title={'提示'}
                             footer={[
-                                <Button onClick={this._quitFail}>取消</Button>,
-                                <Button type='primary' onClick={this._quitSuccess}>确定</Button>
+                                <Button onClick={this._quitFail} key="cancel">取消</Button>,
+                                <Button type='primary' onClick={this._quitSuccess} key="ok">确定</Button>
                             ]}
                         >
                             <Icon type="warning" />
