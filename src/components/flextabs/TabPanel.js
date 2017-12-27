@@ -22,7 +22,6 @@ class TabPanel extends React.Component {
       >
         <span
           style={{ cursor: 'move' }}
-          title={tabItem.name}
           key={`span ${tabItem.id}`}
         >
           {tabItem.name}

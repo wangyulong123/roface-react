@@ -5,7 +5,8 @@
 
 import React from 'react';
 import moment from 'moment';
-import { DatePicker, Input, Icon } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import { DatePicker, Input, Icon, LocaleProvider } from 'antd';
 
 class RoYearPicker extends React.Component {
   static defaultProps = {
@@ -80,16 +81,18 @@ class RoYearPicker extends React.Component {
       );
     } else {
       return (
-        <DatePicker
-          placeholder="Select year"
-          {...this.props}
-          mode={this.state.mode}
-          open={this.state.open}
-          value={this.handleMillisecondValue(this.state.value)}
-          onChange={this.handleYearChange}
-          onOpenChange={this.handleOpenChange}
-          onPanelChange={this.handlePanelChange}
-        />
+        <LocaleProvider locale={zhCN}>
+          <DatePicker
+            placeholder="Select year"
+            {...this.props}
+            mode={this.state.mode}
+            open={this.state.open}
+            value={this.handleMillisecondValue(this.state.value)}
+            onChange={this.handleYearChange}
+            onOpenChange={this.handleOpenChange}
+            onPanelChange={this.handlePanelChange}
+          />
+        </LocaleProvider>
       );
     }
 
