@@ -5,9 +5,10 @@
 
 import React from 'react';
 import moment from 'moment';
-import { DatePicker } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import { DatePicker, Input, Icon, LocaleProvider } from 'antd';
 
-const { MonthPicker, Input, Icon } = DatePicker;
+const { MonthPicker } = DatePicker;
 
 class RoYearMonthPicker extends React.Component {
   static defaultProps = {
@@ -67,12 +68,14 @@ class RoYearMonthPicker extends React.Component {
       );
     } else {
       return (
-        <MonthPicker
-          placeholder="Select month"
-          {...this.props}
-          value={this.handleMillisecondValue(this.state.value)}
-          onChange={this.handleMonthChange}
-        />
+        <LocaleProvider locale={zhCN}>
+          <MonthPicker
+            placeholder="Select month"
+            {...this.props}
+            value={this.handleMillisecondValue(this.state.value)}
+            onChange={this.handleMonthChange}
+          />
+        </LocaleProvider>
       );
     }
   }

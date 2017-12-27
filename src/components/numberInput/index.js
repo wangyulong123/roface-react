@@ -25,8 +25,6 @@ class RoNumber extends React.Component {
   handleNumberChange = (e) => {
     const { onChange, onValueChange } = this.props;
     const numStr = e.toString().replace(/(?!^[-\d\.][\d\.]*)[^\d\.]/g, '');
-    console.log(e);
-    console.log(numStr);
     this.setState({ value: numStr });
     onChange && onChange(numStr);
     onValueChange && onValueChange(numStr)

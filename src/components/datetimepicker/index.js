@@ -4,7 +4,8 @@
 
 import React from 'react';
 import moment from 'moment';
-import { DatePicker, Input, Icon } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import { DatePicker, Input, Icon, LocaleProvider } from 'antd';
 
 class RoDateTimePicker extends React.Component {
   static defaultProps = {
@@ -68,14 +69,16 @@ class RoDateTimePicker extends React.Component {
       );
     } else {
       return (
-        <DatePicker
-          placeholder="Select time"
-          {...this.props}
-          showTime
-          value={this.handleMillisecondValue(this.state.value)}
-          onChange={this.handleTimeChange}
-          onOk={this._onOk}
-        />
+        <LocaleProvider locale={zhCN}>
+          <DatePicker
+            placeholder="Select time"
+            {...this.props}
+            showTime
+            value={this.handleMillisecondValue(this.state.value)}
+            onChange={this.handleTimeChange}
+            onOk={this._onOk}
+          />
+        </LocaleProvider>
       );
     }
   }

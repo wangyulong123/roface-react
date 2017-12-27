@@ -4,7 +4,8 @@
 
 import React from 'react';
 import moment from 'moment';
-import { TimePicker, Input, Icon } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import { TimePicker, Input, Icon, LocaleProvider } from 'antd';
 
 class RoTimePicker extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class RoTimePicker extends React.Component {
     if (reading) {
       return (
         <div>
-          {value && moment(new Date(this.state.value)).format(format)}
+          {this.state.value && moment(new Date(this.state.value)).format(format)}
         </div>
       );
     } else if (readOnly) {
@@ -60,12 +61,14 @@ class RoTimePicker extends React.Component {
       );
     } else {
       return (
-        <TimePicker
-          placeholder="Select time"
-          {...this.props}
-          value={this.handleMillisecondValue(this.state.value)}
-          onChange={this.handleTimeChange}
-        />
+        <LocaleProvider locale={zhCN}>
+          <TimePicker
+            placeholder="Select time"
+            {...this.props}
+            value={this.handleMillisecondValue(this.state.value)}
+            onChange={this.handleTimeChange}
+          />
+        </LocaleProvider>
       );
     }
   }

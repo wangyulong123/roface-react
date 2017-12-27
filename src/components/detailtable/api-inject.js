@@ -529,12 +529,12 @@ export default class DataListObject {
         const col = {};
         col.title = column.name;
         col.dataIndex = column.code;
-        console.log(column.name, column.elementUIHint.editStyle);
+        // console.log(column.name, column.elementUIHint.editStyle);
         col.type = typeMap[column.elementUIHint.editStyle.toLowerCase()];
         // console.log(column.name, col.type);
         if (col.type === 'select' || col.type === 'multiselect') {
           col.codeDict = data.dict[column.code] || [];
-          console.log(col.type, col.codeDict);
+          // console.log(col.type, col.codeDict);
         }
         col.className = 'detail-table-header-cell';
         columns.push(col);
@@ -920,7 +920,7 @@ export default class DataListObject {
   }
 
   setBorder(bool) {
-    this.$set('gridOptions.bordered', bool === false);
+    this.$set('gridOptions.bordered', bool !== false);
   }
 
   static debounce(action, idle, ...args) {
@@ -933,6 +933,7 @@ export default class DataListObject {
       }, idle);
     };
   }
+
   getTemplate(column, row, index, text, rowHint) {
     let tpl = null;
     const target = this;
