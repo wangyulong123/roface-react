@@ -17,23 +17,44 @@ export default class MultiSelect extends React.Component {
             });
         }
     }
-    _assembleOptions = (model, options) => {
-        let newOptions;
-        switch(model) {
-            case 'model':
-                newOptions = options.map(item => item.itemName);
-                break;
-            case 'jsonModel':
-                newOptions = options.map(item => item.v);
-                break;
-            case 'additionModel':
-            default:
-                newOptions = options;
+    _assembleOptions = () => {
+       const { model, options, optionField, optionName, optionDisabled} = this.props;
+       let newOptions;
+       switch(model) {
+           case 'model':
+               newOptions = options.map(item => item.itemName);
+               break;
+           case 'jsonModel':
+               newOptions = options.map(item => item.v);
+               break;
+           case 'additionModel':
+           default:
+               newOptions = options;
        }
        const optionArr = [];
-        newOptions.forEach((item) => {
-           optionArr.push(<Option key={item}>{item}</Option>);
-       });
+       if (options && options[0] instanceof Object) {
+           newOptions && newOptions.forEach((item, index) => {
+               optionArr.push(
+                 <Option
+                   key={item[optionField]}
+                   disabled={optionDisabled && optionDisabled.includes(options[index][optionField])}
+                   value={item[optionField]}
+                 >
+                   {item[optionName]}
+                 </Option>);
+           });
+       } else {
+           newOptions && newOptions.forEach((item) => {
+               optionArr.push(
+                 <Option
+                   key={item}
+                   value={item}
+                   disabled={optionDisabled.includes(item)}
+                 >
+                   {item}
+                 </Option>);
+           });
+       }
        return optionArr;
     };
 
@@ -62,12 +83,13 @@ export default class MultiSelect extends React.Component {
         return ary && ary.join && ary.join(',');
     };
     render() {
+        console.log('multiselect render');
         if (this.props.reading) {
             return (
               <div>{this._changeArray2String(this.props.value)}</div>
             );
         }
-        const children = this._assembleOptions(this.props.model, this.props.options);
+        const children = this._assembleOptions();
         return (
           <Select
             {...this.props}

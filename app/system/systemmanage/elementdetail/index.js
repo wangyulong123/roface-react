@@ -15,7 +15,8 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest, location, closeLoading, openLoading } = this.props;
+    const { rest, history, closeLoading, openLoading } = this.props;
+    const { location } = history;
     if (location && location.state) {
       openLoading && openLoading();
       rest.get('/dataform/admin/dataform/getdataformelementdetail',
@@ -86,7 +87,7 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
     const style = { width: '50%' };
     const { getFieldDecorator } = this.props.form;
-    const { prefix = 'ro' } = this.props;
+    const { prefix = 'ro', location } = this.props;
     return (
       <div className={`${prefix}-element-detail`}>
         <div className={`${prefix}-element-detail-header`}>
@@ -109,7 +110,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('dataFormId', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.dataFormId,
+                    initialValue: this.state.data.dataFormId
+                    || (location && location.state && location.state.id),
                   })(<Text reading />)}
                 </FormItem>
                 <FormItem
