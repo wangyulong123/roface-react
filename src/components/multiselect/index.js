@@ -13,7 +13,7 @@ export default class MultiSelect extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.state.value !== nextProps.value) {
             this.setState({
-                value: nextProps.value,
+                value: this._changeString2Array(nextProps.value),
             });
         }
     }
@@ -77,16 +77,30 @@ export default class MultiSelect extends React.Component {
         return str && str.split && str.split(',');
     };
     _changeArray2String = (ary) => {
+        if (ary instanceof String) {
+            return ary;
+        }
         if (ary.length === 0) {
             return '';
         }
         return ary && ary.join && ary.join(',');
     };
+    _constructReadingValue = (value) => {
+      const { options, optionField, optionName } = this.props;
+      const displayValueArr  = [];
+      value && value.forEach((item) => {
+        options.forEach((option) => {
+            if (option[optionField] === item) {
+                displayValueArr.push(option[optionName]);
+            }
+        });
+      });
+      return displayValueArr;
+    };
     render() {
-        console.log('multiselect render');
         if (this.props.reading) {
             return (
-              <div>{this._changeArray2String(this.props.value)}</div>
+              <div>{this._changeArray2String(this._constructReadingValue(this.state.value))}</div>
             );
         }
         const children = this._assembleOptions();

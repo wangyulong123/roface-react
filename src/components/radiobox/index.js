@@ -6,8 +6,7 @@ export default class RadioBox extends React.Component{
         super(props);
         const value = this.props.value || '';
         const options = this.assembleOptions(this.props.model, this.props.dict);
-            this.state = {
-          // eslint-disable-next-line react/no-unused-state
+        this.state = {
           value,
           options,
           checkedArr: this._constructCheckedArr(value, options),
