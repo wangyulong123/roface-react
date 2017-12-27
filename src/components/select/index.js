@@ -63,7 +63,7 @@ class RoSelect extends React.Component {
   /* eslint-disable */
 
   renderReadingAndReadOnly = () => {
-    const { reading, options, optionField, optionName, readOnly, placeholder, className, style } = this.props;
+    const {reading, options = [], optionField, optionName, readOnly, placeholder, className, style} = this.props;
     let valueX = this.state.value;
 
     if (options[0] instanceof Object) {
