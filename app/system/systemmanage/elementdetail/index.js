@@ -18,7 +18,7 @@ export default Form.create()(class ElementDetail extends React.Component {
     const { rest, location, closeLoading, openLoading } = this.props;
     if (location && location.state) {
       openLoading && openLoading();
-      rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelementdetail', 'get',
+      rest.get('/dataform/admin/dataform/getdataformelementdetail',
         {
           code: location.state.code,
           dataformId: location.state.id,
@@ -54,7 +54,7 @@ export default Form.create()(class ElementDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/savedataformelement', 'post',
+        rest.post('/dataform/admin/dataform/savedataformelement',
           {
             ...this.state.data,
             ...this._filterField(values,
