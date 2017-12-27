@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
+import { Spin } from '../components';
+
 import * as rest from '../lib/rest';
 
 import { addOnResize } from '../lib/listener';
@@ -11,6 +13,9 @@ export const compose = (Com, flexTabs, comProps) => {
       super(props);
       this.height = 150;
       this.flag = true;
+      this.state = {
+        spinning: false,
+      };
     }
     componentDidMount(){
       /* eslint-disable */
@@ -29,10 +34,22 @@ export const compose = (Com, flexTabs, comProps) => {
     _setComHeight = () => {
       this.dom.style.height = (document.documentElement.clientHeight - this.height) + 'px';
     };
+    closeLoading = () => {
+      this.setState({
+        spinning: false
+      })
+    };
+    openLoading = () => {
+      this.setState({
+        spinning: true
+      })
+    };
     render() {
       return (
         <div style={{ overflow: 'auto' }}>
-          <Com flexTabs={flexTabs} {...comProps} rest={rest} />
+          <Spin spinning={this.state.spinning}>
+          <Com flexTabs={flexTabs} {...comProps} rest={rest} closeLoading={this.closeLoading} openLoading={this.openLoading}/>
+          </Spin>
         </div>
       );
     }

@@ -39,3 +39,6 @@ export { default as EasyRichText } from './easyrichtext';
 export { default as Table } from './table';
 export { default as Pagination } from './pagination';
 export { default as LocaleProvider } from './localeprovider';
+export { default as Spin } from './spin';
+export { default as Row } from './row';
+export { default as Col } from './col';

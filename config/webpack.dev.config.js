@@ -12,7 +12,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, '../static'),
-        filename: "bundle.js"
+        filename: "bundle.js",
+        publicPath: "http://localhost:3004/"
     },
     plugins: [
         new HtmlWebpackPlugin({
