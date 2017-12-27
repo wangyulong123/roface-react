@@ -1,0 +1,14 @@
+.detail-table-header-cell{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 180px;
+}
+
+.detail-table-index{
+    width: 50px!important;
+}
+
+.ant-table-body{
+    overflow: auto;
+}

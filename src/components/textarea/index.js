@@ -30,6 +30,11 @@ export default class RoTextArea extends React.Component {
     };
 
     render() {
+        if (this.props.reading) {
+            return (
+              <div>{this.props.value}</div>
+            );
+        }
         return (
           <TextArea
             {...this.props}

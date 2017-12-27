@@ -30,8 +30,9 @@ function setDisabledRows() {
 }
 
 function setSelectedRows() {
-  vm.setSelectedRows((row) => {
-    return row.age <= 13;
+  vm.setSelectedRows((row, index) => {
+    console.log(index);
+    return index < 5;
   });
 }
 
@@ -138,37 +139,37 @@ function removeRows() {
 
 function setValue() {
   // debugger;
-  vm.setValue((row) => { return row.age < 13; }, 'age', 55);
+  vm.setValue((row, index) => { return index > 3; }, 'name', '哈哈');
 }
 
 function setLinkage() {
   vm.setLinkage('name', (row) => {
     // console.warn(row, val, oldVal);
     return {
-      age: Number(row.age) + 1,
-      address: '02',
+      height: (row.name ? row.name.length : 0) + 1,
+      chnName: `都叫我雷锋${row.height}`,
     };
   });
-  vm.setLinkage('age', (row) => {
+  vm.setLinkage('height', (row) => {
     return {
-      height: Number(row.age) + 5,
+      weight: Number(row.height) * 4,
     };
   });
 
-  vm.setLinkage('height', (row) => {
+  vm.setLinkage('weight', (row) => {
     return {
-      weight: Number(row.age) + 4,
+      code: Number(row.monthIncome) * Number(row.height),
     };
   });
   // debugger;
-  vm.setLinkage('address', (row) => {
-    return {
-      weight: Number(row.age) + 3,
-    };
-  });
   vm.setLinkage('sex', (row) => {
     return {
-      name: `${row.name} 2`,
+      code: Number(row.monthIncome) + 3,
+    };
+  });
+  vm.setLinkage('chnName', (row) => {
+    return {
+      code: `${row.chnName} 2`,
     };
   });
   message.success('联动设置成功！请随意改变值观察变化');
@@ -187,7 +188,7 @@ function setColumnReadonly() {
 }
 
 function setRowReadonly() {
-  vm.setRowReadonly((row) => { return row.weight < 50; }, true);
+  vm.setRowReadonly((row, index) => { return !index; }, true);
 }
 
 function setReadonlyByRow() {
@@ -200,7 +201,7 @@ function setReadonlyByCol() {
 
 function setElement() {
   vm.setElement((row) => {
-    return row.weight < 10;
+    return Number(row.birth) > new Date('1990/01/01').getTime();
   }, 'height', (row, column, index, value) => {
     return (
       <div style={{ backgroundColor: 'red', color: 'white', padding: '10px' }}>{value}</div>
@@ -208,12 +209,16 @@ function setElement() {
   });
 
   vm.setElement((row) => {
-    return Number(row.address) > 1;
+    return Number(row.birth) > new Date('1980/01/01').getTime();
   }, 'name', (row, column, index, value) => {
     return (
       <div style={{ backgroundColor: 'blue', color: 'white', padding: '10px' }}>{value}</div>
     );
   });
+
+  message.success(`设置单元格成功！
+  所有八零后的姓名用蓝色标注
+所有九零后的身高用红色标注`);
 }
 
 function setEditable(){
@@ -221,7 +226,7 @@ function setEditable(){
 }
 
 function getColumnDict() {
-  const field = 'address';
+  const field = 'hoppy';
   notification.open({
     message: `${field}字段码表`,
     description: JSON.stringify(vm.getColumnDict(field)),

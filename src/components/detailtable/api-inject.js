@@ -4,107 +4,108 @@
 
 import React from 'react';
 // import { Input, InputNumber, Select, DatePicker, TimePicker } from 'antd';
-import { Text, NumberInput, Currency, Select, DatePicker, DateTimePicker } from '../../components';
+import { Text, TextArea, NumberInput, Currency, Select, MultiSelect, DatePicker, DateTimePicker, YearMonthPicker, YearPicker, TimePicker } from '../../components';
+import * as rest from '../../lib/rest';
 
-const _columns = [{
-  title: '#',
-  dataIndex: 'index',
-  render(text, record, index) {
-    return index + 1;
-  },
-  static: true,
-}, {
-  title: '姓名',
-  dataIndex: 'name',
-  type: 'input',
-  readonly: true,
-}, {
-  title: '年龄',
-  dataIndex: 'age',
-  type: 'number',
-}, {
-  title: '身高',
-  dataIndex: 'height',
-  type: 'number',
-}, {
-  title: '体重',
-  dataIndex: 'weight',
-  type: 'number',
-}, {
-  title: '生日',
-  dataIndex: 'birth',
-  type: 'date',
-}, {
-  title: '地址',
-  dataIndex: 'address',
-  type: 'select',
-  codeDict: [{
-    id: '01',
-    label: '北京',
-  }, {
-    id: '02',
-    label: '上海',
-    disabled: true,
-  }, {
-    id: '03',
-    label: '广州',
-  }, {
-    id: '04',
-    label: '深圳',
-  }],
-}, {
-  title: '性别',
-  dataIndex: 'sex',
-  type: 'select',
-  codeDict: [{
-    id: 'F',
-    label: '女',
-  }, {
-    id: 'M',
-    label: '男',
-  }, {
-    id: 'U',
-    label: '未知',
-  }],
-}];
+// const _columns = [{
+//   title: '#',
+//   dataIndex: 'index',
+//   render(text, record, index) {
+//     return index + 1;
+//   },
+//   static: true,
+// }, {
+//   title: '姓名',
+//   dataIndex: 'name',
+//   type: 'input',
+//   readonly: true,
+// }, {
+//   title: '年龄',
+//   dataIndex: 'age',
+//   type: 'number',
+// }, {
+//   title: '身高',
+//   dataIndex: 'height',
+//   type: 'number',
+// }, {
+//   title: '体重',
+//   dataIndex: 'weight',
+//   type: 'number',
+// }, {
+//   title: '生日',
+//   dataIndex: 'birth',
+//   type: 'date',
+// }, {
+//   title: '地址',
+//   dataIndex: 'address',
+//   type: 'select',
+//   codeDict: [{
+//     id: '01',
+//     label: '北京',
+//   }, {
+//     id: '02',
+//     label: '上海',
+//     disabled: true,
+//   }, {
+//     id: '03',
+//     label: '广州',
+//   }, {
+//     id: '04',
+//     label: '深圳',
+//   }],
+// }, {
+//   title: '性别',
+//   dataIndex: 'sex',
+//   type: 'select',
+//   codeDict: [{
+//     id: 'F',
+//     label: '女',
+//   }, {
+//     id: 'M',
+//     label: '男',
+//   }, {
+//     id: 'U',
+//     label: '未知',
+//   }],
+// }];
 
-let _rows = [{
-  name: '李雷',
-  age: 13,
-  address: '01',
-  height: 171,
-  weight: 62,
-  birth: new Date('1992/06/16').getTime(),
-  sex: 'M',
-}, {
-  name: '韩梅梅',
-  age: 12,
-  address: '02',
-  height: 165,
-  weight: 48,
-  birth: new Date('1994/01/16').getTime(),
-  sex: 'F',
-}, {
-  name: 'Polly',
-  age: 1,
-  address: '03',
-  height: 21,
-  weight: 2.3,
-  birth: new Date('2001/02/30').getTime(),
-  sex: 'U',
-}, {
-  name: 'Miss Wang',
-  age: 29,
-  address: '04',
-  height: 161,
-  weight: 52,
-  birth: new Date('1985/03/01').getTime(),
-  sex: 'F',
-}];
+// let _rows = [{
+//   name: '李雷',
+//   age: 13,
+//   address: '01',
+//   height: 171,
+//   weight: 62,
+//   birth: new Date('1992/06/16').getTime(),
+//   sex: 'M',
+// }, {
+//   name: '韩梅梅',
+//   age: 12,
+//   address: '02',
+//   height: 165,
+//   weight: 48,
+//   birth: new Date('1994/01/16').getTime(),
+//   sex: 'F',
+// }, {
+//   name: 'Polly',
+//   age: 1,
+//   address: '03',
+//   height: 21,
+//   weight: 2.3,
+//   birth: new Date('2001/02/30').getTime(),
+//   sex: 'U',
+// }, {
+//   name: 'Miss Wang',
+//   age: 29,
+//   address: '04',
+//   height: 161,
+//   weight: 52,
+//   birth: new Date('1985/03/01').getTime(),
+//   sex: 'F',
+// }];
 
-for (let i = 0; i < 2; i += 1) {
-  _rows = _rows.concat(_rows);
-}
+// for (let i = 0; i < 2; i += 1) {
+//   _rows = _rows.concat(_rows);
+// }
 
 export default class DataListObject {
   init() {
@@ -156,7 +157,7 @@ export default class DataListObject {
       showSizeChanger: true,
       defaultPageSize: 10,
       current: 1,
-      total: 4,
+      total: 200,
       pageSize: this.defaultPageSize,
       noItemText: '',
       // itemRender: function (page, type, originalElement) {
@@ -245,9 +246,9 @@ export default class DataListObject {
         method(preV, currV, index, array) {
           let ret = 0;
           if (index === array.length - 1) {
-            ret = (preV + currV) / (index + 1);
+            ret = (Number(preV) + Number(currV)) / (index + 1);
           } else {
-            ret = preV + currV;
+            ret = (Number(preV) + Number(currV));
           }
           return ret;
         },
@@ -270,6 +271,22 @@ export default class DataListObject {
         );
       });
     }
+
+    this.tplTypeMap = {
+      text: 'input',
+      textarea: 'textarea',
+      select: 'select',
+      checkbox: 'multiselect',
+      radiobox: 'select',
+      number: 'number',
+      currency: 'currency',
+      multiSelect: 'checkbox',
+      datepicker: 'datepicker',
+      yearmonthpicker: 'yearmonthpicker',
+      yearpicker: 'yearpicker',
+      datetimepicker: 'datetimepicker',
+      timepicker: 'timepicker',
+    };
 
     this.renderGrandTotalFooter = renderGrandTotalFooter.bind(this);
 
@@ -360,10 +377,16 @@ export default class DataListObject {
     // })
     // 暂时用setTimeout替代从服务端请求数据
     const promise = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(_rows);
-        // this.rows = data;
-      }, 1000);
+      // setTimeout(() => {
+      //   resolve(_rows);
+      //   // this.rows = data;
+      // }, 1000);
+      rest.get('/detailTableData').then((res) => {
+        resolve(res.data.slice(0, 9));
+        this.$set('paginationConf.pageSize', res.data.slice(0, 9).length);
+        // this.$set('paginationConf.total', res.data.length);
+        // console.warn(res.data);
+      });
     });
 
     return promise;
@@ -383,10 +406,16 @@ export default class DataListObject {
 
     // 暂时用setTimeout替代从服务端请求数据
     const promise = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(_columns);
-        // this.columns = columns;
-      }, 1000);
+      // setTimeout(() => {
+      //   resolve(_columns);
+      // }, 1000);
+      rest.get('/detailTableTpl').then((res) => {
+        console.log(res);
+        const adapter = this.templateAdapter
+        && this.templateAdapter instanceof Function
+          ? this.templateAdapter : DataListObject.tplAdapter;
+        resolve(adapter(res, this.tplTypeMap));
+      });
     });
 
     return promise;
@@ -478,6 +507,74 @@ export default class DataListObject {
       }
     });
     return columnsHint;
+  }
+
+  setTemplateAdapter(adapter) {
+    this.templateAdapter = adapter;
+  }
+
+  static tplAdapter(data, typeMap) {
+    const columns = [{
+      title: '#',
+      dataIndex: 'index',
+      render(text, record, index) {
+        return index + 1;
+      },
+      className: 'detail-table-index',
+      static: true,
+    }];
+
+    data.meta.elements.forEach((column) => {
+      if (column.elementUIHint.visible) {
+        const col = {};
+        col.title = column.name;
+        col.dataIndex = column.code;
+        console.log(column.name, column.elementUIHint.editStyle);
+        col.type = typeMap[column.elementUIHint.editStyle.toLowerCase()];
+        // console.log(column.name, col.type);
+        if (col.type === 'select' || col.type === 'multiselect') {
+          col.codeDict = data.dict[column.code] || [];
+          console.log(col.type, col.codeDict);
+        }
+        col.className = 'detail-table-header-cell';
+        columns.push(col);
+      }
+    });
+    // console.warn(JSON.stringify(DataListObject.mockListData(data)));
+    return columns;
+  }
+
+  static mockListData(tplData, count = 15) {
+    const data = [];
+    for (let i = 0; i < count; i += 1) {
+      const row = {};
+      tplData.meta.elements.forEach((e) => {
+        switch (e.dataType) {
+          case 'String': {
+            row[e.code] = `测试${e.name}`;
+            break;
+          }
+
+          case 'Double': {
+            row[e.code] = Number(parseFloat(Math.random() * 10000, 10).toFixed(2));
+            break;
+          }
+
+          case 'Date': {
+            row[e.code] = new Date(`
+              ${parseInt(Math.random() * 50 + 1950, 10)}-${parseInt(Math.random() * 12 + 1, 10)}-${parseInt(Math.random() * 27 + 1, 10)}
+              `).getTime();
+            break;
+          }
+
+          default: {
+            break;
+          }
+        }
+      });
+      data.push(row);
+    }
+    return data;
   }
 
   renderUI(data) {
@@ -878,7 +975,19 @@ export default class DataListObject {
           tpl = (
             <Text
               value={row[column.dataIndex]}
-              reading={rowHint.readonly || column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
+              onChange={onChange}
+              onBlur={onBlur}
+              size={this.state.gridOptions.size}
+            />
+          );
+          break;
+        }
+        case 'textarea': {
+          tpl = (
+            <TextArea
+              value={row[column.dataIndex]}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               size={this.state.gridOptions.size}
@@ -890,12 +999,27 @@ export default class DataListObject {
           tpl = (
             <Select
               value={row[column.dataIndex]}
-              reading={rowHint.readonly || column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               optionData={column.codeDict}
-              optionName="label"
-              optionField="id"
+              optionName="name"
+              optionField="code"
+              size={this.state.gridOptions.size}
+            />
+          );
+          break;
+        }
+        case 'multiselect': {
+          tpl = (
+            <MultiSelect
+              value={row[column.dataIndex] || '01'}
+              reading={rowHint.readonly || column.readonly || undefined}
+              onChange={onChange}
+              onBlur={onBlur}
+              options={column.codeDict}
+              optionName="name"
+              optionField="code"
               size={this.state.gridOptions.size}
             />
           );
@@ -905,7 +1029,7 @@ export default class DataListObject {
           tpl = (
             <NumberInput
               value={row[column.dataIndex]}
-              reading={rowHint.readonly || column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               size={this.state.gridOptions.size}
@@ -917,7 +1041,7 @@ export default class DataListObject {
           tpl = (
             <Currency
               value={row[column.dataIndex]}
-              reading={rowHint.readonly || column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               size={this.state.gridOptions.size}
@@ -925,11 +1049,11 @@ export default class DataListObject {
           );
           break;
         }
-        case 'date': {
+        case 'datepicker': {
           tpl = (
             <DatePicker
               value={row[column.dataIndex]}
-              reading={rowHint.readonly || column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               size={this.state.gridOptions.size}
@@ -937,11 +1061,47 @@ export default class DataListObject {
           );
           break;
         }
-        case 'time': {
+        case 'yearmonthpicker': {
+          tpl = (
+            <YearMonthPicker
+              value={row[column.dataIndex]}
+              reading={rowHint.readonly || column.readonly || undefined}
+              onChange={onChange}
+              onBlur={onBlur}
+              size={this.state.gridOptions.size}
+            />
+          );
+          break;
+        }
+        case 'yearpicker': {
+          tpl = (
+            <YearPicker
+              value={row[column.dataIndex]}
+              reading={rowHint.readonly || column.readonly || undefined}
+              onChange={onChange}
+              onBlur={onBlur}
+              size={this.state.gridOptions.size}
+            />
+          );
+          break;
+        }
+        case 'datetimepicker': {
           tpl = (
             <DateTimePicker
               value={row[column.dataIndex]}
-              reading={rowHint.readonly || column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
+              onChange={onChange}
+              onBlur={onBlur}
+              size={this.state.gridOptions.size}
+            />
+          );
+          break;
+        }
+        case 'timepicker': {
+          tpl = (
+            <TimePicker
+              value={row[column.dataIndex]}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               size={this.state.gridOptions.size}
@@ -953,7 +1113,7 @@ export default class DataListObject {
           tpl = (
             <Text
               value={row[column.dataIndex]}
-              readOnly={column.readonly}
+              reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
               size={this.state.gridOptions.size}
@@ -992,7 +1152,7 @@ export default class DataListObject {
       } else if (rowEntry instanceof Function) {
         rows = rows.map((row, index) => {
           const _row = row;
-          if (rowEntry(row)) {
+          if (rowEntry(row, index)) {
             callback(_row, index);
           }
           return _row;

@@ -15,10 +15,11 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest, location, closeLoading, openLoading } = this.props;
+    const { rest, history, closeLoading, openLoading } = this.props;
+    const { location } = history;
     if (location && location.state) {
       openLoading && openLoading();
-      rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelementdetail', 'get',
+      rest.get('/dataform/admin/dataform/getdataformelementdetail',
         {
           code: location.state.code,
           dataformId: location.state.id,
@@ -54,7 +55,7 @@ export default Form.create()(class ElementDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.restAjax('http://192.168.64.246:8080/dataform/admin/dataform/savedataformelement', 'post',
+        rest.post('/dataform/admin/dataform/savedataformelement',
           {
             ...this.state.data,
             ...this._filterField(values,
@@ -86,7 +87,7 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
     const style = { width: '50%' };
     const { getFieldDecorator } = this.props.form;
-    const { prefix = 'ro' } = this.props;
+    const { prefix = 'ro', location } = this.props;
     return (
       <div className={`${prefix}-element-detail`}>
         <div className={`${prefix}-element-detail-header`}>
@@ -109,7 +110,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('dataFormId', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.dataFormId,
+                    initialValue: this.state.data.dataFormId
+                    || (location && location.state && location.state.id),
                   })(<Text reading />)}
                 </FormItem>
                 <FormItem
