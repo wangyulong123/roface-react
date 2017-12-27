@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button, Icon, Collapse, Text, Modal, Notification } from '../../../../src/components';
+import {Form, Button, Icon, Collapse, Text, Modal, Notification, Select, RadioBox } from '../../../../src/components';
 
 import './style/index.less';
 
@@ -143,7 +143,22 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.editStyle,
-                  })(<Text />)}
+                  })(<Select options={[
+                    {code: 'Text', name: '文本框'},
+                    {code: "Textarea", name: '多行文本框'},
+                    {code: "Select", name: '下拉框'},
+                    {code: "Checkbox", name: '复选框'},
+                    {code: "DatePicker", name: '日期选择'},
+                    {code: "Radiobox", name: '单选框'},
+                    {code: "YearMonthPicker", name: '月份选择'},
+                    {code: "Password", name: '密码框'},
+                    {code: "DateRange", name: '区间日期'},
+                    {code: "Address", name: '地址'},
+                    {code: "Star", name: '五星评分'},
+                  ]}
+                             optionName="name"
+                             optionField="code"
+                  />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -168,7 +183,11 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.textAlign,
-                  })(<Text />)}
+                  })(<RadioBox dict={[
+                    {code: 1, name: '左'},
+                    {code: 2, name: '中'},
+                    {code: 3, name: '右'},
+                  ]}/>)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -179,7 +198,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.readonly,
-                  })(<Text />)}
+                  })(<RadioBox dict={[
+                    {code: 0, name: '否'},
+                    {code: 1, name: '是'},
+                  ]}/>)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -190,7 +212,16 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.colspan,
-                  })(<Text />)}
+                  })(<Select options={[
+                    {code: 0, name: '默认(默认占一列）'},
+                    {code: 1, name: '占一列'},
+                    {code: 2, name: '占两列'},
+                    {code: 3, name: '占三列'},
+                    {code: 4, name: '占四列'},
+                  ]}
+                             optionName="name"
+                             optionField="code"
+                  />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -233,7 +264,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.visible,
-                  })(<Text />)}
+                  })(<RadioBox dict={[
+                    {code: 0, name: '否'},
+                    {code: 1, name: '是'},
+                  ]}/>)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -244,7 +278,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.required,
-                  })(<Text />)}
+                  })(<RadioBox dict={[
+                    {code: 0, name: '否'},
+                    {code: 1, name: '是'},
+                  ]}/>)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -254,7 +291,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('dataType', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.dataType,
-                  })(<Text />)}
+                  })(<Select options={['String', 'Number']}/>)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -264,7 +301,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('group', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.group,
-                  })(<Text />)}
+                  })(<Select />)}
                 </FormItem>
               </div>
             </Panel>
@@ -306,11 +343,33 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="检查格式"
                 >
+                  {/*"currency":"金额",*/}
+                  {/*"date":"日期",*/}
+                  {/*"datetime":"日期时间",*/}
+                  {/*"float2":"小数点后2位",*/}
+                  {/*"float4":"小数点后4位",*/}
+                  {/*"float6":"小数点后6位",*/}
+                  {/*"integer":"整数",*/}
+                  {/*"string":"字符串",*/}
+                  {/*"time":"时间"*/}
                   {getFieldDecorator('dataFormat', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.dataFormat,
-                  })(<Text />)}
+                  })(<Select options={[
+                    {code: 'Currency', name: '金额'},
+                    {code: 'Date', name: '日期'},
+                    {code: 'DateTime', name: '日期时间'},
+                    {code: 'Float2', name: '小数点后2位'},
+                    {code: 'Float4', name: '小数点后4位'},
+                    {code: 'Float6', name: 'float6'},
+                    {code: 'Integer', name: '整数'},
+                    {code: 'String', name: '字符串'},
+                    {code: 'Time', name: '时间'},
+                  ]}
+                             optionName="name"
+                             optionField="code"
+                  />)}
                 </FormItem>
               </div>
             </Panel>
