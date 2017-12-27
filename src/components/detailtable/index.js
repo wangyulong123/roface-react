@@ -5,6 +5,7 @@
 import React from 'react';
 import { Table } from 'antd';
 import Methods from './api-inject';
+import './index.css';
 
 class DetailTable extends React.Component {
   constructor(props) {

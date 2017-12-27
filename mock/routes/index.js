@@ -80,6 +80,20 @@ router.route('/templateList')
     rep.sendFile(path.resolve(__dirname, '../json/demo-TemplateList.json'));
   });
 
+router.route('/detailTableTpl')
+  .get(function (req, rep, next) {
+    const detailTableId = req.params.detailTableId;
+    rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+    rep.sendFile(path.resolve(__dirname, '../json/demo-PersonList-tpl.json'));
+  });
+
+router.route('/detailTableData')
+  .get(function (req, rep, next) {
+    const detailTableId = req.params.detailTableId;
+    rep.setHeader('Content-Type', 'application/json;charset=utf-8');
+    rep.sendFile(path.resolve(__dirname, '../json/demo-PersonList.json'));
+  });
+
 var setRedirect = function (options, cb) {
   request(options, function (error, response, body) {
     cb(body);
