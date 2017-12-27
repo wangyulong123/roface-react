@@ -30,8 +30,9 @@ function setDisabledRows() {
 }
 
 function setSelectedRows() {
-  vm.setSelectedRows((row) => {
-    return row.key !== '2';
+  vm.setSelectedRows((row, index) => {
+    console.log(index);
+    return index < 5;
   });
 }
 
@@ -53,7 +54,6 @@ function onSelectRow() {
 
 function onSelectionChange() {
   vm.onSelectionChange((record, selected, selectedRows) => {
-    console.log(record);
     notification.open({
       message: '单行选中状态已变更',
       description: `行号：${vm.getData().indexOf(record)}
@@ -139,37 +139,37 @@ function removeRows() {
 
 function setValue() {
   // debugger;
-  vm.setValue((row) => { return row.age < 13; }, 'age', 55);
+  vm.setValue((row, index) => { return index > 3; }, 'name', '哈哈');
 }
 
 function setLinkage() {
   vm.setLinkage('name', (row) => {
     // console.warn(row, val, oldVal);
     return {
-      age: Number(row.age) + 1,
-      address: '02',
+      height: (row.name ? row.name.length : 0) + 1,
+      chnName: `都叫我雷锋${row.height}`,
     };
   });
-  vm.setLinkage('age', (row) => {
+  vm.setLinkage('height', (row) => {
     return {
-      height: Number(row.age) + 5,
+      weight: Number(row.height) * 4,
     };
   });
 
-  vm.setLinkage('height', (row) => {
+  vm.setLinkage('weight', (row) => {
     return {
-      weight: Number(row.age) + 4,
+      code: Number(row.monthIncome) * Number(row.height),
     };
   });
   // debugger;
-  vm.setLinkage('address', (row) => {
-    return {
-      weight: Number(row.age) + 3,
-    };
-  });
   vm.setLinkage('sex', (row) => {
     return {
-      name: `${row.name} 2`,
+      code: Number(row.monthIncome) + 3,
+    };
+  });
+  vm.setLinkage('chnName', (row) => {
+    return {
+      code: `${row.chnName} 2`,
     };
   });
   message.success('联动设置成功！请随意改变值观察变化');
@@ -184,11 +184,11 @@ function setPageSize() {
 }
 
 function setColumnReadonly() {
-  vm.setColumnReadonly((column) => { return column.dataIndex.length <= 4; }, false);
+  vm.setColumnReadonly((column) => { return column.dataIndex.length <= 4; }, true);
 }
 
 function setRowReadonly() {
-  vm.setRowReadonly((row) => { return row.weight < 50; }, true);
+  vm.setRowReadonly((row, index) => { return !index; }, true);
 }
 
 function setReadonlyByRow() {
@@ -201,7 +201,7 @@ function setReadonlyByCol() {
 
 function setElement() {
   vm.setElement((row) => {
-    return row.weight < 10;
+    return Number(row.birth) > new Date('1990/01/01').getTime();
   }, 'height', (row, column, index, value) => {
     return (
       <div style={{ backgroundColor: 'red', color: 'white', padding: '10px' }}>{value}</div>
@@ -209,12 +209,16 @@ function setElement() {
   });
 
   vm.setElement((row) => {
-    return Number(row.address) > 1;
+    return Number(row.birth) > new Date('1980/01/01').getTime();
   }, 'name', (row, column, index, value) => {
     return (
       <div style={{ backgroundColor: 'blue', color: 'white', padding: '10px' }}>{value}</div>
     );
   });
+
+  message.success(`设置单元格成功！
+  所有八零后的姓名用蓝色标注
+所有九零后的身高用红色标注`);
 }
 
 function setEditable(){
@@ -222,7 +226,7 @@ function setEditable(){
 }
 
 function getColumnDict() {
-  const field = 'address';
+  const field = 'hobby';
   notification.open({
     message: `${field}字段码表`,
     description: JSON.stringify(vm.getColumnDict(field)),
@@ -230,24 +234,9 @@ function getColumnDict() {
 }
 
 function setColumnDict() {
-  const field = 'address';
-  vm.setColumnDict(field, [{
-    id: '00',
-    label: '苏州',
-  }, {
-    id: '01',
-    label: '北京',
-  }, {
-    id: '02',
-    label: '上海',
-    disabled: true,
-  }, {
-    id: '03',
-    label: '广州',
-  }, {
-    id: '04',
-    label: '深圳',
-  }]);
+  const field = 'hobby';
+  const dict = vm.getColumnDict(field).concat([{ code: '00', name: '改bug' }]);
+  vm.setColumnDict(field, dict);
   message.success(`设置${field}字段码表成功，请查看`);
 }
 
@@ -288,16 +277,35 @@ function getRemembers() {
   if (vm.getSelectionMode() !== 'multiple') {
     message.warning('非多选模式下不能设置跨查询选中，请设置为多选模式后重试');
   } else {
+    const remembers = vm.getRemembers();
     notification.open({
-      message: '跨查询选中的数据',
-      description: JSON.stringify(vm.getRemembers()),
+      message: `跨查询选中的数据${remembers.length}条`,
+      description: JSON.stringify(remembers),
     });
   }
 }
 
+function setGrandTotal() {
+  vm.setGrandTotal('weight', 'sum');
+  vm.setGrandTotal('height', 'average');
+  message.success('设置小计成功！请查看表格页脚处');
+}
+
+function setGrandTotalVisible() {
+  vm.setGrandTotalVisible(false);
+}
+
+function getGrandTotalResult() {
+  const field = 'height';
+  notification.open({
+    message: `字段${field}的平均值`,
+    description: vm.getGrandTotalResult(field) || null,
+  });
+}
+
 function onMounted(api) {
   vm = api;
-  vm.setEditable(true);
+  // vm.setEditable(true);
   api.run().then(() => {
     // debugger;
     // console.log('hahah');
@@ -321,6 +329,7 @@ export default class DataListTest extends React.Component {
         <div className="button-group">
           <Button type="primary" onClick={setSize}>设置表格尺寸</Button>
           <Button type="primary" onClick={setBorder}>设置表格边框</Button>
+          <Button type="primary" onClick={setEditable}>打开列表编辑模式</Button>
           <Button type="primary" onClick={toggleSelection}>切换选中状态</Button>
           <Button type="primary" onClick={setDisabledRows}>设置行禁止选中</Button>
           <Button type="primary" onClick={setSelectedRows}>设置默认选中行</Button>
@@ -340,16 +349,19 @@ export default class DataListTest extends React.Component {
           <Button type="primary" onClick={setRowReadonly}>设置行只读</Button>
           <Button type="primary" onClick={setReadonlyByRow}>按行设置列表只读</Button>
           <Button type="primary" onClick={setReadonlyByCol}>按列设置列表只读</Button>
-          <Button type="primary" onClick={setEditable}>打开列表编辑模式</Button>
           <Button type="primary" onClick={setElement}>重置单元格</Button>
-          <Button type="primary" onClick={getColumnDict}>获取码表</Button>
-          <Button type="primary" onClick={setColumnDict}>设置码表</Button>
+          <Button type="primary" onClick={getColumnDict}>获取代码表</Button>
+          <Button type="primary" onClick={setColumnDict}>设置代码表</Button>
           <Button type="primary" onClick={setColumnTemplate}>替换列模板</Button>
           <Button type="primary" onClick={replaceColumnValue}>统一替换列值</Button>
           <Button type="primary" onClick={setSelectionAll}>设置所有行选中</Button>
           <Button type="primary" onClick={setRemember}>设置跨查询选中数据</Button>
           <Button type="primary" onClick={getRemembers}>获取跨查询选中的数据</Button>
           <Button type="primary" onClick={getSelectionMode}>获取选中模式</Button>
+          <Button type="primary" onClick={setGrandTotal}>设置小计</Button>
+          <Button type="primary" onClick={setGrandTotalVisible}>隐藏页脚小计</Button>
+          <Button type="primary" onClick={getGrandTotalResult}>获取小计值</Button>
+
         </div>
         <DetailTable onMounted={onMounted} />
       </div>

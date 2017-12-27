@@ -11,7 +11,7 @@ class EasyRichText extends React.Component {
     this.editor = null;
     this.state = {
       value: props.value,
-      disabled: props.disabled || true,
+      disabled: props.disabled || props.readOnly || false,
       pasteFilterStyle: props.pasteFilterStyle || false,
     };
   }
@@ -35,7 +35,7 @@ class EasyRichText extends React.Component {
       editor.customConfig.menus = menus;
     }
     editor.create();
-    editor.$textElem.attr('contenteditable', disabled);
+    editor.$textElem.attr('contenteditable', !this.state.disabled);
     this.editor = editor;
   }
 
@@ -46,17 +46,16 @@ class EasyRichText extends React.Component {
       pasteFilterStyle: nextProps.pasteFilterStyle,
     });
     if (this.editor) {
-      this.editor.$textElem.attr('contenteditable', nextProps.disabled);
+      this.editor.$textElem.attr('contenteditable', !nextProps.disabled);
     }
   }
 
   handleOnChange = (value) => {
-    this.setState({ value: value });
     this.props.onChange && this.props.onChange(value);
   };
 
   handleOnFocus = () => {
-    this.props.onFocus && this.props.onFocus(this.state.value);
+    this.props.onFocus && this.props.onFocus(this.props.value);
   };
 
   handleOnBlur = (value) => {
@@ -92,9 +91,10 @@ class EasyRichText extends React.Component {
     return (
       <div
         style={{textAlign: 'left'}}
-        {...this.props}
         ref="editorElem"
-      />
+      >
+        <p>{this.state.value || '请在此输入内容...'}</p>
+      </div>
     );
   }
 }

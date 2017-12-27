@@ -21,7 +21,9 @@ export default class App extends React.Component {
   _menuClick = (item, history) => {
     history.replace(`/${item.id}`);
     if (this.flexTabs) {
-      this.flexTabs._createTab(item);
+      this.flexTabs._createTab({...item,
+        Com: this._renderComponent(history, item),
+      });
     }
   };
   _getObject = (obj, fields) => {
