@@ -187,7 +187,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.textAlign,
-                  })(<RadioBox dict={[{code: 1, name: '左'}, {code: 2, name: '中'}, {code: 3, name: '右'}]}/>)}
+                  })(<RadioBox dict={[{code: 1, name: '左'}, {code: 2, name: '中'}, {code: 3, name: '右'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -198,7 +198,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.readonly,
-                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]}/>)}
+                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -262,7 +262,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.visible,
-                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]}/>)}
+                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -273,7 +273,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.required,
-                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]}/>)}
+                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -283,7 +283,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('dataType', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.dataType,
-                  })(<Select options={['String', 'Number']}/>)}
+                  })(<Select options={['String', 'Number']} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -367,7 +367,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('code0', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.code,
-                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]}/>)}
+                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -396,7 +396,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('code2', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.code,
-                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]}/>)}
+                  })(<RadioBox dict={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -438,7 +438,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('code6', {
                     rules: [{ required: true }],
                     initialValue: this.state.data.code,
-                  })(<RadioBox dict={[{code: 'client', name: '客户端'}, {code: 'Server', name: '服务端'}]}/>)}
+                  })(<RadioBox dict={[{code: 'client', name: '客户端'}, {code: 'Server', name: '服务端'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
