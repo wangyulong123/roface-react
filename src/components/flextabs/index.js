@@ -105,7 +105,6 @@ export default class Tab extends React.Component {
   };
 
   _createTab = (item) => {
-    // this.checkWidth();
     const Com = this._initCom(item, this.props);
     const isExsitTabsItem = this.state.tabs && this.state.tabs
         .find(tabsItem => tabsItem.id === item.id);
@@ -134,7 +133,6 @@ export default class Tab extends React.Component {
         });
       }
     }
-    this.checkWidth();
   };
 
   _isExistSpaceIfAdd = () => {
@@ -163,11 +161,12 @@ export default class Tab extends React.Component {
         duration: 3,
       });
     }
+    const finalTabs = this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id ===
+      this.state.activeTabId);
     this.setState({
-      tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id ===
-      this.state.activeTabId),
-      activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
-    });
+      tabs: finalTabs,
+      activeTabId: finalTabs[0].id,
+    }, this._clickTab(finalTabs[0]));
   };
 
   _deleteTab = (e, isDeteleTab) => {
