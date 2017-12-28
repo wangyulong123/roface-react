@@ -95,7 +95,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { location } = history;
     if (location && location.state && location.state.id) {
       openLoading && openLoading();
-      rest.get('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelement',
+      rest.get('/dataform/admin/dataform/getdataformelement',
         {
           id: location.state.id,
         }).then((res) => {
@@ -170,7 +170,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.post('http://192.168.64.246:8080/dataform/admin/dataform/savedataform',
+        rest.post('/dataform/admin/dataform/savedataform',
           {
             ...this.state.data,
             ...this._filterField(values, 'columnNumber'),

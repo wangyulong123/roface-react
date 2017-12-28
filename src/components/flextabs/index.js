@@ -145,7 +145,15 @@ export default class Tab extends React.Component {
   };
 
   _closeAllTabs = () => {
-    this.setState({ tabs: [] });
+    let allMenus = [];
+    depthFirstSearch(this.props.data, (menuItem) => {
+      allMenus.push(menuItem);
+    });
+    const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
+    // 置空并且重新生成默认页
+    this.setState({ tabs: [] }, () => {
+      this._createTab(indexMenu);
+    });
   };
 
   _closeOtherTabs = () => {
@@ -302,10 +310,10 @@ export default class Tab extends React.Component {
                 className="dropdown pull-right ro-tabs-collapse"
               >
                 <span className="roic-right-operate">
-                   <Tooltip placement="leftTop" title={'打开更多...'}>
+                   <Tooltip placement="topLeft" title={'打开更多...'}>
                      <span className="roic-more" onClick={this._dropHiddenDown} />
                    </Tooltip>
-                   <Tooltip placement="leftTop" title={'关闭其他...'}>
+                   <Tooltip placement="topRight" title={'关闭其他...'}>
                      <span className="roic-close-others" onClick={this._closeOtherTabs} />
                    </Tooltip>
                 </span>

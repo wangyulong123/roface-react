@@ -36,7 +36,7 @@ compiler.plugin('done', function(stats) {
 var devServer = new WebpackDevServer(compiler, {
     historyApiFallback: true, // 所有的跳转都指向index.html
     stats: { colors: true },
-    proxy: {
+    /*proxy: {
       '/api': {
         target: 'http://192.168.64.246:8080',
         changeOrigin: true,
@@ -45,7 +45,7 @@ var devServer = new WebpackDevServer(compiler, {
           '^/api': '/'
         }
       }
-    },
+    },*/
 });
 
 devServer.listen(port);

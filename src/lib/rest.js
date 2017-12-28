@@ -78,7 +78,7 @@ export const restAjax = (url, type, data) => {
 
     return new Promise((resolve, reject) => {
         $.ajax({
-            contentType: 'application/json',
+            contentType: 'application/json;charset=utf-8',
             url: reqURL,
             data: typeof reqData === 'string' ? reqData : JSON.stringify(reqData),
             cache: false,
