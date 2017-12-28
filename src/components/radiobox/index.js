@@ -2,6 +2,10 @@ import React from 'react';
 import Radio from './radio';
 
 export default class RadioBox extends React.Component{
+    static defaultProps = {
+        optionField: 'code',
+        optionName: 'name',
+    };
     constructor(props) {
         super(props);
         const value = this.props.value || '';
@@ -55,15 +59,17 @@ export default class RadioBox extends React.Component{
         return [];
     };
     _renderRadioItem = () => {
-      if (this.state.options && this.state.options.length !== 0) {
-         return this.state.options.map((item, index) => {
+      const { optionField, optionName, optionDisabled } = this.props;
+      const options = this.state.options;
+      if (options && options.length !== 0) {
+         return options.map((item, index) => {
               return (
                 <Radio
-                  value={item.code}
-                  displayValue={item.name}
-                  disabled={this.props.disabled}
+                  value={item[optionField]}
+                  displayValue={item[optionName]}
+                  disabled={optionDisabled && optionDisabled.includes(item[optionField])}
                   checked={this.state.checkedArr[index]}
-                  key={`radio${item.code}`}
+                  key={item[optionField]}
                   index={index}
                   radioChangeCallback={this._radioChangeCallback}
                 />

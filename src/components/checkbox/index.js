@@ -4,6 +4,10 @@ import { Checkbox } from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
 export default class RoCheckBox extends React.Component {
+    static defaultProps = {
+        optionField: 'code',
+        optionName: 'name',
+    };
     constructor(props) {
         super(props);
         const value = this.props.value || '';
@@ -20,6 +24,19 @@ export default class RoCheckBox extends React.Component {
             });
         }
     }
+    _dataFormate = (data) => {
+        const { optionField, optionName, optionDisabled } = this.props;
+        const newData = [];
+        data.forEach((item) => {
+           const newItem = {
+               label: item[optionName],
+               value: item[optionField],
+               disabled: optionDisabled && optionDisabled.includes(item[optionField]),
+           };
+           newData.push(newItem);
+        });
+        return newData;
+    };
     assembleOptions = (model, options) => {
         let newOptions;
         switch(model) {
@@ -31,12 +48,11 @@ export default class RoCheckBox extends React.Component {
                 break;
             case 'additionModel':
             default:
-                newOptions = options;
+                newOptions = this._dataFormate(options);
         }
         return newOptions;
     };
     handleChange = (value) => {
-        console.log(value);
         const { onChange } = this.props;
         if (onChange) {
             const v = this._changeArray2String(value);
@@ -61,22 +77,6 @@ export default class RoCheckBox extends React.Component {
         }
         return ary && ary.join && ary.join(',');
     };
-    _renderCheckBoxItem = () => {
-        if (this.state.options && this.state.options.length !== 0) {
-            return this.state.options.map((item) => {
-                return (
-                  <Checkbox
-                    value={item.code}
-                    disabled={this.props.disabled}
-                    key={item.code}
-                  >
-                    {item.name}
-                  </Checkbox>
-                );
-            });
-        }
-        return null;
-    };
     render() {
         if (this.props.reading) {
             return (
@@ -89,9 +89,8 @@ export default class RoCheckBox extends React.Component {
               {...this.props}
               value={this._changeString2Array(this.state.value)}
               onChange={this.handleChange}
-            >
-              {this._renderCheckBoxItem()}
-            </CheckboxGroup>
+              options={this.state.options}
+            />
           </div>
         );
     }
