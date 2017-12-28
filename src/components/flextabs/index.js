@@ -105,7 +105,6 @@ export default class Tab extends React.Component {
   };
 
   _createTab = (item) => {
-    // this.checkWidth();
     const Com = this._initCom(item, this.props);
     const isExsitTabsItem = this.state.tabs && this.state.tabs
         .find(tabsItem => tabsItem.id === item.id);
@@ -134,7 +133,6 @@ export default class Tab extends React.Component {
         });
       }
     }
-    this.checkWidth();
   };
 
   _isExistSpaceIfAdd = () => {
