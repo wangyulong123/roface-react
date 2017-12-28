@@ -134,7 +134,7 @@ export default class Tab extends React.Component {
         });
       }
     }
-    // this.checkWidth();
+    this.checkWidth();
   };
 
   _isExistSpaceIfAdd = () => {
@@ -170,22 +170,54 @@ export default class Tab extends React.Component {
     });
   };
 
-  _deleteTab = (isDeteleTab) => {
-    if (this.state.activeTabId === isDeteleTab.id) {
-      this.setState({
-        tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
-        isDeteleTab.id),
-      }, this.setState({
-        activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 1].id,
-      }));
+  _deleteTab = (e, isDeteleTab) => {
+    e.preventDefault();    // 阻止默认事件
+    e.stopPropagation();   // 阻止事件冒泡
+    const finalTabs =  this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
+      isDeteleTab.id);
+    if (!this.state.tabsCollapse.length) {
+      // tabsCollapse为零，没有折叠起来的tab
+      if (this.state.activeTabId === isDeteleTab.id) {
+        // 删除的是当前显示的tab,并且没有折叠起来的tab
+        // 获取当前删除当前页的索引
+        const deleteIndex = this.state.tabs && this.state.tabs.findIndex(tabItem => tabItem.id ===
+          isDeteleTab.id);
+        const nextShowIndex = deleteIndex - 1 >= 0 ? deleteIndex - 1 : 0;
+        const lastTabsNumber = this.state.tabs.length;
+          this.setState({
+          tabs: finalTabs,
+        }, lastTabsNumber > 1 ? this._clickTab(finalTabs[nextShowIndex]) : this._closeAllTabs());
+      } else {
+        // 删除的不是当前显示的tab,并且没有折叠起来的tab
+        this.setState({
+          tabs: finalTabs,
+        });
+      }
     } else {
-      this.setState({
-        tabs: this.state.tabs && this.state.tabs.filter(tabItems => tabItems.id !==
-        isDeteleTab.id),
-        activeTabId: this.state.tabs && this.state.tabs[this.state.tabs.length - 2].id,
-      });
+      // 有折叠起来的，删除并且进行展开
+      //  将折叠项展开到tabs中
+      const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
+      if (this.state.activeTabId === isDeteleTab.id) {
+        // 删除的是当前显示的tab,并且有折叠起来的tab
+        // 获取当前删除页的索引
+        const deleteIndex = this.state.tabs && this.state.tabs.findIndex(tabItem => tabItem.id ===
+          isDeteleTab.id);
+        // 设置下一个显示页的索引
+        const nextShowIndex = deleteIndex - 1 >= 0 ? deleteIndex - 1 : 0;
+        this.setState({
+          tabs: tempTabsItems ? finalTabs.concat(tempTabsItems) : finalTabs,
+          tabsCollapse: this.state.tabsCollapse,
+          showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
+        }, this._clickTab(finalTabs[nextShowIndex]));
+      } else {
+        // 删除的不是当前显示的tab,并且有折叠起来的tab
+        this.setState({
+          tabs: tempTabsItems ? finalTabs.concat(tempTabsItems) : finalTabs,
+          tabsCollapse: this.state.tabsCollapse,
+          showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
+        });
+      }
     }
-    this.checkWidth();
   };
 
   _refreshTab = () => {
@@ -233,7 +265,7 @@ export default class Tab extends React.Component {
 
   _deleteTabCollapse = (e, collapseItem) => {
     e.preventDefault();    // 阻止默认事件
-    e.stopPropagation();
+    e.stopPropagation();   // 阻止事件冒泡
     this.setState({
       tabsCollapse: this.state.tabsCollapse
         .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id),

@@ -20,7 +20,7 @@ class TabPanel extends React.Component {
         onClick={() => clickTab(tabItem)}
         key={tabItem.id}
       >
-        <Tooltip placement="bottom" title={tabItem.name} mouseEnterDelay={2}>
+        <Tooltip placement="bottom" title={tabItem.name} mouseEnterDelay={0.5}>
           <span
             style={{ cursor: 'move' }}
             key={`span ${tabItem.id}`}
@@ -28,7 +28,7 @@ class TabPanel extends React.Component {
             {tabItem.name}
           </span>
         </Tooltip>
-        <Icon type="close" className="close" onClick={() => deleteTab(tabItem)} />
+        <Icon type="close" className="close" onClick={e => deleteTab(e, tabItem)} />
       </li>);
   }
 }
