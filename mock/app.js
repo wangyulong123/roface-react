@@ -2,6 +2,7 @@ const http = require('http');
 var util = require('util');
 const express = require('express');
 var moment = require('moment');
+var bodyParser = require('body-parser');
 
 //CORS统一设置
 var allowCrossDomain = function(req, res, next) {
@@ -15,13 +16,17 @@ var allowCrossDomain = function(req, res, next) {
 const index = require('./routes/index');
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use(allowCrossDomain);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     // const err = new Error('Not Found');
     // err.status = 404;
     next(err);
 });
+
 
 // error handler
 // app.use(function (err, req, res, next) {

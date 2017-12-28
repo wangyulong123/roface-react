@@ -7,7 +7,7 @@ export default class RoCheckBox extends React.Component {
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const options = this.assembleOptions(this.props.model, this.props.dict);
+        const options = this.assembleOptions(this.props.model, this.props.options);
         this.state = {
             value,
             options,

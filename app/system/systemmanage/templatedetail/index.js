@@ -7,13 +7,17 @@ import './style/index.less';
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
 
+const EditableCell = ({ value, onChange }) => (
+  <div>
+    <Text style={{ margin: '-5px 0' }} value={value} onChange={onChange} />
+  </div>
+);
+
 export default Form.create()(class TemplateDetail extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       data: {},
-      selectedKeys: [],
-      loading: false,
       columns: [{
         title: '#',
         dataIndex: 'number',
@@ -24,68 +28,78 @@ export default Form.create()(class TemplateDetail extends React.Component {
         dataIndex: 'sortCode',
         key: 'sortCode',
       },
-      {
-        title: '中文显示名',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => <a onClick={() => this._createTab(record)}>{text}</a>,
-      },
-      {
-        title: '单位基数',
-        dataIndex: 'multiplier',
-        key: 'multiplier',
-      },
-      {
-        title: '列名',
-        dataIndex: 'code',
-        key: 'code',
-      },
-      {
-        title: '对其',
-        dataIndex: 'elementUIHint',
-        key: 'elementUIHint.textAlign',
-        render: text => <span>{text && text.textAlign}</span>,
-      },
-      {
-        title: '编辑形式',
-        dataIndex: 'elementUIHint',
-        key: 'elementUIHint.editStyle',
-        render: text => <span>{text && text.editStyle}</span>,
-      },
-      {
-        title: '代码表',
-        dataIndex: 'elementUIHint',
-        key: 'elementUIHint.dictCodeExpr',
-        render: text => <span>{text && text.dictCodeExpr}</span>,
-      },
+        {
+          title: '中文显示名',
+          dataIndex: 'name',
+          key: 'name',
+          render: (text, record, index) => this._renderColumns('name', 'Text', text, record, index),
+        },
+        {
+          title: '列名',
+          dataIndex: 'code',
+          key: 'code',
+          render: (text, record, index) => this._renderColumns('code', 'Text', text, record, index),
+        },
+        {
+          title: '对其',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.textAlign',
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.textAlign', 'Select', text && text.textAlign, record, index),
+        },
+        {
+          title: '编辑形式',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.editStyle',
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index),
+        },
+        {
+          title: '代码表',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.dictCodeExpr',
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.dictCodeExpr', 'RadioBox', text && text.dictCodeExpr, record, index),
+        },
         {
           title: '可见',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.visible',
-          render: text => <span>{text && text.visible ? '是' : '否'}</span>,
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.visible', 'RadioBox', text && text.visible, record, index),
         },
         {
           title: '只读',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.readonly',
-          render: text => <span>{text && text.readonly ? '是' : '否'}</span>,
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.readonly', 'RadioBox', text && text.readonly, record, index),
         },
         {
           title: '必须',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.required',
-          render: text => <span>{text && text.required ? '是' : '否'}</span>,
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.required', 'RadioBox', text && text.required, record, index),
         },
         {
           title: '所属组',
           dataIndex: 'group',
           key: 'group',
+          render: (text, record, index) => this._renderColumns('name', 'Text', text, record, index),
         },
         {
           title: '跨几栏',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.colspan',
-          render: text => <span>{text && text.colspan}</span>,
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index),
+        },
+        {
+          title: '操作',
+          dataIndex: 'opt',
+          key: 'opt',
+          render: (text, record, index) => this._createButton(record, index),
         },
       ],
     };
@@ -95,7 +109,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { location } = history;
     if (location && location.state && location.state.id) {
       openLoading && openLoading();
-      rest.get('http://192.168.64.246:8080/dataform/admin/dataform/getdataformelement',
+      rest.get('/dataform/admin/dataform/getdataformelement',
         {
           id: location.state.id,
         }).then((res) => {
@@ -106,6 +120,56 @@ export default Form.create()(class TemplateDetail extends React.Component {
         });
       });
     }
+  }
+  _dataChange = (name, value, code) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        elements: this.state.data.elements.map((ele) => {
+          if (ele.code === code) {
+            return {
+              ...ele,
+              [name]: value,
+            };
+          }
+          return ele;
+        }),
+      },
+    });
+  }
+  _renderColumns(name, com, text, record, column) {
+    return (
+      <EditableCell
+        value={text}
+        com={com}
+        onChange={value => this._dataChange(name, value, record.code, column)}
+      />
+    );
+  }
+  _createButton = (record, index) => {
+    const { prefix = 'ro' } = this.props;
+    return (
+      <div>
+        <Button
+          onClick={() => this._addTableData(record, index)}
+          className={`${prefix}-template-detail-table-button`}
+        >
+          <Icon type="plus" />添加
+        </Button>
+        <Button
+          onClick={() => this._deleteTableData(record)}
+          className={`${prefix}-template-detail-table-button`}
+        >
+          <Icon type="close" />删除
+        </Button>
+        <Button
+          onClick={() => this._createTab(record)}
+          className={`${prefix}-template-detail-table-button`}
+        >
+          <Icon type="info" />详情
+        </Button>
+      </div>
+    );
   }
   _createTab = (record) => {
     const { flexTabs, history } = this.props;
@@ -121,38 +185,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
       },
     });
   };
-  _selectionOnChange = (record) => {
-    this.setState({
-      selectedKeys: [record.code],
-    });
-  }
-  _rowClick = (row) => {
-    this.setState({
-      selectedKeys: [row.code],
-    });
-  }
-  _getBodyWrapper = (body) => {
-    return (
-      <tbody className={body.className}>
-        {
-          body.children.map((child) => {
-            return {
-              ...child,
-              props: {
-                ...child.props,
-                onRowClick: this._rowClick,
-              },
-            };
-          })
-        }
-      </tbody>);
-  }
-  _addTableData = () => {
+  _addTableData = (record, index) => {
     const { length } = this.state.data.elements;
+    const tempArray = [...this.state.data.elements];
+    tempArray.splice(index + 1, 0, { name: `新字段${length}`, code: `新字段${length}`});
     this.setState({
       data: {
         ...this.state.data,
-        elements: [...this.state.data.elements, { name: `新字段${length}`, code: `新字段${length}`}],
+        elements: tempArray,
       },
     });
   }
@@ -170,7 +210,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.post('http://192.168.64.246:8080/dataform/admin/dataform/savedataform',
+        rest.post('/dataform/admin/dataform/savedataform',
           {
             ...this.state.data,
             ...this._filterField(values, 'columnNumber'),
@@ -197,17 +237,13 @@ export default Form.create()(class TemplateDetail extends React.Component {
       }
     });
   }
-  _deleteTableData = () => {
+  _deleteTableData = (record) => {
     this.setState({
       data: {
         ...this.state.data,
-        elements: this.state.data.elements.filter(ele => ele.code !== this.state.selectedKeys[0]),
+        elements: this.state.data.elements.filter(ele => ele.code !== record.code),
       },
-      selectedKeys: [],
     });
-  }
-  _setGroupColumn = () => {
-
   }
   render() {
     const formItemLayout = {
@@ -284,50 +320,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
             </Form>
           </Panel>
           <Panel header="字段信息" key="2">
-            <div>
-              <Button
-                onClick={this._addTableData}
-                className={`${prefix}-template-detail-table-button`}
-              >
-                <Icon type="plus" />添加
-              </Button>
-              <Button
-                onClick={this._saveData}
-                className={`${prefix}-template-detail-table-button`}
-                loading={this.state.loading}
-              >
-                <Icon type="check" />保存
-              </Button>
-              <Button
-                onClick={this._deleteTableData}
-                className={`${prefix}-template-detail-table-button`}
-                disabled={this.state.selectedKeys.length === 0}
-              >
-                <Icon type="close" />删除
-              </Button>
-              <Button
-                onClick={this._setGroupColumn}
-                className={`${prefix}-template-detail-table-button`}
-                disabled={this.state.selectedKeys.length === 0}
-              >
-                <Icon type="setting" />设置分组
-              </Button>
-            </div>
             <Table
-              rowSelection={{
-                selectedRowKeys: this.state.selectedKeys,
-                type: 'radio',
-                onSelect: this._selectionOnChange,
-              }}
               rowKey={record => record.code}
               columns={this.state.columns}
               dataSource={this.state.data.elements || []}
               pagination={false}
-              components={{
-                body: {
-                  wrapper: this._getBodyWrapper,
-                },
-              }}
             />
           </Panel>
         </Collapse>

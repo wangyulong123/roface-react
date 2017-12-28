@@ -63,7 +63,7 @@ export default Form.create()(class Forms extends React.Component {
       prefix: item.elementUIHint.prefix,
       suffix: item.elementUIHint.suffix,
       note: item.elementUIHint.note,
-      dict: dict[item.code],
+      options: dict[item.code],
     };
   };
   _dataType = (type) => {

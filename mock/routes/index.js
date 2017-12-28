@@ -104,13 +104,14 @@ var reqPath = redirect.path;
 var url = redirect.url;
 
 for(let i = 0; i< reqPath.length; i ++) {
+  console.log(reqPath[i]);
   router.route(reqPath[i]).get(function (req, rep, next) {
     setRedirect({
       headers: req.headers,
       uri: url + req.url,
       method: 'get',
     }, function (body) {
-      rep.json(JSON.parse(body));
+      rep.json(body && JSON.parse(body));
     })
   })
   router.route(reqPath[i]).post(function (req, rep, next) {
@@ -118,9 +119,9 @@ for(let i = 0; i< reqPath.length; i ++) {
       headers: req.headers,
       uri: url + reqPath[i],
       method: 'post',
-      json: req.body
+      body: JSON.stringify(req.body)
     }, function (body) {
-      rep.json(JSON.parse(body));
+      rep.json(body && JSON.parse(body));
     })
   })
 }

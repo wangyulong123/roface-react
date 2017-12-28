@@ -5,7 +5,7 @@ export default class RadioBox extends React.Component{
     constructor(props) {
         super(props);
         const value = this.props.value || '';
-        const options = this.assembleOptions(this.props.model, this.props.dict);
+        const options = this.assembleOptions(this.props.model, this.props.options);
         this.state = {
           value,
           options,
@@ -16,7 +16,7 @@ export default class RadioBox extends React.Component{
         if (this.state.value !== nextProps.value) {
             this.setState({
                 value: nextProps.value,
-                checkedArr: this._constructCheckedArr(nextProps.value, this.props.dict),
+                checkedArr: this._constructCheckedArr(nextProps.value, this.props.options),
             });
         }
     }
