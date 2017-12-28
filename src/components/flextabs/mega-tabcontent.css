@@ -26,13 +26,6 @@
     float: left;
 }
 
-.ro-tabdrop {
-    position: relative;
-    list-style: none;
-    margin-top: 5px;
-    padding-right: 20px;
-}
-
 .breadcrumb {
     display: block;
 }
@@ -275,13 +268,12 @@
     background: url("./roic_close_others _hover.svg");
 }
 
-.dropdown-menu li{
-    list-style: none;
+.dropdown-menu {
+    position: relative;
+    margin-top: 5px;
+    margin-right: -25px;
 }
 
-.dropdown-menu a {
-    top: 1px;
-    font-size: small;
-    color: #777;
-    padding: 0 10px;
+.dropdown-menu .menu-item {
+    list-style: none;
 }

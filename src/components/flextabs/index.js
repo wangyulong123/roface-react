@@ -308,7 +308,7 @@ export default class Tab extends React.Component {
 
   _changesOperateCollapse = () => {
     this.setState({
-      showOperateCollapse: this.state.showOperateCollapse === 'list-item' ? '' : 'list-item',
+      showOperateCollapse: this.state.showOperateCollapse === 'list-item' ? 'none' : 'list-item',
       showTabsCollapse: this.state.showTabsCollapse === 'list-item' ? 'none' : 'none',
     });
   };
@@ -387,11 +387,11 @@ export default class Tab extends React.Component {
                   <span className="operate-item" onClick={this._closeAllTabs}>关闭所有</span>
                 </ul>
               </li>
-              <li className="dropdown pull-right ro-tabdrop" style={{ float: 'right' }}>
-                <ul className="dropdown-menu" id="ro-tabclose-container">
-                  <li><Icon type="reload" /></li>
-                </ul>
-              </li>
+              <ul className="pull-right dropdown-menu" id="ro-tabclose-container">
+                <li className="menu-item">
+                  <Icon type="reload" onClick={this._refreshTab} />
+                </li>
+              </ul>
               <div className="ro-tab-content-container">
                 <ol className="breadcrumb ro-breadcrumb">
                   <div className="ro-tab-pane" id="ro-tab-pane">
