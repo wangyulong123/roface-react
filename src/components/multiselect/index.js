@@ -4,6 +4,10 @@ import { Select } from 'antd';
 const Option = Select.Option;
 
 export default class MultiSelect extends React.Component {
+    static defaultProps = {
+        optionField: 'code',
+        optionName: 'name',
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -33,11 +37,11 @@ export default class MultiSelect extends React.Component {
        }
        const optionArr = [];
        if (options && options[0] instanceof Object) {
-           newOptions && newOptions.forEach((item, index) => {
+           newOptions && newOptions.forEach((item) => {
                optionArr.push(
                  <Option
                    key={item[optionField]}
-                   disabled={optionDisabled && optionDisabled.includes(options[index][optionField])}
+                   disabled={optionDisabled && optionDisabled.includes(item[optionField])}
                    value={item[optionField]}
                  >
                    {item[optionName]}

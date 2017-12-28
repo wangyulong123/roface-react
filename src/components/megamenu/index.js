@@ -185,23 +185,23 @@ class MegaMenu extends React.Component {
     };
     _moveRight = () => {
         const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
-        const dValue = this.wrapper.scrollWidth - this.wrapper.offsetWidth + marginLeft;
+        const dValue = (this.wrapper.scrollWidth - this.wrapper.offsetWidth + marginLeft );
         if (dValue <= 0) {
-            this.menuWrapper.style.marginLeft = marginLeft + (this.wrapper.offsetWidth - this.wrapper.scrollWidth) + 'px';
+            this.menuWrapper.style.marginLeft = (marginLeft + (this.wrapper.offsetWidth - this.wrapper.scrollWidth) / 4) + 'px';
             this.right.children[0].style.display = 'none';
         } else if (dValue > this.wrapper.offsetWidth) {
-            this.menuWrapper.style.marginLeft = (-(marginLeft + this.wrapper.offsetWidth)) + 'px';
+            this.menuWrapper.style.marginLeft = (-(marginLeft + this.wrapper.offsetWidth) / 4) + 'px';
         } else {
-            this.menuWrapper.style.marginLeft = (marginLeft - dValue) + 'px';
+            this.menuWrapper.style.marginLeft = ((marginLeft - dValue) / 4) + 'px';
             this.right.children[0].style.display = 'none';
         }
         this.left.children[0].style.display = 'block';
     };
     _moveLeft = () => {
         const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
-        const dValue = this.wrapper.scrollWidth - this.wrapper.offsetWidth + marginLeft;
+        const dValue = (this.wrapper.scrollWidth - this.wrapper.offsetWidth + marginLeft);
         if (dValue + this.wrapper.offsetWidth < 0) {
-            this.menuWrapper.style.marginLeft = (marginLeft + this.wrapper.offsetWidth) + 'px';
+            this.menuWrapper.style.marginLeft = ((marginLeft + this.wrapper.offsetWidth) / 4) + 'px';
         } else {
             this.menuWrapper.style.marginLeft = '0px';
             this.left.children[0].style.display = 'none';
