@@ -218,7 +218,6 @@
 .ro-tabs-collapse .ro-nav-tabs-collapse .span-no-wrap {
     white-space: nowrap;
     width: 140px;
-    /*display: block;*/
     display: inline-flex;
     justify-content: space-between;
 }
