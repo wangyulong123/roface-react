@@ -255,7 +255,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   rules: [{ required: false }],
                   initialValue: this.state.data.formUIHint
                   && this.state.data.formUIHint.columnNumber,
-                })(<RadioBox dict={[
+                })(<RadioBox options={[
                   {code: 1, name: '一栏'},
                   {code: 2, name: '二栏'},
                   {code: 3, name: '三栏'},
