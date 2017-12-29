@@ -4,7 +4,7 @@ import './style/index.less';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, Notification,
+  Button, Icon, Modal, notify,
 } = components;
 
 const Panel = Collapse.Panel;
@@ -252,7 +252,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               columnNumber: values.columnNumber,
             },
           }).then(() => {
-          Notification.success({
+          notify.success({
             message: '保存成功',
           });
           this.setState({
