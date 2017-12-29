@@ -1,0 +1,1 @@
+export HelloWord from './HelloWord';
