@@ -366,7 +366,7 @@ export default class Tab extends React.Component {
                     this.state.tabsCollapse.length &&
                     this.state.tabsCollapse && this.state.tabsCollapse.map((collapseItems) => {
                       return(
-                        <span className="span-no-wrap">
+                        <span className="span-no-wrap" key={`span${collapseItems.id}`}>
                           <li
                             key={collapseItems.id}
                             onClick={() => this._selectTabCollapse(collapseItems)}
