@@ -144,7 +144,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
   componentDidMount(){
     const { rest, history, closeLoading, openLoading } = this.props;
     const { location } = history;
-    if (location && location.state && location.state.id) {
+    if (location && location.state && location.state.id && !location.state.flag) {
       openLoading && openLoading();
       rest.get(`/dataform/admin/dataForm/${location.state.id}`).then((res) => {
         this.setState({

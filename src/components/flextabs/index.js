@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // import { Route } from 'react-router-dom';
 import Sortable from 'sortablejs';
-import { Icon, Notification, Tooltip } from '../index';
+import { Icon, notify, Tooltip } from '../index';
 import TabPanel from './TabPanel';
 import TabContent from './TabContent';
 import { depthFirstSearch } from '../../lib/menutransform';
@@ -157,7 +157,7 @@ export default class Tab extends React.Component {
 
   _closeOtherTabs = () => {
     if (!this.state.activeTabId) {
-      Notification.info({
+      notify.info({
         description: '当前没有可用的tab',
         duration: 3,
       });
@@ -238,7 +238,7 @@ export default class Tab extends React.Component {
 
   _dropHiddenDown = () => {
     if (!this.state.tabsCollapse.length) {
-      Notification.info({
+      notify.info({
         description: '没有折叠起来的tab页',
         duration: 3,
       });
