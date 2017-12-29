@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DetailInfo, Button, Affix, Dropdown, Icon, notify} from '../../../../src/components';
+import {DetailInfo, Button, Affix, Dropdown, Icon, Notify} from '../../../../src/components';
 
 export default class MainFunction extends React.Component {
   constructor(props) {
@@ -18,14 +18,14 @@ export default class MainFunction extends React.Component {
   };
   _getValue = () => {
     const {info} = this.state;
-    notify.success({
+    Notify.success({
       message: '获取姓名',
       description: info.getValue('name'),
     });
   };
   _getData = () => {
     const { info } = this.state;
-    notify.success({
+    Notify.success({
       message: '获取表单数据',
       description: JSON.stringify(info.getData()),
     });
@@ -44,7 +44,7 @@ export default class MainFunction extends React.Component {
   };
   _setValueReadonly = (bool) => {
     const { info } = this.state;
-    notify.success({
+    Notify.success({
       message: '选中操作',
       description: '尝试点击出生日期选择框',
       duration: 6,
@@ -62,7 +62,7 @@ export default class MainFunction extends React.Component {
   _setGroupReadonly = (bool) => {
     const { info } = this.state;
     info.setGroupReadonly('40:经济状况', bool);
-    notify.success({
+    Notify.success({
       message: '选中操作',
       description: '尝试点击经济状况组中输入框',
       duration: 6,
@@ -86,7 +86,7 @@ export default class MainFunction extends React.Component {
   };
   _setItemTips = () => {
     const { info } = this.state;
-    notify.success({
+    Notify.success({
       message: '鼠标操作',
       description: '将鼠标移动到姓名输入框中',
       duration: 6,
@@ -101,12 +101,12 @@ export default class MainFunction extends React.Component {
     const { info } = this.state;
     info.validate((err, value) => {
       if (err) {
-        notify.success({
+        Notify.success({
           message: '校验表单数据',
           description: JSON.stringify(err),
         });
       } else {
-        notify.success({
+        Notify.success({
           message: '校验表单数据',
           description: JSON.stringify(value),
         });
@@ -117,12 +117,12 @@ export default class MainFunction extends React.Component {
     const { info } = this.state;
     info.validateItem('name', (err, value) => {
       if (err) {
-        notify.success({
+        Notify.success({
           message: '校验表单数据(姓名)',
           description: JSON.stringify(err),
         });
       } else {
-        notify.success({
+        Notify.success({
           message: '校验表单数据(姓名)',
           description: JSON.stringify(value),
         });
