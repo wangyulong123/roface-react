@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Button, Icon, Collapse, Text, Modal, Notification, Select, RadioBox,
+  Form, Button, Icon, Collapse, Text, Modal, notify, Select, RadioBox,
   CheckBox,
 } from '../../../../src/components';
 
@@ -61,7 +61,7 @@ export default Form.create()(class ElementDetail extends React.Component {
               ['editStyle', 'textAlign', 'readonly',
                 'colspan', 'suffix', 'htmlStyle', 'visible', 'required', 'eventExpr', 'dataFormat']),
           }).then(() => {
-          Notification.success({
+          notify.success({
             message: '保存成功',
           });
           this.setState({
