@@ -21,7 +21,7 @@ export const addOnResize = (fuc, flag = false) => {
               resize();
           }
           fuc();
-      }, 1000);
+      }, 150);
   } else {
       window.onresize = () => {
           if (resize) {
