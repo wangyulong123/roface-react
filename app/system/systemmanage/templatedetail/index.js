@@ -1,17 +1,30 @@
 import React from  'react';
-
-import { Form, Collapse, Text, RadioBox, TextArea, Table, Button, Icon, Modal, Notification } from '../../../../src/components';
-
+import * as components from '../../../../src/components';
 import './style/index.less';
+
+const {
+  Form, Collapse, Text, RadioBox, TextArea, Table,
+  Button, Icon, Modal, Notification,
+} = components;
 
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
 
-const EditableCell = ({ value, onChange }) => (
-  <div>
-    <Text style={{ margin: '-5px 0' }} value={value} onChange={onChange} />
-  </div>
-);
+const EditableCell = ({value, com, onChange, options}) => {
+  const Com = components[com];
+  return (
+    <div>
+      <Com
+        style={{margin: '-5px 0'}}
+        value={value}
+        onChange={onChange}
+        options={options}
+        optionName="name"
+        optionField="code"
+      />
+    </div>
+  );
+};
 
 export default Form.create()(class TemplateDetail extends React.Component {
   constructor(props){
@@ -45,42 +58,59 @@ export default Form.create()(class TemplateDetail extends React.Component {
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.textAlign',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.textAlign', 'Select', text && text.textAlign, record, index),
+            this._renderColumns('elementUIHint.textAlign', 'Select', text && text.textAlign, record, index,
+              [{code: 'Left', name: '左'}, {code: 'Center', name: '中'}, {code: 'Right', name: '右'}]),
         },
         {
           title: '编辑形式',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.editStyle',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index),
+            this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index,
+              [
+                {code: 'Text', name: '文本框'},
+                {code: 'Textarea', name: '多行文本框'},
+                {code: 'Select', name: '下拉框'},
+                {code: 'Checkbox', name: '复选框'},
+                {code: 'DatePicker', name: '日期选择'},
+                {code: 'Radiobox', name: '单选框'},
+                {code: 'YearMonthPicker', name: '月份选择'},
+                {code: 'Password', name: '密码框'},
+                {code: 'DateRange', name: '区间日期'},
+                {code: 'Address', name: '地址'},
+                {code: 'Star', name: '五星评分'},
+              ]),
         },
         {
           title: '代码表',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.dictCodeExpr',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.dictCodeExpr', 'RadioBox', text && text.dictCodeExpr, record, index),
+            this._renderColumns('elementUIHint.dictCodeExpr', 'Text', text && text.dictCodeExpr, record, index),
         },
         {
           title: '可见',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.visible',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.visible', 'RadioBox', text && text.visible, record, index),
+            this._renderColumns('elementUIHint.visible', 'RadioBox', text && text.visible, record, index,
+              [{code: false, name: '否'}, {code: true, name: '是'}]),
         },
         {
           title: '只读',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.readonly',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.readonly', 'RadioBox', text && text.readonly, record, index),
+            this._renderColumns('elementUIHint.readonly', 'RadioBox', text && text.readonly, record, index,
+              [{code: false, name: '否'}, {code: true, name: '是'}]),
         },
         {
           title: '必须',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.required',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.required', 'RadioBox', text && text.required, record, index),
+            this._renderColumns('elementUIHint.required', 'RadioBox', text && text.required, record, index,
+              [{code: false, name: '否'}, {code: true, name: '是'}]),
         },
         {
           title: '所属组',
@@ -93,7 +123,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.colspan',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index),
+            this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index,
+              [
+                {code: 0, name: '默认(默认占一列）'},
+                {code: 1, name: '占一列'},
+                {code: 2, name: '占两列'},
+                {code: 3, name: '占三列'},
+                {code: 4, name: '占四列'},
+              ]),
         },
         {
           title: '操作',
@@ -134,15 +171,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
       },
     });
   }
-  _renderColumns(name, com, text, record, column) {
-    return (
-      <EditableCell
-        value={text}
-        com={com}
-        onChange={value => this._dataChange(name, value, record.code, column)}
-      />
-    );
-  }
+  _renderColumns = (name, com, text, record, column, options) => (
+    <EditableCell
+      value={text}
+      com={com}
+      onChange={value => this._dataChange(name, value, record.code, column)}
+      options={options}
+    />
+  );
   _createButton = (record, index) => {
     const { prefix = 'ro' } = this.props;
     return (
@@ -288,7 +324,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   rules: [{ required: false }],
                   initialValue: this.state.data.formUIHint
                   && this.state.data.formUIHint.columnNumber,
-                })(<RadioBox dict={[
+                })(<RadioBox options={[
                   {code: 1, name: '一栏'},
                   {code: 2, name: '二栏'},
                   {code: 3, name: '三栏'},
