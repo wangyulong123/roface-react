@@ -40,5 +40,5 @@ export { default as LocaleProvider } from './localeprovider';
 export { default as Spin } from './spin';
 export { default as Row } from './row';
 export { default as Col } from './col';
-export {default as Affix} from './affix';
-export {default as Dropdown} from './dropdown';
+export { default as Affix } from './affix';
+export { default as Dropdown } from './dropdown';
