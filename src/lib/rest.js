@@ -87,6 +87,9 @@ export const restAjax = (url, type, data) => {
                 reject(err);
             },
             success: (result) => {
+                if (result && result.status) {
+                    reject(result);
+                }
                 resolve(result);
             },
         });
