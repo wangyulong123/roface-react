@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Button, Icon, Collapse, Text, Modal, Notification, Select, RadioBox,
+  Form, Button, Icon, Collapse, Text, Modal, Notify, Select, RadioBox,
   CheckBox,
 } from '../../../../src/components';
 
@@ -22,7 +22,7 @@ export default Form.create()(class ElementDetail extends React.Component {
     const { location } = history;
     if (location && location.state) {
       openLoading && openLoading();
-      rest.get(`/dataform/admin/dataForm/${location.state.id}/${location.state.code}`).then((res) => {
+      rest.get(`/dataform/admin/dataForm/${location.state.dataId}/${location.state.dataCode}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -61,7 +61,7 @@ export default Form.create()(class ElementDetail extends React.Component {
               ['editStyle', 'textAlign', 'readonly',
                 'colspan', 'suffix', 'htmlStyle', 'visible', 'required', 'eventExpr', 'dataFormat']),
           }).then(() => {
-          Notification.success({
+          Notify.success({
             message: '保存成功',
           });
           this.setState({

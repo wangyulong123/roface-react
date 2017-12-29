@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // import { Route } from 'react-router-dom';
 import Sortable from 'sortablejs';
-import { Icon, Notification, Tooltip } from '../index';
+import { Icon, Notify, Tooltip } from '../index';
 import TabPanel from './TabPanel';
 import TabContent from './TabContent';
 import { depthFirstSearch } from '../../lib/menutransform';
@@ -47,15 +47,25 @@ export default class Tab extends React.Component {
         allMenus.push(menuItem);
       });
       const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0];
-      const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
-      this._createTab(initTab ? initTab : indexMenu);
+      const tempState = {
+        id: history.location.state.id,
+        name: history.location.state.name,
+        url: history.location.state.url,
+      };
+      const customTab = {
+        ...tempState,
+        state: {
+          ...history.location.state
+        },
+      }
+      this.createTab(initTab ? initTab : customTab);
     } else if (!pathname) {
       let allMenus = [];
       depthFirstSearch(nextProps.data, (menuItem) => {
         allMenus.push(menuItem);
       });
       const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
-      this._createTab(indexMenu);
+      this.createTab(indexMenu);
     }
   }
 
@@ -105,7 +115,9 @@ export default class Tab extends React.Component {
     }
   };
 
-  _createTab = (item) => {
+  createTab = (item) => {
+    const { history } = this.props;
+    history.replace(`/${item.id}`, {...(item.state || {})});
     const Com = this._initCom(item, this.props);
     const isExsitTabsItem = this.state.tabs && this.state.tabs
         .find(tabsItem => tabsItem.id === item.id);
@@ -151,13 +163,13 @@ export default class Tab extends React.Component {
     const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
     // 置空并且重新生成默认页
     this.setState({ tabs: [] }, () => {
-      this._createTab(indexMenu);
+      this.createTab(indexMenu);
     });
   };
 
   _closeOtherTabs = () => {
     if (!this.state.activeTabId) {
-      Notification.info({
+      Notify.info({
         description: '当前没有可用的tab',
         duration: 3,
       });
@@ -238,7 +250,7 @@ export default class Tab extends React.Component {
 
   _dropHiddenDown = () => {
     if (!this.state.tabsCollapse.length) {
-      Notification.info({
+      Notify.info({
         description: '没有折叠起来的tab页',
         duration: 3,
       });
@@ -366,7 +378,7 @@ export default class Tab extends React.Component {
                     this.state.tabsCollapse.length &&
                     this.state.tabsCollapse && this.state.tabsCollapse.map((collapseItems) => {
                       return(
-                        <span className="span-no-wrap">
+                        <span className="span-no-wrap" key={`span${collapseItems.id}`}>
                           <li
                             key={collapseItems.id}
                             onClick={() => this._selectTabCollapse(collapseItems)}
