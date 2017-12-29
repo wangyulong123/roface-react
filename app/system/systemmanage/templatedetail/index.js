@@ -4,7 +4,7 @@ import './style/index.less';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, Notification
+  Button, Icon, Modal, Notification,
 } = components;
 
 const Panel = Collapse.Panel;

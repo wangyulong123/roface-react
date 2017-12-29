@@ -8,6 +8,14 @@
   },
   "rules": {
     "indent": ["off"],//关闭缩进检查
+    "react/jsx-indent": ["warn", 2],
+    "react/jsx-indent-props": ["warn", 2],
+    "padded-blocks":["off"],
+    "no-unused-vars":["warn"],
+    "react/jsx-tag-spacing":["off"],
+    "jsx-quotes":["off"],
+    "react/jsx-closing-tag-location":["off"],
+    "react/jsx-closing-bracket-location":["off"],
     "object-shorthand": ["off"],
     "no-useless-escape":["off"],  //不允许在字符串和正则表达式中使用无意义的换行符
     "no-cond-assign":["off"],
