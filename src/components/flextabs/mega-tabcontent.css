@@ -26,13 +26,6 @@
     float: left;
 }
 
-.ro-tabdrop {
-    position: relative;
-    list-style: none;
-    margin-top: 5px;
-    padding-right: 20px;
-}
-
 .breadcrumb {
     display: block;
 }
@@ -164,32 +157,24 @@
     background: url("./roic_more_hover.svg");
 }
 
-.roic-close-others {
+/* 展开关闭操作列表 */
+.roic-operate-collapse {
     display: inline-block;
     width: 15px;
     height: 15px;
     margin-left: 5px;
-    background: url("./roic_close_others.svg");
+    /*background: url("./roic_close_others.svg");*/
 }
 
-.roic-close-others:hover {
-    background: url("./roic_close_others _hover.svg");
+.roic-operate-collapse:hover {
+    /*background: url("./roic_close_others.svg");*/
 }
-
 
 .ro-tabs-collapse ul {
-    /*position: relative;*/
-    /*list-style: none;*/
-    /*margin-top: 0px;*/
-    /*padding-right: 20px;*/
-    /*display: none;*/
     position: absolute;
     top: 100%;
-    /*left: 0;*/
-    right: 20px;
     z-index: 1000;
     display: none;
-    /*float: right;*/
     min-width: 160px;
     padding: 6px 10px;
     font-size: 14px;
@@ -205,33 +190,61 @@
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
-.ro-tabs-collapse ul span li {
+.ro-tabs-collapse .ro-nav-tabs-collapse {
+    right: 20px;
+}
+
+.ro-tabs-collapse .ro-nav-operate-collapse {
+    right: 5px;
+    min-width: 100px;
+}
+
+
+.ro-tabs-collapse .ro-nav-tabs-collapse span li {
     display: inline-block;
 }
 
-.ro-tabs-collapse ul span:hover li {
+.ro-tabs-collapse .ro-nav-tabs-collapse span:hover li {
     cursor: pointer;
     color:  #288be2;
     background: #ddd;
 }
 
-.ro-tabs-collapse ul span:hover {
+.ro-tabs-collapse .ro-nav-tabs-collapse span:hover {
     cursor: pointer;
     background: #ddd;
 }
 
-.ro-tabs-collapse ul .span-no-wrap {
+.ro-tabs-collapse .ro-nav-tabs-collapse .span-no-wrap {
     white-space: nowrap;
     width: 140px;
-    /*display: block;*/
     display: inline-flex;
     justify-content: space-between;
 }
 
-.ro-tabs-collapse ul .span-no-wrap li {
+.ro-tabs-collapse .ro-nav-tabs-collapse .span-no-wrap li {
     width: 120px;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.ro-tabs-collapse .ro-nav-operate-collapse {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ro-tabs-collapse .ro-nav-operate-collapse .operate-item {
+    white-space: nowrap;
+    width: 100px;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.ro-tabs-collapse .ro-nav-operate-collapse .operate-item:hover {
+    cursor: pointer;
+    color:  #288be2;
+    background: #ddd;
 }
 
 .close-collapse {
@@ -241,13 +254,25 @@
     margin-left: 5px;
 }
 
-.dropdown-menu li{
-    list-style: none;
+/*关闭其他tab*/
+.roic-close-others {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    background: url("./roic_close_others.svg");
 }
 
-.dropdown-menu a {
-    top: 1px;
-    font-size: small;
-    color: #777;
-    padding: 0 10px;
+.roic-close-others:hover {
+    background: url("./roic_close_others _hover.svg");
+}
+
+.dropdown-menu {
+    position: relative;
+    margin-top: 5px;
+    margin-right: -25px;
+}
+
+.dropdown-menu .menu-item {
+    list-style: none;
 }

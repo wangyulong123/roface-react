@@ -19,6 +19,7 @@ export default class Tab extends React.Component {
       tabs: [],
       tabsCollapse: [],
       showTabsCollapse: 'none',
+      showOperateCollapse: 'none',
       activeTabId: null,
       isCollapse: false,
     };
@@ -245,6 +246,7 @@ export default class Tab extends React.Component {
     }
     this.setState({
       showTabsCollapse: this.state.showTabsCollapse === 'list-item' ? '' : 'list-item',
+      showOperateCollapse: this.state.showOperateCollapse === 'list-item' ? 'none' : 'none'
     });
   };
 
@@ -304,6 +306,13 @@ export default class Tab extends React.Component {
     }
   };
 
+  _changesOperateCollapse = () => {
+    this.setState({
+      showOperateCollapse: this.state.showOperateCollapse === 'list-item' ? 'none' : 'list-item',
+      showTabsCollapse: this.state.showTabsCollapse === 'list-item' ? 'none' : 'none',
+    });
+  };
+
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
@@ -344,13 +353,14 @@ export default class Tab extends React.Component {
                    <Tooltip placement="topLeft" title={'打开更多...'}>
                      <span className="roic-more" onClick={this._dropHiddenDown} />
                    </Tooltip>
-                   <Tooltip placement="topRight" title={'关闭其他...'}>
-                     <span className="roic-close-others" onClick={this._closeOtherTabs} />
+                   <Tooltip placement="topRight" title={'展开关闭操作列表'}>
+                     <Icon type="double-right" className="" onClick={this._changesOperateCollapse} />
                    </Tooltip>
                 </span>
                 <ul
                   style={{ display: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none' }}
                   id="ro-nav-tabs-collapse"
+                  className="ro-nav-tabs-collapse"
                 >
                   {
                     this.state.tabsCollapse.length &&
@@ -368,12 +378,20 @@ export default class Tab extends React.Component {
                     })
                   }
                 </ul>
-              </li>
-              <li className="dropdown pull-right ro-tabdrop" style={{ float: 'right' }}>
-                <ul className="dropdown-menu" id="ro-tabclose-container">
-                  <li><a id="ro-close-all" onClick={this._closeAllTabs}>关闭所有</a></li>
+                <ul
+                  style={{ display: this.state.showOperateCollapse }}
+                  id="ro-nav-operate-collapse"
+                  className="ro-nav-operate-collapse"
+                >
+                  <span className="operate-item" onClick={this._closeOtherTabs}>关闭其他</span>
+                  <span className="operate-item" onClick={this._closeAllTabs}>关闭所有</span>
                 </ul>
               </li>
+              <ul className="pull-right dropdown-menu" id="ro-tabclose-container">
+                <li className="menu-item">
+                  <Icon type="reload" onClick={this._refreshTab} />
+                </li>
+              </ul>
               <div className="ro-tab-content-container">
                 <ol className="breadcrumb ro-breadcrumb">
                   <div className="ro-tab-pane" id="ro-tab-pane">
