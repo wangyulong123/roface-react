@@ -20,6 +20,7 @@ class MegaMenu extends React.Component {
     this.left = null;
     this.offsetWidth = 0;
     this.tag = null;
+    this.moveWidth = 210;
     this.state = {
       menuData: [],
       dropDownState: 'top',
@@ -184,16 +185,11 @@ class MegaMenu extends React.Component {
     return parseFloat(data.split('px')[0] || 0, 10);
   };
   _moveRight = () => {
-    const moveWidth = 210;
     this.rightWidth = this.wrapper.scrollWidth - this.wrapper.offsetWidth;
-    console.log(this.rightWidth);
     const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
-    const dValue = this.rightWidth + marginLeft;
-    if (dValue <= 0) {
-      this.menuWrapper.style.marginLeft = - this.rightWidth + marginLeft + 'px';
-      this.right.children[0].style.display = 'none';
-    } else if (dValue >= moveWidth) {
-      this.menuWrapper.style.marginLeft = marginLeft - moveWidth + 'px';
+    const dValue = - this.rightWidth + this.moveWidth;
+    if (dValue < 0) {
+      this.menuWrapper.style.marginLeft = marginLeft - this.moveWidth + 'px';
     } else {
       this.menuWrapper.style.marginLeft = - this.rightWidth + marginLeft + 'px';
       this.right.children[0].style.display = 'none';
@@ -201,13 +197,11 @@ class MegaMenu extends React.Component {
     this.left.children[0].style.display = 'block';
   };
   _moveLeft = () => {
-    const moveWidth = 210;
     const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
     this.rightWidth = this.wrapper.scrollWidth - this.wrapper.offsetWidth;
-    console.log(this.rightWidth);
-    const dValue = moveWidth + marginLeft;
+    const dValue = this.moveWidth + marginLeft;
     if (dValue <= 0) {
-      this.menuWrapper.style.marginLeft = (marginLeft + moveWidth) + 'px';
+      this.menuWrapper.style.marginLeft = (marginLeft + this.moveWidth) + 'px';
     } else {
       this.menuWrapper.style.marginLeft = '0px';
       this.left.children[0].style.display = 'none';
