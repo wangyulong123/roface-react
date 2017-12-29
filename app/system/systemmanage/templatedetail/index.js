@@ -109,10 +109,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { location } = history;
     if (location && location.state && location.state.id) {
       openLoading && openLoading();
-      rest.get('/dataform/admin/dataform/getdataformelement',
-        {
-          id: location.state.id,
-        }).then((res) => {
+      rest.get(`/dataform/admin/dataForm/${location.state.id}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -210,7 +207,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.post('/dataform/admin/dataform/savedataform',
+        rest.post('/dataform/admin/dataForm',
           {
             ...this.state.data,
             ...this._filterField(values, 'columnNumber'),

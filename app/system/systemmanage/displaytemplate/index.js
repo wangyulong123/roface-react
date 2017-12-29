@@ -1,7 +1,7 @@
 import React from 'react';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
-import { Table, LocaleProvider } from '../../../../src/components';
+import { Table, LocaleProvider, Modal } from '../../../../src/components';
 
 export default class DisplayTemplate extends React.Component {
   constructor(props){
@@ -33,12 +33,18 @@ export default class DisplayTemplate extends React.Component {
   componentDidMount(){
     const { rest, closeLoading, openLoading } = this.props;
     openLoading && openLoading();
-    rest.get('/dataform/admin/dataform/getdataform').then((res) => {
+    rest.get('/dataform/admin/dataForms').then((res) => {
       this.setState({
         data: res,
       }, () => {
         closeLoading && closeLoading();
       });
+    }).catch((err) => {
+      Modal.error({
+        title: '获取模板列表失败',
+        content: JSON.stringify(err),
+      });
+      closeLoading && closeLoading();
     });
   }
   _createTab = (record) => {

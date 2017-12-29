@@ -13,6 +13,7 @@ export const compose = (Com, flexTabs, comProps) => {
       super(props);
       this.height = 150;
       this.flag = true;
+      this.update = false;
       this.state = {
         spinning: false,
       };
@@ -21,27 +22,37 @@ export const compose = (Com, flexTabs, comProps) => {
       /* eslint-disable */
       this.dom = ReactDom.findDOMNode(this);
       this._setComHeight();
-      addOnResize(() => {
-        if (this.flag) {
-          this.flag = false;
-          setTimeout(() => {
-            this._setComHeight();
-            this.flag = true;
-          }, 100)
-        }
-      })
+      addOnResize(this._checkWidth);
+    };
+    shouldComponentUpdate(){
+      return this.update;
+    }
+    _checkWidth = () => {
+      if (this.flag) {
+        this.flag = false;
+        setTimeout(() => {
+          this._setComHeight();
+          this.flag = true;
+        }, 100)
+      }
     };
     _setComHeight = () => {
       this.dom.style.height = (document.documentElement.clientHeight - this.height) + 'px';
     };
     closeLoading = () => {
+      this.update = true;
       this.setState({
         spinning: false
+      }, () => {
+        this.update = false;
       })
     };
     openLoading = () => {
+      this.update = true;
       this.setState({
         spinning: true
+      }, () => {
+        this.update = false;
       })
     };
     render() {

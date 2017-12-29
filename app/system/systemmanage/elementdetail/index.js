@@ -22,11 +22,7 @@ export default Form.create()(class ElementDetail extends React.Component {
     const { location } = history;
     if (location && location.state) {
       openLoading && openLoading();
-      rest.get('/dataform/admin/dataform/getdataformelementdetail',
-        {
-          code: location.state.code,
-          dataformId: location.state.id,
-        }).then((res) => {
+      rest.get(`/dataform/admin/dataForm/${location.state.id}/${location.state.code}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -58,7 +54,7 @@ export default Form.create()(class ElementDetail extends React.Component {
         this.setState({
           loading: true,
         });
-        rest.post('/dataform/admin/dataform/savedataformelement',
+        rest.post('/dataform/admin/dataForm/dataFormElement',
           {
             ...this.state.data,
             ...this._filterField(values,
