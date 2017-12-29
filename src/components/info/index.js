@@ -22,8 +22,9 @@ export default class Forms extends React.Component {
       }, () => {
         didMount({
           setValue: this.setValue,
-          getData: this.getData,
+          getValue: this.getValue,
           setData: this.setData,
+          getData: this.getData,
           setItemVisible: this.setItemVisible,
           setItemRequired: this.setItemRequired,
           setValueReadonly: this.setValueReadonly,
@@ -46,11 +47,14 @@ export default class Forms extends React.Component {
   setValue = (itemId, value) => {
     this.form.setFieldsValue({ [itemId]: value });
   };
-  getData = () => {
-    return this.form.getFieldsValue();
+  getValue = (itemId) => {
+    return this.form.getFieldValue(itemId);
   };
   setData = (data) => {
     this.form.setFieldsValue(data);
+  };
+  getData = (data) => {
+    return this.form.getFieldsValue(data);
   };
   setItemVisible = (itemId, status) => {
     this._updateElementUIHint(itemId, status, 'visible', ele => ele.code === itemId);
