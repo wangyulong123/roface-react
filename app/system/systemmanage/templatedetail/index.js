@@ -4,7 +4,7 @@ import './style/index.less';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, notify,
+  Button, Icon, Modal, Notify,
 } = components;
 
 const Panel = Collapse.Panel;
@@ -144,9 +144,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
   componentDidMount(){
     const { rest, history, closeLoading, openLoading } = this.props;
     const { location } = history;
-    if (location && location.state && location.state.id && !location.state.flag) {
+    if (location && location.state && location.state.dataId && !location.state.flag) {
       openLoading && openLoading();
-      rest.get(`/dataform/admin/dataForm/${location.state.id}`).then((res) => {
+      rest.get(`/dataform/admin/dataForm/${location.state.dataId}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -196,7 +196,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           <Icon type="close" />删除
         </Button>
         <Button
-          onClick={() => this._createTab(record)}
+          onClick={() => this.createTab(record)}
           className={`${prefix}-template-detail-table-button`}
         >
           <Icon type="info" />详情
@@ -204,17 +204,20 @@ export default Form.create()(class TemplateDetail extends React.Component {
       </div>
     );
   }
-  _createTab = (record) => {
-    const { flexTabs, history } = this.props;
+  createTab = (record) => {
+    const { flexTabs } = this.props;
     const { data } = this.state;
-    history.replace(`/system/systemManage/ElementDetail/${data.id}/${record.code}`, { id: data.id, code: record.code });
-    flexTabs._createTab({
+    const tab = {
       id: `system/systemManage/ElementDetail/${data.id}/${record.code}`,
       name: `字段:${record.name}`,
       url: 'system/systemManage/ElementDetail',
+    };
+    flexTabs.createTab({
+      ...tab,
       state: {
-        id: data.id,
-        code: record.code,
+        ...tab,
+        dataId: data.id,
+        dataCode: record.code,
       },
     });
   };
@@ -252,7 +255,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               columnNumber: values.columnNumber,
             },
           }).then(() => {
-          notify.success({
+          Notify.success({
             message: '保存成功',
           });
           this.setState({

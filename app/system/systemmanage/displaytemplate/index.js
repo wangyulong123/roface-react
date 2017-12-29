@@ -1,7 +1,7 @@
 import React from 'react';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
-import { Table, LocaleProvider, Modal, Button, Icon, notify, Text } from '../../../../src/components';
+import { Table, LocaleProvider, Modal, Button, Icon, Notify, Text } from '../../../../src/components';
 
 export default class DisplayTemplate extends React.Component {
   constructor(props){
@@ -21,7 +21,7 @@ export default class DisplayTemplate extends React.Component {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <a onClick={() => this._createTab(record)}>{text}</a>,
+        render: (text, record) => <a onClick={() => this.createTab(record)}>{text}</a>,
       }, {
         title: '分栏数',
         dataIndex: 'formUIHint',
@@ -66,7 +66,7 @@ export default class DisplayTemplate extends React.Component {
           <Icon type="close" />克隆
         </Button>
         <Button
-          onClick={() => this._createTab(record)}
+          onClick={() => this.createTab(record)}
           className={`${prefix}-template-detail-table-button`}
         >
           <Icon type="info" />详情
@@ -98,7 +98,7 @@ export default class DisplayTemplate extends React.Component {
               data: [...that.state.data, res]
             });
             closeLoading && closeLoading();
-            notify.success({
+            Notify.success({
               message: '克隆成功',
             });
           }).catch((e) => {
@@ -110,15 +110,19 @@ export default class DisplayTemplate extends React.Component {
       },
     });
   }
-  _createTab = (record) => {
-    const { flexTabs, history } = this.props;
-    history.replace(`/system/systemManage/TemplateDetail/${record.id}`, { id: record.id, flag: record.flag });
-    flexTabs._createTab({
+  createTab = (record) => {
+    const { flexTabs } = this.props;
+    const tab = {
       id: `system/systemManage/TemplateDetail/${record.id}`,
       name: `模板:${record.name}`,
       url: 'system/systemManage/TemplateDetail',
+    };
+    flexTabs.createTab({
+      ...tab,
       state: {
-        id: record.id,
+        ...tab,
+        dataId: record.id,
+        flag: record.flag
       },
     });
   };
@@ -126,7 +130,7 @@ export default class DisplayTemplate extends React.Component {
     return (
       <div>
         <Button
-          onClick={() => this._createTab({
+          onClick={() => this.createTab({
             name: '新增模板',
             id: `newTemplateDetail${new Date().getTime()}`,
             flag: true
