@@ -40,6 +40,7 @@ export { default as LocaleProvider } from './localeprovider';
 export { default as Spin } from './spin';
 export { default as Row } from './row';
 export { default as Col } from './col';
+export { default as Slider } from './slider';
 export {default as Affix} from './affix';
 export {default as Dropdown} from './dropdown';
 export {default as Divider} from './divider';

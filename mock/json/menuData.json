@@ -628,7 +628,7 @@
   },
   {
     "id": "D10-00-30",
-    "name": "栅格",
+    "name": "多栏栅格",
     "i18nCode": "menu.guide.gridlayout",
     "summary": null,
     "sortCode": "D10-00-30",
