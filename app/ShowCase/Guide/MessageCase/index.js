@@ -1,35 +1,36 @@
 import React from 'react';
-import {Button, Icon, Message,Notify, Divider, Menu, Row, Col} from '../../../../src/components';
+import {Button, Icon, Message, Modal, Notify, Divider, Menu, Row, Col} from '../../../../src/components';
 import './index.css';
 
 const ButtonGroup = Button.Group;
 
 export default class MessageCase extends React.Component {
 
-    openNotice = (type, content,title) => {
+    openNotice = (type, content, title) => {
         switch (type) {
             case 'info':
-                Notify.info(content,title);
+                Notify.info(content, title);
                 break;
             case 'success':
-                Notify.success(content,title);
+                Notify.success(content, title);
                 break;
             case 'warn':
-                Notify.warn(content,title);
+                Notify.warn(content, title);
                 break;
             case 'error':
-                Notify.error(content,title);
+                Notify.error(content, title);
                 break;
         }
 
     }
 
     openNoticeCustomize1 = () => {
-        Notify.info(<div style={{fontSize:'18px',color:'#FF0000'}}>这是通过DOM定义的消息内容</div>,<span style={{fontSize:'14px',color:'#0000FF'}}>自定义的标题头</span>);
+        Notify.info(<div style={{fontSize: '18px', color: '#FF0000'}}>这是通过DOM定义的消息内容</div>, <span
+            style={{fontSize: '14px', color: '#0000FF'}}>自定义的标题头</span>);
     }
 
     openNoticeCustomize2 = () => {
-        Notify.open('不会自动关闭的消息','提示',0)
+        Notify.open('不会自动关闭的消息', '提示', 0)
     }
 
     openMessage = (type, content) => {
@@ -47,8 +48,8 @@ export default class MessageCase extends React.Component {
                 Message.error(content);
                 break;
             case 'loading':
-                const hide = Message.loading(content,0);
-                setTimeout(()=>{
+                const hide = Message.loading(content, 0);
+                setTimeout(() => {
                     hide();
                     Message.info('设置为2.5秒后，手动消失了');
                 }, 2500);
@@ -58,8 +59,62 @@ export default class MessageCase extends React.Component {
     }
 
     openMessageByDuration = (content) => {
-        Message.info(content,10);
+        Message.info(content, 10);
     };
+
+    openModalAlert = (type,message,title) => {
+        Modal[type]({
+            title:title,
+            content:message,
+        });
+    };
+
+    openModalAlertCustomize1 = () => {
+        Modal.info({
+            title:<span
+                style={{fontSize: '14px', color: '#0000FF'}}>自定义的标题头</span>,
+            content:<div style={{fontSize: '18px', color: '#FF0000'}}>这是通过DOM定义的消息内容</div>,
+            okText:'好的，我已经确定了',
+            okType:'danger',
+        });
+    };
+    openModalAutoClose = () => {
+        const modal = Modal.success({
+            title: '自动关闭对话框',
+            content: '这个模态框会在5秒后自动关闭'
+        });
+
+        setTimeout(() => modal.destroy(), 5000);
+    };
+
+    showConfirm = () => {
+        Modal.confirm({
+            title: '操作确认',
+            content: '你确定要这样操作吗？',
+            onOk() {
+                Notify.success('您已确定完成XX操作，系统已经处理完成','确认操作提示');
+            },
+            onCancel() {
+                Notify.info('您已放弃XX操作','取消操作提示');
+            },
+        });
+    };
+
+    showConfirmCustomize = () => {
+        Modal.confirm({
+            title: '操作确认',
+            content: '你确定要这样操作吗？',
+            okText: '我确定要这样做',
+            okType: 'danger',
+            cancelText: '放弃',
+            onOk() {
+                Notify.success('您已确定完成XX操作，系统已经处理完成','确认操作提示');
+            },
+            onCancel() {
+                Notify.info('您已放弃XX操作','取消操作提示');
+            },
+        });
+    }
 
     render() {
         return (
@@ -76,12 +131,14 @@ export default class MessageCase extends React.Component {
                         </ButtonGroup>
 
                         <ButtonGroup>
-                            <Button type="primary" onClick={() => this.openNotice('info', '这里是消息内容','这里是消息标题')}>定义消息标题</Button>
+                            <Button type="primary"
+                                    onClick={() => this.openNotice('info', '这里是消息内容', '这里是消息标题')}>定义消息标题</Button>
                             <Button type="primary" onClick={() => this.openNoticeCustomize1()}>使用DOM自定义</Button>
                         </ButtonGroup>
 
                         <ButtonGroup>
-                            <Button type="primary" onClick={() => this.openNotice('info', '这里是消息内容','这里是消息标题')}>定义消息标题</Button>
+                            <Button type="primary"
+                                    onClick={() => this.openNotice('info', '这里是消息内容', '这里是消息标题')}>定义消息标题</Button>
                             <Button type="primary" onClick={() => this.openNoticeCustomize1()}>使用DOM自定义</Button>
                             <Button type="primary" onClick={() => this.openNoticeCustomize2()}>不自动关闭的通知</Button>
                         </ButtonGroup>
@@ -101,12 +158,35 @@ export default class MessageCase extends React.Component {
                         </ButtonGroup>
 
                         <ButtonGroup>
-                            <Button type="primary" onClick={() => this.openMessageByDuration('成功反馈消息，10秒后自动消失')}>10秒后消失</Button>
+                            <Button type="primary"
+                                    onClick={() => this.openMessageByDuration('成功反馈消息，10秒后自动消失')}>10秒后消失</Button>
                         </ButtonGroup>
                     </div>
                 </Col>
                 <Col span={8}>
                     <h3>交互对话框</h3>
+                    <h4>信息提示框</h4>
+                    <div>
+                        <ButtonGroup>
+                            <Button type="primary" onClick={() => this.openModalAlert('info', '信息提示，一般')}>一般信息</Button>
+                            <Button type="primary" onClick={() => this.openModalAlert('success', '信息提示，成功')}>成功</Button>
+                            <Button type="primary" onClick={() => this.openModalAlert('warn', '信息提示，警告')}>警告</Button>
+                            <Button type="primary" onClick={() => this.openModalAlert('error', '信息提示，出错')}>错误</Button>
+                        </ButtonGroup>
+                        <ButtonGroup>
+                            <Button type="primary" onClick={() => this.openModalAlertCustomize1()}>定义标题和内容</Button>
+                            <Button type="primary" onClick={() => this.openModalAutoClose()}>5秒后自动关闭</Button>
+                        </ButtonGroup>
+                    </div>
+                    <h4>确认框</h4>
+                    <div>
+                        <ButtonGroup>
+                            <Button type="primary" onClick={() => this.showConfirm()}>默认</Button>
+                            <Button type="primary" onClick={() => this.showConfirmCustomize()}>自定义样式</Button>
+                        </ButtonGroup>
+                        <ButtonGroup>
+                        </ButtonGroup>
+                    </div>
                 </Col>
                 <Col span={8}>
                     <h3>其他交互效果</h3>
