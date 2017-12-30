@@ -20,13 +20,6 @@ export default class MessageCase extends React.Component {
             case 'error':
                 Notify.error(content,title);
                 break;
-            // case 'loading':
-            //     const hide = Message.loading(content,0);
-            //     setTimeout(()=>{
-            //         hide();
-            //         Message.info('设置为2.5秒后，手动消失了');
-            //     }, 2500);
-            //     break;
         }
 
     }
