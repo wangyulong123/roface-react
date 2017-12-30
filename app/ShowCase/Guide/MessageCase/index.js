@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Message, Modal, Notify, Divider, Menu, Row, Col} from '../../../../src/components';
+import {Button, Icon, Message, Modal, Notify,Popconfirm, Divider, Menu, Row, Col} from '../../../../src/components';
 import './index.css';
 
 const ButtonGroup = Button.Group;
@@ -114,7 +114,25 @@ export default class MessageCase extends React.Component {
                 Notify.info('您已放弃XX操作','取消操作提示');
             },
         });
+    };
+
+    popConfirm = () => {
+        Notify.success('确认操作');
     }
+
+    popCancel  = () =>  {
+        Notify.error('放弃操作');
+    }
+
+    showModal = () => {
+        Notify.warn('开发中...');
+    };
+
+    showModalCustomize = () => {
+        Notify.warn('开发中...');
+    };
+
+
 
     render() {
         return (
@@ -183,6 +201,21 @@ export default class MessageCase extends React.Component {
                         <ButtonGroup>
                             <Button type="primary" onClick={() => this.showConfirm()}>默认</Button>
                             <Button type="primary" onClick={() => this.showConfirmCustomize()}>自定义样式</Button>
+                        </ButtonGroup>
+                        <ButtonGroup>
+                        </ButtonGroup>
+                    </div>
+                    <h4>气泡确认框</h4>
+                    <div>
+                        <Popconfirm title="确定删除吗?" onConfirm={() => this.popConfirm()} onCancel={() => this.popCancel()} okText="确定" cancelText="放弃">
+                            <Button type="primary">删除</Button>
+                        </Popconfirm>
+                    </div>
+                    <h4>弹出选择框(暂时没有完成)</h4>
+                    <div>
+                        <ButtonGroup>
+                            <Button type="primary" onClick={() => this.showModal()}>默认</Button>
+                            <Button type="primary" onClick={() => this.showModalCustomize()}>自定义样式</Button>
                         </ButtonGroup>
                         <ButtonGroup>
                         </ButtonGroup>

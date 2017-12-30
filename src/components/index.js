@@ -12,6 +12,7 @@ export { default as NumberInput } from './numberInput';
 export { default as Currency } from './currency';
 export { default as Alert } from './alert';
 export { default as Modal } from './modal';
+export { default as Popconfirm } from './popconfirm';
 export { default as Anchor } from './anchor';
 export { default as Collapse } from './collapse';
 export { default as Tooltip } from './tooltip';
