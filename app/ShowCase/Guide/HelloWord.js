@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import './HelloWord.css';
 
 export default class HelloWord extends React.Component {
 
