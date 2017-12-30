@@ -646,6 +646,25 @@
     "updatedTime": 1513736855000
   },
   {
+    "id": "D10-00-40",
+    "name": "消息及交互",
+    "i18nCode": "menu.guide.messagecase",
+    "summary": null,
+    "sortCode": "D10-00-40",
+    "icon": null,
+    "url": "ShowCase/Guide/MessageCase",
+    "param": null,
+    "enable": "Y",
+    "container": null,
+    "style": null,
+    "template": null,
+    "revision": null,
+    "createdBy": null,
+    "createdTime": 1513736855000,
+    "updatedBy": null,
+    "updatedTime": 1513736855000
+  },
+  {
     "id": "D10-10",
     "name": "列表",
     "i18nCode": "menu.demo.list",
