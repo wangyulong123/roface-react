@@ -12,7 +12,7 @@ export default class GridLayout extends React.Component {
             gutterKey: 1,
             colCountKey: 2,
         };
-        [0, 8, 16, 24, 32, 40, 48].forEach((value, i) => {
+        [0, 10, 20, 30, 40, 50, 60].forEach((value, i) => {
             this.gutters[i] = value;
         });
         [2, 3, 4, 6, 8, 12].forEach((value, i) => {
