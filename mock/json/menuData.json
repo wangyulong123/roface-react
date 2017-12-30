@@ -609,7 +609,7 @@
   },
   {
     "id": "D10-00-20",
-    "name": "按钮",
+    "name": "按钮及调用",
     "i18nCode": "menu.guide.buttoncase",
     "summary": null,
     "sortCode": "D10-00-20",
