@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import { Spin } from '../components';
 
 import * as rest from '../lib/rest';
+import * as dataform from '../lib/dataform';
 
 import { addOnResize } from '../lib/listener';
 
@@ -59,7 +60,12 @@ export const compose = (Com, flexTabs, comProps) => {
       return (
         <div style={{ overflow: 'auto' }}>
           <Spin spinning={this.state.spinning}>
-          <Com flexTabs={flexTabs} {...comProps} rest={rest} closeLoading={this.closeLoading} openLoading={this.openLoading}/>
+          <Com
+            flexTabs={flexTabs}
+            {...comProps}
+            rest={rest}
+            dataform={dataform}
+            closeLoading={this.closeLoading} openLoading={this.openLoading}/>
           </Spin>
         </div>
       );

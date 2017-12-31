@@ -18,11 +18,11 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest, history, closeLoading, openLoading } = this.props;
+    const { dataform, history, closeLoading, openLoading } = this.props;
     const { location } = history;
     if (location && location.state) {
       openLoading && openLoading();
-      rest.get(`/dataform/admin/dataForm/${location.state.dataId}/${location.state.dataCode}`).then((res) => {
+      dataform.getAdmin(`/dataform/${location.state.dataId}/${location.state.dataCode}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -48,13 +48,13 @@ export default Form.create()(class ElementDetail extends React.Component {
     return tempObj;
   }
   _saveData = () => {
-    const { rest } = this.props;
+    const { dataform } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({
           loading: true,
         });
-        rest.post('/dataform/admin/dataForm/dataFormElement',
+        dataform.postAdmin(`/dataform/${this.state.id}/element`,
           {
             ...this.state.data,
             ...this._filterField(values,

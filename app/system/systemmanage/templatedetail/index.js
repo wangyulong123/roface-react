@@ -142,11 +142,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest, history, closeLoading, openLoading } = this.props;
+    const { dataform, history, closeLoading, openLoading } = this.props;
     const { location } = history;
     if (location && location.state && location.state.dataId && !location.state.flag) {
       openLoading && openLoading();
-      rest.get(`/dataform/admin/dataForm/${location.state.dataId}`).then((res) => {
+      dataform.getAdmin(`/dataform/${location.state.dataId}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -161,6 +161,16 @@ export default Form.create()(class TemplateDetail extends React.Component {
         ...this.state.data,
         elements: this.state.data.elements.map((ele) => {
           if (ele.code === code) {
+            if (name.includes('.')) {
+              const arrays = name.split('.');
+              return {
+                ...ele,
+                [arrays[0]]: {
+                  ...ele[arrays[0]],
+                  [arrays[1]]: value
+                }
+              }
+            }
             return {
               ...ele,
               [name]: value,
@@ -196,13 +206,34 @@ export default Form.create()(class TemplateDetail extends React.Component {
           <Icon type="close" />删除
         </Button>
         <Button
-          onClick={() => this.createTab(record)}
+          onClick={() => this._checkDataId(record)}
           className={`${prefix}-template-detail-table-button`}
         >
           <Icon type="info" />详情
         </Button>
       </div>
     );
+  }
+  _checkDataId = (record) => {
+    const { data } = this.state;
+    if (!data.id) {
+      const that = this;
+      Modal.confirm({
+        okText: '确认',
+        cancelText: '取消',
+        title: '是否保存当前模板?',
+        content: '当前模板为新增模板，请先保存。',
+        onOk() {
+          that._saveData().then(res => {
+            that.setState({
+              data: res
+            }, that.createTab(record))
+          })
+        },
+      })
+    } else {
+      this.createTab(record);
+    }
   }
   createTab = (record) => {
     const { flexTabs } = this.props;
@@ -222,9 +253,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
     });
   };
   _addTableData = (record, index) => {
-    const { length } = this.state.data.elements;
-    const tempArray = [...this.state.data.elements];
-    tempArray.splice(index + 1, 0, { name: `新字段${length}`, code: `新字段${length}`});
+    const { length } = this.state.data.elements || [];
+    const tempArray = [...(this.state.data.elements || [])];
+    const newField = { name: `新字段${length}`, code: `新字段${length}`};
+    if (!record) {
+      tempArray.push(newField)
+    } else {
+      tempArray.splice(index + 1, 0, newField);
+    }
     this.setState({
       data: {
         ...this.state.data,
@@ -240,38 +276,43 @@ export default Form.create()(class TemplateDetail extends React.Component {
     return tempObj;
   }
   _saveData = () => {
-    const { rest } = this.props;
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.setState({
-          loading: true,
-        });
-        rest.post('/dataform/admin/dataForm',
-          {
-            ...this.state.data,
-            ...this._filterField(values, 'columnNumber'),
-            formUIHint: {
-              ...this.state.data.formUIHint,
-              columnNumber: values.columnNumber,
-            },
-          }).then(() => {
-          Notify.success({
-            message: '保存成功',
-          });
+    const { dataform } = this.props;
+    return new Promise((resovle, reject) => {
+      this.props.form.validateFields((err, values) => {
+        if (!err) {
           this.setState({
-            loading: false,
+            loading: true,
           });
-        }).catch((e) => {
-          Modal.error({
-            title: '保存失败',
-            content: JSON.stringify(e),
+          dataform.postAdmin(`/dataform?dataFormId=${this.state.data.id}`,
+            {
+              ...this.state.data,
+              ...this._filterField(values, 'columnNumber'),
+              formUIHint: {
+                ...this.state.data.formUIHint,
+                columnNumber: values.columnNumber,
+              },
+            }).then((res) => {
+            resovle(res);
+            Notify.success({
+              message: '保存成功',
+            });
+            this.setState({
+              loading: false,
+            });
+          }).catch((e) => {
+            reject(e);
+            Modal.error({
+              title: '保存失败',
+              content: JSON.stringify(e),
+            });
+            this.setState({
+              loading: false,
+            });
           });
-          this.setState({
-            loading: false,
-          });
-        });
-      }
-    });
+        }
+      });
+    })
+
   }
   _deleteTableData = (record) => {
     this.setState({
@@ -356,6 +397,12 @@ export default Form.create()(class TemplateDetail extends React.Component {
             </Form>
           </Panel>
           <Panel header="字段信息" key="2">
+            <Button
+              onClick={this._addTableData}
+              className={`${prefix}-template-detail-table-button`}
+            >
+              <Icon type="plus" />添加
+            </Button>
             <Table
               rowKey={record => record.code}
               columns={this.state.columns}
