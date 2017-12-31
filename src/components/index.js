@@ -5,6 +5,7 @@ export { default as NavTree } from './navtree';
 export { default as Tabs } from './tabs';
 export { default as Button } from './button';
 export { default as Form } from './form';
+export { default as Input } from './input';
 // export { default as NavSubtree } from './menu';
 export { default as FlexTabs } from './flextabs';
 export { default as NavMega } from './megamenu';
