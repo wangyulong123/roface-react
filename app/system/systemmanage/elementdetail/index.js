@@ -110,7 +110,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('dataFormId', {
                     rules: [{ required: true }],
                     initialValue: this.state.data.dataFormId
-                    || (location && location.state && location.state.id),
+                    || (location && location.state && location.state.dataId),
                   })(<Text reading />)}
                 </FormItem>
                 <FormItem
