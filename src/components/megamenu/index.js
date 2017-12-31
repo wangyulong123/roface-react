@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Form, Icon, Tabs, Text, Button, Modal } from '../index';
+import { Icon } from '../index';
 import MenuChildren from './MenuChildren';
+import PersonalManager from './PersonalManager';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
 import { addOnResize } from '../../lib/listener';
 
-const TabPane = Tabs.TabPane;
-const FormItem = Form.Item;
-
-class MegaMenu extends React.Component {
+export default class MegaMenu extends React.Component {
   constructor(props) {
     super(props);
     this.dom = null;
@@ -19,12 +17,9 @@ class MegaMenu extends React.Component {
     this.right = null;
     this.left = null;
     this.offsetWidth = 0;
-    this.tag = null;
+    this.moveWidth = 210;
     this.state = {
       menuData: [],
-      dropDownState: 'top',
-      dropDownBox: 'none',
-      quitState: false,
     };
   }
   componentDidMount() {
@@ -46,17 +41,7 @@ class MegaMenu extends React.Component {
         this.checkWidth();
       });
     });
-    const tags = document.querySelectorAll('.' + prefix + '-personal-box');
-    if (tags.length > 0) {
-      this.tag = tags[tags.length - 1];
-      window.addEventListener('click', this._executeCb);
-    }
   }
-  _executeCb = e => {
-    if (this.tag && this.tag.compareDocumentPosition(e.target) !== 20) {
-      this._closeDropDown();
-    }
-  };
   _menuClick = (e, item) => {
     e.stopPropagation();
     if (!item.children || item.children.length === 0) {
@@ -184,16 +169,11 @@ class MegaMenu extends React.Component {
     return parseFloat(data.split('px')[0] || 0, 10);
   };
   _moveRight = () => {
-    const moveWidth = 210;
     this.rightWidth = this.wrapper.scrollWidth - this.wrapper.offsetWidth;
-    console.log(this.rightWidth);
     const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
-    const dValue = this.rightWidth + marginLeft;
-    if (dValue <= 0) {
-      this.menuWrapper.style.marginLeft = - this.rightWidth + marginLeft + 'px';
-      this.right.children[0].style.display = 'none';
-    } else if (dValue >= moveWidth) {
-      this.menuWrapper.style.marginLeft = marginLeft - moveWidth + 'px';
+    const dValue = - this.rightWidth + this.moveWidth;
+    if (dValue < 0) {
+      this.menuWrapper.style.marginLeft = marginLeft - this.moveWidth + 'px';
     } else {
       this.menuWrapper.style.marginLeft = - this.rightWidth + marginLeft + 'px';
       this.right.children[0].style.display = 'none';
@@ -201,154 +181,19 @@ class MegaMenu extends React.Component {
     this.left.children[0].style.display = 'block';
   };
   _moveLeft = () => {
-    const moveWidth = 210;
     const marginLeft = this._getValue(this.menuWrapper.style.marginLeft);
     this.rightWidth = this.wrapper.scrollWidth - this.wrapper.offsetWidth;
-    console.log(this.rightWidth);
-    const dValue = moveWidth + marginLeft;
+    const dValue = this.moveWidth + marginLeft;
     if (dValue <= 0) {
-      this.menuWrapper.style.marginLeft = (marginLeft + moveWidth) + 'px';
+      this.menuWrapper.style.marginLeft = (marginLeft + this.moveWidth) + 'px';
     } else {
       this.menuWrapper.style.marginLeft = '0px';
       this.left.children[0].style.display = 'none';
     }
     this.right.children[0].style.display = 'block';
   };
-  _dropDownBox = e => {
-    const { dropDownState, dropDownBox } = this.state;
-    if (dropDownState === 'down') {
-      this.setState({
-        dropDownState: 'top',
-        dropDownBox: 'none',
-      });
-    } else {
-      this.setState({
-        dropDownState: 'down',
-        dropDownBox: 'block',
-      });
-    }
-    e.nativeEvent.stopImmediatePropagation();
-  };
-  _closeDropDown = () => {
-    const { dropDownState, dropDownBox } = this.state;
-    this.setState({
-      dropDownState: 'top',
-      dropDownBox: 'none',
-    });
-  };
-  informationTabPane = (prefix, getFieldDecorator) => {
-    const formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol:{ span: 14, offset: 0 },
-    };
-    return (
-      <div className={`${prefix}-tabPane1`}>
-        <div className={`${prefix}-tabPane1-portrait`}>
-          <span className={`${prefix}-tabPane1-portrait-icon`} />
-          <span className={`${prefix}-tabPane1-portrait-tooltip`}>更新头像</span>
-        </div>
-        <div className={`${prefix}-tabPane1-register`}>
-          <Form>
-            <FormItem
-              {...formItemLayout}
-              label="账户"
-            >
-              {getFieldDecorator('account', {
-                rule: [
-                  {type: 'string'},
-                  {required: true, message: '请输入个人账户'}
-                ],
-              })(<Text placeholder="请输入用户账户" />)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="昵称"
-            >
-              {getFieldDecorator('nickname', {
-                rule: [{type: 'string'}],
-              })(<Text placeholder="请输入用户昵称" />)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="邮箱"
-            >
-              {getFieldDecorator('user_email', {
-                rule: [{type: 'email'}],
-              })(<Text placeholder="请输入邮箱地址" />)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="电话"
-            >
-              {getFieldDecorator('phone', {
-                rule: [{type: 'number'}],
-              })(<Text placeholder="请输入联系方式" />)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="其他"
-            >
-              {getFieldDecorator('other')(<Text placeholder="请输入" />)}
-            </FormItem>
-          </Form>
-        </div>
-      </div>
-    );
-  };
-  passwordTabPane = (prefix, getFieldDecorator) => {
-    const formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol:{ span: 15, offset: 0 },
-    };
-    return (
-      <div className={`${prefix}-tabPane2`}>
-        <Form>
-          <FormItem
-            {...formItemLayout}
-            label="原密码"
-          >
-            {getFieldDecorator('oldPassword', {
-              rule: [{type: 'password'},{required: true}],
-            })(<Text type="password" placeholder="请输入原密码" />)}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="新密码"
-          >
-            {getFieldDecorator('newPasswod', {
-              rule: [{type: 'password'},{required: true}],
-            })(<Text type="password" placeholder="请输入新密码" />)}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="确认密码"
-          >
-            {getFieldDecorator('confirmPassword', {
-              rule: [{type: 'password'},{required: true}],
-            })(<Text type="password" placeholder="请再输入一遍" />)}
-          </FormItem>
-        </Form>
-      </div>
-    );
-  };
-  _showQuitBox = () => {
-    const { quitState } = this.state;
-    this.setState({
-      quitState: true,
-    });
-  };
-  _quitSuccess = () => {
-    console.log('success!');
-  };
-  _quitFail = () => {
-    this.setState({
-      quitState: false,
-    });
-  };
   render() {
     const { prefix = 'ro' } = this.props;
-    const { getFieldDecorator } = this.props.form;
-    const { dropDownBox, dropDownState, quitState } = this.state;
     return (
       <div className={`${prefix}-nav-container`}>
         <div className={`${prefix}-navbar-logo`}>
@@ -361,53 +206,8 @@ class MegaMenu extends React.Component {
           </div>
         </div>
         <div className={`${prefix}-nav-arrow-right`}><Icon type="right" onClick={this._moveRight}/></div>
-        <div className={`${prefix}-nav-right`}>
-                    <span className={`${prefix}-right-items`}>
-                        <span className={`${prefix}-personal-portrait`} />
-                        <span className={`${prefix}-navRight-text`}>admin</span>
-                        <span className={`${prefix}-personal-${dropDownState}`} onClick={this._dropDownBox} />
-                        <div style={{ display: dropDownBox }} className={`${prefix}-personal-box`}>
-                            <Tabs defaultActiveKey="1">
-                                <TabPane tab="个人信息" key="1">
-                                    {this.informationTabPane(prefix, getFieldDecorator)}
-                                </TabPane>
-                                <TabPane tab="修改密码"  key="2">
-                                    {this.passwordTabPane(prefix, getFieldDecorator)}
-                                </TabPane>
-                            </Tabs>
-                            <span className={`${prefix}-personal-box-downLine`} />
-                            <div className={`${prefix}-personal-box-button`}>
-                                <Button>取消</Button>
-                                <Button type="primary">保存</Button>
-                            </div>
-                        </div>
-                    </span>
-          <span className={`${prefix}-vertical-line`} />
-          <span className={`${prefix}-right-items`}>
-                        <span className={`${prefix}-personal-information`} />
-                        <span className={`${prefix}-personal-information-prompt ${prefix}-navRight-text`}>消息中心</span>
-                    </span>
-          <span className={`${prefix}-vertical-line`} />
-          <span className={`${prefix}-right-items`}>
-                        <span className={`${prefix}-personal-quit`} />
-                        <span className={`${prefix}-navRight-text`} onClick={this._showQuitBox}>退出</span>
-                        <Modal
-                          visible={quitState}
-                          onOk={this._quitSuccess}
-                          onCancel={this._quitFail}
-                          title={'提示'}
-                          footer={[
-                            <Button onClick={this._quitFail} key="cancel">取消</Button>,
-                            <Button type='primary' onClick={this._quitSuccess} key="ok">确定</Button>
-                          ]}
-                        >
-                            <Icon type="warning" />
-                            <span>确认退出系统？</span>
-                        </Modal>
-                    </span>
-        </div>
+        <PersonalManager />
       </div>
     );
   }
 }
-export default MegaMenu = Form.create()(MegaMenu);
