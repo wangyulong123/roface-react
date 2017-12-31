@@ -181,8 +181,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('code', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.code,
+                    initialValue: this.state.data && this.state.data.code,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -190,10 +189,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="表名"
                 >
-                  {getFieldDecorator('table_', {
+                  {getFieldDecorator('table', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.table_,
+                    initialValue: this.state.data && this.state.data.table,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -201,10 +199,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="列名"
                 >
-                  {getFieldDecorator('column_', {
+                  {getFieldDecorator('column', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.column_,
+                    initialValue: this.state.data && this.state.data.column,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -363,7 +360,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('group', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.group,
-                  })(<Select />)}
+                  })(<Text />)}
                 </FormItem>
               </div>
             </Panel>
