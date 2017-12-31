@@ -58,8 +58,9 @@ export default Form.create()(class ElementDetail extends React.Component {
           {
             ...this.state.data,
             ...this._filterField(values,
-              ['editStyle', 'textAlign', 'readonly',
-                'colspan', 'suffix', 'htmlStyle', 'visible', 'required', 'eventExpr', 'dataFormat']),
+              ['editStyle', 'textAlign', 'readonly', 'colspan', 'suffix', 'htmlStyle',
+                'visible', 'required', 'eventExpr', 'maskFormat', 'tips', 'dictCodeMode',
+                'dictCodeExpr' ]),
           }).then(() => {
           Notify.success({
             message: '保存成功',
@@ -497,7 +498,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('runAt', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.runAt,
                   })(<RadioBox options={[{code: 'Client', name: '客户端'}, {code: 'Server', name: '服务端'}]} />)}
                 </FormItem>
                 <FormItem
