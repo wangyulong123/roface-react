@@ -1,12 +1,7 @@
 var redirect = {
-  url: 'http://192.168.64.227:8080',
+  url: 'http://192.168.64.80:8080',
   path: [
-    '/dataform/admin/dataForms',
-    '/dataform/admin/dataForm/dataFormElement',
-    '/dataform/admin/cloneDataForm',
-    '/dataform/admin/dataForm',
-    '/dataform/admin/dataForm/:id',
-    '/dataform/admin/dataForm/:dataFormId/:code',
+
   ]
 }
 
