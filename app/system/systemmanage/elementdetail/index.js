@@ -126,46 +126,6 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="来源描述"
-                >
-                  {getFieldDecorator('name', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.name,
-                  })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
-                  label="JBO定义表名"
-                >
-                  {getFieldDecorator('dataModel', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.dataModel,
-                  })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
-                  label="JBO属性名"
-                >
-                  {getFieldDecorator('name', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.name,
-                  })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
-                  label="JBO类名"
-                >
-                  {getFieldDecorator('name', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.name,
-                  })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
                   label="查询项"
                 >
                   {getFieldDecorator('select', {
@@ -600,24 +560,6 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.tips,
                   })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
-                  label="是否Sum"
-                >
-                  {getFieldDecorator('code4', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.code,
-                  })(<Select
-                    options={[
-                      {code: 1, name: '不汇总'},
-                      {code: 2, name: '显示小计'},
-                      {code: 3, name: '显示小计+总计'},
-                    ]}
-                    optionName="name"
-                    optionField="code"
-                  />)}
                 </FormItem>
               </div>
             </Panel>
