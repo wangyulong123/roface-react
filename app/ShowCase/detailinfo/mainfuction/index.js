@@ -202,7 +202,7 @@ export default class MainFunction extends React.Component {
   render() {
     return (
       <div>
-        <Affix offsetTop={480}>
+        <Affix offsetTop={0}>
           {this._renderMenuBtn('setValue和getValue(姓名)', this.state.disabled,
             e => this._useValueSet(e), ['setValue', 'getValue'])}
           {this._renderMenuBtn('Data对象操作(英文名)', this.state.disabled,

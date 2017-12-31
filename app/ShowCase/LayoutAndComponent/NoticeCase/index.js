@@ -1,6 +1,5 @@
 import React from 'react';
-import {Dropdown, Button} from 'antd';
-import {message, Icon, Menu} from '../../../../src/components';
+import {message, Icon, Menu, Dropdown, Button} from '../../../../src/components';
 
 export default class NoticeCase extends React.Component {
     openNotificationWithIcon = (type) => {

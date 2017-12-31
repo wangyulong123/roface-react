@@ -12,18 +12,31 @@ const FormItem = Form.Item;
 
 const EditableCell = ({value, com, onChange, options}) => {
   const Com = components[com];
+  if (com === 'Select' || com === 'RadioBox') {
+    return (
+      <div>
+        <Com
+          style={{margin: '-5px 0'}}
+          value={value}
+          onChange={onChange}
+          options={options}
+          optionName="name"
+          optionField="code"
+        />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Com
         style={{margin: '-5px 0'}}
         value={value}
         onChange={onChange}
-        options={options}
-        optionName="name"
-        optionField="code"
       />
     </div>
   );
+
 };
 
 export default Form.create()(class TemplateDetail extends React.Component {
@@ -54,11 +67,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
           render: (text, record, index) => this._renderColumns('code', 'Text', text, record, index),
         },
         {
-          title: '对其',
+          title: '对齐',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.textAlign',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.textAlign', 'Select', text && text.textAlign, record, index,
+            this._renderColumns('elementUIHint.textAlign', 'RadioBox', text && text.textAlign, record, index,
               [{code: 'Left', name: '左'}, {code: 'Center', name: '中'}, {code: 'Right', name: '右'}]),
         },
         {
@@ -267,6 +280,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         elements: tempArray,
       },
     });
+    console.log(this.state.data);
   }
   _filterField = (obj, field) => {
     const tempObj = {};
@@ -344,12 +358,25 @@ export default Form.create()(class TemplateDetail extends React.Component {
             <Form className="login-form">
               <FormItem
                 {...formItemLayout}
-                label="模板编号"
+                label="包名"
               >
-                {getFieldDecorator('code', {
-                  rules: [{ required: true }],
-                  initialValue: this.state.data.code,
-                })(<Text reading />)}
+                <div>
+                  {getFieldDecorator('pack', {
+                    rules: [{ required: true }],
+                    initialValue: this.state.data.pack,
+                  })(<Text />)}
+                </div>
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="编号"
+              >
+                <div>
+                  {getFieldDecorator('code', {
+                    rules: [{ required: true }],
+                    initialValue: this.state.data.code,
+                  })(<Text />)}
+                </div>
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -378,12 +405,72 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
+                label="JBO定义表名"
+              >
+                {getFieldDecorator('dataModel', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.dataModel
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="查询项"
+              >
+                {getFieldDecorator('select', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.select,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
                 label="查询条件"
               >
-                {getFieldDecorator('query', {
+                {getFieldDecorator('where', {
                   rules: [{ required: false }],
-                  initialValue: this.state.data.query,
+                  initialValue: this.state.data.query
+                  && this.state.data.query.where,
                 })(<TextArea />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="From"
+              >
+                {getFieldDecorator('from', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.from,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="Group By"
+              >
+                {getFieldDecorator('groupBy', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.groupBy,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="Order By"
+              >
+                {getFieldDecorator('orderBy', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.orderBy,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="having"
+              >
+                {getFieldDecorator('having', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.having,
+                })(<Text />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}

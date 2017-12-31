@@ -371,9 +371,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="缺省值"
                 >
-                  {getFieldDecorator('code10', {
+                  {getFieldDecorator('defaultValue', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.defaultValue,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -402,10 +402,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="检查格式"
                 >
-                  {getFieldDecorator('dataFormat', {
+                  {getFieldDecorator('maskFormat', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.dataFormat,
+                    && this.state.data.elementUIHint.maskFormat,
                   })(<Select
                     options={[
                       {code: 'Currency', name: '金额'},
@@ -433,7 +433,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('enable', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.enable,
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
@@ -460,9 +460,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="聚合表达式"
                 >
-                  {getFieldDecorator('comparePattern', {
+                  {getFieldDecorator('summaryExpression', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.comparePattern,
+                    initialValue: this.state.data.summaryExpression,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -482,7 +482,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('tips', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.tips,
+                    initialValue: this.state.data.elementUIHint
+                    && this.state.data.elementUIHint.tips,
                   })(<Text />)}
                 </FormItem>
               </div>
