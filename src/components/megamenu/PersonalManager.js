@@ -165,7 +165,7 @@ export default Form.create()(class PersonalManager extends React.Component {
       <div className={`${prefix}-nav-right`}>
         <span className={`${prefix}-right-items`}>
           <span className={`${prefix}-personal-portrait`} />
-          <span className={`${prefix}-navRight-text`}>admin</span>
+          <span className={`${prefix}-navRight-text`} onClick={this._dropDownBox}>admin</span>
           <span className={`${prefix}-personal-${dropDownState}`} onClick={this._dropDownBox} />
           <div style={{display: dropDownBox}} className={`${prefix}-personal-box`}>
             <Tabs defaultActiveKey="1">
