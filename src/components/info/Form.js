@@ -90,22 +90,30 @@ export default Form.create()(class Forms extends React.Component {
       const comProps = this._getElementUIHint(item);
       const key = `${index}`;
       return (
-        <Item
+        <div
           key={key}
-          className={`${prefix}-item`}
+          className={`${prefix}-item-container`}
           style={{ width: `${(100 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan}%` }}
-          label={item.name}
         >
-          <Tooltip title={item.elementUIHint.tips}>
-            <div>
-              {getFieldDecorator(item.code, {
-                initialValue: dataValue[item.code] || item.defaultValue,
-                rules: [{ required: item.elementUIHint.required, type: this._dataType(item.dataType), message: `${item.name}是必输字段` }],
-              })(
-                typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
-            </div>
-          </Tooltip>
-        </Item>
+          <Item
+            className={`${prefix}-item`}
+            label={item.name}
+          >
+            <Tooltip title={item.elementUIHint.tips}>
+              <div>
+                {getFieldDecorator(item.code, {
+                  initialValue: dataValue[item.code] || item.defaultValue,
+                  rules: [{ required: item.elementUIHint.required, type: this._dataType(item.dataType), message: `${item.name}是必输字段` }],
+                })(
+                  typeof Com === 'object' ? React.cloneElement(Com, comProps) : <Com {...comProps} />)}
+              </div>
+            </Tooltip>
+          </Item>
+          {
+            item.elementUIHint &&
+            item.elementUIHint.note ? <div className={`${prefix}-item-container-note`}>{item.elementUIHint.note}</div> : null
+          }
+        </div>
       );
     }));
   }

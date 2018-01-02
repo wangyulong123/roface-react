@@ -16,6 +16,7 @@ export default class Tab extends React.Component {
     this.dom = null;
     this.tabsWrapper = null;
     this.state = {
+      refresh: false,
       tabs: [],
       tabsCollapse: [],
       showTabsCollapse: 'none',
@@ -233,7 +234,9 @@ export default class Tab extends React.Component {
   };
 
   _refreshTab = () => {
-    console.log('_refreshTab');
+    this.setState({
+      refresh: !this.state.refresh
+    })
   };
 
   _clickTab = (currentTabItem) => {
@@ -419,6 +422,7 @@ export default class Tab extends React.Component {
               <div>
                 {
                   <TabContent
+                    refresh={this.state.refresh}
                     activeTabId={this.state.activeTabId}
                     tabs={this.state.tabs}
                   />

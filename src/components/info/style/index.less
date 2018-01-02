@@ -17,11 +17,18 @@
     display: flex;
     flex-wrap: wrap;
   }
+  &-item-container {
+    display: flex;
+    &-note {
+      line-height: 39px;
+    }
+  }
   &-item {
     min-width: 200px;
     display: flex;
     padding-right: 5px;
     align-items: center;
+    flex-grow: 1;
   }
 }
 .ant-form-item-control-wrapper {
