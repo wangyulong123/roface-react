@@ -36,3 +36,7 @@ export const getAdmin = (url, param) => {
 export const postAdmin = (url, param) => {
   return rest.post(`${config.webApi.dataFormAdmin}${url}`, param);
 };
+
+export const deleteAdmin = (url, param) => {
+  return rest.del(`${config.webApi.dataFormAdmin}${url}`, param);
+};
