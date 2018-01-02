@@ -124,6 +124,17 @@ for(let i = 0; i< reqPath.length; i ++) {
       rep.json(body && JSON.parse(body));
     })
   })
+
+  router.route(reqPath[i]).delete(function (req, rep, next) {
+    setRedirect({
+      headers: req.headers,
+      uri: url + reqPath[i],
+      method: 'delete',
+      body: JSON.stringify(req.body)
+    }, function (body) {
+      rep.json(body && JSON.parse(body));
+    })
+  })
 }
 
 
