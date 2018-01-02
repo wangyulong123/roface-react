@@ -2,6 +2,7 @@ import React from 'react';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 import { Table, LocaleProvider, Modal, Button, Icon, Notify, Text } from '../../../../src/components';
+import './style/index.less';
 
 export default class DisplayTemplate extends React.Component {
   constructor(props){
@@ -27,14 +28,9 @@ export default class DisplayTemplate extends React.Component {
         dataIndex: 'formUIHint',
         key: 'formUIHint',
         render: text => <span>{text.columnNumber}</span>,
-      },
-      {
-        title: '操作',
-        dataIndex: 'opt',
-        key: 'opt',
-        render: (text, record, index) => this._createButton(record, index),
-      },
+      }
       ],
+      selectedRowRecord: null,
     };
     this.id = ''
   }
@@ -55,30 +51,26 @@ export default class DisplayTemplate extends React.Component {
       closeLoading && closeLoading();
     });
   }
-  _createButton = (record, index) => {
-    const { prefix = 'ro' } = this.props;
-    return (
-      <div>
-        <Button
-          onClick={() => this._cloneTableData(record)}
-          className={`${prefix}-template-detail-table-button`}
-        >
-          <Icon type="close" />克隆
-        </Button>
-        <Button
-          onClick={() => this.createTab(record)}
-          className={`${prefix}-template-detail-table-button`}
-        >
-          <Icon type="info" />详情
-        </Button>
-      </div>
-    );
-  }
+
+  _onSelectRow = (record) => {
+    this.setState({
+      selectedRowRecord: record,
+    });
+  };
+
   _idChange = (value) => {
     this.id = value;
-  }
-  _cloneTableData = (record) => {
+  };
+
+  _cloneTableData = () => {
     const { dataform, openLoading, closeLoading } = this.props;
+    const record = this.state.selectedRowRecord;
+    if (!record) {
+      Notify.info({
+        message: '请选择要克隆的模板行！',
+      });
+      return;
+    }
     const that = this;
     Modal.confirm({
       title: '请输入模板编号',
@@ -89,7 +81,7 @@ export default class DisplayTemplate extends React.Component {
       ),
       onOk() {
         openLoading && openLoading();
-        dataform.postAdmin.post('/dataform/clone', {
+        dataform.postAdmin('/dataform/clone', {
           newDataFormId: that.id,
           oldDataFormId: record.id
         })
@@ -109,12 +101,21 @@ export default class DisplayTemplate extends React.Component {
         });
       },
     });
-  }
+  };
+
   refresh = () => {
     console.log("组件刷新");
-  }
+  };
+
   createTab = (record) => {
     const { flexTabs } = this.props;
+    record = record || this.state.selectedRowRecord;
+    if (!record) {
+      Notify.info({
+        message: '请选择要查看详情的模板行！',
+      });
+      return;
+    }
     const tab = {
       id: `system/systemManage/TemplateDetail/${record.id}`,
       name: `模板:${record.name}`,
@@ -129,18 +130,68 @@ export default class DisplayTemplate extends React.Component {
       },
     });
   };
+
+  _deleteTemplate = () => {
+    const { dataform, closeLoading, openLoading } = this.props;
+    openLoading && openLoading();
+    const record = this.state.selectedRowRecord;
+    if (!record) {
+      Notify.info({
+        message: '请选择要删除的模板行！',
+      });
+      return;
+    }
+    // dataform/{id}
+    dataform.deleteAdmin(`/dataform/${record.id}`, {
+      id: record.id
+    })
+      .then((res) => {
+        closeLoading && closeLoading();
+        Notify.success({
+          message: '删除模板成功',
+        });
+      }).catch((e) => {
+      closeLoading && closeLoading();
+      Modal.error({
+        title: '删除模板失败',
+        content: JSON.stringify(e),
+      });
+    });
+  };
+
   render() {
+    const { prefix = 'ro' } = this.props;
     return (
       <div>
-        <Button
-          onClick={() => this.createTab({
-            name: '新增模板',
-            id: `newTemplateDetail${new Date().getTime()}`,
-            flag: true
-          })}
-        >
-          <Icon type="plus" />新增模板
-        </Button>
+        <div className={`${prefix}-template-detail-button-group`}>
+          <Button
+            onClick={() => this.createTab({
+              name: '新增模板',
+              id: `newTemplateDetail${new Date().getTime()}`,
+              flag: true
+            })}
+          >
+            <Icon type="plus" />新增模板
+          </Button>
+          <Button
+            onClick={() => this._cloneTableData()}
+            className={`${prefix}-template-detail-button-group-button`}
+          >
+            <Icon type="close" />克隆
+          </Button>
+          <Button
+            onClick={() => this.createTab()}
+            className={`${prefix}-template-detail-button-group-button`}
+          >
+            <Icon type="info" />详情
+          </Button>
+          <Button
+            onClick={() => this._deleteTemplate()}
+            className={`${prefix}-template-detail-button-group-button`}
+          >
+            <Icon type="info" />删除
+          </Button>
+        </div>
         <LocaleProvider locale={zhCN}>
           <Table
             rowKey={record => record.id}
@@ -149,6 +200,10 @@ export default class DisplayTemplate extends React.Component {
             pagination={{
               showSizeChanger: true,
               showQuickJumper: true,
+            }}
+            rowSelection={{
+              type: 'radio',
+              onSelect: this._onSelectRow
             }}
           />
         </LocaleProvider>
