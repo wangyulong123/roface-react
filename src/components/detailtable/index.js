@@ -3,7 +3,8 @@
  */
 
 import React from 'react';
-import { Table } from 'antd';
+import { Table, LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 import Methods from './api-inject';
 import './index.css';
 
@@ -35,17 +36,19 @@ class DetailTable extends React.Component {
       this.beforeRender();
     }
     return (
-      <Table
-        columns={this.state.columns}
-        dataSource={this.state.rows}
-        loading={this.state.gridOptions.tplLoading && this.state.gridOptions.dataLoading}
-        rowSelection={this.state.rowSelection}
-        size={this.state.gridOptions.size}
-        bordered={this.state.gridOptions.bordered}
-        rowKey={this.state.key}
-        footer={this.state.footer}
-        pagination={this.state.paginationConf}
-      />
+      <LocaleProvider locale={zhCN}>
+        <Table
+          columns={this.state.columns}
+          dataSource={this.state.rows}
+          loading={this.state.gridOptions.tplLoading && this.state.gridOptions.dataLoading}
+          rowSelection={this.state.rowSelection}
+          size={this.state.gridOptions.size}
+          bordered={this.state.gridOptions.bordered}
+          rowKey={this.state.key}
+          footer={this.state.footer}
+          pagination={this.state.paginationConf}
+        />
+      </LocaleProvider>
     );
   }
 }
