@@ -1,7 +1,7 @@
 import React from 'react';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
-import { Table, LocaleProvider, Modal, Button, Icon, Notify, Text } from '../../../../src/components';
+import { Table, LocaleProvider, Modal, Button, Icon, Notify, Text, Pagination } from '../../../../src/components';
 
 export default class DisplayTemplate extends React.Component {
   constructor(props){
@@ -33,15 +33,17 @@ export default class DisplayTemplate extends React.Component {
         dataIndex: 'opt',
         key: 'opt',
         render: (text, record, index) => this._createButton(record, index),
-      },
-      ],
+      }],
+      pageIndex: 0,
+      pageCount: 10,
     };
     this.id = ''
   }
   componentDidMount(){
     const { dataform, closeLoading, openLoading } = this.props;
+    const { pageIndex, pageCount } = this.state;
     openLoading && openLoading();
-    dataform.getAdmin('/dataform').then((res) => {
+    dataform.getAdmin(`/dataform/list/code=DESC/${pageIndex}-${pageCount}`).then((res) => {
       this.setState({
         data: res,
       }, () => {
@@ -73,10 +75,10 @@ export default class DisplayTemplate extends React.Component {
         </Button>
       </div>
     );
-  }
+  };
   _idChange = (value) => {
     this.id = value;
-  }
+  };
   _cloneTableData = (record) => {
     const { dataform, openLoading, closeLoading } = this.props;
     const that = this;
@@ -109,7 +111,7 @@ export default class DisplayTemplate extends React.Component {
         });
       },
     });
-  }
+  };
   createTab = (record) => {
     const { flexTabs } = this.props;
     const tab = {
@@ -126,6 +128,18 @@ export default class DisplayTemplate extends React.Component {
       },
     });
   };
+  _paginationOnChange = (page, pageSize) => {
+
+  };
+  _renderPagination = () => (
+    <Pagination
+      showSizeChanger={true}
+      showQuickJumper={true}
+      defaultCurrent={1}
+      onShowSizeChange={() => {}}
+      onChange={this._paginationOnChange}
+    />
+  );
   render() {
     return (
       <div>
@@ -143,10 +157,7 @@ export default class DisplayTemplate extends React.Component {
             rowKey={record => record.id}
             columns={this.state.columns}
             dataSource={this.state.data}
-            pagination={{
-              showSizeChanger: true,
-              showQuickJumper: true,
-            }}
+            pagination={this._renderPagination()}
           />
         </LocaleProvider>
       </div>

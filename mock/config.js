@@ -7,8 +7,9 @@ var redirect = {
     '/dataform/devtool/dataform/:id',
     '/dataform/devtool/dataform/:dataFormId/:elementCode',
     '/dataform/devtool/dataform/:id',
+    '/dataform/devtool/dataform/list/code=DESC/:page',
     '/dataform/list/:sort'
   ]
-}
+};
 
 module.exports = redirect;
