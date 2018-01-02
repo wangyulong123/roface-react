@@ -159,9 +159,20 @@ class CustomizedForm extends React.Component {
 }
 
 export default class FormWithData extends React.Component {
-    state = {
-        data: {email: 'example@amarsoft.com'},
+  constructor(){
+    super();
+    this.state = {
+      data: { email: 'example@amarsoft.com' },
     }
+    this.MyForm = Form.create({
+      onValuesChange: (props, values) => {
+        console.log('props',props);
+        console.log('values',values);
+        this.setState({ data:values });
+      }
+    })(CustomizedForm);
+  }
+
     /**
      * 改变按钮为加载中状态，1秒之后复原
      */
@@ -169,20 +180,11 @@ export default class FormWithData extends React.Component {
     }
 
     render() {
-
-        const MyForm = Form.create({
-            onValuesChange: (props, values) => {
-                console.log('props',props);
-                console.log('values',values);
-                this.setState({data:values});
-            }
-        })(CustomizedForm);
-
         return (
             <div style={{margin: '15px'}}>
                 <Row gutter={10}>
                     <Col span={18}>
-                        <MyForm data={this.state.data}/>
+                        <this.MyForm data={this.state.data}/>
                     </Col>
                     <Col span={6}>
                 <pre className="language-bash">
