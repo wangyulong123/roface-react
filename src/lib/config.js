@@ -9,7 +9,7 @@ const config = {
         dataFormMethod: '/dataform/method',
         dataFormDataOne: '/dataform/data/one',
         dataFormDataList: '/dataform/data/list',
-        dataFormAdmin: '/dataform/admin',
+        dataFormAdmin: '/dataform/devtool',
         // dataFormDataOne: '/dataform/data/one/{form}/{param}',
         // dataFormDataList: '/dataform/data/list/{form}/{param}/{sort}/{index:[]+}-{size:[]+}',
     },
