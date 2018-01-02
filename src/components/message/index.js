@@ -1,5 +1,9 @@
 import { message } from 'antd';
 
+// export default class Message extends React.Component{
+//     message: Antd.message
+// }
+
 export const success = (content, duration, onClose) => {
     message.success(content, duration, onClose);
 };
