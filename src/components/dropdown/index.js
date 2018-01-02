@@ -3,9 +3,10 @@
  */
 
 import React from 'react';
-import {Menu, Dropdown} from 'antd';
+import { Menu, Dropdown } from 'antd';
 
 class RoDropdown extends React.Component {
+  static Button = Dropdown.Button;
   handleMenuClick = e => this.props.onClick && this.props.onClick(e);
 
   /* eslint-disable */
