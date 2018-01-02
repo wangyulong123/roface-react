@@ -117,7 +117,7 @@ for(let i = 0; i< reqPath.length; i ++) {
   router.route(reqPath[i]).post(function (req, rep, next) {
     setRedirect({
       headers: req.headers,
-      uri: url + reqPath[i],
+      uri: url + req.url,
       method: 'post',
       body: JSON.stringify(req.body)
     }, function (body) {
@@ -128,7 +128,7 @@ for(let i = 0; i< reqPath.length; i ++) {
   router.route(reqPath[i]).delete(function (req, rep, next) {
     setRedirect({
       headers: req.headers,
-      uri: url + reqPath[i],
+      uri: url + req.url,
       method: 'delete',
       body: JSON.stringify(req.body)
     }, function (body) {

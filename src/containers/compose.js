@@ -17,6 +17,7 @@ export const compose = (Com, flexTabs, comProps) => {
       this.update = false;
       this.state = {
         spinning: false,
+        refresh: false,
       };
     }
     componentDidMount(){
@@ -31,7 +32,18 @@ export const compose = (Com, flexTabs, comProps) => {
     componentWillReceiveProps(nextProps) {
       if (this.props.refresh !== nextProps.refresh && nextProps.activeTabId === nextProps.tabItem.id) {
         // 点击了刷新按钮
-        this.instance.refresh && this.instance.refresh();
+        this.update = true;
+        this.setState({
+          refresh: true,
+          spinning: true
+        }, () => {
+          this.setState({
+            refresh: false,
+            spinning: false
+          }, () => {
+            this.update = false;
+          })
+        })
       }
     }
     _checkWidth = () => {
@@ -66,15 +78,15 @@ export const compose = (Com, flexTabs, comProps) => {
       return (
         <div style={{ overflow: 'auto' }}>
           <Spin spinning={this.state.spinning}>
-          <Com
-            ref={instance => this.instance = instance}
-            flexTabs={flexTabs}
-            {...comProps}
-            rest={rest}
-            dataform={dataform}
-            closeLoading={this.closeLoading}
-            openLoading={this.openLoading}
-          />
+            {this.state.refresh ? null : <Com
+              ref={instance => this.instance = instance}
+              flexTabs={flexTabs}
+              {...comProps}
+              rest={rest}
+              dataform={dataform}
+              closeLoading={this.closeLoading}
+              openLoading={this.openLoading}
+            />}
           </Spin>
         </div>
       );
