@@ -23,6 +23,9 @@ export default Form.create()(class PersonalManager extends React.Component {
       window.addEventListener('click', this._executeCb);
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener('click', this.executeCb);
+  }
   _executeCb = (e) => {
     if (this.tag && this.tag.compareDocumentPosition(e.target) !== 20) {
       this._closeDropDown();
@@ -164,8 +167,8 @@ export default Form.create()(class PersonalManager extends React.Component {
     return (
       <div className={`${prefix}-nav-right`}>
         <span className={`${prefix}-right-items`}>
-          <span className={`${prefix}-personal-portrait`} />
-          <span className={`${prefix}-navRight-text`}>admin</span>
+          <span className={`${prefix}-personal-portrait`} onClick={this._dropDownBox} />
+          <span className={`${prefix}-navRight-text`} onClick={this._dropDownBox}>admin</span>
           <span className={`${prefix}-personal-${dropDownState}`} onClick={this._dropDownBox} />
           <div style={{display: dropDownBox}} className={`${prefix}-personal-box`}>
             <Tabs defaultActiveKey="1">

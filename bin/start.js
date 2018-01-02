@@ -37,13 +37,10 @@ var devServer = new WebpackDevServer(compiler, {
     historyApiFallback: true, // 所有的跳转都指向index.html
     stats: { colors: true },
     /*proxy: {
-      '/api': {
-        target: 'http://192.168.64.246:8080',
+      '/dataform/admin': {
+        target: 'http://192.168.64.227:8080',
         changeOrigin: true,
-        pathRewrite: {
-          // '^/api': '/ICEManage'
-          '^/api': '/'
-        }
+        pathRewrite: {}
       }
     },*/
 });
