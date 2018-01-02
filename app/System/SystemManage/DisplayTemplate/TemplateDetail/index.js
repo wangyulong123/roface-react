@@ -1,5 +1,5 @@
 import React from  'react';
-import * as components from '../../../../src/components';
+import * as components from '../../../../../src/components';
 import './style/index.less';
 
 const {
@@ -261,9 +261,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { flexTabs } = this.props;
     const { data } = this.state;
     const tab = {
-      id: `system/systemManage/ElementDetail/${data.id}/${record.code}`,
+      id: `System/SystemManage/DisplayTemplate/ElementDetail/${data.id}/${record.code}`,
       name: `字段:${record.name}`,
-      url: 'system/systemManage/ElementDetail',
+      url: 'System/SystemManage/DisplayTemplate/ElementDetail',
     };
     flexTabs.createTab({
       ...tab,
