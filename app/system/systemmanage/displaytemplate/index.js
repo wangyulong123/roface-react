@@ -110,6 +110,9 @@ export default class DisplayTemplate extends React.Component {
       },
     });
   }
+  refresh = () => {
+    console.log("组件刷新");
+  }
   createTab = (record) => {
     const { flexTabs } = this.props;
     const tab = {
