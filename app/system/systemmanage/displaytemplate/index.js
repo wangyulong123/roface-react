@@ -33,24 +33,31 @@ export default class DisplayTemplate extends React.Component {
         key: 'formUIHint',
         render: text => <span>{text.columnNumber}</span>,
       },
-      {
-        title: '操作',
-        dataIndex: 'opt',
-        key: 'opt',
-        render: (text, record, index) => this._createButton(record, index),
-      }],
+        {
+          title: '操作',
+          dataIndex: 'opt',
+          key: 'opt',
+          render: (text, record, index) => this._createButton(record, index),
+        }],
       pageIndex: 0,
-      pageCount: 10,
+      pageSize: 10,
+      totalCount: 10,
     };
     this.id = ''
   }
   componentDidMount(){
+    const { pageIndex, pageSize } = this.state;
+    this._getDataformList(pageIndex, pageSize);
+  }
+  _getDataformList = (index, size, code='DESC') => {
     const { dataform, closeLoading, openLoading } = this.props;
-    const { pageIndex, pageCount } = this.state;
     openLoading && openLoading();
-    dataform.getAdmin(`/dataform/list/code=DESC/${pageIndex}-${pageCount}`).then((res) => {
+    dataform.getAdmin(`/dataform/list/code=${code}/${index}-${size}`).then((res) => {
       this.setState({
+        pageIndex: res.index,
+        pageSize: res.size,
         data: res.dataList,
+        totalCount: res.totalRowCount,
       }, () => {
         closeLoading && closeLoading();
       });
@@ -61,7 +68,7 @@ export default class DisplayTemplate extends React.Component {
       });
       closeLoading && closeLoading();
     });
-  }
+  };
   _createButton = (record, index) => {
     const { prefix = 'ro' } = this.props;
     return (
@@ -137,18 +144,13 @@ export default class DisplayTemplate extends React.Component {
     });
   };
   _paginationOnChange = (page, pageSize) => {
-
+    this._getDataformList(page-1, pageSize);
   };
-  _renderPagination = () => (
-    <Pagination
-      showSizeChanger={true}
-      showQuickJumper={true}
-      defaultCurrent={1}
-      onShowSizeChange={() => {}}
-      onChange={this._paginationOnChange}
-    />
-  );
+  _paginationShowSizeChange = (current, size) => {
+    this._getDataformList(current-1, size);
+  };
   render() {
+    const { pageIndex, pageSize, totalCount } = this.state;
     return (
       <div>
         <Button
@@ -165,7 +167,16 @@ export default class DisplayTemplate extends React.Component {
             rowKey={record => record.id}
             columns={this.state.columns}
             dataSource={this.state.data}
-            pagination={this._renderPagination()}
+            pagination={{
+              showSizeChanger: true,
+              showQuickJumper: true,
+              defaultCurrent: 1,
+              total: totalCount,
+              pageSize: pageSize,
+              current: pageIndex + 1,
+              onShowSizeChange: this._paginationShowSizeChange,
+              onChange: this._paginationOnChange
+            }}
           />
         </LocaleProvider>
       </div>
