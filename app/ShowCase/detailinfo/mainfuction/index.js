@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DetailInfo, Button, Affix, Dropdown, Icon, Notify} from '../../../../src/components';
+import {DetailInfo, Button, Affix, Dropdown, Menu, Icon, Notify} from '../../../../src/components';
 
 export default class MainFunction extends React.Component {
   constructor(props) {
@@ -132,56 +132,6 @@ export default class MainFunction extends React.Component {
   _saveData = () => {
     console.log('save data');
   };
-  // 调用Api
-  _useValueSet = (e) => {
-    if (e.key === 'setValue') this._setValue();
-    else if (e.key === 'getValue') this._getValue();
-  };
-  _useDataSet = (e) => {
-    if (e.key === 'setData') this._setData();
-    else if (e.key === 'getData') this._getData();
-    else if (e.key === 'saveData') this._saveData();
-  };
-  _useVisibleSet = (e) => {
-    if (e.key === 'true') this._setItemVisible(true);
-    else if (e.key === 'false') this._setItemVisible(false);
-  };
-  _useRequiredSet = (e) => {
-    if (e.key === 'true') this._setItemRequired(true);
-    else if (e.key === 'false') this._setItemRequired(false);
-  };
-  _useReadOnlySet = (e) => {
-    if (e.key === 'true') this._setValueReadonly(true);
-    else if (e.key === 'false') this._setValueReadonly(false);
-  };
-  _useReadingModeSet = (e) => {
-    if (e.key === 'true') this._setReadingMode(true);
-    else if (e.key === 'false') this._setReadingMode(false);
-  };
-  _useGroupVisibleSet = (e) => {
-    if (e.key === 'true') this._setGroupVisible(true);
-    else if (e.key === 'false') this._setGroupVisible(false);
-  };
-  _useGroupReadOnlySet = (e) => {
-    if (e.key === 'true') this._setGroupReadonly(true);
-    else if (e.key === 'false') this._setGroupReadonly(false);
-  };
-  _useGroupReadingModeSet = (e) => {
-    if (e.key === 'true') this._setGroupReadingMode(true);
-    else if (e.key === 'false') this._setGroupReadingMode(false);
-  };
-  _useTipsNotesSet = (e) => {
-    if (e.key === 'tips') this._setItemTips();
-    else if (e.key === 'notes') this._setItemNotes();
-  };
-  _useSuffixPrefixSet = (e) => {
-    if (e.key === 'suffix') this._setItemSuffix();
-    else if (e.key === 'prefix') this._setItemPrefix();
-  };
-  _useValidateSet = (e) => {
-    if (e.key === 'all') this._validate(true);
-    else if (e.key === 'item(姓名)') this._validateItem();
-  };
   // 界面渲染
   _didMount = (info) => {
     this.setState({
@@ -189,185 +139,112 @@ export default class MainFunction extends React.Component {
       disabled: false,
     });
   };
-  _renderMenuBtn = (content, disabled, onClick, options) => {
-    return (
-      <Dropdown options={options} onClick={onClick}>
-        <Button disabled={disabled}>
-          {content} <Icon type="down"/>
-        </Button>
-      </Dropdown>
-    );
-  };
-
   render() {
+    const menuItem = (text, onChange) => <Menu.Item><a onClick={onChange}>{text}</a></Menu.Item>
+
     return (
       <div>
         <Affix offsetTop={0}>
-          {this._renderMenuBtn('setValue和getValue(姓名)', this.state.disabled,
-            e => this._useValueSet(e), ['setValue', 'getValue'])}
-          {this._renderMenuBtn('Data对象操作(英文名)', this.state.disabled,
-            e => this._useDataSet(e), ['setData', 'getData', 'saveData'])}
-          {this._renderMenuBtn('Visible设置(性别)', this.state.disabled,
-            e => this._useVisibleSet(e), ['true', 'false'])}
-          {this._renderMenuBtn('Required设置(生日)', this.state.disabled,
-            e => this._useRequiredSet(e), ['true', 'false'])}
-          {this._renderMenuBtn('ReadOnly设置(生日)', this.state.disabled,
-            e => this._useReadOnlySet(e), ['true', 'false'])}
-          {this._renderMenuBtn('ReadingMode设置(姓名)', this.state.disabled,
-            e => this._useReadingModeSet(e), ['true', 'false'])}
-          {this._renderMenuBtn('GroupVisible设置(联系信息组)', this.state.disabled,
-            e => this._useGroupVisibleSet(e), ['true', 'false'])}
-          {this._renderMenuBtn('GroupReadOnly设置(经济状况组)', this.state.disabled,
-            e => this._useGroupReadOnlySet(e), ['true', 'false'])}
-          {this._renderMenuBtn('GroupReadingMode设置(职业信息组)', this.state.disabled,
-            e => this._useGroupReadingModeSet(e), ['true', 'false'])}
-          {this._renderMenuBtn('tips、Notes设置(姓名)', this.state.disabled,
-            e => this._useTipsNotesSet(e), ['tips', 'notes'])}
-          {this._renderMenuBtn('前缀、后缀设置(姓名)', this.state.disabled,
-            e => this._useSuffixPrefixSet(e), ['suffix', 'prefix'])}
-          {this._renderMenuBtn('validate设置', this.state.disabled,
-            e => this._useValidateSet(e), ['all', 'item(姓名)'])}
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('setValue', () => this._setValue())}
+              {menuItem('getValue', () => this._getValue())}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setValue和getValue(姓名)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('setData', () => this._setData())}
+              {menuItem('getData', () => this._getData())}
+              {menuItem('saveData', () =>this._saveData())}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setData和getData(英文名)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setItemVisible(true))}
+              {menuItem('false', () => this._setItemVisible(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setVisible(性别)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setItemRequired(true))}
+              {menuItem('false', () => this._setItemRequired(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setRequired(生日)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setValueReadonly(true))}
+              {menuItem('false', () => this._setValueReadonly(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setReadOnly(生日)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setReadingMode(true))}
+              {menuItem('false', () => this._setReadingMode(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setReadingMode(姓名)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setGroupVisible(true))}
+              {menuItem('false', () => this._setGroupVisible(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setGroupVisible(联系信息组)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setGroupReadonly(true))}
+              {menuItem('false', () => this._setGroupReadonly(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setGroupReadOnly(经济状况组)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('true', () => this._setGroupReadingMode(true))}
+              {menuItem('false', () => this._setGroupReadingMode(false))}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setGroupReadingMode(职业信息组)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('tips', () => this._setItemTips())}
+              {menuItem('notes', () => this._setItemNotes())}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setTips和setNotes(姓名)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('suffix', () => this._setItemSuffix())}
+              {menuItem('prefix', () => this._setItemPrefix())}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'setSuffix和setPrefix(姓名)'} <Icon type="down" /> </Button>
+          </Dropdown>
+          <Dropdown overlay={
+            <Menu>
+              {menuItem('all', () => this._validate())}
+              {menuItem('item(姓名)', () => this._validateItem())}
+            </Menu>
+          }>
+            <Button disabled={this.state.disabled}> {'validate和validateItem'} <Icon type="down" /> </Button>
+          </Dropdown>
         </Affix>
         <DetailInfo dataFormId="demo-PersonInfo-data" didMount={this._didMount} />
       </div>
     );
   }
 }
-//
-// <Button
-//   disabled={this.state.disabled}
-//   onClick={this._setValue}
-// >
-//   setValue(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._getData}
-// >
-// getData
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setData}
-// >
-// setData(英文名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setItemVisible(false)}
-// >
-// setItemVisible(性别)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setItemVisible(true)}
-// >
-// setItemVisibleTrue(性别)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setItemRequired}
-// >
-// setItemRequired(生日)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setValueReadonly(true)}
-// >
-// setValueReadonly(生日)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setValueReadonly(false)}
-// >
-// setValueReadonlyFalse(生日)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setReadingMode(true)}
-// >
-// setReadingMode(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setReadingMode(false)}
-// >
-// setReadingModeFalse(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setGroupVisible(false)}
-// >
-// setGroupVisible(联系信息)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setGroupVisible(true)}
-// >
-// setGroupVisibleTrue(联系信息)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setGroupReadonly}
-// >
-// setGroupReadonly(经济状况)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setGroupReadingMode(true)}
-// >
-// setGroupReadingMode(职业信息)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={() => this._setGroupReadingMode(false)}
-// >
-// setGroupReadingModeFalse(职业信息)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setItemTemplate}
-// >
-// setItemTemplate(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setItemPrefix}
-// >
-// setItemPrefix(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setItemSuffix}
-// >
-// setItemSuffix(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setItemTips}
-// >
-// setItemTips(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._setItemNotes}
-// >setItemNotes(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._validate}
-// >
-// validate
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._validateItem}
-// >
-// validateItem(姓名)
-// </Button>
-// <Button
-// disabled={this.state.disabled}
-// onClick={this._saveData}
-// >saveData
-// </Button>
-
