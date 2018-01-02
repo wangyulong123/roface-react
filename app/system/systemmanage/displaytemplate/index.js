@@ -45,7 +45,7 @@ export default class DisplayTemplate extends React.Component {
     openLoading && openLoading();
     dataform.getAdmin(`/dataform/list/code=DESC/${pageIndex}-${pageCount}`).then((res) => {
       this.setState({
-        data: res,
+        data: res.dataList,
       }, () => {
         closeLoading && closeLoading();
       });
