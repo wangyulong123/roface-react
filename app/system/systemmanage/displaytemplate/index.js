@@ -75,10 +75,10 @@ export default class DisplayTemplate extends React.Component {
         </Button>
       </div>
     );
-  };
+  }
   _idChange = (value) => {
     this.id = value;
-  };
+  }
   _cloneTableData = (record) => {
     const { dataform, openLoading, closeLoading } = this.props;
     const that = this;
@@ -111,7 +111,10 @@ export default class DisplayTemplate extends React.Component {
         });
       },
     });
-  };
+  }
+  refresh = () => {
+    console.log("组件刷新");
+  }
   createTab = (record) => {
     const { flexTabs } = this.props;
     const tab = {

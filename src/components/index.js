@@ -48,3 +48,4 @@ export { default as Slider } from './slider';
 export {default as Affix} from './affix';
 export {default as Dropdown} from './dropdown';
 export {default as Divider} from './divider';
+export { default as showModal } from './modal/ModalWrapper';

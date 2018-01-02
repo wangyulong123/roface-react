@@ -30,6 +30,21 @@
     display: block;
 }
 
+/* 兼容火狐浏览器-57.0.3 (64 位)*/
+@-moz-document url-prefix(){
+    .ro-tab-content-container {
+        margin-top: -4px;
+    }
+
+    .ro-tabs-collapse {
+        top: -25px!important;
+    }
+
+    .dropdown-menu {
+        top: 0!important;
+    }
+}
+
 .ro-breadcrumb {
     color: #555;
     font-size: small;
@@ -83,6 +98,7 @@
 
 .list-item {
     list-style: none;
+    display: inline-flex;
 }
 
 .li-active {
@@ -104,6 +120,7 @@
 .ro-main-tabs-container > ul.nav-tabs > li .close {
     text-align: center;
     width: 20px;
+    margin-top: 4px;
 }
 
 .ro-main-tabs-container > ul.nav-tabs > li span {
@@ -269,10 +286,14 @@
 
 .dropdown-menu {
     position: relative;
-    margin-top: 5px;
+    top: 5px;
     margin-right: -25px;
 }
 
 .dropdown-menu .menu-item {
     list-style: none;
+}
+
+.dropdown-menu .menu-item>:hover {
+    cursor: pointer;
 }
