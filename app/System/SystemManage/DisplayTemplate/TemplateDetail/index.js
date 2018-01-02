@@ -4,7 +4,7 @@ import './style/index.less';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, Notify, Dropdown, Menu,
+  Button, Icon, Modal, Notify, Dropdown, Menu, CheckBox,
 } = components;
 
 const Panel = Collapse.Panel;
@@ -12,7 +12,7 @@ const FormItem = Form.Item;
 
 const EditableCell = ({value, com, onChange, options}) => {
   const Com = components[com];
-  if (com === 'Select' || com === 'RadioBox') {
+  if (com === 'Select' || com === 'RadioBox' || com === 'CheckBox') {
     return (
       <div>
         <Com
@@ -26,7 +26,6 @@ const EditableCell = ({value, com, onChange, options}) => {
       </div>
     );
   }
-
   return (
     <div>
       <Com
@@ -36,7 +35,7 @@ const EditableCell = ({value, com, onChange, options}) => {
       />
     </div>
   );
-
+  
 };
 
 export default Form.create()(class TemplateDetail extends React.Component {
@@ -106,24 +105,21 @@ export default Form.create()(class TemplateDetail extends React.Component {
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.visible',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.visible', 'RadioBox', text && text.visible, record, index,
-              [{code: false, name: '否'}, {code: true, name: '是'}]),
+            this._renderColumns('elementUIHint.visible', 'CheckBox', text && text.visible, record, index, []),
         },
         {
           title: '只读',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.readonly',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.readonly', 'RadioBox', text && text.readonly, record, index,
-              [{code: false, name: '否'}, {code: true, name: '是'}]),
+            this._renderColumns('elementUIHint.readonly', 'RadioBox', text && text.readonly, record, index, [])
         },
         {
           title: '必须',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.required',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.required', 'RadioBox', text && text.required, record, index,
-              [{code: false, name: '否'}, {code: true, name: '是'}]),
+            this._renderColumns('elementUIHint.required', 'RadioBox', text && text.required, record, index, []),
         },
         // {
         //   title: '所属组',
@@ -138,7 +134,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           render: (text, record, index) =>
             this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index,
               [
-                {code: 0, name: '默认(1）'},
+                {code: 0, name: '默认(1)'},
                 {code: 1, name: '1'},
                 {code: 2, name: '2'},
                 {code: 3, name: '3'},
@@ -234,9 +230,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
     );
     return (
       <div>
-        <Dropdown>
-          dropdown
-        </Dropdown>
+        <Dropdown.Button overlay={menu}>
+          操作
+        </Dropdown.Button>
       </div>
     );
   }
@@ -265,9 +261,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { flexTabs } = this.props;
     const { data } = this.state;
     const tab = {
-      id: `System/SystemManage/DisplayTemplate/ElementDetail/${data.id}/${record.code}`,
+      id: `system/systemManage/ElementDetail/${data.id}/${record.code}`,
       name: `字段:${record.name}`,
-      url: 'System/SystemManage/DisplayTemplate/ElementDetail',
+      url: 'system/systemManage/ElementDetail',
     };
     flexTabs.createTab({
       ...tab,
@@ -339,7 +335,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         }
       });
     })
-
+    
   }
   _deleteTableData = (record) => {
     this.setState({
@@ -426,14 +422,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               {/*<FormItem*/}
-                {/*{...formItemLayout}*/}
-                {/*label="查询项"*/}
+              {/*{...formItemLayout}*/}
+              {/*label="查询项"*/}
               {/*>*/}
-                {/*{getFieldDecorator('select', {*/}
-                  {/*rules: [{ required: false }],*/}
-                  {/*initialValue: this.state.data.query*/}
-                  {/*&& this.state.data.query.select,*/}
-                {/*})(<Text />)}*/}
+              {/*{getFieldDecorator('select', {*/}
+              {/*rules: [{ required: false }],*/}
+              {/*initialValue: this.state.data.query*/}
+              {/*&& this.state.data.query.select,*/}
+              {/*})(<Text />)}*/}
               {/*</FormItem>*/}
               <FormItem
                 {...formItemLayout}
