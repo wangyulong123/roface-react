@@ -1,1 +1,0 @@
-export NoticeCase from './NoticeCase';
