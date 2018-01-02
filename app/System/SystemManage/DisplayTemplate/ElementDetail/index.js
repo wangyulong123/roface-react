@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Form, Button, Icon, Collapse, Text, Modal, Notify, Select, RadioBox,
   CheckBox,
-} from '../../../../src/components';
+} from '../../../../../src/components';
 
 import './style/index.less';
 
