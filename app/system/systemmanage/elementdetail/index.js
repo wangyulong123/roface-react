@@ -18,11 +18,11 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { rest, history, closeLoading, openLoading } = this.props;
+    const { dataform, history, closeLoading, openLoading } = this.props;
     const { location } = history;
     if (location && location.state) {
       openLoading && openLoading();
-      rest.get(`/dataform/admin/dataForm/${location.state.dataId}/${location.state.dataCode}`).then((res) => {
+      dataform.getAdmin(`/dataform/${location.state.dataId}/${location.state.dataCode}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -48,18 +48,19 @@ export default Form.create()(class ElementDetail extends React.Component {
     return tempObj;
   }
   _saveData = () => {
-    const { rest } = this.props;
+    const { dataform } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({
           loading: true,
         });
-        rest.post('/dataform/admin/dataForm/dataFormElement',
+        dataform.postAdmin(`/dataform/${this.state.id}/element`,
           {
             ...this.state.data,
             ...this._filterField(values,
-              ['editStyle', 'textAlign', 'readonly',
-                'colspan', 'suffix', 'htmlStyle', 'visible', 'required', 'eventExpr', 'dataFormat']),
+              ['editStyle', 'textAlign', 'readonly', 'colspan', 'suffix', 'htmlStyle',
+                'visible', 'required', 'eventExpr', 'maskFormat', 'tips', 'dictCodeMode',
+                'dictCodeExpr' ]),
           }).then(() => {
           Notify.success({
             message: '保存成功',
@@ -110,13 +111,13 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('dataFormId', {
                     rules: [{ required: true }],
                     initialValue: this.state.data.dataFormId
-                    || (location && location.state && location.state.id),
+                    || (location && location.state && location.state.dataId),
                   })(<Text reading />)}
                 </FormItem>
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="中文显示"
+                  label="名称"
                 >
                   {getFieldDecorator('name', {
                     rules: [{ required: false }],
@@ -177,13 +178,43 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
+                  label="使用名"
+                >
+                  {getFieldDecorator('code', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data && this.state.data.code,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="表名"
+                >
+                  {getFieldDecorator('table', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data && this.state.data.table,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="列名"
+                >
+                  {getFieldDecorator('column', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data && this.state.data.column,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
                   label="对齐"
                 >
                   {getFieldDecorator('textAlign', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.textAlign,
-                  })(<RadioBox options={[{code: 1, name: '左'}, {code: 2, name: '中'}, {code: 3, name: '右'}]} />)}
+                  })(<RadioBox options={[{code: 'Left', name: '左'}, {code: 'Center', name: '中'}, {code: 'Right', name: '右'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -194,7 +225,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.readonly,
-                  })(<RadioBox options={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -258,7 +289,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.visible,
-                  })(<RadioBox options={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -269,7 +300,28 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.required,
-                  })(<RadioBox options={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="下拉框来源"
+                >
+                  {getFieldDecorator('dictCodeMode', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.elementUIHint &&
+                    this.state.data.elementUIHint.dictCodeMode,
+                  })(<Select />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="代码表"
+                >
+                  {getFieldDecorator('dictCodeExpr', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.elementUIHint && this.state.data.elementUIHint.dictCodeExpr,
+                  })(<Text />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -284,12 +336,32 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
+                  label="有效"
+                >
+                  {getFieldDecorator('enable', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.enable,
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="是否更新"
+                >
+                  {getFieldDecorator('updateable', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.updateable,
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
                   label="所属组"
                 >
                   {getFieldDecorator('group', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.group,
-                  })(<Select />)}
+                  })(<Text />)}
                 </FormItem>
               </div>
             </Panel>
@@ -300,9 +372,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="缺省值"
                 >
-                  {getFieldDecorator('code10', {
+                  {getFieldDecorator('defaultValue', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.defaultValue,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -331,10 +403,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="检查格式"
                 >
-                  {getFieldDecorator('dataFormat', {
+                  {getFieldDecorator('maskFormat', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.dataFormat,
+                    && this.state.data.elementUIHint.maskFormat,
                   })(<Select
                     options={[
                       {code: 'Currency', name: '金额'},
@@ -360,19 +432,19 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="查询"
                 >
-                  {getFieldDecorator('code0', {
+                  {getFieldDecorator('enable', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
-                  })(<RadioBox options={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
+                    initialValue: this.state.data.enable,
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
                   {...formItemLayout}
                   label="查询选项"
                 >
-                  {getFieldDecorator('code1', {
+                  {getFieldDecorator('comparePattern', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.comparePattern,
                   })(<CheckBox
                     options={[{code: 'Quick', name: '快速搜索'},
                       {code: 'Equal', name: '等于'},
@@ -387,40 +459,33 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
+                  label="聚合表达式"
+                >
+                  {getFieldDecorator('summaryExpression', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.summaryExpression,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
                   label="可排序"
                 >
-                  {getFieldDecorator('code2', {
+                  {getFieldDecorator('sortable', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
-                  })(<RadioBox options={[{code: 0, name: '否'}, {code: 1, name: '是'}]} />)}
+                    initialValue: this.state.data.sortable,
+                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
                   {...formItemLayout}
                   label="提示"
                 >
-                  {getFieldDecorator('code3', {
+                  {getFieldDecorator('tips', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.elementUIHint
+                    && this.state.data.elementUIHint.tips,
                   })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
-                  label="是否Sum"
-                >
-                  {getFieldDecorator('code4', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.code,
-                  })(<Select
-                    options={[
-                      {code: 1, name: '不汇总'},
-                      {code: 2, name: '显示小计'},
-                      {code: 3, name: '显示小计+总计'},
-                    ]}
-                    optionName="name"
-                    optionField="code"
-                  />)}
                 </FormItem>
               </div>
             </Panel>
@@ -429,21 +494,21 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="字段校验位置"
+                  label="校验执行位置"
                 >
-                  {getFieldDecorator('code6', {
+                  {getFieldDecorator('runAt', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.code,
-                  })(<RadioBox options={[{code: 'client', name: '客户端'}, {code: 'Server', name: '服务端'}]} />)}
+                    initialValue: this.state.data.runAt,
+                  })(<RadioBox options={[{code: 'Client', name: '客户端'}, {code: 'Server', name: '服务端'}]} />)}
                 </FormItem>
                 <FormItem
                   style={style}
                   {...formItemLayout}
                   label="表达式"
                 >
-                  {getFieldDecorator('code7', {
+                  {getFieldDecorator('expr', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.expr,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -451,9 +516,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="校验方式"
                 >
-                  {getFieldDecorator('code8', {
+                  {getFieldDecorator('mode', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.mode,
                   })(<RadioBox
                     options={[
                       {code: 'jsFunction', name: 'JS函数'},
@@ -467,9 +532,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {...formItemLayout}
                   label="校验不通过提示"
                 >
-                  {getFieldDecorator('code9', {
+                  {getFieldDecorator('defaultMessage', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.code,
+                    initialValue: this.state.data.defaultMessage,
                   })(<Text />)}
                 </FormItem>
               </div>

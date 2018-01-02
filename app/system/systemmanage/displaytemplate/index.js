@@ -39,9 +39,9 @@ export default class DisplayTemplate extends React.Component {
     this.id = ''
   }
   componentDidMount(){
-    const { rest, closeLoading, openLoading } = this.props;
+    const { dataform, closeLoading, openLoading } = this.props;
     openLoading && openLoading();
-    rest.get('/dataform/admin/dataForms').then((res) => {
+    dataform.getAdmin('/dataform').then((res) => {
       this.setState({
         data: res,
       }, () => {
@@ -78,7 +78,7 @@ export default class DisplayTemplate extends React.Component {
     this.id = value;
   }
   _cloneTableData = (record) => {
-    const { rest, openLoading, closeLoading } = this.props;
+    const { dataform, openLoading, closeLoading } = this.props;
     const that = this;
     Modal.confirm({
       title: '请输入模板编号',
@@ -89,7 +89,7 @@ export default class DisplayTemplate extends React.Component {
       ),
       onOk() {
         openLoading && openLoading();
-        rest.post('/dataform/admin/cloneDataForm', {
+        dataform.postAdmin.post('/dataform/clone', {
           newDataFormId: that.id,
           oldDataFormId: record.id
         })

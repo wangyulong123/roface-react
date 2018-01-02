@@ -28,3 +28,11 @@ export const getDataList = (id,param,sort,index,size) => {
 export const invokeMethod = (dataFormId, funcName, param) => {
     return rest.post(`${config.webApi.dataFormMethod}/${dataFormId}/${funcName}`,param);
 };
+
+export const getAdmin = (url, param) => {
+  return rest.get(`${config.webApi.dataFormAdmin}${url}`, param);
+};
+
+export const postAdmin = (url, param) => {
+  return rest.post(`${config.webApi.dataFormAdmin}${url}`, param);
+};
