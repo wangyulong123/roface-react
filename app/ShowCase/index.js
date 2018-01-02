@@ -1,3 +1,3 @@
-export * as detailInfo from './detailinfo';
-export * as detailTable from './detailtable';
+export * as DetailInfo from './DetailInfo';
+export * as DetailTable from './DetailTable';
 export * as Guide from './Guide';
