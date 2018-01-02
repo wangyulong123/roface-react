@@ -1,1 +1,1 @@
-export * as systemManage from './systemmanage';
+export * as SystemManage from './SystemManage';

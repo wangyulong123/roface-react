@@ -1,9 +1,14 @@
 import React from 'react';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
+import TemplateDetail from './TemplateDetail';
+import ElementDetail from './ElementDetail';
+
 import { Table, LocaleProvider, Modal, Button, Icon, Notify, Text, Pagination } from '../../../../src/components';
 
 export default class DisplayTemplate extends React.Component {
+  static TemplateDetail = TemplateDetail;
+  static ElementDetail = ElementDetail;
   constructor(props){
     super(props);
     this.state = {
@@ -125,9 +130,9 @@ export default class DisplayTemplate extends React.Component {
   createTab = (record) => {
     const { flexTabs } = this.props;
     const tab = {
-      id: `system/systemManage/TemplateDetail/${record.id}`,
+      id: `System/SystemManage/DisplayTemplate/TemplateDetail/${record.id}`,
       name: `模板:${record.name}`,
-      url: 'system/systemManage/TemplateDetail',
+      url: 'System/SystemManage/DisplayTemplate/TemplateDetail',
     };
     flexTabs.createTab({
       ...tab,
