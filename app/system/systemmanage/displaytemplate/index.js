@@ -33,12 +33,12 @@ export default class DisplayTemplate extends React.Component {
         key: 'formUIHint',
         render: text => <span>{text.columnNumber}</span>,
       },
-      {
-        title: '操作',
-        dataIndex: 'opt',
-        key: 'opt',
-        render: (text, record, index) => this._createButton(record, index),
-      }],
+        {
+          title: '操作',
+          dataIndex: 'opt',
+          key: 'opt',
+          render: (text, record, index) => this._createButton(record, index),
+        }],
       pageIndex: 0,
       pageSize: 10,
       totalCount: 10,
