@@ -1,1 +1,1 @@
-export DisplayTemplate from './DisplayTemplate';
+export DisplayTemplate from './DisplayTemplate'
