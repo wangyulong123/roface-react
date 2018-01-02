@@ -21,6 +21,10 @@ const Option = Select.Option;
 const RadioGroup = Radio.Group;
 
 class CustomizedForm extends React.Component {
+    constructor() {
+        super();
+        this.state = {email: 'syang@amarsoft.com'};
+    }
     render() {
         const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
