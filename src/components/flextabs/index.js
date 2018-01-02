@@ -404,7 +404,9 @@ export default class Tab extends React.Component {
               </li>
               <ul className="pull-right dropdown-menu" id="ro-tabclose-container">
                 <li className="menu-item">
-                  <Icon type="reload" onClick={this._refreshTab} />
+                  <Tooltip placement="bottomRight" title={'刷新Tab页'}>
+                    <Icon type="reload" onClick={this._refreshTab} />
+                  </Tooltip>
                 </li>
               </ul>
               <div className="ro-tab-content-container">

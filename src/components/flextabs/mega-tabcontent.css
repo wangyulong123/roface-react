@@ -293,3 +293,7 @@
 .dropdown-menu .menu-item {
     list-style: none;
 }
+
+.dropdown-menu .menu-item>:hover {
+    cursor: pointer;
+}
