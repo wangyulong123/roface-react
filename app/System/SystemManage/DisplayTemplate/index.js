@@ -153,9 +153,7 @@ export default class DisplayTemplate extends React.Component {
       return;
     }
     // dataform/{id}
-    dataform.deleteAdmin(`/dataform/${record.id}`, {
-    id: record.id
-  })
+    dataform.deleteAdmin(`/dataform/${record.id}`)
     .then((res) => {
     closeLoading && closeLoading();
     Notify.success({
