@@ -1003,7 +1003,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
-              optionData={column.codeDict}
+              options={column.codeDict}
               optionName="name"
               optionField="code"
               size={this.state.gridOptions.size}
