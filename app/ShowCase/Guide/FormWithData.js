@@ -24,7 +24,6 @@ class CustomizedForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {data: props.data};
-        console.log('form-data:', props.data);
     }
 
     render() {
