@@ -20,7 +20,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 
-class CustomizedForm extends React.Component {
+export class CustomizedForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {data: props.data};
