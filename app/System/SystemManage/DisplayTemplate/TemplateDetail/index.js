@@ -171,7 +171,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
       openLoading && openLoading();
       dataform.getAdmin(`/dataform/${location.state.dataId}`).then((res) => {
         this.setState({
-          data: res,
+          data: {
+            ...res,
+            elements: (res.elements || []).map(ele => ({ ...ele, key: Math.uuid() }))
+          },
         }, () => {
           closeLoading && closeLoading();
         });
@@ -289,7 +292,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
   _addTableData = (record, index) => {
     const { length } = this.state.data.elements || [];
     const tempArray = [...(this.state.data.elements || [])];
-    const newField = { name: `新字段${length}`, code: `新字段${length}`};
+    const newField = { name: `新字段${length}`, code: `新字段${length}`, key: Math.uuid()};
     if (!record) {
       tempArray.push(newField)
     } else {
@@ -547,11 +550,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
               <Icon type="plus" />添加
             </Button>
             <Table
-              rowKey={record => record.code}
+              rowKey={record => record.key}
               columns={this.state.columns}
               dataSource={this.state.data.elements || []}
               pagination={false}
-              scroll={{ x: 1723 }}
+              scroll={{ x: 1904 }}
             />
           </Panel>
         </Collapse>

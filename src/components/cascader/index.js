@@ -1,7 +1,9 @@
 import React from 'react';
 import { Cascader } from 'antd';
 import { transformIntoTree, cascaderCodemap, attributes } from './tool';
+import { compose } from '../compose';
 
+@compose
 export default class RoCascader extends React.Component{
     constructor(props) {
         super(props);
