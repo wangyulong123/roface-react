@@ -104,7 +104,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.colspan',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index,
+            this._renderColumns('elementUIHint.colspan', 'RadioBox', (text && text.colspan) || 1, record, index,
               [
                 {code: 1, name: '1'},
                 {code: 2, name: '2'},
