@@ -231,6 +231,7 @@ export default class DisplayTemplate extends React.Component {
             <Icon type="info" />详情
           </Button>
           <Button
+            type="danger"
             onClick={() => this._deleteTemplate()}
             className={`${prefix}-template-detail-button-group-button`}
           >
