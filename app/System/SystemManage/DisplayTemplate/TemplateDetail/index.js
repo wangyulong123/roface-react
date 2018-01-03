@@ -86,11 +86,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
             this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index,
               [
                 {code: 'Text', name: '文本框'},
-                {code: 'Textarea', name: '多行文本框'},
+                {code: 'TextArea', name: '多行文本框'},
                 {code: 'Select', name: '下拉框'},
-                {code: 'Checkbox', name: '复选框'},
+                {code: 'CheckBox', name: '复选框'},
                 {code: 'DatePicker', name: '日期选择'},
-                {code: 'Radiobox', name: '单选框'},
+                {code: 'RadioBox', name: '单选框'},
                 {code: 'YearMonthPicker', name: '月份选择'},
                 {code: 'Password', name: '密码框'},
                 {code: 'DateRange', name: '区间日期'},
@@ -254,7 +254,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           that._saveData().then(res => {
             that.setState({
               data: res
-            }, that.createTab(record))
+            }, () => that.createTab(record))
           })
         },
       })
@@ -319,6 +319,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 ...this.state.data.formUIHint,
                 columnNumber: values.columnNumber,
               },
+              query: {
+                ...this.state.data.query,
+                where: values.where,
+                from: values.from,
+                groupBy: values.groupBy,
+                orderBy: values.order,
+                having: values.having,
+              }
             }).then((res) => {
             resovle(res);
             Notify.success({
@@ -426,16 +434,6 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   initialValue: this.state.data.dataModel
                 })(<Text />)}
               </FormItem>
-              {/*<FormItem*/}
-              {/*{...formItemLayout}*/}
-              {/*label="查询项"*/}
-              {/*>*/}
-              {/*{getFieldDecorator('select', {*/}
-              {/*rules: [{ required: false }],*/}
-              {/*initialValue: this.state.data.query*/}
-              {/*&& this.state.data.query.select,*/}
-              {/*})(<Text />)}*/}
-              {/*</FormItem>*/}
               <FormItem
                 {...formItemLayout}
                 label="查询条件"
