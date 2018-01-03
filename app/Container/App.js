@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import * as app from '../index';
 
 import { NavMega, FlexTabs } from '../../src/components';
+import PersonalManager from './personalManager/index';
 import NotFound from './NotFound';
 import { compose } from './compose';
 // import * as showcase from '../../app/showcase';
@@ -68,6 +69,7 @@ export default class App extends React.Component {
                   ref={this._getInstance}
                   dataMount={this._dataMount}
                   logoIcon={imgUrl}
+                  NavRight={PersonalManager}
                 />
                 <FlexTabs
                   {...props}
