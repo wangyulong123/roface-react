@@ -19,7 +19,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(allowCrossDomain);
-
+app.use(express.static('img'));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     // const err = new Error('Not Found');
