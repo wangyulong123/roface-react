@@ -444,7 +444,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 wrapperCol={{ span: 18 }}
               >
                 {getFieldDecorator('formStyle', {
-                  rules: [{ required: false }],
+                  rules: [{ required: true }],
                 })(<RadioBox options={[
                   {code: 'DataTable', name: '数据列表'},
                   {code: 'DetailInfo', name: '详情表单'},
@@ -479,7 +479,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('dataModelType', {
-                  rules: [{ required: false }],
+                  rules: [{ required: true }],
                   initialValue: this.state.data.dataModelType,
                 })(<RadioBox options={[
                 {code: 'JavaBean', name: 'JavaBean'},
@@ -488,10 +488,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 }
               </FormItem>
               <FormItem
-                style={{ width: '75%' }}
+                style={style}
                 {...formItemLayout}
                 label="数据模型"
-                wrapperCol={{ span: 16 }}
+                wrapperCol={{ span: 8 }}
               >
                 {getFieldDecorator('dataModel', {
                   rules: [{ required: false }],
@@ -502,6 +502,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={style}
                 {...formItemLayout}
                 label="处理Handler"
+                wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('handler', {
                   rules: [{ required: false }],
@@ -512,6 +513,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={style}
                 {...formItemLayout}
                 label="SELECT"
+                wrapperCol={{ span: 6 }}
               >
                 {getFieldDecorator('select', {
                   rules: [{ required: false }],
@@ -519,13 +521,20 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   && this.state.data.query.select) || 'select',
                 })(<Text />)}
               </FormItem>
+                <FormItem
+                    style={style}
+                    {...formItemLayout}
+                    label="字段明细"
+                >
+                  <code>[自动计算]</code>
+                </FormItem>
               <FormItem
                 style={style}
                 {...formItemLayout}
                 label="FROM"
               >
                 {getFieldDecorator('from', {
-                  rules: [{ required: false }],
+                  rules: [{ required: true }],
                   initialValue: this.state.data.query
                   && this.state.data.query.from,
                 })(<TextArea />)}
