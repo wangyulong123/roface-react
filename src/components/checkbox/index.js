@@ -1,8 +1,10 @@
 import React from 'react';
 import { Checkbox } from 'antd';
+import { compose } from '../compose';
 
 const CheckboxGroup = Checkbox.Group;
 
+@compose
 export default class RoCheckBox extends React.Component {
     static defaultProps = {
         optionField: 'code',

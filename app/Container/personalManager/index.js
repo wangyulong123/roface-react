@@ -1,7 +1,5 @@
 import React from 'react';
-import {Form, Icon, Tabs, Text, Button, Modal} from '../index';
-
-import './style/index.less';
+import {Form, Icon, Tabs, Text, Button, Modal} from '../../../src/components/index';
 
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;

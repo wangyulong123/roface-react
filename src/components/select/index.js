@@ -4,9 +4,11 @@
 
 import React from 'react';
 import { Select, Input, Icon } from 'antd';
+import { compose } from '../compose';
 
 const Option = Select.Option;
 
+@compose
 class RoSelect extends React.Component {
   constructor(props) {
     super(props);

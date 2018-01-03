@@ -1,6 +1,9 @@
 import React from 'react';
 import { Input } from 'antd';
 
+import { compose } from '../compose';
+
+@compose
 export default class RoText extends React.Component {
     constructor(props) {
         super(props);
