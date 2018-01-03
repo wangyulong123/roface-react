@@ -190,9 +190,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="可更新"
                 >
                   {getFieldDecorator('updateable', {
@@ -201,9 +201,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="持久化"
                 >
                   {getFieldDecorator('persist', {
@@ -212,9 +212,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="启用"
                 >
                   {getFieldDecorator('enable', {
@@ -223,8 +223,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
-                  style={style}
+                  style={{...style, width: '20%'}}
                   {...formItemLayout}
+                  wrapperCol={{span: 10}}
                   label="是否主键"
                 >
                   {getFieldDecorator('primaryKey', {
@@ -233,7 +234,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
-                  style={style}
+                  style={{...style, width: '80%'}}
                   {...formItemLayout}
                   label="主键生成器"
                 >
@@ -243,9 +244,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="默认值"
                 >
                   {getFieldDecorator('defaultValue', {
@@ -254,9 +255,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="倍数"
                 >
                   {getFieldDecorator('multiplier', {
@@ -265,9 +266,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="最大长度"
                 >
                   {getFieldDecorator('limitedLength', {
@@ -436,7 +437,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.dictCodeMode,
-                  })(<Text />)}
+                  })(<Select options={['SQLQuery', 'DictCode', 'JSON']} />)}
                 </FormItem>
                 <FormItem
                   style={style}
