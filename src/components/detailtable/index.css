@@ -12,3 +12,40 @@
 .ant-table-body{
     overflow: auto;
 }
+
+.detail-table-wrapper {
+    padding: 5px 10px;
+}
+
+.detail-table-operation{
+    display: flex;
+    border: 1px solid #e8e8e8;
+    padding: 5px 10px;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.detail-btn-wrapper {
+    width: 50%;
+}
+
+.detail-searcher-wrapper{
+    width: 50%;
+}
+
+.detail-toggle-wrapper{
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.detail-filter-wrapper{
+    width: 100%;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1150px) {
+
+}

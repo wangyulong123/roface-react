@@ -192,6 +192,7 @@ export default class DataListObject {
 
     this.state.rows = [];
     this.state.columns = [];
+    // this.state.buttonList = [];
     this.state.key = '$$key';
 
     // 自定义表footer
@@ -1003,7 +1004,7 @@ export default class DataListObject {
               reading={rowHint.readonly || column.readonly || undefined}
               onChange={onChange}
               onBlur={onBlur}
-              optionData={column.codeDict}
+              options={column.codeDict}
               optionName="name"
               optionField="code"
               size={this.state.gridOptions.size}
@@ -1560,5 +1561,16 @@ export default class DataListObject {
       }
     }
   }
+
+  onQuickSearch(searchCondition) {
+    console.log(searchCondition, this);
+  }
+
+  onSearcherToggle(searcherToggle) {
+    this.setState({
+      openSeniorSearch: searcherToggle,
+    });
+  }
+
 }
 
