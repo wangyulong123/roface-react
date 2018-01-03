@@ -14,6 +14,10 @@ $ cd roface
 $ npm install                   # Install project dependencies
 $ npm start                     # Compile and launch
 ```
+```bash
+$ cd roface/mock
+$ node app.js                   # run mock server
+```
 
 Then visit [http://localhost:3004/](http://localhost:3004/)
 
