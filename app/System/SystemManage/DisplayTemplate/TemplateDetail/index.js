@@ -417,27 +417,6 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   })(<Text />)}
               </FormItem>
               <FormItem
-                style={style}
-                {...formItemLayout}
-                label="关键字"
-                wrapperCol={{ span: 12 }}
-              >
-                {getFieldDecorator('tags', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.tags,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="模版说明"
-              >
-                {getFieldDecorator('description', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.description,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
                 style={{ width: '50%' }}
                 {...formItemLayout}
                 label="显示方式"
@@ -445,6 +424,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               >
                 {getFieldDecorator('formStyle', {
                   rules: [{ required: true }],
+                  initialValue: this.state.data.formStyle,
                 })(<RadioBox options={[
                   {code: 'DataTable', name: '数据列表'},
                   {code: 'DetailInfo', name: '详情表单'},
@@ -473,9 +453,30 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   />)}
               </FormItem>
               <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="关键字"
+                  wrapperCol={{ span: 12 }}
+              >
+                  {getFieldDecorator('tags', {
+                      rules: [{ required: false }],
+                      initialValue: this.state.data.tags,
+                  })(<Text />)}
+              </FormItem>
+              <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="模版说明"
+              >
+                  {getFieldDecorator('description', {
+                      rules: [{ required: false }],
+                      initialValue: this.state.data.description,
+                  })(<Text />)}
+              </FormItem>
+              <FormItem
                 style={style}
                 {...formItemLayout}
-                label="数据模型类别"
+                label="数据模型"
                 wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('dataModelType', {
@@ -490,7 +491,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               <FormItem
                 style={style}
                 {...formItemLayout}
-                label="数据模型"
+                label="数据实体"
                 wrapperCol={{ span: 8 }}
               >
                 {getFieldDecorator('dataModel', {
