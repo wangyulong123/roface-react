@@ -48,13 +48,13 @@ export default Form.create()(class ElementDetail extends React.Component {
     return tempObj;
   }
   _saveData = () => {
-    const { dataform } = this.props;
+    const { dataform, location } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({
           loading: true,
         });
-        dataform.postAdmin(`/dataform/${this.state.id}/element`,
+        dataform.postAdmin(`/dataform/${location && location.state && location.state.dataId}/element`,
           {
             ...this.state.data,
             ...this._filterField(values,
@@ -112,7 +112,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: true }],
                     initialValue: this.state.data.dataFormId
                     || (location && location.state && location.state.dataId),
-                  })(<Text />)}
+                  })(<Text reading />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -158,7 +158,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={{...style, width: '30%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="列名"
                 >
                   {getFieldDecorator('column', {
@@ -181,7 +181,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={{...style, width: '30%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 15}}
+                  wrapperCol={{span: 17}}
                   label="数据表"
                 >
                   {getFieldDecorator('table', {
@@ -251,7 +251,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('defaultValue', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.defaultValue,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<Text />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '30%'}}
@@ -262,7 +262,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('multiplier', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.multiplier,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<Text />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '30%'}}
@@ -273,7 +273,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('limitedLength', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.limitedLength,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<Text />)}
                 </FormItem>
                 <FormItem
                   style={style}
@@ -377,8 +377,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('colspan', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.colspan,
+                    initialValue: (this.state.data.elementUIHint
+                    && this.state.data.elementUIHint.colspan) || 1,
                   })(<RadioBox options={[
                       {code: 1, name: '1'},
                       {code: 2, name: '2'},
