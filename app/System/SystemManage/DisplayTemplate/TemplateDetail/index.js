@@ -508,7 +508,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   rules: [{ required: false }],
                   initialValue: this.state.data.query
                   && this.state.data.query.from,
-                })(<Text />)}
+                })(<TextArea />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -518,7 +518,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   rules: [{ required: false }],
                   initialValue: this.state.data.query
                   && this.state.data.query.groupBy,
-                })(<Text />)}
+                })(<TextArea />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -528,7 +528,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   rules: [{ required: false }],
                   initialValue: this.state.data.query
                   && this.state.data.query.orderBy,
-                })(<Text />)}
+                })(<TextArea />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -538,7 +538,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   rules: [{ required: false }],
                   initialValue: this.state.data.query
                   && this.state.data.query.having,
-                })(<Text />)}
+                })(<TextArea />)}
               </FormItem>
             </Form>
           </Panel>
