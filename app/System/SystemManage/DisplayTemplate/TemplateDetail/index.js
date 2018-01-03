@@ -509,6 +509,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               columns={this.state.columns}
               dataSource={this.state.data.elements || []}
               pagination={false}
+              scroll={{ x: 1723 }}
             />
           </Panel>
         </Collapse>
