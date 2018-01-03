@@ -2,7 +2,7 @@
  * Created by jkwu on 17-12-25.
  */
 import React from 'react';
-import NotFound from '../../containers/NotFound';
+import NotFound from '../../../app/Container/NotFound';
 
 class TabContent extends React.Component {
   render() {

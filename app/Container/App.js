@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import * as app from '../../app';
+import * as app from '../index';
 
-import { NavMega, FlexTabs } from '../components';
+import { NavMega, FlexTabs } from '../../src/components';
 import NotFound from './NotFound';
 import { compose } from './compose';
 // import * as showcase from '../../app/showcase';
