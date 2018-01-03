@@ -5,7 +5,7 @@ import { Checkbox } from 'antd';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, Notify, Dropdown, Menu,
+  Button, Icon, Modal, Notify, Dropdown, Menu, Select
 } = components;
 
 const Panel = Collapse.Panel;
@@ -58,59 +58,25 @@ export default Form.create()(class TemplateDetail extends React.Component {
         title: '排序号',
         dataIndex: 'sortCode',
         key: 'sortCode',
+        render: (text, record, index) => this._renderColumns('sortCode', 'Text', text, record, index),
       },
         {
-          title: '中文显示名',
+          title: '显示名',
           dataIndex: 'name',
           key: 'name',
           render: (text, record, index) => this._renderColumns('name', 'Text', text, record, index),
         },
         {
-          title: '列名',
+          title: '英文代码',
           dataIndex: 'code',
           key: 'code',
           render: (text, record, index) => this._renderColumns('code', 'Text', text, record, index),
         },
         {
-          title: 'code',
-          dataIndex: 'originCode',
-          key: 'originCode',
-          render: (text, record, index) => this._renderColumns('originCode', 'Text', text, record, index),
-        },
-        {
-          title: '对齐',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.textAlign',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.textAlign', 'RadioBox', text && text.textAlign, record, index,
-              [{code: 'Left', name: '左'}, {code: 'Center', name: '中'}, {code: 'Right', name: '右'}]),
-        },
-        {
-          title: '编辑形式',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.editStyle',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index,
-              [
-                {code: 'Text', name: '文本框'},
-                {code: 'TextArea', name: '多行文本框'},
-                {code: 'Select', name: '下拉框'},
-                {code: 'CheckBox', name: '复选框'},
-                {code: 'DatePicker', name: '日期选择'},
-                {code: 'RadioBox', name: '单选框'},
-                {code: 'YearMonthPicker', name: '月份选择'},
-                {code: 'Password', name: '密码框'},
-                {code: 'DateRange', name: '区间日期'},
-                {code: 'Address', name: '地址'},
-                {code: 'Star', name: '五星评分'},
-              ]),
-        },
-        {
-          title: '代码表',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.dictCodeExpr',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.dictCodeExpr', 'Text', text && text.dictCodeExpr, record, index),
+          title: '列名',
+          dataIndex: 'column',
+          key: 'column',
+          render: (text, record, index) => this._renderColumns('column', 'Text', text, record, index),
         },
         {
           title: '可见',
@@ -134,18 +100,60 @@ export default Form.create()(class TemplateDetail extends React.Component {
             this._renderColumns('elementUIHint.required', 'CheckBox', text && text.required, record, index, []),
         },
         {
-          title: '跨几栏',
+          title: '栏位数',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.colspan',
           render: (text, record, index) =>
             this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index,
               [
-                {code: 0, name: '默认'},
                 {code: 1, name: '1'},
                 {code: 2, name: '2'},
                 {code: 3, name: '3'},
                 {code: 4, name: '4'},
               ]),
+        },
+        {
+          title: '数据类型',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.dataFormat',
+          render: (text, record, index) => this._renderColumns('elementUIHint.dataFormat', 'Select',
+            text && text.dataFormat, record, index,
+            ['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']),
+        },
+        {
+          title: '编辑形式',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.editStyle',
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index,
+              [
+                {code: 'Text', name: '文本框'},
+                {code: 'TextArea', name: '多行文本框'},
+                {code: 'Select', name: '下拉框'},
+                {code: 'CheckBox', name: '复选框'},
+                {code: 'DatePicker', name: '日期选择'},
+                {code: 'RadioBox', name: '单选框'},
+                {code: 'YearMonthPicker', name: '月份选择'},
+                {code: 'Password', name: '密码框'},
+                {code: 'DateRange', name: '区间日期'},
+                {code: 'Address', name: '地址'},
+                {code: 'Star', name: '五星评分'},
+              ]),
+        },
+        {
+          title: '字典形式',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.dictCodeMode',
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.dictCodeMode', 'Select', text && text.dictCodeMode, record, index,
+            ['SQLQuery', 'DictCode', 'JSON']),
+        },
+        {
+          title: '字典表达式',
+          dataIndex: 'elementUIHint',
+          key: 'elementUIHint.dictCodeExpr',
+          render: (text, record, index) =>
+            this._renderColumns('elementUIHint.dictCodeExpr', 'Text', text && text.dictCodeExpr, record, index),
         },
         {
           title: '操作',
@@ -213,7 +221,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             onClick={() => this._addTableData(record, index)}
             className={`${prefix}-template-detail-table-button`}
           >
-            <Icon type="plus" />添加
+            添加
           </Button>
         </Menu.Item>
         <Menu.Item key="2">
@@ -221,7 +229,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             onClick={() => this._deleteTableData(record)}
             className={`${prefix}-template-detail-table-button`}
           >
-            <Icon type="close" />删除
+            删除
           </Button>
         </Menu.Item>
         <Menu.Item key="3">
@@ -229,17 +237,15 @@ export default Form.create()(class TemplateDetail extends React.Component {
             onClick={() => this._checkDataId(record)}
             className={`${prefix}-template-detail-table-button`}
           >
-            <Icon type="info" />详情
+            详情
           </Button>
         </Menu.Item>
       </Menu>
     );
     return (
-      <div>
-        <Dropdown.Button overlay={menu}>
-          操作
-        </Dropdown.Button>
-      </div>
+      <Dropdown overlay={menu}>
+        <Button>操作 <Icon type="down" /></Button>
+      </Dropdown>
     );
   }
   _checkDataId = (record) => {
@@ -456,21 +462,12 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="排序码"
-              >
-                {getFieldDecorator('sortCode', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.sortCode,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                {...formItemLayout}
                 label="数据模型类别"
               >
                 {getFieldDecorator('dataModelType', {
                   rules: [{ required: false }],
                   initialValue: this.state.data.dataModelType,
-                })(<Text />)}
+                })(<Select options={['JavaBean', 'DataMap']} />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -496,8 +493,8 @@ export default Form.create()(class TemplateDetail extends React.Component {
               >
                 {getFieldDecorator('select', {
                   rules: [{ required: false }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.select && 'select',
+                  initialValue: (this.state.data.query
+                  && this.state.data.query.select) || 'select',
                 })(<Text />)}
               </FormItem>
               <FormItem
