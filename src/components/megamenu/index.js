@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Icon } from '../index';
 import MenuChildren from './MenuChildren';
-import PersonalManager from './PersonalManager';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
@@ -196,7 +195,7 @@ export default class MegaMenu extends React.Component {
     this.right.children[0].style.display = 'block';
   };
   render() {
-    const { prefix = 'ro' } = this.props;
+    const { prefix = 'ro', NavRight } = this.props;
     return (
       <div className={`${prefix}-nav-container`}>
         <div className={`${prefix}-navbar-logo`}>
@@ -209,7 +208,7 @@ export default class MegaMenu extends React.Component {
           </div>
         </div>
         <div className={`${prefix}-nav-arrow-right`}><Icon type="right" onClick={this._moveRight}/></div>
-        <PersonalManager />
+        <NavRight />
       </div>
     );
   }
