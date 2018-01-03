@@ -10,7 +10,7 @@ export const compose = (Com) => {
       return props.some(field => nextProps[field] !== this.props[field]);
     }
     render() {
-      return <Com />;
+      return <Com {...this.props} />;
     }
   }
   return Compose;
