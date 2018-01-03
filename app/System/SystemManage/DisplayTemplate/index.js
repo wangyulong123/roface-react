@@ -144,11 +144,12 @@ export default class DisplayTemplate extends React.Component {
         flag: record.flag
       },
     });
-  };
-  _deleteTemplate = () => {
-    const {dataform, closeLoading, openLoading} = this.props;
-    openLoading && openLoading();
+    };
+
+    _deleteTemplate = () => {
+    const { dataform, closeLoading, openLoading } = this.props;
     const record = this.state.selectedRowRecord;
+    const that = this;
     if (!record) {
       Notify.info({
         message: '请选择要删除的模板行！',
@@ -156,23 +157,49 @@ export default class DisplayTemplate extends React.Component {
       return;
     }
     // dataform/{id}
-    dataform.deleteAdmin(`/dataform/${record.id}`)
-      .then((res) => {
-        closeLoading && closeLoading();
-        Notify.success({
-          message: '删除模板成功',
-        });
-      }).catch((e) => {
-      closeLoading && closeLoading();
-      Modal.error({
-        title: '删除模板失败',
-        content: JSON.stringify(e),
+      Modal.confirm({
+        title: '删除模板',
+        content: (
+          <div>您确定要删除模板:{record.name || record.id} 吗？</div>
+        ),
+        onOk() {
+          openLoading && openLoading();
+          // 如果删除的是索引为0的项目，则默认选中后面一项
+          // 如果删除的不是索引为0的，则选中删除项前面的一项
+          // 如果删除的是该列表的最后一项，则默认不做选中
+          const isDeletedIndex = that.state.data.findIndex(templateItem => templateItem.id === record.id);
+          let nextIndex = 0;
+          if (isDeletedIndex === 0) {
+            nextIndex = isDeletedIndex + 1;
+          } else if (isDeletedIndex > 0) {
+            nextIndex = (isDeletedIndex - 1 < 0) ? 0 : isDeletedIndex - 1
+          }
+          dataform.deleteAdmin(`/dataform/${record.id}`)
+            .then(() => {
+              that.setState({
+                data: that.state.data && that.state.data.filter(templateItem => templateItem.id !== record.id),
+                selectedRowRecord: that.state.data[nextIndex]
+              }, () => {
+                  closeLoading && closeLoading();
+                  Notify.success({
+                    message: '删除模板' + (record.name || record.id) + '成功',
+                  });
+              });
+            }).catch((e) => {
+            closeLoading && closeLoading();
+            Modal.error({
+              title: '删除模板失败',
+              content: JSON.stringify(e),
+            });
+          });
+        },
       });
-    });
   };
+
   _paginationOnChange = (page, pageSize) => {
     this._getDataformList(page - 1, pageSize);
   };
+
   _paginationShowSizeChange = (current, size) => {
     this._getDataformList(current - 1, size);
   };
@@ -195,19 +222,19 @@ export default class DisplayTemplate extends React.Component {
             onClick={() => this._cloneTableData()}
             className={`${prefix}-template-detail-button-group-button`}
           >
-            <Icon type="close"/>克隆
+            <Icon type="close" />克隆
           </Button>
           <Button
             onClick={() => this.createTab()}
             className={`${prefix}-template-detail-button-group-button`}
           >
-            <Icon type="info"/>详情
+            <Icon type="info" />详情
           </Button>
           <Button
             onClick={() => this._deleteTemplate()}
             className={`${prefix}-template-detail-button-group-button`}
           >
-            <Icon type="info"/>删除
+            <Icon type="close" />删除
           </Button>
         </div>
         <LocaleProvider locale={zhCN}>
@@ -227,7 +254,8 @@ export default class DisplayTemplate extends React.Component {
             }}
             rowSelection={{
               type: 'radio',
-              onSelect: this._onSelectRow
+              onSelect: this._onSelectRow,
+              selectedRowKeys: [this.state.selectedRowRecord && this.state.selectedRowRecord.id]
             }}
           />
         </LocaleProvider>

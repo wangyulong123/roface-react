@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDom from 'react-dom';
+
 import * as dataForm from '../../lib/dataform';
 import Form from './Form';
 import './style/index.less';
@@ -13,34 +15,38 @@ export default class Forms extends React.Component {
     };
   }
   componentDidMount() {
-    const { dataFormId, didMount } = this.props;
+    const { dataFormId, didMount, formReady, dataReady } = this.props;
+    /* eslint-disable */
+    formReady && formReady(ReactDom.findDOMNode(this));
+    const info = {
+      setValue: this.setValue,
+      getValue: this.getValue,
+      setData: this.setData,
+      getData: this.getData,
+      setItemVisible: this.setItemVisible,
+      setItemRequired: this.setItemRequired,
+      setValueReadonly: this.setValueReadonly,
+      setReadingMode: this.setReadingMode,
+      setGroupVisible: this.setGroupVisible,
+      setGroupReadonly: this.setGroupReadonly,
+      setGroupReadingMode: this.setGroupReadingMode,
+      setItemTemplate: this.setItemTemplate,
+      setItemPrefix: this.setItemPrefix,
+      setItemSuffix: this.setItemSuffix,
+      setItemTips: this.setItemTips,
+      setItemNotes: this.setItemNotes,
+      validate: this.validate,
+      validateItem: this.validateItem,
+      saveData: this.saveData,
+    };
     dataForm.getMeta(dataFormId).then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
         dict: res.dict || {},
       }, () => {
-        didMount({
-          setValue: this.setValue,
-          getValue: this.getValue,
-          setData: this.setData,
-          getData: this.getData,
-          setItemVisible: this.setItemVisible,
-          setItemRequired: this.setItemRequired,
-          setValueReadonly: this.setValueReadonly,
-          setReadingMode: this.setReadingMode,
-          setGroupVisible: this.setGroupVisible,
-          setGroupReadonly: this.setGroupReadonly,
-          setGroupReadingMode: this.setGroupReadingMode,
-          setItemTemplate: this.setItemTemplate,
-          setItemPrefix: this.setItemPrefix,
-          setItemSuffix: this.setItemSuffix,
-          setItemTips: this.setItemTips,
-          setItemNotes: this.setItemNotes,
-          validate: this.validate,
-          validateItem: this.validateItem,
-          saveData: this.saveData,
-        });
+        dataReady && dataReady(info);
+        didMount && didMount(info);
       });
     });
   }

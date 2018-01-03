@@ -137,7 +137,4 @@ for(let i = 0; i< reqPath.length; i ++) {
   })
 }
 
-
-
-
 module.exports = router;

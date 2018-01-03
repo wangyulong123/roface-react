@@ -1,10 +1,11 @@
 import React from  'react';
 import * as components from '../../../../../src/components';
 import './style/index.less';
+import { Checkbox } from 'antd';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, Notify, Dropdown, Menu, CheckBox,
+  Button, Icon, Modal, Notify, Dropdown, Menu,
 } = components;
 
 const Panel = Collapse.Panel;
@@ -12,28 +13,33 @@ const FormItem = Form.Item;
 
 const EditableCell = ({value, com, onChange, options}) => {
   const Com = components[com];
-  if (com === 'Select' || com === 'RadioBox' || com === 'CheckBox') {
+  if ( com === 'CheckBox' ) {
     return (
-      <div>
-        <Com
-          style={{margin: '-5px 0'}}
-          value={value}
-          onChange={onChange}
-          options={options}
-          optionName="name"
-          optionField="code"
-        />
-      </div>
+      <Checkbox
+        style={{margin: '-5px 0'}}
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+      />
+
     );
-  }
-  return (
-    <div>
+  } else if (com === 'Select' || com === 'RadioBox') {
+    return (
       <Com
         style={{margin: '-5px 0'}}
         value={value}
         onChange={onChange}
+        options={options}
+        optionName="name"
+        optionField="code"
       />
-    </div>
+    );
+  }
+  return (
+    <Com
+      style={{margin: '-5px 0'}}
+      value={value}
+      onChange={onChange}
+    />
   );
   
 };
@@ -86,11 +92,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
             this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index,
               [
                 {code: 'Text', name: '文本框'},
-                {code: 'Textarea', name: '多行文本框'},
+                {code: 'TextArea', name: '多行文本框'},
                 {code: 'Select', name: '下拉框'},
-                {code: 'Checkbox', name: '复选框'},
+                {code: 'CheckBox', name: '复选框'},
                 {code: 'DatePicker', name: '日期选择'},
-                {code: 'Radiobox', name: '单选框'},
+                {code: 'RadioBox', name: '单选框'},
                 {code: 'YearMonthPicker', name: '月份选择'},
                 {code: 'Password', name: '密码框'},
                 {code: 'DateRange', name: '区间日期'},
@@ -117,21 +123,15 @@ export default Form.create()(class TemplateDetail extends React.Component {
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.readonly',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.readonly', 'RadioBox', text && text.readonly, record, index, [])
+            this._renderColumns('elementUIHint.readonly', 'CheckBox', text && text.readonly, record, index, [])
         },
         {
           title: '必须',
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.required',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.required', 'RadioBox', text && text.required, record, index, []),
+            this._renderColumns('elementUIHint.required', 'CheckBox', text && text.required, record, index, []),
         },
-        // {
-        //   title: '所属组',
-        //   dataIndex: 'group',
-        //   key: 'group',
-        //   render: (text, record, index) => this._renderColumns('name', 'Text', text, record, index),
-        // },
         {
           title: '跨几栏',
           dataIndex: 'elementUIHint',
@@ -139,7 +139,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           render: (text, record, index) =>
             this._renderColumns('elementUIHint.colspan', 'RadioBox', text && text.colspan, record, index,
               [
-                {code: 0, name: '默认(1)'},
+                {code: 0, name: '默认'},
                 {code: 1, name: '1'},
                 {code: 2, name: '2'},
                 {code: 3, name: '3'},
@@ -254,7 +254,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           that._saveData().then(res => {
             that.setState({
               data: res
-            }, that.createTab(record))
+            }, () => that.createTab(record))
           })
         },
       })
@@ -319,6 +319,15 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 ...this.state.data.formUIHint,
                 columnNumber: values.columnNumber,
               },
+              query: {
+                ...this.state.data.query,
+                select: values.select,
+                where: values.where,
+                from: values.from,
+                groupBy: values.groupBy,
+                orderBy: values.order,
+                having: values.having,
+              }
             }).then((res) => {
             resovle(res);
             Notify.success({
@@ -372,7 +381,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             <Form className="login-form">
               <FormItem
                 {...formItemLayout}
-                label="包名"
+                label="包"
               >
                 <div>
                   {getFieldDecorator('pack', {
@@ -383,7 +392,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="编号"
+                label="模版代码"
               >
                 <div>
                   {getFieldDecorator('code', {
@@ -403,52 +412,96 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="分栏数"
+                label="标签"
+              >
+                {getFieldDecorator('tags', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.tags,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="模版说明"
+              >
+                {getFieldDecorator('description', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.description,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="栏数"
               >
                 {getFieldDecorator('columnNumber', {
                   rules: [{ required: false }],
                   initialValue: this.state.data.formUIHint
                   && this.state.data.formUIHint.columnNumber,
                 })(<RadioBox options={[
-                  {code: 1, name: '一栏'},
-                  {code: 2, name: '二栏'},
-                  {code: 3, name: '三栏'},
-                  {code: 4, name: '四栏'},
+                  {code: 1, name: '1'},
+                  {code: 2, name: '2'},
+                  {code: 3, name: '3'},
+                  {code: 4, name: '4'},
                 ]}
                 />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="JBO定义表名"
+                label="排序码"
+              >
+                {getFieldDecorator('sortCode', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.sortCode,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="排序码"
+              >
+                {getFieldDecorator('sortCode', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.sortCode,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="数据模型类别"
+              >
+                {getFieldDecorator('dataModelType', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.dataModelType,
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="数据模型"
               >
                 {getFieldDecorator('dataModel', {
                   rules: [{ required: false }],
-                  initialValue: this.state.data.dataModel
+                  initialValue: this.state.data.dataModel,
                 })(<Text />)}
               </FormItem>
-              {/*<FormItem*/}
-              {/*{...formItemLayout}*/}
-              {/*label="查询项"*/}
-              {/*>*/}
-              {/*{getFieldDecorator('select', {*/}
-              {/*rules: [{ required: false }],*/}
-              {/*initialValue: this.state.data.query*/}
-              {/*&& this.state.data.query.select,*/}
-              {/*})(<Text />)}*/}
-              {/*</FormItem>*/}
               <FormItem
                 {...formItemLayout}
-                label="查询条件"
+                label="处理Handler"
               >
-                {getFieldDecorator('where', {
+                {getFieldDecorator('handler', {
                   rules: [{ required: false }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.where,
-                })(<TextArea />)}
+                  initialValue: this.state.data.handler,
+                })(<Text />)}
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="From"
+                label="SELECT"
+              >
+                {getFieldDecorator('select', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.select && 'select',
+                })(<Text />)}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="FROM"
               >
                 {getFieldDecorator('from', {
                   rules: [{ required: false }],
@@ -458,7 +511,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="Group By"
+                label="GROUP BY"
               >
                 {getFieldDecorator('groupBy', {
                   rules: [{ required: false }],
@@ -468,7 +521,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="Order By"
+                label="ORDER BY"
               >
                 {getFieldDecorator('orderBy', {
                   rules: [{ required: false }],
@@ -478,22 +531,13 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="having"
+                label="HAVING"
               >
                 {getFieldDecorator('having', {
                   rules: [{ required: false }],
                   initialValue: this.state.data.query
                   && this.state.data.query.having,
                 })(<Text />)}
-              </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label="业务模型"
-              >
-                {getFieldDecorator('handler', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.handler,
-                })(<TextArea />)}
               </FormItem>
             </Form>
           </Panel>
