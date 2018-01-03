@@ -11,12 +11,14 @@ const {
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
 const ButtonGroup = Button.Group;
+const comSize = 'small';
 
 const EditableCell = ({value, com, onChange, options}) => {
   const Com = components[com];
   if ( com === 'CheckBox' ) {
     return (
       <Checkbox
+        size={comSize}
         checked={value}
         onChange={(e) => onChange(e.target.checked)}
       />
@@ -25,6 +27,7 @@ const EditableCell = ({value, com, onChange, options}) => {
   } else if (com === 'Select' || com === 'RadioBox') {
     return (
       <Com
+        size={comSize}
         value={value}
         onChange={onChange}
         options={options}
@@ -35,6 +38,7 @@ const EditableCell = ({value, com, onChange, options}) => {
   }
   return (
     <Com
+      size={comSize}
       value={value}
       onChange={onChange}
     />
@@ -216,9 +220,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
   _createButton = (record, index) => {
     return (
       <ButtonGroup>
-        <Button onClick={() => this._checkDataId(record)} icon="info" type="primary"/>
-        <Button onClick={() => this._addTableData(record, index)} icon="plus" type="primary"/>
-        <Button onClick={() => this._deleteTableData(record)} icon="minus" type="primary"/>
+        <Button onClick={() => this._checkDataId(record)} icon="info" type="primary" size={comSize}/>
+        <Button onClick={() => this._addTableData(record, index)} icon="plus" type="primary" size={comSize}/>
+        <Button onClick={() => this._deleteTableData(record)} icon="minus" type="primary" size={comSize}/>
       </ButtonGroup>
     );
   };
@@ -292,24 +296,28 @@ export default Form.create()(class TemplateDetail extends React.Component {
           this.setState({
             loading: true,
           });
-          dataform.postAdmin(`/dataform?dataFormId=${this.state.data.id}`,
-            {
-              ...this.state.data,
-              ...this._filterField(values, 'columnNumber'),
-              formUIHint: {
-                ...this.state.data.formUIHint,
-                columnNumber: values.columnNumber,
-              },
-              query: {
-                ...this.state.data.query,
-                select: values.select,
-                where: values.where,
-                from: values.from,
-                groupBy: values.groupBy,
-                orderBy: values.order,
-                having: values.having,
-              }
-            }).then((res) => {
+
+          const param = {
+            ...this.state.data,
+            ...this._filterField(values, 'columnNumber'),
+            formUIHint: {
+              ...this.state.data.formUIHint,
+              columnNumber: values.columnNumber,
+            },
+            query: {
+              ...this.state.data.query,
+              select: values.select,
+              where: values.where,
+              from: values.from,
+              groupBy: values.groupBy,
+              orderBy: values.order,
+              having: values.having,
+            }
+          };
+          console.log(param);
+          console.log(this.state.data.id);
+          const url = this.state.data.id ? `/dataform/${this.state.data.id}` : '/dataform';
+          dataform.postAdmin(url, param).then((res) => {
             resovle(res);
             Notify.success({
               message: '保存成功',
@@ -365,6 +373,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '25%' }}
                 {...formItemLayout}
                 label="包"
+                wrapperCol={{ span: 10 }}
               >
                 <div>
                   {getFieldDecorator('pack', {
@@ -420,6 +429,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '25%' }}
                 {...formItemLayout}
                 label="栏数"
+                wrapperCol={{ span: 10 }}
               >
                 {getFieldDecorator('columnNumber', {
                   rules: [{ required: false }],
@@ -448,6 +458,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '25%' }}
                 {...formItemLayout}
                 label="数据模型类别"
+                wrapperCol={{ span: 10 }}
               >
                 {getFieldDecorator('dataModelType', {
                   rules: [{ required: false }],
@@ -500,6 +511,17 @@ export default Form.create()(class TemplateDetail extends React.Component {
               <FormItem
                 style={style}
                 {...formItemLayout}
+                label="WHERE"
+              >
+                {getFieldDecorator('where', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.where,
+                })(<TextArea />)}
+              </FormItem>
+              <FormItem
+                style={style}
+                {...formItemLayout}
                 label="GROUP BY"
               >
                 {getFieldDecorator('groupBy', {
@@ -540,6 +562,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               <Icon type="plus" />添加
             </Button>
             <Table
+              size={comSize}
               rowKey={record => record.key}
               columns={this.state.columns}
               dataSource={this.state.data.elements || []}
