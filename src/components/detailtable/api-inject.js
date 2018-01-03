@@ -192,6 +192,7 @@ export default class DataListObject {
 
     this.state.rows = [];
     this.state.columns = [];
+    // this.state.buttonList = [];
     this.state.key = '$$key';
 
     // 自定义表footer
@@ -1560,5 +1561,16 @@ export default class DataListObject {
       }
     }
   }
+
+  onQuickSearch(searchCondition) {
+    console.log(searchCondition, this);
+  }
+
+  onSearcherToggle(searcherToggle) {
+    this.setState({
+      openSeniorSearch: searcherToggle,
+    });
+  }
+
 }
 
