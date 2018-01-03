@@ -425,14 +425,18 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 {getFieldDecorator('formStyle', {
                   rules: [{ required: true }],
                   initialValue: this.state.data.formStyle,
-                })(<RadioBox options={[
-                  {code: 'DataTable', name: '数据列表'},
-                  {code: 'DetailInfo', name: '详情表单'},
-                  {code: 'TreeTable', name: '树图列表'},
-                  {code: 'ListItem', name: '列表项'},
-                  {code: 'ListCard', name: '卡片列表'},
-                ]}
-                />)}
+                })(<Select
+                    options={[
+                      {code: 'DataTable', name: 'DataTable'},
+                      {code: 'DetailInfo', name: 'DetailInfo'},
+                      {code: 'TreeTable', name: 'TreeTable'},
+                      {code: 'ListItem', name: 'ListItem'},
+                      {code: 'ListCard', name: 'ListCard'},
+                    ]}
+                    optionName="name"
+                    optionField="code"
+                    />
+                )}
               </FormItem>
               <FormItem
                   style={{ width: '45%' }}
