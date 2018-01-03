@@ -7,7 +7,7 @@ export const compose = (Com) => {
       return this._compareProps(nextProps);
     }
     _compareProps = (nextProps) => {
-      const props = ['reading', 'readOnly', 'prefix', 'suffix', 'options', 'value'];
+      const props = ['reading', 'readOnly', 'prefix', 'suffix', 'options', 'value', 'checked', 'displayValue'];
       return props.some((field) => {
         if (Array.isArray(nextProps[field])) {
           return this._compareArray(nextProps[field], this.props[field]);
