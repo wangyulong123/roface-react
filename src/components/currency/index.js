@@ -4,7 +4,9 @@
 
 import React from 'react';
 import { Input } from 'antd';
+import { compose } from '../compose';
 
+@compose
 class RoCurrency extends React.Component {
   constructor(props) {
     super(props);

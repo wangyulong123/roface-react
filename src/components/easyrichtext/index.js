@@ -4,7 +4,9 @@
 
 import React from 'react';
 import Editor from 'wangeditor';
+import { compose } from '../compose';
 
+@compose
 class EasyRichText extends React.Component {
   constructor(props) {
     super(props);
