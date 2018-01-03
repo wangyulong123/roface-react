@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import { Spin } from '../components';
+import { Spin } from '../../src/components';
 
-import * as rest from '../lib/rest';
-import * as dataform from '../lib/dataform';
+import * as rest from '../../src/lib/rest';
+import * as dataform from '../../src/lib/dataform';
 
-import { addOnResize } from '../lib/listener';
+import { addOnResize } from '../../src/lib/listener';
 
 export const compose = (Com, flexTabs, comProps) => {
   class ComposeCom extends React.Component {
