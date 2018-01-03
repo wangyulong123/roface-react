@@ -5,7 +5,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
-    entry: [require.resolve('babel-polyfill'), path.resolve(__dirname, '../src/lib/string'), path.resolve(__dirname, '../src/index')],
+    entry: [require.resolve('babel-polyfill'),
+      path.resolve(__dirname, '../src/lib/string'),
+      path.resolve(__dirname, '../src/lib/Math'),
+      path.resolve(__dirname, '../src/index')],
     output: {
         path: path.resolve(__dirname, '../static'),
         filename: "bundle.js"

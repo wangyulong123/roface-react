@@ -6,7 +6,9 @@ import React from 'react';
 import moment from 'moment';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { TimePicker, Input, Icon, LocaleProvider } from 'antd';
+import { compose } from '../compose';
 
+@compose
 class RoTimePicker extends React.Component {
   constructor(props) {
     super(props);
