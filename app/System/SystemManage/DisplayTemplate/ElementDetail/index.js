@@ -112,7 +112,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: true }],
                     initialValue: this.state.data.dataFormId
                     || (location && location.state && location.state.dataId),
-                  })(<Text reading />)}
+                  })(<Text />)}
                 </FormItem>
                 <FormItem
                   style={style}
