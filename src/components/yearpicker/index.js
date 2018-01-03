@@ -7,7 +7,9 @@ import React from 'react';
 import moment from 'moment';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { DatePicker, Input, Icon, LocaleProvider } from 'antd';
+import { compose } from '../compose';
 
+@compose
 class RoYearPicker extends React.Component {
   static defaultProps = {
     format: 'YYYY',

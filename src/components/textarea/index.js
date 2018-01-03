@@ -1,8 +1,10 @@
 import React from 'react';
 import {Input} from 'antd';
+import { compose } from '../compose';
 
 const { TextArea } = Input;
 
+@compose
 export default class RoTextArea extends React.Component {
     constructor(props) {
         super(props);

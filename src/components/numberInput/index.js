@@ -4,7 +4,9 @@
 
 import React from 'react';
 import { InputNumber } from 'antd';
+import { compose } from '../compose';
 
+@compose
 class RoNumber extends React.Component {
   /* eslint-disable */
   constructor(props) {

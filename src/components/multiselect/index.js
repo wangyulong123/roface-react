@@ -1,8 +1,10 @@
 import React from 'react';
 import { Select } from 'antd';
+import { compose } from '../compose';
 
 const Option = Select.Option;
 
+@compose
 export default class MultiSelect extends React.Component {
     static defaultProps = {
         optionField: 'code',
