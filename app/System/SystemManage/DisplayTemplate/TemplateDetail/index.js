@@ -75,6 +75,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           title: 'code',
           dataIndex: 'originCode',
           key: 'originCode',
+          render: (text, record, index) => this._renderColumns('originCode', 'Text', text, record, index),
         },
         {
           title: '对齐',
