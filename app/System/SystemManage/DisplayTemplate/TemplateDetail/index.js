@@ -56,114 +56,114 @@ export default Form.create()(class TemplateDetail extends React.Component {
         dataIndex: 'number',
         key: 'number',
         render: (text, record, index) => <span>{index}</span>,
-      },{
-        title: '排序号',
-        dataIndex: 'sortCode',
-        key: 'sortCode',
-        render: (text, record, index) => this._renderColumns('sortCode', 'Text', text, record, index),
       },
-        {
-          title: '显示名',
-          dataIndex: 'name',
-          key: 'name',
-          render: (text, record, index) => this._renderColumns('name', 'Text', text, record, index),
-        },
-        {
-          title: '英文代码',
-          dataIndex: 'code',
-          key: 'code',
-          render: (text, record, index) => this._renderColumns('code', 'Text', text, record, index),
-        },
-        {
-          title: '列名',
-          dataIndex: 'column',
-          key: 'column',
-          render: (text, record, index) => this._renderColumns('column', 'Text', text, record, index),
-        },
-        {
-          title: '可见',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.visible',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.visible', 'CheckBox', text && text.visible, record, index, []),
-        },
-        {
-          title: '只读',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.readonly',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.readonly', 'CheckBox', text && text.readonly, record, index, [])
-        },
-        {
-          title: '必须',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.required',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.required', 'CheckBox', text && text.required, record, index, []),
-        },
-        {
-          title: '栏位数',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.colspan',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.colspan', 'Select', (text && text.colspan) || 1, record, index,
-              [
-                {code: 1, name: '1'},
-                {code: 2, name: '2'},
-                {code: 3, name: '3'},
-                {code: 4, name: '4'},
-              ]),
-        },
-        {
-          title: '数据类型',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.dataFormat',
-          render: (text, record, index) => this._renderColumns('elementUIHint.dataFormat', 'Select',
-            text && text.dataFormat, record, index,
-            ['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']),
-        },
-        {
-          title: '编辑形式',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.editStyle',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle, record, index,
-              [
-                {code: 'Text', name: '文本框'},
-                {code: 'TextArea', name: '多行文本框'},
-                {code: 'Select', name: '下拉框'},
-                {code: 'CheckBox', name: '复选框'},
-                {code: 'DatePicker', name: '日期选择'},
-                {code: 'RadioBox', name: '单选框'},
-                {code: 'YearMonthPicker', name: '月份选择'},
-                {code: 'Password', name: '密码框'},
-                {code: 'DateRange', name: '区间日期'},
-                {code: 'Address', name: '地址'},
-                {code: 'Star', name: '五星评分'},
-              ]),
-        },
-        {
-          title: '字典形式',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.dictCodeMode',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.dictCodeMode', 'Select', text && text.dictCodeMode, record, index,
-            ['SQLQuery', 'DictCode', 'JSON']),
-        },
-        {
-          title: '字典表达式',
-          dataIndex: 'elementUIHint',
-          key: 'elementUIHint.dictCodeExpr',
-          render: (text, record, index) =>
-            this._renderColumns('elementUIHint.dictCodeExpr', 'Text', text && text.dictCodeExpr, record, index),
-        },
-        {
-          title: '操作',
-          dataIndex: 'opt',
-          key: 'opt',
-          render: (text, record, index) => this._createButton(record, index),
-        },
-      ],
+      {
+        title: '操作',
+        dataIndex: 'opt',
+        key: 'opt',
+        render: (text, record, index) => this._createButton(record, index),
+      },
+      {
+      title: '排序号',
+      dataIndex: 'sortCode',
+      key: 'sortCode',
+      render: (text, record, index) => this._renderColumns('sortCode', 'Text', text, record, index),
+      },
+      {
+        title: '显示名',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text, record, index) => this._renderColumns('name', 'Text', text, record, index),
+      },
+      {
+        title: '英文代码',
+        dataIndex: 'code',
+        key: 'code',
+        render: (text, record, index) => this._renderColumns('code', 'Text', text, record, index),
+      },
+      {
+        title: '列名',
+        dataIndex: 'column',
+        key: 'column',
+        render: (text, record, index) => this._renderColumns('column', 'Text', text, record, index),
+      },
+      {
+        title: '可见',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.visible',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.visible', 'CheckBox', text && text.visible || true, record, index, []),
+      },
+      {
+        title: '只读',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.readonly',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.readonly', 'CheckBox', text && text.readonly, record, index, [])
+      },
+      {
+        title: '必须',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.required',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.required', 'CheckBox', text && text.required, record, index, []),
+      },
+      {
+        title: '栏位数',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.colspan',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.colspan', 'Select', (text && text.colspan) || 1, record, index,
+            [
+              {code: 1, name: '1'},
+              {code: 2, name: '2'},
+              {code: 3, name: '3'},
+              {code: 4, name: '4'},
+            ]),
+      },
+      {
+        title: '数据类型',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.dataFormat',
+        render: (text, record, index) => this._renderColumns('elementUIHint.dataFormat', 'Select',
+          text && text.dataFormat || 'String', record, index,
+          ['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']),
+      },
+      {
+        title: '编辑形式',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.editStyle',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.editStyle', 'Select', text && text.editStyle || 'Text', record, index,
+            [
+              {code: 'Text', name: '文本框'},
+              {code: 'TextArea', name: '多行文本框'},
+              {code: 'Select', name: '下拉框'},
+              {code: 'CheckBox', name: '复选框'},
+              {code: 'DatePicker', name: '日期选择'},
+              {code: 'RadioBox', name: '单选框'},
+              {code: 'YearMonthPicker', name: '月份选择'},
+              {code: 'Password', name: '密码框'},
+              {code: 'DateRange', name: '区间日期'},
+              {code: 'Address', name: '地址'},
+              {code: 'Star', name: '五星评分'},
+            ]),
+      },
+      {
+        title: '字典形式',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.dictCodeMode',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.dictCodeMode', 'Select', text && text.dictCodeMode, record, index,
+          ['SQLQuery', 'DictCode', 'JSON']),
+      },
+      {
+        title: '字典表达式',
+        dataIndex: 'elementUIHint',
+        key: 'elementUIHint.dictCodeExpr',
+        render: (text, record, index) =>
+          this._renderColumns('elementUIHint.dictCodeExpr', 'Text', text && text.dictCodeExpr, record, index),
+      }],
     };
   }
   componentDidMount(){
@@ -373,6 +373,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '30%' }}
                 {...formItemLayout}
                 label="包"
+                wrapperCol={{ span: 13 }}
               >
                 <div>
                   {getFieldDecorator('pack', {
@@ -424,9 +425,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
               >
                 {getFieldDecorator('formStyle', {
                   rules: [{ required: true }],
-                  initialValue: this.state.data.formStyle,
-                })(<Select
-                    options={[
+                  initialValue: (this.state.data.formUIHint
+                  && this.state.data.formUIHint.formStyle) || 'DataTable',
+                })(<Select options={[
                       {code: 'DataTable', name: 'DataTable'},
                       {code: 'DetailInfo', name: 'DetailInfo'},
                       {code: 'TreeTable', name: 'TreeTable'},
@@ -439,15 +440,15 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 )}
               </FormItem>
               <FormItem
-                  style={{ width: '45%' }}
-                  {...formItemLayout}
-                  label="栏数"
-                  wrapperCol={{ span: 18 }}
+                style={{ width: '45%' }}
+                {...formItemLayout}
+                label="栏数"
+                wrapperCol={{ span: 18 }}
               >
                   {getFieldDecorator('columnNumber', {
                       rules: [{ required: false }],
-                      initialValue: this.state.data.formUIHint
-                      && this.state.data.formUIHint.columnNumber,
+                      initialValue: (this.state.data.formUIHint
+                      && this.state.data.formUIHint.columnNumber) || 1,
                   })(<RadioBox options={[
                       {code: 1, name: '1'},
                       {code: 2, name: '2'},
@@ -485,12 +486,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
               >
                 {getFieldDecorator('dataModelType', {
                   rules: [{ required: true }],
-                  initialValue: this.state.data.dataModelType,
+                  initialValue: this.state.data.dataModelType || 'JavaBean',
                 })(<RadioBox options={[
-                {code: 'JavaBean', name: 'JavaBean'},
-                {code: 'DataMap', name: 'DataMap'},
-                    ]}/>)
-                }
+                  {code: 'JavaBean', name: 'JavaBean'},
+                  {code: 'DataMap', name: 'DataMap'},
+                ]}/>)}
               </FormItem>
               <FormItem
                 style={style}
