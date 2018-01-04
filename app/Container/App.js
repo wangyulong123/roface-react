@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import * as app from '../index';
+import * as app from '../autoIndex';
 
 import { NavMega, FlexTabs } from '../../src/components';
 import PersonalManager from './NavbarComponents/pernalmanager';
