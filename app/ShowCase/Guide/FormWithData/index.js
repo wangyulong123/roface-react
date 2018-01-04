@@ -14,7 +14,7 @@ import {
     DatePicker,
     Input,
     InputNumber,
-} from '../../../src/components';
+} from '../../../../src/components/index';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node bin/build.js",
+    "start-auto": "node bin/auto.js && node bin/start.js",
     "start": "node bin/start.js",
+    "auto": "node bin/auto.js",
     "roface": "node bin/roface"
   },
   "repository": {
