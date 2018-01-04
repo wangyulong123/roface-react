@@ -5,7 +5,7 @@ import TemplateDetail from './TemplateDetail';
 import ElementDetail from './ElementDetail';
 import {Table, LocaleProvider, Modal, Button, Icon, Notify, Text} from '../../../../src/components';
 
-const comSize = 'default';
+const comSize = 'small';
 const ButtonGroup = Button.Group;
 
 export default class DisplayTemplate extends React.Component {
@@ -202,7 +202,6 @@ export default class DisplayTemplate extends React.Component {
     return (
       <LocaleProvider locale={zhCN}>
         <Table
-          size="small"
           rowKey={record => record.id}
           columns={this.state.columns}
           dataSource={this.state.data}
