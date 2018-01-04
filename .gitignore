@@ -8,6 +8,7 @@ build
 
 # build
 static
+autoIndex.js
 
 # misc
 .DS_Store

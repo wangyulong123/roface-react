@@ -17,8 +17,8 @@ function checkIsCom(dir, ignore) {
   if (filterFiles.length === 0) {
     return false
   }
-  if (files.some((file) => !checkFirstUp(file) && file !== 'index.js')
-    || (files.length === 1 && files[0] === 'index.js') || files.some(function (file) {
+  if (files.some((file) => !checkFirstUp(file) && file !== 'index.js' && file !== 'autoIndex.js')
+    || (files.length === 1 && files[0] === 'index.js' && files[0] !== 'autoIndex.js') || files.some(function (file) {
       return file.endsWith('less') || file.endsWith('css');
     })) {
     return false;
@@ -28,7 +28,7 @@ function checkIsCom(dir, ignore) {
 
 function checkDir(dir, ignore) {
   var files = fs.readdirSync(dir);
-  if (!files.some((file) => !checkFirstUp(file) && file !== 'index.js')) {
+  if (!files.some((file) => !checkFirstUp(file) && file !== 'index.js' && file !== 'autoIndex.js')) {
     files.forEach(function (file) {
       var pathname = path.join(dir, file);
       if (fs.lstatSync(pathname).isDirectory()) {
@@ -55,14 +55,18 @@ function autoJs(fileObj) {
     var data = '// 该文件为自动生成，手动修改无效\n';
     data = data + fileObj[field].map(function (file) {
       if (file.isDir) {
-        return 'export * as ' + file.name + ' from \'./' + file.name + '\';'
+        return 'export * as ' + file.name + ' from \'./' + file.name + '/autoIndex\';'
       } else {
         return 'export ' + file.name + ' from \'./' + file.name + '\';'
       }
     }).join('\n');
     //console.log(fileObj);
-    fs.writeFileSync(field + '/index.js', data);
-    console.log(field + '/index.js 文件生成');
+    // 删除原来的index.js文件
+    if (fs.existsSync(field + '/index.js')) {
+      fs.unlinkSync(field + '/index.js');
+    }
+    fs.writeFileSync(field + '/autoIndex.js', data);
+    console.log(field + '/autoIndex.js 文件生成');
   })
   console.log('app 所有索引文件已经成功生成');
 }
