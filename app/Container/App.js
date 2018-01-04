@@ -30,7 +30,8 @@ export default class App extends React.Component {
   };
   _getObject = (obj, fields) => {
     return fields.reduce((a, b) => {
-      return a[b];
+      const tempB = b.replace(/\W/g, '');
+      return a[tempB];
     }, obj);
   };
   _getCom = (props, tab) => {

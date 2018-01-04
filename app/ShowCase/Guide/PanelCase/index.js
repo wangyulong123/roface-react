@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Icon, Collapse, Divider, Menu, Row, Col, Form} from '../../../src/components';
-import {CustomizedForm} from './FormWithData'
+import {Button, Icon, Collapse, Divider, Menu, Row, Col, Form} from '../../../../src/components/index';
+import {CustomizedForm} from '../FormWithData'
 
 const Panel = Collapse.Panel;
 

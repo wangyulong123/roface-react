@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import * as dataForm from '../../lib/dataform';
 import Form from './Form';
 import './style/index.less';
+import { Modal } from '../index';
 
 export default class Forms extends React.Component {
   constructor(props) {
@@ -48,6 +49,11 @@ export default class Forms extends React.Component {
         dataReady && dataReady(info);
         didMount && didMount(info);
       });
+    }).catch(e => {
+      Modal.error({
+        title: '获取详情数据失败',
+        content: JSON.stringify(e)
+      })
     });
   }
   setValue = (itemId, value) => {
