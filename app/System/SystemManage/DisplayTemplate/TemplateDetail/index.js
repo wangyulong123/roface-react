@@ -10,13 +10,15 @@ const {
 
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
+const ButtonGroup = Button.Group;
+const comSize = 'small';
 
 const EditableCell = ({value, com, onChange, options}) => {
   const Com = components[com];
   if ( com === 'CheckBox' ) {
     return (
       <Checkbox
-        style={{margin: '-5px 0'}}
+        size={comSize}
         checked={value}
         onChange={(e) => onChange(e.target.checked)}
       />
@@ -25,7 +27,7 @@ const EditableCell = ({value, com, onChange, options}) => {
   } else if (com === 'Select' || com === 'RadioBox') {
     return (
       <Com
-        style={{margin: '-5px 0'}}
+        size={comSize}
         value={value}
         onChange={onChange}
         options={options}
@@ -36,7 +38,7 @@ const EditableCell = ({value, com, onChange, options}) => {
   }
   return (
     <Com
-      style={{margin: '-5px 0'}}
+      size={comSize}
       value={value}
       onChange={onChange}
     />
@@ -104,7 +106,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
           dataIndex: 'elementUIHint',
           key: 'elementUIHint.colspan',
           render: (text, record, index) =>
-            this._renderColumns('elementUIHint.colspan', 'RadioBox', (text && text.colspan) || 1, record, index,
+            this._renderColumns('elementUIHint.colspan', 'Select', (text && text.colspan) || 1, record, index,
               [
                 {code: 1, name: '1'},
                 {code: 2, name: '2'},
@@ -216,41 +218,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
     />
   );
   _createButton = (record, index) => {
-    const { prefix = 'ro' } = this.props;
-    const menu = (
-      <Menu>
-        <Menu.Item key="1">
-          <Button
-            onClick={() => this._addTableData(record, index)}
-            className={`${prefix}-template-detail-table-button`}
-          >
-            添加
-          </Button>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Button
-            onClick={() => this._deleteTableData(record)}
-            className={`${prefix}-template-detail-table-button`}
-          >
-            删除
-          </Button>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Button
-            onClick={() => this._checkDataId(record)}
-            className={`${prefix}-template-detail-table-button`}
-          >
-            详情
-          </Button>
-        </Menu.Item>
-      </Menu>
-    );
     return (
-      <Dropdown overlay={menu}>
-        <Button>操作 <Icon type="down" /></Button>
-      </Dropdown>
+      <ButtonGroup>
+        <Button onClick={() => this._checkDataId(record)} icon="info" type="primary" size={comSize}/>
+        <Button onClick={() => this._addTableData(record, index)} icon="plus" type="primary" size={comSize}/>
+        <Button onClick={() => this._deleteTableData(record)} icon="minus" type="primary" size={comSize}/>
+      </ButtonGroup>
     );
-  }
+  };
   _checkDataId = (record) => {
     const { data } = this.state;
     if (!data.id) {
@@ -321,24 +296,28 @@ export default Form.create()(class TemplateDetail extends React.Component {
           this.setState({
             loading: true,
           });
-          dataform.postAdmin(`/dataform?dataFormId=${this.state.data.id}`,
-            {
-              ...this.state.data,
-              ...this._filterField(values, 'columnNumber'),
-              formUIHint: {
-                ...this.state.data.formUIHint,
-                columnNumber: values.columnNumber,
-              },
-              query: {
-                ...this.state.data.query,
-                select: values.select,
-                where: values.where,
-                from: values.from,
-                groupBy: values.groupBy,
-                orderBy: values.order,
-                having: values.having,
-              }
-            }).then((res) => {
+
+          const param = {
+            ...this.state.data,
+            ...this._filterField(values, 'columnNumber'),
+            formUIHint: {
+              ...this.state.data.formUIHint,
+              columnNumber: values.columnNumber,
+            },
+            query: {
+              ...this.state.data.query,
+              select: values.select,
+              where: values.where,
+              from: values.from,
+              groupBy: values.groupBy,
+              orderBy: values.order,
+              having: values.having,
+            }
+          };
+          console.log(param);
+          console.log(this.state.data.id);
+          const url = this.state.data.id ? `/dataform/${this.state.data.id}` : '/dataform';
+          dataform.postAdmin(url, param).then((res) => {
             resovle(res);
             Notify.success({
               message: '保存成功',
@@ -372,9 +351,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
   render() {
     const formItemLayout = {
       labelCol: { span: 6},
-      wrapperCol: { span: 16 },
+      wrapperCol: { span: 18 },
     };
     const { getFieldDecorator, prefix = 'ro' } = this.props.form;
+    const style = { width: '100%' };
     return (
       <div className={`${prefix}-template-detail`}>
         <div className={`${prefix}-template-detail-all-save`}>
@@ -388,10 +368,12 @@ export default Form.create()(class TemplateDetail extends React.Component {
         </div>
         <Collapse defaultActiveKey={['1', '2']} onChange={this._panelChange}>
           <Panel header="基本信息" key="1">
-            <Form className="login-form">
+            <Form className={`${prefix}-template-detail-info-layout`}>
               <FormItem
+                style={{ width: '25%' }}
                 {...formItemLayout}
                 label="包"
+                wrapperCol={{ span: 12 }}
               >
                 <div>
                   {getFieldDecorator('pack', {
@@ -401,8 +383,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 </div>
               </FormItem>
               <FormItem
+                style={{ width: '75%' }}
                 {...formItemLayout}
                 label="模版代码"
+                wrapperCol={{ span: 16 }}
               >
                 <div>
                   {getFieldDecorator('code', {
@@ -412,6 +396,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 </div>
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="名称"
               >
@@ -421,6 +406,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="标签"
               >
@@ -430,6 +416,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="模版说明"
               >
@@ -439,8 +426,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={{ width: '25%' }}
                 {...formItemLayout}
                 label="栏数"
+                wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('columnNumber', {
                   rules: [{ required: false }],
@@ -455,8 +444,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 />)}
               </FormItem>
               <FormItem
+                style={{ width: '75%' }}
                 {...formItemLayout}
                 label="排序码"
+                wrapperCol={{ span: 16 }}
               >
                 {getFieldDecorator('sortCode', {
                   rules: [{ required: false }],
@@ -464,8 +455,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={{ width: '25%' }}
                 {...formItemLayout}
                 label="数据模型类别"
+                wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('dataModelType', {
                   rules: [{ required: false }],
@@ -473,8 +466,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Select options={['JavaBean', 'DataMap']} />)}
               </FormItem>
               <FormItem
+                style={{ width: '75%' }}
                 {...formItemLayout}
                 label="数据模型"
+                wrapperCol={{ span: 16 }}
               >
                 {getFieldDecorator('dataModel', {
                   rules: [{ required: false }],
@@ -482,6 +477,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="处理Handler"
               >
@@ -491,6 +487,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="SELECT"
               >
@@ -501,6 +498,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<Text />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="FROM"
               >
@@ -511,6 +509,18 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<TextArea />)}
               </FormItem>
               <FormItem
+                style={style}
+                {...formItemLayout}
+                label="WHERE"
+              >
+                {getFieldDecorator('where', {
+                  rules: [{ required: false }],
+                  initialValue: this.state.data.query
+                  && this.state.data.query.where,
+                })(<TextArea />)}
+              </FormItem>
+              <FormItem
+                style={style}
                 {...formItemLayout}
                 label="GROUP BY"
               >
@@ -521,6 +531,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<TextArea />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="ORDER BY"
               >
@@ -531,6 +542,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 })(<TextArea />)}
               </FormItem>
               <FormItem
+                style={style}
                 {...formItemLayout}
                 label="HAVING"
               >
@@ -550,11 +562,12 @@ export default Form.create()(class TemplateDetail extends React.Component {
               <Icon type="plus" />添加
             </Button>
             <Table
+              size={comSize}
               rowKey={record => record.key}
               columns={this.state.columns}
               dataSource={this.state.data.elements || []}
               pagination={false}
-              scroll={{ x: 1904 }}
+              scroll={{ x: 2000 }}
             />
           </Panel>
         </Collapse>
