@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Icon } from '../index';
+import { Icon, Modal } from '../index';
 import MenuChildren from './MenuChildren';
 
 import './style/index.less';
@@ -42,6 +42,11 @@ export default class MegaMenu extends React.Component {
       }, () => {
         this.checkWidth();
       });
+    }).catch(e => {
+      Modal.error({
+        title: '获取菜单列表失败',
+        content: JSON.stringify(e)
+      })
     });
   }
   _menuClick = (e, item) => {

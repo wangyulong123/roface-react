@@ -47,11 +47,12 @@ export default class Tab extends React.Component {
       depthFirstSearch(nextProps.data, (menuItem) => {
         allMenus.push(menuItem);
       });
-      const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0];
+      const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0] ||
+        allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
       const tempState = {
-        id: history.location.state.id,
-        name: history.location.state.name,
-        url: history.location.state.url,
+        id: history.location.state && history.location.state.id,
+        name: history.location.state && history.location.state.name,
+        url: history.location.state && history.location.state.url,
       };
       const customTab = {
         ...tempState,
@@ -65,7 +66,7 @@ export default class Tab extends React.Component {
       depthFirstSearch(nextProps.data, (menuItem) => {
         allMenus.push(menuItem);
       });
-      const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
+      const indexMenu = allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
       this.createTab(indexMenu);
     }
   }
@@ -73,7 +74,7 @@ export default class Tab extends React.Component {
   _initCom = (tab, props) => {
     const { renderComponent } = this.props;
     return renderComponent(props, tab);
-  }
+  };
 
 
   checkWidth = () => {
@@ -161,7 +162,7 @@ export default class Tab extends React.Component {
     depthFirstSearch(this.props.data, (menuItem) => {
       allMenus.push(menuItem);
     });
-    const indexMenu = allMenus.filter(menuItem => menuItem.id === '00')[0];
+    const indexMenu = allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
     // 置空并且重新生成默认页
     this.setState({ tabs: [] }, () => {
       this.createTab(indexMenu);
@@ -303,18 +304,6 @@ export default class Tab extends React.Component {
         onUpdate: (evt) => {
           console.log('onUpdate');
           // 处理拖动后的页面
-          // const originFields = this.props.dataSource.filter(item => (this.state.show || (item.operator === false)) &&
-          // (item.name && item.name.includes(this.state.value)));
-          // const { newIndex, oldIndex } = evt;
-          // const newName = originFields[newIndex].name;
-          // const oldName = originFields[oldIndex].name;
-          // const tempOldIndex = this.props.entityAllFields.findIndex((field) => field.name === oldName);
-          // const tempNewIndex = this.props.entityAllFields.findIndex((field) => field.name === newName);
-          // const finalFields = [...this.props.entityAllFields];
-          // const olderField = finalFields.splice(tempOldIndex, 1)[0];
-          // finalFields.splice(tempNewIndex, 0, olderField);
-
-         // this.props.onUpdateProperties(finalFields, 'sort');
         },
       };
       Sortable.create(componentBackingInstance, options);
