@@ -5,16 +5,19 @@ import TemplateDetail from './TemplateDetail';
 import ElementDetail from './ElementDetail';
 import {Table, LocaleProvider, Modal, Button, Icon, Notify, Text} from '../../../../src/components';
 
+const comSize = 'default';
+const ButtonGroup = Button.Group;
+
 export default class DisplayTemplate extends React.Component {
   static TemplateDetail = TemplateDetail;
   static ElementDetail = ElementDetail;
 
   constructor(props) {
     super(props);
-    this.id = '';
+    this.pack = '';
+    this.code = '';
     this.state = {
       data: [],
-      selectedRowRecord: null,
       pageIndex: 0,
       pageSize: 10,
       totalCount: 10,
@@ -24,19 +27,29 @@ export default class DisplayTemplate extends React.Component {
         key: 'number',
         render: (text, record, index) => <span>{index}</span>,
       }, {
+        title: '操作',
+        dataIndex: 'opt',
+        key: 'opt',
+        render: (text, record, index) => this._createButton(record, index),
+      },{
         title: '模板编号',
-        dataIndex: 'code',
-        key: 'code',
+        dataIndex: 'id',
+        key: 'id',
       }, {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
         render: (text, record) => <a onClick={() => this.createTab(record)}>{text}</a>,
       }, {
-        title: '分栏数',
-        dataIndex: 'formUIHint',
-        key: 'formUIHint',
-        render: text => <span>{text.columnNumber}</span>,
+        title: '数据模型',
+        dataIndex: 'dataModelType',
+        key: 'dataModelType',
+        render: text => <span>{text}</span>,
+      },{
+        title: '关键字',
+        dataIndex: 'tags',
+        key: 'tags',
+        render: text => <span>{text}</span>,
       }],
     };
   }
@@ -68,47 +81,43 @@ export default class DisplayTemplate extends React.Component {
     });
   };
 
-  _onSelectRow = (record) => {
-    this.setState({
-      selectedRowRecord: record,
-    });
+  _createButton = (record, index) => {
+    return (
+      <ButtonGroup>
+        <Button onClick={() => this._addTemplate(record, index)} icon="plus" type="primary" size={comSize}/>
+        <Button onClick={() => this._deleteTemplate(record, index)} icon="minus" type="primary" size={comSize}/>
+        <Button onClick={() => this._cloneTableData(record, index)} icon="copy" type="primary" size={comSize}/>
+      </ButtonGroup>
+    );
   };
-  _idChange = (value) => {
-    this.id = value;
-  };
-
-  _cloneTableData = () => {
+  _cloneTableData = (record, index) => {
     const {dataform, openLoading, closeLoading} = this.props;
-    const record = this.state.selectedRowRecord;
-    if (!record) {
-      Notify.info({
-        message: '请选择要克隆的模板行！',
-      });
-      return;
-    }
+    const tempArray = [...(this.state.data || [])];
     const that = this;
+    that.pack = record.pack;
+    that.code = record.code + 'copy';
     Modal.confirm({
-      title: '请输入模板编号',
+      title: `将会复制模版${record.id}`,
       content: (
         <div>
-          <Text defaultValue={record.id} onChange={this._idChange}/>
+          新模版包:<Text value={that.pack} onChange={value => this.pack = value} />
+          新模版编号:<Text value={that.code} onChange={value => this.code = value} />
         </div>
       ),
       onOk() {
         openLoading && openLoading();
         dataform.postAdmin('/dataform/clone', {
-          newDataFormId: that.id,
+          newDataFormId: that.pack + '-' + that.code,
           oldDataFormId: record.id
-        })
-          .then((res) => {
-            that.setState({
-              data: [...that.state.data, res]
-            });
+        }).then((res) => {
+          tempArray.splice(index + 1, 0, res);
+          that.setState({ data: tempArray }, () => {
             closeLoading && closeLoading();
             Notify.success({
               message: '克隆成功',
             });
-          }).catch((e) => {
+          });
+        }).catch((e) => {
           Modal.error({
             title: '克隆失败',
             content: JSON.stringify(e),
@@ -123,14 +132,7 @@ export default class DisplayTemplate extends React.Component {
   };
 
   createTab = (record) => {
-    const {flexTabs} = this.props;
-    record = record || this.state.selectedRowRecord;
-    if (!record) {
-      Notify.info({
-        message: '请选择要查看详情的模板行！',
-      });
-      return;
-    }
+    const { flexTabs } = this.props;
     const tab = {
       id: `System/SystemManage/DisplayTemplate/TemplateDetail/${record.id}`,
       name: `模板:${record.name}`,
@@ -144,56 +146,47 @@ export default class DisplayTemplate extends React.Component {
         flag: record.flag
       },
     });
-    };
-
-    _deleteTemplate = () => {
-    const { dataform, closeLoading, openLoading } = this.props;
-    const record = this.state.selectedRowRecord;
-    const that = this;
+  };
+  _addTemplate = (record, index) => {
+    const newT = { name: '新增模板', id: `newTemplateDetail${new Date().getTime()}`, flag: true }
+    const tempArray = [...(this.state.data || [])];
     if (!record) {
-      Notify.info({
-        message: '请选择要删除的模板行！',
-      });
-      return;
+      tempArray.push(newT)
+    } else {
+      tempArray.splice(index + 1, 0, newT);
     }
-    // dataform/{id}
-      Modal.confirm({
-        title: '删除模板',
-        content: (
-          <div>您确定要删除模板:{record.name || record.id} 吗？</div>
-        ),
-        onOk() {
-          openLoading && openLoading();
-          // 如果删除的是索引为0的项目，则默认选中后面一项
-          // 如果删除的不是索引为0的，则选中删除项前面的一项
-          // 如果删除的是该列表的最后一项，则默认不做选中
-          const isDeletedIndex = that.state.data.findIndex(templateItem => templateItem.id === record.id);
-          let nextIndex = 0;
-          if (isDeletedIndex === 0) {
-            nextIndex = isDeletedIndex + 1;
-          } else if (isDeletedIndex > 0) {
-            nextIndex = (isDeletedIndex - 1 < 0) ? 0 : isDeletedIndex - 1
-          }
-          dataform.deleteAdmin(`/dataform/${record.id}`)
-            .then(() => {
-              that.setState({
-                data: that.state.data && that.state.data.filter(templateItem => templateItem.id !== record.id),
-                selectedRowRecord: that.state.data[nextIndex]
-              }, () => {
-                  closeLoading && closeLoading();
-                  Notify.success({
-                    message: '删除模板' + (record.name || record.id) + '成功',
-                  });
+    this.setState({ data: tempArray });
+    this.createTab(newT);
+  };
+  _deleteTemplate = (record) => {
+    const { dataform, closeLoading, openLoading } = this.props;
+    const that = this;
+    Modal.confirm({
+      title: '删除模板',
+      content: (
+        <div>您确定要删除模板:{record.name || record.id} 吗？</div>
+      ),
+      onOk() {
+        openLoading && openLoading();
+        dataform.deleteAdmin(`/dataform/${record.id}`)
+          .then(() => {
+            that.setState({
+              data: that.state.data.filter(ele => ele.code !== record.code)
+            }, () => {
+              closeLoading && closeLoading();
+              Notify.success({
+                message: '删除模板' + (record.name || record.id) + '成功',
               });
-            }).catch((e) => {
-            closeLoading && closeLoading();
-            Modal.error({
-              title: '删除模板失败',
-              content: JSON.stringify(e),
             });
+          }).catch((e) => {
+          closeLoading && closeLoading();
+          Modal.error({
+            title: '删除模板失败',
+            content: JSON.stringify(e),
           });
-        },
-      });
+        });
+      },
+    });
   };
 
   _paginationOnChange = (page, pageSize) => {
@@ -205,62 +198,26 @@ export default class DisplayTemplate extends React.Component {
   };
 
   render() {
-    const {pageIndex, pageSize, totalCount, prefix = 'ro'} = this.state;
+    const {pageIndex, pageSize, totalCount } = this.state;
     return (
-      <div>
-        <div className={`${prefix}-template-detail-button-group`}>
-          <Button
-            onClick={() => this.createTab({
-              name: '新增模板',
-              id: `newTemplateDetail${new Date().getTime()}`,
-              flag: true
-            })}
-          >
-            <Icon type="plus"/>新增模板
-          </Button>
-          <Button
-            onClick={() => this._cloneTableData()}
-            className={`${prefix}-template-detail-button-group-button`}
-          >
-            <Icon type="close" />克隆
-          </Button>
-          <Button
-            onClick={() => this.createTab()}
-            className={`${prefix}-template-detail-button-group-button`}
-          >
-            <Icon type="info" />详情
-          </Button>
-          <Button
-            type="danger"
-            onClick={() => this._deleteTemplate()}
-            className={`${prefix}-template-detail-button-group-button`}
-          >
-            <Icon type="close" />删除
-          </Button>
-        </div>
-        <LocaleProvider locale={zhCN}>
-          <Table
-            rowKey={record => record.id}
-            columns={this.state.columns}
-            dataSource={this.state.data}
-            pagination={{
-              showSizeChanger: true,
-              showQuickJumper: true,
-              defaultCurrent: 1,
-              total: totalCount,
-              pageSize: pageSize,
-              current: pageIndex + 1,
-              onShowSizeChange: this._paginationShowSizeChange,
-              onChange: this._paginationOnChange
-            }}
-            rowSelection={{
-              type: 'radio',
-              onSelect: this._onSelectRow,
-              selectedRowKeys: [this.state.selectedRowRecord && this.state.selectedRowRecord.id]
-            }}
-          />
-        </LocaleProvider>
-      </div>
+      <LocaleProvider locale={zhCN}>
+        <Table
+          size="small"
+          rowKey={record => record.id}
+          columns={this.state.columns}
+          dataSource={this.state.data}
+          pagination={{
+            showSizeChanger: true,
+            showQuickJumper: true,
+            defaultCurrent: 1,
+            total: totalCount,
+            pageSize: pageSize,
+            current: pageIndex + 1,
+            onShowSizeChange: this._paginationShowSizeChange,
+            onChange: this._paginationOnChange
+          }}
+        />
+      </LocaleProvider>
     );
   }
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import Radio from './radio';
+import { compose } from '../compose';
 
+@compose
 export default class RadioBox extends React.Component{
     static defaultProps = {
         optionField: 'code',

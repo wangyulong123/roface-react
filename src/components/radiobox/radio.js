@@ -1,6 +1,8 @@
 import React from 'react';
 import { Radio } from 'antd';
+import { compose } from '../compose';
 
+@compose
 export default class RoRadio extends React.Component{
     constructor(props){
         super(props);

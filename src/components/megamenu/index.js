@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Icon } from '../index';
 import MenuChildren from './MenuChildren';
-import PersonalManager from './PersonalManager';
 
 import './style/index.less';
 import { getUserMenuList } from '../../lib/base';
@@ -11,6 +10,7 @@ import { addOnResize } from '../../lib/listener';
 export default class MegaMenu extends React.Component {
   constructor(props) {
     super(props);
+    this.logo = null;
     this.dom = null;
     this.wrapper = null;
     this.menuWrapper = null;
@@ -24,13 +24,15 @@ export default class MegaMenu extends React.Component {
   }
   componentDidMount() {
     /* eslint-disable */
-    const { prefix = 'ro', dataMount } = this.props;
+    const { prefix = 'ro', dataMount, logoIcon } = this.props;
     this.dom = ReactDom.findDOMNode(this);
+    this.logo = Array.from(Array.from(this.dom.children).filter(d => d.className === `${prefix}-navbar-logo`)[0].children).filter(item => item.className === `${prefix}-navbar-icon`);
     this.right = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-right`)[0];
     this.wrapper = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-wrapper`)[0];
     this.left = Array.from(this.dom.children).filter(d => d.className === `${prefix}-nav-arrow-left`)[0];
     this.menuWrapper = Array.from(this.wrapper.children).filter(d => d.className === `${prefix}-nav-menu-wrapper`)[0];
     this.offsetWidth = this.wrapper.offsetWidth;
+    this.logo[0].style.background = `url(${logoIcon}) 0% 0% / 100% 100% no-repeat`;
     addOnResize(this.checkWidth, true);
     getUserMenuList().then(res => {
       const dataSource = this.removeLevelMore(this.flatToTree(res).data);
@@ -193,7 +195,7 @@ export default class MegaMenu extends React.Component {
     this.right.children[0].style.display = 'block';
   };
   render() {
-    const { prefix = 'ro' } = this.props;
+    const { prefix = 'ro', NavRight } = this.props;
     return (
       <div className={`${prefix}-nav-container`}>
         <div className={`${prefix}-navbar-logo`}>
@@ -206,7 +208,7 @@ export default class MegaMenu extends React.Component {
           </div>
         </div>
         <div className={`${prefix}-nav-arrow-right`}><Icon type="right" onClick={this._moveRight}/></div>
-        <PersonalManager />
+        <NavRight />
       </div>
     );
   }

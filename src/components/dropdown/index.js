@@ -4,7 +4,9 @@
 
 import React from 'react';
 import { Menu, Dropdown } from 'antd';
+import { compose } from '../compose';
 
+@compose
 class RoDropdown extends React.Component {
   static Button = Dropdown.Button;
   handleMenuClick = e => this.props.onClick && this.props.onClick(e);
