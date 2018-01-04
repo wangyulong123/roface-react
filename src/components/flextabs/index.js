@@ -65,7 +65,7 @@ export default class Tab extends React.Component {
       depthFirstSearch(nextProps.data, (menuItem) => {
         allMenus.push(menuItem);
       });
-      const indexMenu = allMenus.filter(menuItem => menuItem.id === 'Home')[0];
+      const indexMenu = allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
       this.createTab(indexMenu);
     }
   }
@@ -161,7 +161,7 @@ export default class Tab extends React.Component {
     depthFirstSearch(this.props.data, (menuItem) => {
       allMenus.push(menuItem);
     });
-    const indexMenu = allMenus.filter(menuItem => menuItem.id === 'Home')[0];
+    const indexMenu = allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
     // 置空并且重新生成默认页
     this.setState({ tabs: [] }, () => {
       this.createTab(indexMenu);
