@@ -2,10 +2,13 @@
 
 .@{prefix}-element-detail {
   &-header {
-    display: flex;
+    position: relative;
+    height: 40px;
     &-button {
-      margin: 0px 0px 10px 10px;
-      width: 120px
+      position: fixed;
+      width: 120px;
+      margin-left: 40%;
+      z-index: 999;
     }
   }
   &-body-panel {
