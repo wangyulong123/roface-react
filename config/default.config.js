@@ -1,5 +1,6 @@
 module.exports = {
     host: 'localhost',
     port : 3004,
-    protocol : 'http'
+    protocol : 'http',
+    autoJsIgnore: ['Container', 'Reference', 'ElementDetail', 'TemplateDetail']
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Message, Divider, Menu, Row, Col} from '../../../src/components/index';
+import {Button, Icon, Message, Divider, Menu, Row, Col} from '../../../../src/components/index';
 import {Dropdown} from 'antd';
 
 const ButtonGroup = Button.Group;
