@@ -47,20 +47,22 @@ export default class Tab extends React.Component {
       depthFirstSearch(nextProps.data, (menuItem) => {
         allMenus.push(menuItem);
       });
-      const initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0] ||
+      let initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0] ||
         allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
-      const tempState = {
-        id: history.location.state && history.location.state.id,
-        name: history.location.state && history.location.state.name,
-        url: history.location.state && history.location.state.url,
-      };
-      const customTab = {
-        ...tempState,
-        state: {
-          ...history.location.state
-        },
+      if (history.location.state && history.location.state.id) {
+        const tempState = {
+          id: history.location.state && history.location.state.id,
+          name: history.location.state && history.location.state.name,
+          url: history.location.state && history.location.state.url,
+        };
+        initTab = {
+          ...tempState,
+          state: {
+            ...history.location.state
+          },
+        };
       }
-      this.createTab(initTab ? initTab : customTab);
+      this.createTab(initTab);
     } else if (!pathname) {
       let allMenus = [];
       depthFirstSearch(nextProps.data, (menuItem) => {
