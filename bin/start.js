@@ -36,13 +36,16 @@ compiler.plugin('done', function(stats) {
 var devServer = new WebpackDevServer(compiler, {
     historyApiFallback: true, // 所有的跳转都指向index.html
     stats: { colors: true },
-    /*proxy: {
-      '/dataform/admin': {
-        target: 'http://192.168.64.227:8080',
+    proxy: {
+      '/webapi': {
+        target: 'http://192.168.64.148:8080',
         changeOrigin: true,
-        pathRewrite: {}
+        pathRewrite: {
+          // '^/api': '/ICEManage'
+          '^/webapi': '/amix'
+        }
       }
-    },*/
+    },
 });
 
 devServer.listen(port);
