@@ -1,18 +1,19 @@
 @import "../../../../../../src/style/index";
 
 .@{prefix}-template-detail {
-  padding: 0px 10px 10px 10px;
+  padding: 0 10px 10px 10px;
   &-table-button {
     margin-left: 5px;
   }
   &-all-save {
-    position: relative;
+    position: fixed;
     height: 40px;
+    z-index: 888;
+    background: #fff;
+    width: 100%;
     &-button {
       width: 120px;
-      position: fixed;
-      margin-left: 45%;
-      z-index: 999;
+      margin-left: 5px;
     }
   }
   &-info-layout {
