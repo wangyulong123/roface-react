@@ -350,8 +350,8 @@ export default Form.create()(class TemplateDetail extends React.Component {
   }
   render() {
     const formItemLayout = {
-      labelCol: { span: 6},
-      wrapperCol: { span: 18 },
+      labelCol: { span: 8},
+      wrapperCol: { span: 16 },
     };
     const { getFieldDecorator, prefix = 'ro' } = this.props.form;
     const style = { width: '100%' };
@@ -370,10 +370,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
           <Panel header="基本信息" key="1">
             <Form className={`${prefix}-template-detail-info-layout`}>
               <FormItem
-                style={{ width: '25%' }}
+                style={{ width: '30%' }}
                 {...formItemLayout}
                 label="包"
-                wrapperCol={{ span: 12 }}
               >
                 <div>
                   {getFieldDecorator('pack', {
@@ -383,10 +382,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 </div>
               </FormItem>
               <FormItem
-                style={{ width: '75%' }}
+                style={{ width: '65%' }}
                 {...formItemLayout}
                 label="模版代码"
-                wrapperCol={{ span: 16 }}
+                wrapperCol={{ span: 12 }}
               >
                 <div>
                   {getFieldDecorator('code', {
@@ -396,80 +395,108 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 </div>
               </FormItem>
               <FormItem
-                style={style}
+                style={{ width: '50%' }}
                 {...formItemLayout}
                 label="名称"
+                wrapperCol={{ span: 18 }}
               >
                 {getFieldDecorator('name', {
-                  rules: [{ required: false }],
+                  rules: [{ required: true }],
                   initialValue: this.state.data.name,
                 })(<Text />)}
               </FormItem>
               <FormItem
-                style={style}
-                {...formItemLayout}
-                label="标签"
+                  style={{ width: '50%' }}
+                  {...formItemLayout}
+                  label="排序码"
+                  wrapperCol={{ span: 8 }}
               >
-                {getFieldDecorator('tags', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.tags,
-                })(<Text />)}
+                  {getFieldDecorator('sortCode', {
+                      rules: [{ required: false }],
+                      initialValue: this.state.data.sortCode,
+                  })(<Text />)}
+              </FormItem>
+              <FormItem
+                style={{ width: '50%' }}
+                {...formItemLayout}
+                label="显示方式"
+                wrapperCol={{ span: 18 }}
+              >
+                {getFieldDecorator('formStyle', {
+                  rules: [{ required: true }],
+                  initialValue: this.state.data.formStyle,
+                })(<Select
+                    options={[
+                      {code: 'DataTable', name: 'DataTable'},
+                      {code: 'DetailInfo', name: 'DetailInfo'},
+                      {code: 'TreeTable', name: 'TreeTable'},
+                      {code: 'ListItem', name: 'ListItem'},
+                      {code: 'ListCard', name: 'ListCard'},
+                    ]}
+                    optionName="name"
+                    optionField="code"
+                    />
+                )}
+              </FormItem>
+              <FormItem
+                  style={{ width: '45%' }}
+                  {...formItemLayout}
+                  label="栏数"
+                  wrapperCol={{ span: 18 }}
+              >
+                  {getFieldDecorator('columnNumber', {
+                      rules: [{ required: false }],
+                      initialValue: this.state.data.formUIHint
+                      && this.state.data.formUIHint.columnNumber,
+                  })(<RadioBox options={[
+                      {code: 1, name: '1'},
+                      {code: 2, name: '2'},
+                      {code: 3, name: '3'},
+                      {code: 4, name: '4'},
+                  ]}
+                  />)}
+              </FormItem>
+              <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="关键字"
+                  wrapperCol={{ span: 12 }}
+              >
+                  {getFieldDecorator('tags', {
+                      rules: [{ required: false }],
+                      initialValue: this.state.data.tags,
+                  })(<Text />)}
+              </FormItem>
+              <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="模版说明"
+              >
+                  {getFieldDecorator('description', {
+                      rules: [{ required: false }],
+                      initialValue: this.state.data.description,
+                  })(<Text />)}
               </FormItem>
               <FormItem
                 style={style}
                 {...formItemLayout}
-                label="模版说明"
-              >
-                {getFieldDecorator('description', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.description,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={{ width: '25%' }}
-                {...formItemLayout}
-                label="栏数"
-                wrapperCol={{ span: 12 }}
-              >
-                {getFieldDecorator('columnNumber', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.formUIHint
-                  && this.state.data.formUIHint.columnNumber,
-                })(<RadioBox options={[
-                  {code: 1, name: '1'},
-                  {code: 2, name: '2'},
-                  {code: 3, name: '3'},
-                  {code: 4, name: '4'},
-                ]}
-                />)}
-              </FormItem>
-              <FormItem
-                style={{ width: '75%' }}
-                {...formItemLayout}
-                label="排序码"
-                wrapperCol={{ span: 16 }}
-              >
-                {getFieldDecorator('sortCode', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.sortCode,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={{ width: '25%' }}
-                {...formItemLayout}
-                label="数据模型类别"
+                label="数据模型"
                 wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('dataModelType', {
-                  rules: [{ required: false }],
+                  rules: [{ required: true }],
                   initialValue: this.state.data.dataModelType,
-                })(<Select options={['JavaBean', 'DataMap']} />)}
+                })(<RadioBox options={[
+                {code: 'JavaBean', name: 'JavaBean'},
+                {code: 'DataMap', name: 'DataMap'},
+                    ]}/>)
+                }
               </FormItem>
               <FormItem
-                style={{ width: '75%' }}
+                style={style}
                 {...formItemLayout}
-                label="数据模型"
-                wrapperCol={{ span: 16 }}
+                label="数据实体"
+                wrapperCol={{ span: 8 }}
               >
                 {getFieldDecorator('dataModel', {
                   rules: [{ required: false }],
@@ -480,6 +507,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={style}
                 {...formItemLayout}
                 label="处理Handler"
+                wrapperCol={{ span: 12 }}
               >
                 {getFieldDecorator('handler', {
                   rules: [{ required: false }],
@@ -490,6 +518,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={style}
                 {...formItemLayout}
                 label="SELECT"
+                wrapperCol={{ span: 6 }}
               >
                 {getFieldDecorator('select', {
                   rules: [{ required: false }],
@@ -497,13 +526,20 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   && this.state.data.query.select) || 'select',
                 })(<Text />)}
               </FormItem>
+                <FormItem
+                    style={style}
+                    {...formItemLayout}
+                    label="字段明细"
+                >
+                  <code>[自动计算]</code>
+                </FormItem>
               <FormItem
                 style={style}
                 {...formItemLayout}
                 label="FROM"
               >
                 {getFieldDecorator('from', {
-                  rules: [{ required: false }],
+                  rules: [{ required: true }],
                   initialValue: this.state.data.query
                   && this.state.data.query.from,
                 })(<TextArea />)}
