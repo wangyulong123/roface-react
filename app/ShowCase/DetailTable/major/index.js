@@ -491,7 +491,7 @@ function onMounted(api) {
     disabled: true,
   });
 
-  api.run().then(() => {
+  api.run('system-MenuList', {code: 'MenuList'}).then(() => {
 
   });
 }
