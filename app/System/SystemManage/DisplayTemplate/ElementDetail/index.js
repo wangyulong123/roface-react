@@ -82,10 +82,10 @@ export default Form.create()(class ElementDetail extends React.Component {
   }
   render() {
     const formItemLayout = {
-      labelCol: { span: 3},
-      wrapperCol: { span: 20 },
+      labelCol: { span: 4},
+      wrapperCol: { span: 19 },
     };
-    const style = { width: '50%' };
+    const style = { width: '49%' };
     const { getFieldDecorator } = this.props.form;
     const { prefix = 'ro', location } = this.props;
     return (
@@ -107,6 +107,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   style={style}
                   {...formItemLayout}
                   label="模板ID"
+                  wrapperCol={{ span: 18 }}
                 >
                   {getFieldDecorator('dataFormId', {
                     rules: [{ required: true }],
@@ -118,6 +119,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   style={style}
                   {...formItemLayout}
                   label="排序号"
+                  wrapperCol={{ span: 8 }}
                 >
                   {getFieldDecorator('sortCode', {
                     rules: [{ required: false }],
@@ -128,9 +130,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                   style={style}
                   {...formItemLayout}
                   label="显示名"
+                  wrapperCol={{span: 12}}
                 >
                   {getFieldDecorator('name', {
-                    rules: [{ required: false }],
+                    rules: [{ required: true }],
                     initialValue: this.state.data.name,
                   })(<Text />)}
                 </FormItem>
@@ -145,20 +148,20 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '20%'}}
+                  style={{...style, width: '35%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 10}}
+                  wrapperCol={{span: 16}}
                   label="英文代码"
                 >
                   {getFieldDecorator('code', {
-                    rules: [{ required: false }],
+                    rules: [{ required: true }],
                     initialValue: this.state.data.code,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '35%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 16}}
                   label="列名"
                 >
                   {getFieldDecorator('column', {
@@ -167,27 +170,38 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '20%'}}
-                  {...formItemLayout}
-                  wrapperCol={{span: 10}}
-                  label="数据类型"
-                >
-                  {getFieldDecorator('column', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.dataFormat,
-                  })(<Select options={['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']} />)}
-                </FormItem>
-                <FormItem
                   style={{...style, width: '30%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 16}}
                   label="数据表"
                 >
                   {getFieldDecorator('table', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.table,
                   })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={{...style, width: '35%'}}
+                  {...formItemLayout}
+                  label="数据类型"
+                  wrapperCol={{span: 12}}
+                >
+                  {getFieldDecorator('dataFormat', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.elementUIHint
+                    && this.state.data.elementUIHint.dataFormat,
+                  })(<Select options={['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']} />)}
+                </FormItem>
+                <FormItem
+                    style={{...style, width: '60%'}}
+                    {...formItemLayout}
+                    wrapperCol={{span: 8}}
+                    label="默认值"
+                >
+                    {getFieldDecorator('defaultValue', {
+                        rules: [{ required: false }],
+                        initialValue: this.state.data.defaultValue,
+                    })(<Text />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '33%'}}
@@ -223,7 +237,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '20%'}}
+                  style={{...style, width: '25%'}}
                   {...formItemLayout}
                   wrapperCol={{span: 10}}
                   label="是否主键"
@@ -234,9 +248,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '80%'}}
+                  style={{...style, width: '75%'}}
                   {...formItemLayout}
                   label="主键生成器"
+                  wrapperCol={{span: 16}}
                 >
                   {getFieldDecorator('primaryKeyGenerator', {
                     rules: [{ required: false }],
@@ -244,20 +259,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '33%'}}
+                  style={{...style, width: '25%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
-                  label="默认值"
-                >
-                  {getFieldDecorator('defaultValue', {
-                    rules: [{ required: false }],
-                    initialValue: this.state.data.defaultValue,
-                  })(<Text />)}
-                </FormItem>
-                <FormItem
-                  style={{...style, width: '33%'}}
-                  {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 6}}
                   label="倍数"
                 >
                   {getFieldDecorator('multiplier', {
@@ -266,9 +270,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '33%'}}
+                  style={{...style, width: '25%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 6}}
                   label="最大长度"
                 >
                   {getFieldDecorator('limitedLength', {
@@ -277,7 +281,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={style}
+                    style={{...style, width: '50%'}}
                   {...formItemLayout}
                   label="统计表达式"
                 >
@@ -293,7 +297,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="一级分组表达式"
+                  wrapperCol={{span: 16}}
+                  label="一级分组"
                 >
                   {getFieldDecorator('group', {
                     rules: [{ required: false }],
@@ -303,7 +308,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="一级分组国际化代码"
+                  wrapperCol={{span: 16}}
+                  label="一级分组国际化"
                 >
                   {getFieldDecorator('groupI18nCode', {
                     rules: [{ required: false }],
@@ -313,7 +319,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="二级分组表达式"
+                  wrapperCol={{span: 16}}
+                  label="二级分组"
                 >
                   {getFieldDecorator('subGroup', {
                     rules: [{ required: false }],
@@ -323,7 +330,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="二级分组国际化代码"
+                  wrapperCol={{span: 16}}
+                  label="二级分组国际化"
                 >
                   {getFieldDecorator('subGroupI18nCode', {
                     rules: [{ required: false }],
@@ -390,9 +398,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                     optionField="code"
                   />)}
                 </FormItem>
-                <FormItem
-                  style={style}
+                <FormItem style={{...style, width: '25%'}}
                   {...formItemLayout}
+                  wrapperCol={{span: 14}}
                   label="编辑形式"
                 >
                   {getFieldDecorator('editStyle', {
@@ -418,7 +426,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   />)}
                 </FormItem>
                 <FormItem
-                  style={style}
+                    style={{...style, width: '75%'}}
                   {...formItemLayout}
                   label="对齐"
                 >
@@ -428,10 +436,10 @@ export default Form.create()(class ElementDetail extends React.Component {
                     && this.state.data.elementUIHint.textAlign,
                   })(<RadioBox options={[{code: 'Left', name: '左'}, {code: 'Center', name: '中'}, {code: 'Right', name: '右'}]} />)}
                 </FormItem>
-                <FormItem
-                  style={style}
-                  {...formItemLayout}
-                  label="数据字典模式"
+                  <FormItem style={{...style, width: '25%'}}
+                            {...formItemLayout}
+                            wrapperCol={{span: 14}}
+                  label="字典模式"
                 >
                   {getFieldDecorator('dictCodeMode', {
                     rules: [{ required: false }],
@@ -442,7 +450,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="数据字典表达式"
+                  label="字典表达式"
                 >
                   {getFieldDecorator('dictCodeExpr', {
                     rules: [{ required: false }],
@@ -486,7 +494,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="TIPS国际化代码"
+                  label="TIPS国际化"
                 >
                   {getFieldDecorator('tipsI18nCode', {
                     rules: [{ required: false }],
@@ -498,7 +506,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="字段备注"
+                  label="备注"
                 >
                   {getFieldDecorator('note', {
                     rules: [{ required: false }],
@@ -509,7 +517,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={style}
                   {...formItemLayout}
-                  label="字段备注国际化代码"
+                  label="备注国际化"
                 >
                   {getFieldDecorator('noteI18nCode', {
                     rules: [{ required: false }],
@@ -522,6 +530,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   style={style}
                   {...formItemLayout}
                   label="层级权重值"
+                  wrapperCol={{span: 6}}
                 >
                   {getFieldDecorator('rank', {
                     rules: [{ required: false }],
@@ -532,6 +541,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   style={style}
                   {...formItemLayout}
                   label="媒体查询"
+                  wrapperCol={{span: 6}}
                 >
                   {getFieldDecorator('mediaQuery', {
                     rules: [{ required: false }],
