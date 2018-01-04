@@ -21,7 +21,9 @@ class DetailButtons extends React.Component {
   constructor(props) {
     super(props);
     this.state = { buttonList: props.buttonList || [], methods: props.methods };
-    this.state.methods.addBtn = this.addBtn.bind(this);
+    if(this.state.methods) {
+      this.state.methods.addBtn = this.addBtn.bind(this);
+    }
   }
 
 
