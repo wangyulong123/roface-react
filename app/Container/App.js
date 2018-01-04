@@ -4,7 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import * as app from '../index';
 
 import { NavMega, FlexTabs } from '../../src/components';
-import PersonalManager from './personalManager/index';
+import PersonalManager from './NavbarComponents/pernalmanager';
+import Logo from './NavbarComponents/logo';
 import NotFound from './NotFound';
 import { compose } from './compose';
 // import * as showcase from '../../app/showcase';
@@ -16,7 +17,6 @@ export default class App extends React.Component {
     this.flexTabs = null;
     this.state = {
       menuData: [],
-      imgUrl: 'http://localhost:3003/logo.svg',
     };
     this.cache = {};
   }
@@ -55,7 +55,6 @@ export default class App extends React.Component {
     });
   };
   render() {
-    const { imgUrl } = this.state;
     return (
       <BrowserRouter>
         <Route
@@ -68,7 +67,7 @@ export default class App extends React.Component {
                   menuClick={this._menuClick}
                   ref={this._getInstance}
                   dataMount={this._dataMount}
-                  logoIcon={imgUrl}
+                  LogoIcon={Logo}
                   NavRight={PersonalManager}
                 />
                 <FlexTabs
