@@ -373,7 +373,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '25%' }}
                 {...formItemLayout}
                 label="包"
-                wrapperCol={{ span: 12 }}
+                wrapperCol={{ span: 13 }}
               >
                 <div>
                   {getFieldDecorator('pack', {
@@ -429,7 +429,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '25%' }}
                 {...formItemLayout}
                 label="栏数"
-                wrapperCol={{ span: 12 }}
+                wrapperCol={{ span: 13 }}
               >
                 {getFieldDecorator('columnNumber', {
                   rules: [{ required: false }],
@@ -458,7 +458,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                 style={{ width: '25%' }}
                 {...formItemLayout}
                 label="数据模型类别"
-                wrapperCol={{ span: 12 }}
+                wrapperCol={{ span: 13 }}
               >
                 {getFieldDecorator('dataModelType', {
                   rules: [{ required: false }],
