@@ -1,7 +1,6 @@
 import React from  'react';
 import * as components from '../../../../../src/components';
 import './style/index.less';
-// import { Checkbox } from 'antd';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
@@ -356,6 +355,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             onClick={this._saveData}
             className={`${prefix}-template-detail-all-save-button`}
             loading={this.state.loading}
+            type="primary"
           >
             <Icon type="check" />保存
           </Button>

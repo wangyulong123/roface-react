@@ -95,6 +95,7 @@ export default Form.create()(class ElementDetail extends React.Component {
             className={`${prefix}-element-detail-header-button`}
             loading={this.state.loading}
             onClick={this._saveData}
+            type="primary"
           >
             <Icon type="check" />保存
           </Button>
