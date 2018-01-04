@@ -35,11 +35,11 @@ export default class DisplayTemplate extends React.Component {
         title: '模板编号',
         dataIndex: 'id',
         key: 'id',
+        render: (text, record) => <a onClick={() => this.createTab(record)}>{text}</a>,
       }, {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <a onClick={() => this.createTab(record)}>{text}</a>,
       }, {
         title: '数据模型',
         dataIndex: 'dataModelType',
@@ -215,6 +215,9 @@ export default class DisplayTemplate extends React.Component {
             current: pageIndex + 1,
             onShowSizeChange: this._paginationShowSizeChange,
             onChange: this._paginationOnChange
+          }}
+          locale={{
+            emptyText: <Button onClick={this._addTemplate}>添加一个模版</Button>
           }}
         />
       </LocaleProvider>

@@ -1,11 +1,11 @@
 import React from  'react';
 import * as components from '../../../../../src/components';
 import './style/index.less';
-import { Checkbox } from 'antd';
+// import { Checkbox } from 'antd';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
-  Button, Icon, Modal, Notify, Dropdown, Menu, Select
+  Button, Icon, Modal, Notify, Select
 } = components;
 
 const Panel = Collapse.Panel;
@@ -15,16 +15,7 @@ const comSize = 'small';
 
 const EditableCell = ({value, com, onChange, options}) => {
   const Com = components[com];
-  if ( com === 'CheckBox' ) {
-    return (
-      <Checkbox
-        size={comSize}
-        checked={value}
-        onChange={(e) => onChange(e.target.checked)}
-      />
-
-    );
-  } else if (com === 'Select' || com === 'RadioBox') {
+  if (com === 'Select' || com === 'RadioBox' || com === 'CheckBox') {
     return (
       <Com
         size={comSize}
@@ -267,7 +258,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
   _addTableData = (record, index) => {
     const { length } = this.state.data.elements || [];
     const tempArray = [...(this.state.data.elements || [])];
-    const newField = { name: `新字段${length}`, code: `新字段${length}`, key: Math.uuid()};
+    const nextElement = this.state.data.elements[index + 1];
+    let sortC = parseInt(record.sortCode) || 1000;
+    sortC = parseInt(nextElement ? (parseInt(nextElement.sortCode) + sortC) / 2 : sortC + 10);
+    const newField = { name: `新字段${length}`, code: `新字段${length}`, key: Math.uuid(), sortCode: sortC};
     if (!record) {
       tempArray.push(newField)
     } else {
@@ -591,12 +585,6 @@ export default Form.create()(class TemplateDetail extends React.Component {
             </Form>
           </Panel>
           <Panel header="字段信息" key="2">
-            <Button
-              onClick={this._addTableData}
-              className={`${prefix}-template-detail-table-button`}
-            >
-              <Icon type="plus" />添加
-            </Button>
             <Table
               size={comSize}
               rowKey={record => record.key}
@@ -604,6 +592,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
               dataSource={this.state.data.elements || []}
               pagination={false}
               scroll={{ x: 2000 }}
+              locale={{
+                emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
+              }}
             />
           </Panel>
         </Collapse>

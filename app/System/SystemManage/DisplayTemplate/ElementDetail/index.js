@@ -46,7 +46,7 @@ export default Form.create()(class ElementDetail extends React.Component {
       tempObj[f] = obj[f];
     });
     return tempObj;
-  }
+  };
   _saveData = () => {
     const { dataform, location } = this.props;
     this.props.form.validateFields((err, values) => {
@@ -212,7 +212,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('updateable', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.updateable,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '33%'}}
@@ -223,7 +223,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('persist', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.persist,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '33%'}}
@@ -234,7 +234,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('enable', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.enable,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '25%'}}
@@ -245,7 +245,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('primaryKey', {
                     rules: [{ required: false }],
                     initialValue: this.state.data.primaryKey,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '75%'}}
@@ -266,7 +266,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('multiplier', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.multiplier,
+                    initialValue: this.state.data.multiplier || 1,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -277,7 +277,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('limitedLength', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.limitedLength,
+                    initialValue: this.state.data.limitedLength || 0,
                   })(<Text />)}
                 </FormItem>
                 <FormItem
@@ -352,7 +352,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.visible,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '25%'}}
@@ -364,7 +364,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.readonly,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '20%'}}
@@ -376,7 +376,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                     rules: [{ required: false }],
                     initialValue: this.state.data.elementUIHint
                     && this.state.data.elementUIHint.required,
-                  })(<RadioBox options={[{code: false, name: '否'}, {code: true, name: '是'}]} />)}
+                  })(<CheckBox />)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '30%'}}
@@ -405,8 +405,8 @@ export default Form.create()(class ElementDetail extends React.Component {
                 >
                   {getFieldDecorator('editStyle', {
                     rules: [{ required: false }],
-                    initialValue: this.state.data.elementUIHint
-                    && this.state.data.elementUIHint.editStyle,
+                    initialValue: (this.state.data.elementUIHint
+                    && this.state.data.elementUIHint.editStyle) || 'Text',
                   })(<Select
                     options={[
                       {code: 'Text', name: '文本框'},
