@@ -157,7 +157,7 @@ export default class DataListObject {
       showSizeChanger: true,
       defaultPageSize: 10,
       current: 1,
-      total: 200,
+      total: 0,
       pageSize: this.defaultPageSize,
       noItemText: '',
       // itemRender: function (page, type, originalElement) {
@@ -286,7 +286,7 @@ export default class DataListObject {
       yearmonthpicker: 'yearmonthpicker',
       yearpicker: 'yearpicker',
       datetimepicker: 'datetimepicker',
-      timepicker: 'timepicker',
+      timepicker: 'datetimepicker',
     };
 
     this.renderGrandTotalFooter = renderGrandTotalFooter.bind(this);
