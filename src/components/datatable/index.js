@@ -26,6 +26,11 @@ class DataTable extends React.Component {
     });
     const injects = {};
     this.props.dataReady && (injects.dataReady = this.props.dataReady);
+    injects.query = {
+      dono: this.props.dataFormId,
+      params: this.props.dataFormParams,
+    };
+    // console.log(injects);
     this.methods.init(injects);
   }
 
@@ -35,6 +40,7 @@ class DataTable extends React.Component {
     if (this.props.didMounted) {
       this.props.didMounted(this.methods);
     }
+    this.run(this.props.dataFormId, this.props.dataFormParams);
   }
 
   componentWillUnmount() {

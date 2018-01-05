@@ -112,13 +112,13 @@ export default class DataListObject {
   init(injects) {
     if (injects && injects instanceof Object) {
       Object.assign(this, injects);
-      console.log(this);
+      // console.log(this);
     }
     const target = this;
     this.state.gridOptions = {
       searchRenderOnly: false,
       loading: false,
-      size: 'default',
+      size: 'small',
       bordered: true,
       requireType: 'remote',
       // rowSelection: {
@@ -236,7 +236,7 @@ export default class DataListObject {
     }
 
     this.on.valueChanged = valueChanged.bind(this);
-    this.lastQuery = {};
+    this.lastQuery = injects.query;
 
     console.log(this.lastQuery);
     this.disabledKeys = [];
@@ -686,7 +686,6 @@ export default class DataListObject {
     };
 
     const promise = this.queryTplAndData(dono, params, current, pageSize).then((res) => {
-      console.warn(res);
       this.dataReady && this.dataReady(res);
       this.$set('paginationConf.total', res.body.totalRowCount);
       this.fillData(res.body.dataList);
@@ -700,6 +699,43 @@ export default class DataListObject {
     return promise.then(() => {
 
     });
+  }
+
+  /*eslint-disable consistent-return*/
+  saveData() {
+    if (!this.lastQuery || !this.lastQuery.dono) {
+      console.error('参数错误，显示模板不存在，不能删除');
+      console.error(this.lastQuery);
+    }
+    console.log(JSON.stringify(this.state.rows));
+    this.$set('gridOptions.dataLoading', true);
+    const rows = this.state.rows.map((row) => {
+      const rowCopy = { ...row };
+      delete rowCopy.$$key;
+      return rowCopy;
+    });
+    // console.log(rows, rows instanceof Array);
+    return TableService.saveTableData(this.lastQuery.dono, rows).then(() => {
+      this.$set('gridOptions.dataLoading', false);
+    });
+  }
+
+  /*eslint-disable consistent-return*/
+  deleteData(dataList) {
+    if (!dataList) return;
+    console.log(this.lastQuery);
+    if (!this.lastQuery || !this.lastQuery.dono) {
+      console.error('参数错误，显示模板不存在，不能删除');
+      console.error(this.lastQuery);
+    }
+
+    let removeRows = dataList;
+    if (!(removeRows instanceof Array)) {
+      removeRows = [removeRows];
+    }
+
+    const rows = this.removeRows(removeRows);
+    return TableService.deleteTableData(this.lastQuery.dono, rows);
   }
 
   $get(attrChainStr) {

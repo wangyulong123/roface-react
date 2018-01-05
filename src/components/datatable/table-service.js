@@ -21,3 +21,13 @@ export function queryTableTplAndData(dono, params, pageIndex, pageSize, sortCode
   return rest.get(url);
 }
 
+export function saveTableData(dono, listData){
+  const url = `/dataform/save/list/${dono}`;
+  return rest.post(url, listData);
+}
+
+export function deleteTableData(dono, listData){
+  const url = `/dataform/delete/list/${dono}`;
+  return rest.post(url, listData);
+}
+

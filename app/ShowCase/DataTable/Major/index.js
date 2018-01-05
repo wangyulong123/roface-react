@@ -7,11 +7,11 @@ import { DataTable } from '../../../../src/components';
 
 export default class DataListMajor extends React.Component {
   dataReady(res) {
-    console.warn(123, res);
+    // console.warn(123, res);
   }
 
   tableReady(dom) {
-    console.warn(dom);
+    // console.warn(dom);
   }
 
   didMounted(api) {
@@ -318,6 +318,19 @@ export default class DataListMajor extends React.Component {
         onclick: testme,
       });
     }
+
+    function saveData() {
+      vm.saveData().then(() => {
+        message.success('数据保存成功！');
+      });
+    }
+
+    function deleteData() {
+      vm.deleteData(vm.getSelectedRow()).then(() => {
+        message.success('数据删除成功！');
+      });
+    }
+
     vm.addBtn(['设置表格尺寸', setSize, 'arrows-alt', 'primary']);
     vm.addBtn({
       type: 'primary',
@@ -493,15 +506,28 @@ export default class DataListMajor extends React.Component {
       disabled: true,
     });
 
-    vm.run('system-MenuList', {code: 'MenuList'}).then(() => {
-
+    vm.addBtn({
+      type: 'primary',
+      onclick: saveData,
+      name: '保存',
     });
+
+    vm.addBtn({
+      type: 'danger',
+      onclick: deleteData,
+      name: '删除',
+      icon: 'delete',
+    });
+
+
   }
 
   render() {
     return (
       <div>
         <DataTable
+          dataFormId="system-MenuList"
+          dataFormParams={{ code: 'MenuList' }}
           didMounted={this.didMounted}
           dataReady={this.dataReady}
           tableReady={this.tableReady} />
