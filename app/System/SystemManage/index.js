@@ -1,0 +1,1 @@
+export DisplayTemplate from './DisplayTemplate'
