@@ -62,9 +62,9 @@ function autoJs(fileObj) {
     }).join('\n');
     //console.log(fileObj);
     // 删除原来的index.js文件
-    if (fs.existsSync(field + '/index.js')) {
-      fs.unlinkSync(field + '/index.js');
-    }
+    /* if (fs.existsSync(field + '/index.js')) {
+       fs.unlinkSync(field + '/index.js');
+    } */
     fs.writeFileSync(field + '/autoIndex.js', data);
     console.log(field + '/autoIndex.js 文件生成');
   })
