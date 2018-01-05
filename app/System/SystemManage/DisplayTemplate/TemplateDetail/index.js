@@ -584,7 +584,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             </Panel>
             <Panel header="字段信息" key="2">
               <Table
-                size={comSize}
+                className={`${prefix}-template-field-table`}
                 rowKey={record => record.key}
                 columns={this.state.columns}
                 dataSource={this.state.data.elements || []}
