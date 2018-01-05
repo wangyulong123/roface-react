@@ -173,37 +173,36 @@ export default Form.create()(class TemplateDetail extends React.Component {
       });
     }
   }
-  _dataChange = (name, value, code) => {
+  _dataChange = (name, value, code, index) => {
+    let current = this.state.data.elements[index];
+    if (name.includes('.')) {
+      const arrays = name.split('.');
+      current = {
+        ...current,
+        [arrays[0]]: {
+          ...current[arrays[0]],
+          [arrays[1]]: value
+        }
+      }
+    } else {
+      current = {
+        ...current,
+        [name]: value,
+      }
+    }
+    this.state.data.elements[index] = current;
     this.setState({
       data: {
         ...this.state.data,
-        elements: this.state.data.elements.map((ele) => {
-          if (ele.code === code) {
-            if (name.includes('.')) {
-              const arrays = name.split('.');
-              return {
-                ...ele,
-                [arrays[0]]: {
-                  ...ele[arrays[0]],
-                  [arrays[1]]: value
-                }
-              }
-            }
-            return {
-              ...ele,
-              [name]: value,
-            };
-          }
-          return ele;
-        }),
-      },
+        elements: this.state.data.elements,
+      }
     });
-  }
-  _renderColumns = (name, com, text, record, column, options) => (
+  };
+  _renderColumns = (name, com, text, record, index, options) => (
     <EditableCell
       value={text}
       com={com}
-      onChange={value => this._dataChange(name, value, record.code, column)}
+      onChange={value => this._dataChange(name, value, record.code, index)}
       options={options}
     />
   );
