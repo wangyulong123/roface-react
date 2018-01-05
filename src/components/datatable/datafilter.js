@@ -29,11 +29,13 @@ const FormItem = Form.Item;
 //   name: '姓名',
 // }, {
 //   editType: 'select',
-//   placeholder: '测试',
-//   defaultValue: '123',
-//   field: 'name',
-//   name: '姓名',
-// },]
+//   field: 'sex',
+//   name: '性别',
+// }, {
+//   editType: 'select',
+//   field: 'sex',
+//   name: '生日',
+// }]
 class DetailFilter extends React.Component {
   constructor(props) {
     super(props);
