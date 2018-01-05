@@ -202,6 +202,7 @@ export default class DisplayTemplate extends React.Component {
     return (
       <LocaleProvider locale={zhCN}>
         <Table
+          className={'ro-template-table'}
           rowKey={record => record.id}
           columns={this.state.columns}
           dataSource={this.state.data}
