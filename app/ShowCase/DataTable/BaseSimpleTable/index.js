@@ -4,12 +4,12 @@ import { DataTable ,Button} from '../../../../src/components';
 
 export default class BaseSimpleTable extends React.Component {
     //dataTable(vm),meta,dom
-    formReady(dom){
-        console.log('form-ready:',dom);
+    formReady(dataTable,meta,dom){
+        console.log('form-ready:',dataTable,meta,dom);
     }
     //dataTable(vm),dataList(res.body)
-    dataReady(data){
-        console.log('data-ready:',data);
+    dataReady(dataTable,dataList){
+        console.log('data-ready:',dataTable,dataList);
     }
 
     didMounted(dataTable){
