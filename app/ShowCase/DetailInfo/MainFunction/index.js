@@ -243,7 +243,7 @@ export default class MainFunction extends React.Component {
             <Button disabled={this.state.disabled}> {'validate和validateItem'} <Icon type="down" /> </Button>
           </Dropdown>
         </Affix>
-        <DetailInfo dataFormId="demo-PersonInfo-data" didMount={this._didMount} />
+        <DetailInfo dataFormId="demo-PersonGroupInfo"  params={{id: 1}} didMount={this._didMount} />
       </div>
     );
   }

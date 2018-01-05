@@ -8,7 +8,7 @@ export default class ColumnTwo extends React.Component {
   };
   render() {
     return (
-      <DetailInfo dataFormId="demo-PersonInfo-data-ColumnTwo" didMount={this._didMount} />
+      <DetailInfo dataFormId="demo-PersonTwoColInfo"  params={{id: 1}} didMount={this._didMount} />
     );
   }
 }

@@ -9,7 +9,7 @@ export default class Group extends React.Component {
   };
   render() {
     return (
-      <DetailInfo dataFormId="demo-PersonInfo-data-Group" didMount={this._didMount} />
+      <DetailInfo dataFormId="demo-PersonGroupInfo"  params={{id: 1}} didMount={this._didMount} />
     );
   }
 }

@@ -30,7 +30,7 @@ export default class MetaSeparateData extends React.Component {
     return (
       <div>
         <Button disabled={this.state.disabled} onClick={this._getData}>获取数据</Button>
-        <DetailInfo dataFormId="demo-PersonInfo-data-MetaSeparateData" didMount={this._didMount} />
+        <DetailInfo dataFormId="demo-PersonSimpleInfo" didMount={this._didMount} />
       </div>
     );
   }
