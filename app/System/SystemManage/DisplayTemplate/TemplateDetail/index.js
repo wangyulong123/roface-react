@@ -51,6 +51,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
         title: '操作',
         dataIndex: 'opt',
         key: 'opt',
+        width: '140px',
         render: (text, record, index) => this._createButton(record, index),
       },
       {
