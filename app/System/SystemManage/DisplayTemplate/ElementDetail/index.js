@@ -100,7 +100,7 @@ export default Form.create()(class ElementDetail extends React.Component {
             <Icon type="check" />保存
           </Button>
         </div>
-        <Form>
+        <Form className={`${prefix}-element-detail-form`}>
           <Collapse defaultActiveKey={['1', '2', '3',]} onChange={this._panelChange}>
             <Panel header="基本信息" key="1">
               <div className={`${prefix}-element-detail-body-panel`}>

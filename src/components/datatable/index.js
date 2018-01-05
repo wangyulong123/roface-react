@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import ReactDom from 'react-dom';
 import {Table, LocaleProvider} from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import DataButtons from './databuttons';
@@ -23,12 +24,16 @@ class DataTable extends React.Component {
       this.methods[method] = this.methods[method].bind(this);
       this[method] = this.methods[method];
     });
-    this.methods.init();
+    const injects = {};
+    this.props.dataReady && (injects.dataReady = this.props.dataReady);
+    this.methods.init(injects);
   }
 
   componentDidMount() {
-    if (this.props.onMounted) {
-      this.props.onMounted(this.methods);
+    /* eslint-disable react/no-find-dom-node*/
+    this.props.tableReady && this.props.tableReady(ReactDom.findDOMNode(this));
+    if (this.props.didMounted) {
+      this.props.didMounted(this.methods);
     }
   }
 

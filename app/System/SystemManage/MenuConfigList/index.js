@@ -1,5 +1,5 @@
 import React from "react";
-import {DetailTable} from '../../../../src/components';
+import { DataTable } from '../../../../src/components';
 
 let vm = null;
 
@@ -13,7 +13,7 @@ export default class MenuConfigList extends React.Component {
     render() {
         return (
             <div>
-                <DetailTable onMounted={onMounted}/>
+                <DataTable onMounted={onMounted}/>
             </div>
         );
     }
