@@ -183,6 +183,7 @@ export default class DataListObject {
       onShowSizeChange(current, size) {
         console.log(current, size);
         target.$set('paginationConf.pageSize', size);
+        target.$set('paginationConf.current', 1);
         target.run(target.lastQuery.dono, target.lastQuery.params, 0, size);
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
           target.setRememberedRows();
