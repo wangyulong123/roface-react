@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { notification, message, Button } from 'antd';
-import { DetailTable } from '../../../../src/components';
+import { DataTable } from '../../../../src/components';
 
 let vm = null;
 
@@ -491,7 +491,7 @@ function onMounted(api) {
     disabled: true,
   });
 
-  api.run().then(() => {
+  api.run('system-MenuList', {code: 'MenuList'}).then(() => {
 
   });
 }
@@ -500,7 +500,7 @@ export default class DataListTest extends React.Component {
   render() {
     return (
       <div>
-        <DetailTable onMounted={onMounted} />
+        <DataTable onMounted={onMounted} />
       </div>
     );
   }

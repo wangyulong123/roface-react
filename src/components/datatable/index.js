@@ -5,14 +5,14 @@
 import React from 'react';
 import {Table, LocaleProvider} from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
-import DetailButtons from './detailbuttons';
-import DetailSearcher from './detailsearcher';
-import DetailToggle from './detailtoggle';
-import DetailFilter from './detailfilter';
+import DataButtons from './databuttons';
+import DataSearcher from './datasearcher';
+import DataToggle from './datatoggle';
+import DataFilter from './datafilter';
 import Methods from './api-inject';
 import './index.css';
 
-class DetailTable extends React.Component {
+class DataTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -40,29 +40,29 @@ class DetailTable extends React.Component {
       this.beforeRender();
     }
     const target = this;
-    function renderDetailFilter() {
+    function renderDataFilter() {
       let tpl = null;
       if (target.state.openSeniorSearch) {
-        tpl = <DetailFilter />;
+        tpl = <DataFilter />;
       }
       return tpl;
     }
 
     return (
-      <div className="detail-table-wrapper">
-        <div className="detail-table-operation">
-          <div className="detail-btn-wrapper">
-            <DetailButtons buttonList={this.state.buttonList} methods={this.methods}/>
+      <div className="data-table-wrapper">
+        <div className="data-table-operation">
+          <div className="data-btn-wrapper">
+            <DataButtons buttonList={this.state.buttonList} methods={this.methods}/>
           </div>
-          <div className="detail-searcher-wrapper">
-            <DetailSearcher placeholder="haha" onSearch={this.onQuickSearch} />
+          <div className="data-searcher-wrapper">
+            <DataSearcher placeholder="haha" onSearch={this.onQuickSearch} />
           </div>
-          <div className="detail-toggle-wrapper">
-            <DetailToggle onChange={this.onSearcherToggle} />
+          <div className="data-toggle-wrapper">
+            <DataToggle onChange={this.onSearcherToggle} />
           </div>
         </div>
-        <div className="detail-filter-wrapper">
-          {renderDetailFilter()}
+        <div className="data-filter-wrapper">
+          {renderDataFilter()}
         </div>
         <LocaleProvider locale={zhCN}>
           <Table
@@ -81,4 +81,4 @@ class DetailTable extends React.Component {
     );
   }
 }
-export default DetailTable;
+export default DataTable;

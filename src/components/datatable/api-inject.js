@@ -6,6 +6,7 @@ import React from 'react';
 // import { Input, InputNumber, Select, DatePicker, TimePicker } from 'antd';
 import { Text, TextArea, NumberInput, Currency, Select, MultiSelect, DatePicker, DateTimePicker, YearMonthPicker, YearPicker, TimePicker } from '../../components';
 import * as rest from '../../lib/rest';
+import * as TableService from './table-service';
 
 // const _columns = [{
 //   title: '#',
@@ -354,6 +355,28 @@ export default class DataListObject {
     this.on.itemPerPageChange = callback.bind(this);
   }
 
+  queryTplAndData(dono, params) {
+    if (this.state.gridOptions.searchRenderOnly) {
+      return null;
+    }
+    this.$set('gridOptions.tplLoading', true);
+    this.$set('gridOptions.dataLoading', true);
+
+    if (!this.state.paginationConf.pagination) {
+      this.$set('paginationConf.itemsPerPage', 0);
+    }
+
+    const promise = new Promise((resolve) => {
+      TableService.queryTableTplAndData(dono, params,
+        Math.max(this.state.paginationConf.current - 1, 0),
+        this.state.paginationConf.defaultPageSize).then((res) => {
+        resolve(res);
+      });
+    });
+
+    return promise;
+  }
+
   // 数据查询方法
   queryDataDefault() {
     if (this.state.gridOptions.searchRenderOnly) {
@@ -634,20 +657,35 @@ export default class DataListObject {
     this.setState({ rows: listDataCopy });
   }
 
-  run() {
+  run(dono, params) {
     this.$set('gridOptions.requireType', 'remote');
-    const tplPromise = this.queryData('default').then((res) => {
-      this.fillData(res);
+    // const tplPromise = this.queryData('default').then((res) => {
+    //   this.fillData(res);
+    //   this.$set('gridOptions.dataLoading', false);
+    // });
+    //
+    // const DataPromise = this.queryTplData().then((res) => {
+    //   this.renderUI(res);
+    //   this.$set('gridOptions.tplLoading', false);
+    // });
+    //
+    // return Promise.all([tplPromise, DataPromise]).then(() => {
+    //   // this.$set('gridOptions.loading', false);
+    // });
+
+    const promise = this.queryTplAndData(dono, params).then((res) => {
+      console.warn(res);
+      this.$set('paginationConf.total', res.body.totalRowCount);
+      this.fillData(res.body.dataList);
       this.$set('gridOptions.dataLoading', false);
-    });
-
-    const DataPromise = this.queryTplData().then((res) => {
-      this.renderUI(res);
       this.$set('gridOptions.tplLoading', false);
+      const adapter = this.templateAdapter
+      && this.templateAdapter instanceof Function
+        ? this.templateAdapter : DataListObject.tplAdapter;
+      this.renderUI(adapter(res, this.tplTypeMap));
     });
+    return promise.then(() => {
 
-    return Promise.all([tplPromise, DataPromise]).then(() => {
-      // this.$set('gridOptions.loading', false);
     });
   }
 
