@@ -3,24 +3,26 @@ import React from "react";
 import { DataTable ,Button} from '../../../../src/components';
 
 export default class BaseSimpleTable extends React.Component {
-    //dataTable,meta,dom
+    //dataTable(vm),meta,dom
     formReady(dom){
         console.log('form-ready:',dom);
-    };
-    //dataTable,dataList
+    }
+    //dataTable(vm),dataList(res.body)
     dataReady(data){
         console.log('data-ready:',data);
-    };
+    }
 
-    didMounted(vm){
-        vm.setColumnTemplate('name', (row, column, index, text) => {
-            return (<a onClick={()=>this.clickName(row)}>{text}</a>);
+    didMounted(dataTable){
+        function clickName(row){
+            console.log(row);
+        }
+
+        dataTable.setColumnTemplate('name', (row, column, index, text) => {
+            return (<a onClick={()=>clickName(row)}>{text}</a>);
         });
-    };
 
-    clickName(row){
-        console.log(row);
-    };
+    }
+
 
     render() {
         return (
