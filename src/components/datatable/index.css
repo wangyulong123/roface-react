@@ -1,11 +1,11 @@
-.detail-table-header-cell{
+.data-table-header-cell{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 180px;
 }
 
-.detail-table-index{
+.data-table-index{
     width: 50px!important;
 }
 
@@ -13,11 +13,11 @@
     overflow: auto;
 }
 
-.detail-table-wrapper {
+.data-table-wrapper {
     padding: 5px 10px;
 }
 
-.detail-table-operation{
+.data-table-operation{
     display: flex;
     border: 1px solid #e8e8e8;
     padding: 5px 10px;
@@ -25,21 +25,21 @@
     flex-wrap: wrap;
 }
 
-.detail-btn-wrapper {
+.data-btn-wrapper {
     width: 50%;
 }
 
-.detail-searcher-wrapper{
+.data-searcher-wrapper{
     width: 50%;
 }
 
-.detail-toggle-wrapper{
+.data-toggle-wrapper{
     position: absolute;
     bottom: 5px;
     right: 10px;
 }
 
-.detail-filter-wrapper{
+.data-filter-wrapper{
     width: 100%;
     border: 1px solid #e8e8e8;
     border-top: none;
