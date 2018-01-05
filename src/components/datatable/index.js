@@ -36,7 +36,7 @@ class DataTable extends React.Component {
 
   componentDidMount() {
     /* eslint-disable react/no-find-dom-node*/
-    this.props.tableReady && this.props.tableReady(ReactDom.findDOMNode(this));
+    this.props.formReady && this.props.formReady(ReactDom.findDOMNode(this));
     if (this.props.didMounted) {
       this.props.didMounted(this.methods);
     }

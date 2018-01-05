@@ -10,8 +10,8 @@ export default class DataListMajor extends React.Component {
     // console.warn(123, res);
   }
 
-  tableReady(dom) {
-    // console.warn(dom);
+  formReady(dom) {
+    console.warn(dom);
   }
 
   didMounted(api) {
@@ -250,12 +250,12 @@ export default class DataListMajor extends React.Component {
     }
 
     function setColumnTemplate() {
-      vm.setColumnTemplate('age', (row, column, index, text) => {
+      vm.setColumnTemplate('name', (row, column, index, text) => {
         return (<h2 style={{ backgroundColor: 'green' }}>{text}</h2>);
       });
-      vm.setColumnTemplate('birth', (row, column, index, text) => {
-        return (<h3 style={{ backgroundColor: 'red', color: 'white' }}>{text}</h3>);
-      });
+      // vm.setColumnTemplate('birth', (row, column, index, text) => {
+      //   return (<h3 style={{ backgroundColor: 'red', color: 'white' }}>{text}</h3>);
+      // });
     }
 
     function replaceColumnValue() {
@@ -530,7 +530,7 @@ export default class DataListMajor extends React.Component {
           dataFormParams={{ code: 'MenuList' }}
           didMounted={this.didMounted}
           dataReady={this.dataReady}
-          tableReady={this.tableReady} />
+          formReady={this.formReady} />
       </div>
     );
   }
