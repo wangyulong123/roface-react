@@ -32,6 +32,9 @@ export default class Tab extends React.Component {
     this.dom = ReactDom.findDOMNode(this);
     // tab的固定长度
     this.tabWidth = 110;
+    this.tabsLeftWidth = 5;
+    this.tabsRightWidth = 36;
+    this.tabIntervalWidth = 2;
     this.tabsWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-page-content-wrapper`)[0];
     this.offsetWidth = this.tabsWrapper.offsetWidth;
 
@@ -81,9 +84,9 @@ export default class Tab extends React.Component {
 
   checkWidth = () => {
     if (this.tabsWrapper) {
-      const tabsLength = this.state.tabs.length * (this.tabWidth + 2);
-      if (this.tabsWrapper.offsetWidth - 5 - 42 < tabsLength) {
-        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 - (this.state.tabs.length) * 2 - tabsLength) > this.tabWidth;
+      const tabsLength = this.state.tabs.length * (this.tabWidth + this.tabIntervalWidth);
+      if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth < tabsLength) {
+        const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth - (this.state.tabs.length) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
         if (isSpace) {
           console.log('isSpace-1:' + isSpace);
         } else {
@@ -98,9 +101,9 @@ export default class Tab extends React.Component {
             tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
           });
         }
-      } else if (this.tabsWrapper.offsetWidth - 5 - 41 > tabsLength) {
-        const isSpace = (this.tabsWrapper.offsetWidth - 5 - 41 -
-          (this.state.tabs.length ? this.state.tabs.length -1 : 0) * 2 - tabsLength) > this.tabWidth;
+      } else if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth > tabsLength) {
+        const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth -
+          (this.state.tabs.length ? this.state.tabs.length -1 : 0) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
           console.log('isSpace-2:' + isSpace);
           const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
@@ -154,8 +157,8 @@ export default class Tab extends React.Component {
 
   _isExistSpaceIfAdd = () => {
     if (this.tabsWrapper) {
-      const tabsLength = (this.state.tabs.length + 1) * (this.tabWidth + 2);
-      return this.tabsWrapper.offsetWidth - 5 - 42 > tabsLength;
+      const tabsLength = (this.state.tabs.length + 1) * (this.tabWidth + this.tabIntervalWidth);
+      return this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth > tabsLength;
     }
   };
 
