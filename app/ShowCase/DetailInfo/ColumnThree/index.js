@@ -9,7 +9,7 @@ export default class ColumnThree extends React.Component {
   };
   render() {
     return (
-      <DetailInfo dataFormId="demo-PersonInfo-data-ColumnThree" didMount={this._didMount} />
+      <DetailInfo dataFormId="demo-PersonThreeColInfo"  params={{id: 1}} didMount={this._didMount} />
     );
   }
 }

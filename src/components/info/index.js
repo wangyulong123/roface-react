@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import $ from 'jquery';
 
 import * as dataForm from '../../lib/dataform';
 import Form from './Form';
@@ -16,7 +17,7 @@ export default class Forms extends React.Component {
     };
   }
   componentDidMount() {
-    const { dataFormId, didMount, formReady, dataReady } = this.props;
+    const { didMount, formReady, dataReady } = this.props;
     /* eslint-disable */
     formReady && formReady(ReactDom.findDOMNode(this));
     const info = {
@@ -40,7 +41,7 @@ export default class Forms extends React.Component {
       validateItem: this.validateItem,
       saveData: this.saveData,
     };
-    dataForm.getMeta(dataFormId).then((res) => {
+    this._getData().then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
@@ -56,6 +57,13 @@ export default class Forms extends React.Component {
       })
     });
   }
+  _getData = () => {
+    const { dataFormId, params } = this.props;
+    if (params) {
+      return dataForm.getDataOne(dataFormId, $.param(this.props.params))
+    }
+    return dataForm.getMeta(dataFormId)
+  };
   setValue = (itemId, value) => {
     this.form.setFieldsValue({ [itemId]: value });
   };
