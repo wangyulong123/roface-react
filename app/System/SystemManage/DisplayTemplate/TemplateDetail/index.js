@@ -256,7 +256,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
   _addTableData = (record, index) => {
     const { length } = this.state.data.elements || [];
     const tempArray = [...(this.state.data.elements || [])];
-    const nextElement = this.state.data.elements[index + 1];
+    const nextElement = tempArray[index + 1];
     let sortC = parseInt(record.sortCode) || 1000;
     sortC = parseInt(nextElement ? (parseInt(nextElement.sortCode) + sortC) / 2 : sortC + 10);
     const newField = { name: `新字段${length}`, code: `新字段${length}`, key: Math.uuid(), sortCode: sortC};
