@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: 'http://192.168.64.159:8080/amix',
+    baseUrl: 'http://192.168.64.227:8080/amix',
     webApi: {
         i18n: '/base/i18n',
         dictList: '/base/dicts',

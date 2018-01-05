@@ -6,12 +6,12 @@ import { notification, message, Button } from 'antd';
 import { DataTable } from '../../../../src/components';
 
 export default class DataListMajor extends React.Component {
-  dataReady(res) {
-    // console.warn(123, res);
+  dataReady(dataTable, dataList) {
+    console.warn(123, dataTable, dataList);
   }
 
-  formReady(dom) {
-    console.warn(dom);
+  formReady(dataTable, meta, dom) {
+    console.warn(dataTable, meta, dom);
   }
 
   didMounted(api) {

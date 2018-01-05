@@ -35,12 +35,17 @@ class DataTable extends React.Component {
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-find-dom-node*/
-    this.props.formReady && this.props.formReady(ReactDom.findDOMNode(this));
     if (this.props.didMounted) {
       this.props.didMounted(this.methods);
     }
-    this.run(this.props.dataFormId, this.props.dataFormParams);
+    this.run(this.props.dataFormId, this.props.dataFormParams).then(() => {
+      /* eslint-disable react/no-find-dom-node*/
+      this.props.formReady && (this.props.formReady(
+        this.methods,
+        this.state.columns,
+        ReactDom.findDOMNode(this),
+      ));
+    });
   }
 
   componentWillUnmount() {
@@ -79,7 +84,7 @@ class DataTable extends React.Component {
           <Table
             columns={this.state.columns}
             dataSource={this.state.rows}
-            loading={this.state.gridOptions.tplLoading && this.state.gridOptions.dataLoading}
+            loading={this.state.gridOptions.tplLoading || this.state.gridOptions.dataLoading}
             rowSelection={this.state.rowSelection}
             size={this.state.gridOptions.size}
             bordered={this.state.gridOptions.bordered}
