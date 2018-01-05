@@ -12,7 +12,8 @@ export default class Simple extends React.Component {
   render() {
     return (
       <DetailInfo
-        dataFormId="demo-PersonInfo-data-Simple"
+        params={{id: 1}}
+        dataFormId="demo-PersonSimpleInfo"
         formReady={this._formReady}
         dataReady={this._dataReady}/>
     );

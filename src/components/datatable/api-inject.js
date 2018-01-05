@@ -109,7 +109,11 @@ import * as TableService from './table-service';
 // }
 
 export default class DataListObject {
-  init() {
+  init(injects) {
+    if (injects && injects instanceof Object) {
+      Object.assign(this, injects);
+      console.log(this);
+    }
     const target = this;
     this.state.gridOptions = {
       searchRenderOnly: false,
@@ -167,6 +171,8 @@ export default class DataListObject {
       pageSizeOptions: ['10', '20', '30', '40', '50', '150', '300'],
       onChange(currentPage, itemsPerPage) {
         target.$set('paginationConf.current', currentPage);
+        target.run(target.lastQuery.dono, target.lastQuery.params, currentPage - 1, itemsPerPage);
+
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
           target.setRememberedRows();
         }
@@ -177,6 +183,8 @@ export default class DataListObject {
       onShowSizeChange(current, size) {
         console.log(current, size);
         target.$set('paginationConf.pageSize', size);
+        target.$set('paginationConf.current', 1);
+        target.run(target.lastQuery.dono, target.lastQuery.params, 0, size);
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
           target.setRememberedRows();
         }
@@ -355,7 +363,7 @@ export default class DataListObject {
     this.on.itemPerPageChange = callback.bind(this);
   }
 
-  queryTplAndData(dono, params) {
+  queryTplAndData(dono, params, current, pageSize) {
     if (this.state.gridOptions.searchRenderOnly) {
       return null;
     }
@@ -368,8 +376,8 @@ export default class DataListObject {
 
     const promise = new Promise((resolve) => {
       TableService.queryTableTplAndData(dono, params,
-        Math.max(this.state.paginationConf.current - 1, 0),
-        this.state.paginationConf.defaultPageSize).then((res) => {
+        Math.max(current || this.state.paginationConf.current - 1, 0),
+        pageSize || this.state.paginationConf.defaultPageSize).then((res) => {
         resolve(res);
       });
     });
@@ -657,7 +665,7 @@ export default class DataListObject {
     this.setState({ rows: listDataCopy });
   }
 
-  run(dono, params) {
+  run(dono, params, current, pageSize) {
     this.$set('gridOptions.requireType', 'remote');
     // const tplPromise = this.queryData('default').then((res) => {
     //   this.fillData(res);
@@ -672,9 +680,14 @@ export default class DataListObject {
     // return Promise.all([tplPromise, DataPromise]).then(() => {
     //   // this.$set('gridOptions.loading', false);
     // });
+    this.lastQuery = {
+      dono,
+      params,
+    };
 
-    const promise = this.queryTplAndData(dono, params).then((res) => {
+    const promise = this.queryTplAndData(dono, params, current, pageSize).then((res) => {
       console.warn(res);
+      this.dataReady && this.dataReady(res);
       this.$set('paginationConf.total', res.body.totalRowCount);
       this.fillData(res.body.dataList);
       this.$set('gridOptions.dataLoading', false);

@@ -174,37 +174,36 @@ export default Form.create()(class TemplateDetail extends React.Component {
       });
     }
   }
-  _dataChange = (name, value, code) => {
+  _dataChange = (name, value, code, index) => {
+    let current = this.state.data.elements[index];
+    if (name.includes('.')) {
+      const arrays = name.split('.');
+      current = {
+        ...current,
+        [arrays[0]]: {
+          ...current[arrays[0]],
+          [arrays[1]]: value
+        }
+      }
+    } else {
+      current = {
+        ...current,
+        [name]: value,
+      }
+    }
+    this.state.data.elements[index] = current;
     this.setState({
       data: {
         ...this.state.data,
-        elements: this.state.data.elements.map((ele) => {
-          if (ele.code === code) {
-            if (name.includes('.')) {
-              const arrays = name.split('.');
-              return {
-                ...ele,
-                [arrays[0]]: {
-                  ...ele[arrays[0]],
-                  [arrays[1]]: value
-                }
-              }
-            }
-            return {
-              ...ele,
-              [name]: value,
-            };
-          }
-          return ele;
-        }),
-      },
+        elements: this.state.data.elements,
+      }
     });
-  }
-  _renderColumns = (name, com, text, record, column, options) => (
+  };
+  _renderColumns = (name, com, text, record, index, options) => (
     <EditableCell
       value={text}
       com={com}
-      onChange={value => this._dataChange(name, value, record.code, column)}
+      onChange={value => this._dataChange(name, value, record.code, index)}
       options={options}
     />
   );
@@ -258,7 +257,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
   _addTableData = (record, index) => {
     const { length } = this.state.data.elements || [];
     const tempArray = [...(this.state.data.elements || [])];
-    const nextElement = this.state.data.elements[index + 1];
+    const nextElement = tempArray[index + 1];
     let sortC = parseInt(record.sortCode) || 1000;
     sortC = parseInt(nextElement ? (parseInt(nextElement.sortCode) + sortC) / 2 : sortC + 10);
     const newField = { name: `新字段${length}`, code: `新字段${length}`, key: Math.uuid(), sortCode: sortC};
@@ -361,244 +360,246 @@ export default Form.create()(class TemplateDetail extends React.Component {
             <Icon type="check" />保存
           </Button>
         </div>
-        <Collapse defaultActiveKey={['1', '2']} onChange={this._panelChange}>
-          <Panel header="基本信息" key="1">
-            <Form className={`${prefix}-template-detail-info-layout`}>
-              <FormItem
-                style={{ width: '30%' }}
-                {...formItemLayout}
-                label="包"
-                wrapperCol={{ span: 13 }}
-              >
-                <div>
-                  {getFieldDecorator('pack', {
+        <div className={`${prefix}-template-detail-collapse`}>
+          <Collapse defaultActiveKey={['1', '2']} onChange={this._panelChange}>
+            <Panel header="基本信息" key="1">
+              <Form className={`${prefix}-template-detail-info-layout`}>
+                <FormItem
+                  style={{ width: '30%' }}
+                  {...formItemLayout}
+                  label="包"
+                  wrapperCol={{ span: 13 }}
+                >
+                  <div>
+                    {getFieldDecorator('pack', {
+                      rules: [{ required: true }],
+                      initialValue: this.state.data.pack,
+                    })(<Text />)}
+                  </div>
+                </FormItem>
+                <FormItem
+                  style={{ width: '65%' }}
+                  {...formItemLayout}
+                  label="模版代码"
+                  wrapperCol={{ span: 12 }}
+                >
+                  <div>
+                    {getFieldDecorator('code', {
+                      rules: [{ required: true }],
+                      initialValue: this.state.data.code,
+                    })(<Text />)}
+                  </div>
+                </FormItem>
+                <FormItem
+                  style={{ width: '50%' }}
+                  {...formItemLayout}
+                  label="名称"
+                  wrapperCol={{ span: 18 }}
+                >
+                  {getFieldDecorator('name', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.pack,
+                    initialValue: this.state.data.name,
                   })(<Text />)}
-                </div>
-              </FormItem>
-              <FormItem
-                style={{ width: '65%' }}
-                {...formItemLayout}
-                label="模版代码"
-                wrapperCol={{ span: 12 }}
-              >
-                <div>
-                  {getFieldDecorator('code', {
+                </FormItem>
+                <FormItem
+                  style={{ width: '50%' }}
+                  {...formItemLayout}
+                  label="排序码"
+                  wrapperCol={{ span: 8 }}
+                >
+                  {getFieldDecorator('sortCode', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.sortCode,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={{ width: '50%' }}
+                  {...formItemLayout}
+                  label="显示方式"
+                  wrapperCol={{ span: 18 }}
+                >
+                  {getFieldDecorator('formStyle', {
                     rules: [{ required: true }],
-                    initialValue: this.state.data.code,
-                  })(<Text />)}
-                </div>
-              </FormItem>
-              <FormItem
-                style={{ width: '50%' }}
-                {...formItemLayout}
-                label="名称"
-                wrapperCol={{ span: 18 }}
-              >
-                {getFieldDecorator('name', {
-                  rules: [{ required: true }],
-                  initialValue: this.state.data.name,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={{ width: '50%' }}
-                {...formItemLayout}
-                label="排序码"
-                wrapperCol={{ span: 8 }}
-              >
-                {getFieldDecorator('sortCode', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.sortCode,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={{ width: '50%' }}
-                {...formItemLayout}
-                label="显示方式"
-                wrapperCol={{ span: 18 }}
-              >
-                {getFieldDecorator('formStyle', {
-                  rules: [{ required: true }],
-                  initialValue: (this.state.data.formUIHint
-                    && this.state.data.formUIHint.formStyle) || 'DataTable',
-                })(<Select options={[
-                    {code: 'DataTable', name: 'DataTable'},
-                    {code: 'DetailInfo', name: 'DetailInfo'},
-                    {code: 'TreeTable', name: 'TreeTable'},
-                    {code: 'ListItem', name: 'ListItem'},
-                    {code: 'ListCard', name: 'ListCard'},
+                    initialValue: (this.state.data.formUIHint
+                      && this.state.data.formUIHint.formStyle) || 'DataTable',
+                  })(<Select options={[
+                      {code: 'DataTable', name: 'DataTable'},
+                      {code: 'DetailInfo', name: 'DetailInfo'},
+                      {code: 'TreeTable', name: 'TreeTable'},
+                      {code: 'ListItem', name: 'ListItem'},
+                      {code: 'ListCard', name: 'ListCard'},
+                    ]}
+                             optionName="name"
+                             optionField="code"
+                    />
+                  )}
+                </FormItem>
+                <FormItem
+                  style={{ width: '45%' }}
+                  {...formItemLayout}
+                  label="栏数"
+                  wrapperCol={{ span: 18 }}
+                >
+                  {getFieldDecorator('columnNumber', {
+                    rules: [{ required: false }],
+                    initialValue: (this.state.data.formUIHint
+                      && this.state.data.formUIHint.columnNumber) || 1,
+                  })(<RadioBox options={[
+                    {code: 1, name: '1'},
+                    {code: 2, name: '2'},
+                    {code: 3, name: '3'},
+                    {code: 4, name: '4'},
                   ]}
-                           optionName="name"
-                           optionField="code"
-                  />
-                )}
-              </FormItem>
-              <FormItem
-                style={{ width: '45%' }}
-                {...formItemLayout}
-                label="栏数"
-                wrapperCol={{ span: 18 }}
-              >
-                {getFieldDecorator('columnNumber', {
-                  rules: [{ required: false }],
-                  initialValue: (this.state.data.formUIHint
-                    && this.state.data.formUIHint.columnNumber) || 1,
-                })(<RadioBox options={[
-                  {code: 1, name: '1'},
-                  {code: 2, name: '2'},
-                  {code: 3, name: '3'},
-                  {code: 4, name: '4'},
-                ]}
-                />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="关键字"
-                wrapperCol={{ span: 12 }}
-              >
-                {getFieldDecorator('tags', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.tags,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="模版说明"
-              >
-                {getFieldDecorator('description', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.description,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="数据模型"
-                wrapperCol={{ span: 12 }}
-              >
-                {getFieldDecorator('dataModelType', {
-                  rules: [{ required: true }],
-                  initialValue: this.state.data.dataModelType || 'JavaBean',
-                })(<RadioBox options={[
-                  {code: 'JavaBean', name: 'JavaBean'},
-                  {code: 'DataMap', name: 'DataMap'},
-                ]}/>)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="数据实体"
-                wrapperCol={{ span: 8 }}
-              >
-                {getFieldDecorator('dataModel', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.dataModel,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="处理Handler"
-                wrapperCol={{ span: 12 }}
-              >
-                {getFieldDecorator('handler', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.handler,
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="SELECT"
-                wrapperCol={{ span: 6 }}
-              >
-                {getFieldDecorator('select', {
-                  rules: [{ required: false }],
-                  initialValue: (this.state.data.query
-                    && this.state.data.query.select) || 'select',
-                })(<Text />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="字段明细"
-              >
-                <code>[自动计算]</code>
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="FROM"
-              >
-                {getFieldDecorator('from', {
-                  rules: [{ required: true }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.from,
-                })(<TextArea />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="WHERE"
-              >
-                {getFieldDecorator('where', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.where,
-                })(<TextArea />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="GROUP BY"
-              >
-                {getFieldDecorator('groupBy', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.groupBy,
-                })(<TextArea />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="ORDER BY"
-              >
-                {getFieldDecorator('orderBy', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.orderBy,
-                })(<TextArea />)}
-              </FormItem>
-              <FormItem
-                style={style}
-                {...formItemLayout}
-                label="HAVING"
-              >
-                {getFieldDecorator('having', {
-                  rules: [{ required: false }],
-                  initialValue: this.state.data.query
-                  && this.state.data.query.having,
-                })(<TextArea />)}
-              </FormItem>
-            </Form>
-          </Panel>
-          <Panel header="字段信息" key="2">
-            <Table
-              className={`${prefix}-template-field-table`}
-              rowKey={record => record.key}
-              columns={this.state.columns}
-              dataSource={this.state.data.elements || []}
-              pagination={false}
-              scroll={{ x: 2000 }}
-              locale={{
-                emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
-              }}
-            />
-          </Panel>
-        </Collapse>
+                  />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="关键字"
+                  wrapperCol={{ span: 12 }}
+                >
+                  {getFieldDecorator('tags', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.tags,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="模版说明"
+                >
+                  {getFieldDecorator('description', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.description,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="数据模型"
+                  wrapperCol={{ span: 12 }}
+                >
+                  {getFieldDecorator('dataModelType', {
+                    rules: [{ required: true }],
+                    initialValue: this.state.data.dataModelType || 'JavaBean',
+                  })(<RadioBox options={[
+                    {code: 'JavaBean', name: 'JavaBean'},
+                    {code: 'DataMap', name: 'DataMap'},
+                  ]}/>)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="数据实体"
+                  wrapperCol={{ span: 8 }}
+                >
+                  {getFieldDecorator('dataModel', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.dataModel,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="处理Handler"
+                  wrapperCol={{ span: 12 }}
+                >
+                  {getFieldDecorator('handler', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.handler,
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="SELECT"
+                  wrapperCol={{ span: 6 }}
+                >
+                  {getFieldDecorator('select', {
+                    rules: [{ required: false }],
+                    initialValue: (this.state.data.query
+                      && this.state.data.query.select) || 'select',
+                  })(<Text />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="字段明细"
+                >
+                  <code>[自动计算]</code>
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="FROM"
+                >
+                  {getFieldDecorator('from', {
+                    rules: [{ required: true }],
+                    initialValue: this.state.data.query
+                    && this.state.data.query.from,
+                  })(<TextArea />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="WHERE"
+                >
+                  {getFieldDecorator('where', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.query
+                    && this.state.data.query.where,
+                  })(<TextArea />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="GROUP BY"
+                >
+                  {getFieldDecorator('groupBy', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.query
+                    && this.state.data.query.groupBy,
+                  })(<TextArea />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="ORDER BY"
+                >
+                  {getFieldDecorator('orderBy', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.query
+                    && this.state.data.query.orderBy,
+                  })(<TextArea />)}
+                </FormItem>
+                <FormItem
+                  style={style}
+                  {...formItemLayout}
+                  label="HAVING"
+                >
+                  {getFieldDecorator('having', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.query
+                    && this.state.data.query.having,
+                  })(<TextArea />)}
+                </FormItem>
+              </Form>
+            </Panel>
+            <Panel header="字段信息" key="2">
+              <Table
+                size={comSize}
+                rowKey={record => record.key}
+                columns={this.state.columns}
+                dataSource={this.state.data.elements || []}
+                pagination={false}
+                scroll={{ x: 2000 }}
+                locale={{
+                  emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
+                }}
+              />
+            </Panel>
+          </Collapse>
+        </div>
       </div>);
   }
 });
