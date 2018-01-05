@@ -714,7 +714,7 @@ export default class DataListObject {
     };
 
     const promise = this.queryTplAndData(dono, params, current, pageSize).then((res) => {
-      this.dataReady && this.dataReady(res);
+      this.dataReady && this.dataReady(this, res.body);
       this.$set('paginationConf.total', res.body.totalRowCount);
       this.fillData(res.body.dataList);
       this.$set('gridOptions.dataLoading', false);
@@ -756,14 +756,16 @@ export default class DataListObject {
       console.error('参数错误，显示模板不存在，不能删除');
       console.error(this.lastQuery);
     }
-
+    this.$set('gridOptions.dataLoading', true);
     let removeRows = dataList;
     if (!(removeRows instanceof Array)) {
       removeRows = [removeRows];
     }
 
     const rows = this.removeRows(removeRows);
-    return TableService.deleteTableData(this.lastQuery.dono, rows);
+    return TableService.deleteTableData(this.lastQuery.dono, rows).then(() => {
+      this.$set('gridOptions.dataLoading', false);
+    });
   }
 
   $get(attrChainStr) {
