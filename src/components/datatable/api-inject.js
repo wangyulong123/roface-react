@@ -171,7 +171,7 @@ export default class DataListObject {
       pageSizeOptions: ['10', '20', '30', '40', '50', '150', '300'],
       onChange(currentPage, itemsPerPage) {
         target.$set('paginationConf.current', currentPage);
-        target.run(target.lastQuery.dono, target.lastQuery.params, currentPage, itemsPerPage);
+        target.run(target.lastQuery.dono, target.lastQuery.params, currentPage - 1, itemsPerPage);
 
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
           target.setRememberedRows();
@@ -183,7 +183,7 @@ export default class DataListObject {
       onShowSizeChange(current, size) {
         console.log(current, size);
         target.$set('paginationConf.pageSize', size);
-        target.run(target.lastQuery.dono, target.lastQuery.params, current, size);
+        target.run(target.lastQuery.dono, target.lastQuery.params, 0, size);
         if (target.remember && target.state.rowSelection.type === 'checkbox') {
           target.setRememberedRows();
         }
