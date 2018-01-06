@@ -22,15 +22,8 @@ export default class BaseSimpleTable extends React.Component {
     clickName = (row) => {
         const {flexTabs} = this.prop;
 
-        // flexTabs.createTab('ShowCase/DataTable/BaseSimpleTable/DetailInfo','');
+        flexTabs.createTab('ShowCase/DataTable/BaseSimpleTable/DetailInfo', '');
         // flexTabs.createTab(<DetailInfo dataFormId="demo-MapPersonInfo" params={{id: row.id}}/>,'');
         // console.log(props);
-    ;
-
-
-    render() {
-        return (
-            <DataTable dataFormId="demo-MapPersonList" dataReady={this.dataReady} formReady={this.formReady}/>
-        );
     }
 }
