@@ -1,7 +1,7 @@
 import React from 'react';
-import { addOnResize } from '../../../src/lib/listener';
+import { addOnResize } from '../../../../src/lib/listener';
 
-export default class WorkFlow extends React.Component {
+export default class WorkFlowDesigner extends React.Component {
   constructor(){
     super();
     this.height = 150;
