@@ -3,7 +3,7 @@ import React from "react";
 import { DataTable ,Button} from '../../../../src/components';
 
 export default class BaseSimpleTable extends React.Component {
-    static DetailInfo = DetailInfo;
+    // static DetailInfo = DetailInfo;
     //dataTable(vm),meta,dom
     formReady(dataTable,meta,dom){
         console.log('form-ready:',dataTable,meta,dom);
