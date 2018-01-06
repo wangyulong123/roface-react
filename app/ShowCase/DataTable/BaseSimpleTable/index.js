@@ -1,22 +1,27 @@
 import React from "react";
 
-import { DataTable } from '../../../../src/components';
+import { DataTable ,Button} from '../../../../src/components';
 
 export default class BaseSimpleTable extends React.Component {
-    didMounted(vm) {
-        vm.run('demo-MapPersonList', {code: 'MenuList'}).then(() => {
-        });
-        vm.setColumnTemplate('name', (row, column, index, text) => {
-            return (<a style={{ backgroundColor: 'green' }}>{text}</a>);
-        });
-
+    //dataTable(vm),meta,dom
+    formReady(dataTable,meta,dom){
+        console.log('form-ready:',dataTable,meta,dom);
     }
+    dataReady(dataTable,dataList){
+        console.log('data-ready:',dataTable,dataList);
+        function clickName(row){
+            console.log(row);
+        }
+
+        dataTable.setColumnTemplate('name', (row, column, index, text) => {
+            return (<a onClick={()=>clickName(row)}>{text}</a>);
+        });
+    }
+
 
     render() {
         return (
-            <div>
-                <DataTable didMounted={this.didMounted}/>
-            </div>
+            <DataTable dataFormId="demo-MapPersonList" dataReady={this.dataReady} formReady={this.formReady}/>
         );
     }
 }

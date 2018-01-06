@@ -83,7 +83,8 @@ export default Form.create()(class TemplateDetail extends React.Component {
         dataIndex: 'elementUIHint',
         key: 'elementUIHint.visible',
         render: (text, record, index) =>
-          this._renderColumns('elementUIHint.visible', 'CheckBox', text && text.visible || true, record, index, []),
+          this._renderColumns('elementUIHint.visible', 'CheckBox', text && text.visible ? true : false,
+            record, index, []),
       },
       {
         title: '只读',
@@ -114,11 +115,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
       },
       {
         title: '数据类型',
-        dataIndex: 'elementUIHint',
-        key: 'elementUIHint.dataFormat',
-        render: (text, record, index) => this._renderColumns('elementUIHint.dataFormat', 'Select',
-          text && text.dataFormat || 'String', record, index,
-          ['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']),
+        dataIndex: 'dataType',
+        key: 'dataType',
+        render: (text, record, index) => this._renderColumns('dataType', 'Select',
+          text || 'String', record, index,
+          ['String', 'Integer', 'Double', 'Date', 'StringArray', 'Boolean']),
       },
       {
         title: '编辑形式',
@@ -174,43 +175,44 @@ export default Form.create()(class TemplateDetail extends React.Component {
       });
     }
   }
-  _dataChange = (name, value, code, index) => {
-    let current = this.state.data.elements[index];
-    if (name.includes('.')) {
-      const arrays = name.split('.');
-      current = {
-        ...current,
-        [arrays[0]]: {
-          ...current[arrays[0]],
-          [arrays[1]]: value
-        }
-      }
-    } else {
-      current = {
-        ...current,
-        [name]: value,
-      }
-    }
-    this.state.data.elements[index] = current;
+  _dataChange = (name, value, key) => {
     this.setState({
       data: {
         ...this.state.data,
-        elements: this.state.data.elements,
-      }
+        elements: this.state.data.elements.map((ele) => {
+          if (ele.key === key) {
+            if (name.includes('.')) {
+              const arrays = name.split('.');
+              return {
+                ...ele,
+                [arrays[0]]: {
+                  ...ele[arrays[0]],
+                  [arrays[1]]: value
+                }
+              }
+            }
+            return {
+              ...ele,
+              [name]: value,
+            };
+          }
+          return ele;
+        }),
+      },
     });
   };
   _renderColumns = (name, com, text, record, index, options) => (
     <EditableCell
       value={text}
       com={com}
-      onChange={value => this._dataChange(name, value, record.code, index)}
+      onChange={value => this._dataChange(name, value, record.key)}
       options={options}
     />
   );
   _createButton = (record, index) => {
     return (
       <ButtonGroup>
-        <Button onClick={() => this._checkDataId(record)} icon="info" type="primary" size={comSize}/>
+        <Button onClick={() => this._checkDataId(record)} icon="edit" type="primary" size={comSize}/>
         <Button onClick={() => this._addTableData(record, index)} icon="plus" type="primary" size={comSize}/>
         <Button onClick={() => this._deleteTableData(record)} icon="minus" type="primary" size={comSize}/>
       </ButtonGroup>
@@ -272,15 +274,14 @@ export default Form.create()(class TemplateDetail extends React.Component {
         elements: tempArray,
       },
     });
-    console.log(this.state.data);
-  }
+  };
   _filterField = (obj, field) => {
     const tempObj = {};
     Object.keys(obj).filter(f => f !== field).forEach((f) => {
       tempObj[f] = obj[f];
     });
     return tempObj;
-  }
+  };
   _saveData = () => {
     const { dataform } = this.props;
     return new Promise((resovle, reject) => {
@@ -289,7 +290,6 @@ export default Form.create()(class TemplateDetail extends React.Component {
           this.setState({
             loading: true,
           });
-
           const param = {
             ...this.state.data,
             ...this._filterField(values, 'columnNumber'),
@@ -307,8 +307,6 @@ export default Form.create()(class TemplateDetail extends React.Component {
               having: values.having,
             }
           };
-          console.log(param);
-          console.log(this.state.data.id);
           const url = this.state.data.id ? `/dataform/${this.state.data.id}` : '/dataform';
           dataform.postAdmin(url, param).then((res) => {
             resovle(res);
@@ -587,7 +585,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             </Panel>
             <Panel header="字段信息" key="2">
               <Table
-                size={comSize}
+                className={`${prefix}-template-field-table`}
                 rowKey={record => record.key}
                 columns={this.state.columns}
                 dataSource={this.state.data.elements || []}
