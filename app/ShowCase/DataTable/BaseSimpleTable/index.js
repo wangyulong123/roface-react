@@ -18,6 +18,10 @@ export default class BaseSimpleTable extends React.Component {
         });
     }
 
+    clickName = (row) => {
+        //<DetailInfo dataFormId="demo-MapPersonInfo" params={{id: row.id}}/>
+    };
+
 
     render() {
         return (
