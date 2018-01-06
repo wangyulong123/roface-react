@@ -23,7 +23,7 @@ class RoTree extends React.Component {
     const titleRef = nodeTitle.includes('.') ? nodeTitle.split('.') : nodeTitle;
     const keyRef = nodeKey.includes('.') ? nodeKey.split('.') : nodeKey;
     return dataS && dataS.map((item) => {
-      if (item[childrenKey]) {
+      if (item[childrenKey] && item[childrenKey].length > 0) {
         return (
           <TreeNode
             {...item}
@@ -38,6 +38,7 @@ class RoTree extends React.Component {
       return (
         <TreeNode
           {...item}
+          children={undefined}  // eslint-disable-line
           title={titleRef instanceof Array ? item[titleRef[0]][titleRef[1]] : item[titleRef]}
           key={keyRef instanceof Array ? item[keyRef[0]][keyRef[1]] : item[keyRef]}
           dataRef={item}
