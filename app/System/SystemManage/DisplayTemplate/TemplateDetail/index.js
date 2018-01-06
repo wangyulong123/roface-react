@@ -293,9 +293,11 @@ export default Form.create()(class TemplateDetail extends React.Component {
           const param = {
             ...this.state.data,
             ...this._filterField(values, 'columnNumber'),
+            ...this._filterField(values, 'formStyle'),
             formUIHint: {
               ...this.state.data.formUIHint,
               columnNumber: values.columnNumber,
+              formStyle: values.formStyle,
             },
             query: {
               ...this.state.data.query,
