@@ -3,6 +3,7 @@ import React from "react";
 import { DataTable ,Button} from '../../../../src/components';
 
 export default class BaseSimpleTable extends React.Component {
+    static DetailInfo = DetailInfo;
     //dataTable(vm),meta,dom
     formReady(dataTable,meta,dom){
         console.log('form-ready:',dataTable,meta,dom);
@@ -19,8 +20,12 @@ export default class BaseSimpleTable extends React.Component {
     }
 
     clickName = (row) => {
-        //<DetailInfo dataFormId="demo-MapPersonInfo" params={{id: row.id}}/>
-    };
+        const {flexTabs} = this.prop;
+
+        // flexTabs.createTab('ShowCase/DataTable/BaseSimpleTable/DetailInfo','');
+        // flexTabs.createTab(<DetailInfo dataFormId="demo-MapPersonInfo" params={{id: row.id}}/>,'');
+        // console.log(props);
+    ;
 
 
     render() {
