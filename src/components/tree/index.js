@@ -9,8 +9,8 @@ const TreeNode = Tree.TreeNode;
 
 class RoTree extends React.Component {
   static defaultProps = {
-    nodeName: 'title',
-    nodeValue: 'key',
+    nodeTitle: 'title',
+    nodeKey: 'key',
     childrenKey: 'children',
   };
   static TreeNode = TreeNode;
@@ -19,17 +19,29 @@ class RoTree extends React.Component {
     this.state = {};
   }
   _renderTreeNode = (dataS) => {
-    const { nodeName, nodeValue, childrenKey } = this.props;
+    const { nodeTitle, nodeKey, childrenKey } = this.props;
+    const titleRef = nodeTitle.includes('.') ? nodeTitle.split('.') : nodeTitle;
+    const keyRef = nodeKey.includes('.') ? nodeKey.split('.') : nodeKey;
     return dataS && dataS.map((item) => {
       if (item[childrenKey]) {
         return (
-          <TreeNode {...item} title={item[nodeName]} key={item[nodeValue]} dataRef={item}>
+          <TreeNode
+            {...item}
+            title={titleRef instanceof Array ? item[titleRef[0]][titleRef[1]] : item[titleRef]}
+            key={keyRef instanceof Array ? item[keyRef[0]][keyRef[1]] : item[keyRef]}
+            dataRef={item}
+          >
             {this._renderTreeNode(item[childrenKey])}
           </TreeNode>
         );
       }
       return (
-        <TreeNode {...item} title={item[nodeName]} key={item[nodeValue]} dataRef={item} />
+        <TreeNode
+          {...item}
+          title={titleRef instanceof Array ? item[titleRef[0]][titleRef[1]] : item[titleRef]}
+          key={keyRef instanceof Array ? item[keyRef[0]][keyRef[1]] : item[keyRef]}
+          dataRef={item}
+        />
       );
     });
   };
