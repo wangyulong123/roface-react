@@ -1,22 +1,35 @@
 import React from 'react';
-import {Tree,Row,Col,DataTable,DetailInfo} from '../../../../src/components';
+import {Tree,Row,Col,DataTable,DetailInfo,Tabs} from '../../../../src/components';
 
 export default class UserManager extends React.Component {
-    constructor(props){
+    constructor(props) {
         super();
         this.state = {
-            dataSource:[]
+            dataSource: []
         }
 
-        const {rest,openLoading,closeLoading} = props;
+        const {rest, openLoading, closeLoading} = props;
         openLoading();
         rest.get('/auth/admin/org/allOrgTree')
-            .then((data)=>{
-                this.setState({dataSource:data});
+            .then((data) => {
+                this.setState({dataSource: data});
                 closeLoading();
             });
-    }
 
+        this.tabsOptions = [
+            {
+                tab:'userDetail',
+                key:"userDetail",
+                content: <DetailInfo dataFormId="system-AdminUserInfo"/>
+            },
+            {
+                tab:'roleList',
+                key:"roleList",
+                content: <DataTable dataFormId="system-SimpleRoleListForUserManage"/>
+            }
+        ]
+
+    }
     onSelect(selectedKeys, info){
         console.log('onSelect', nodeKey);
     }
@@ -39,7 +52,7 @@ export default class UserManager extends React.Component {
                         <DataTable dataFormId="system-AdminUserList"/>
                     </Col>
                     <Col span={8}>
-                        <DetailInfo dataFormId="system-AdminUserInfo"/>
+                        <Tabs options={this.tabsOptions}/>
                     </Col>
                 </Row>
             </div>

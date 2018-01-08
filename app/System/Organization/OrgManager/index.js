@@ -17,9 +17,18 @@ export default class OrgManager extends React.Component {
             });
     }
 
-    onSelect(selectedKeys, info){
-        console.log('onSelect', nodeKey);
-    }
+    onSelect = (selectedKeys, info) => {
+        console.log('selectedKeys', selectedKeys);
+        console.log('info', info);
+        console.log(this);
+        this.api.run('system-AdminOrgList', { orgId: selectedKeys[0]}).then(() => {
+           console.log('chenggong')
+        });
+    };
+    _listDidMounted = (api) => {
+        this.api = api;
+        console.log(this);
+    };
 
     render() {
         return (
@@ -36,7 +45,11 @@ export default class OrgManager extends React.Component {
                         </Tree>
                     </Col>
                     <Col span={10}>
-                        <DataTable dataFormId="system-AdminOrgList"/>
+                        <DataTable
+                            dataFormId="system-AdminOrgList"
+                            dataFormParams={{orgId: '0001'}}
+                            didMounted={this._listDidMounted}
+                        />
                     </Col>
                     <Col span={8}>
                         <DetailInfo dataFormId="system-AdminOrgInfo"/>
