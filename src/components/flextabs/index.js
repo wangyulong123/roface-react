@@ -139,9 +139,9 @@ export default class Tab extends React.Component {
       url = item.url + '?' + param;
     }
     if (url) {
-      history.replace(`/${url}`);
+      history.push(`/${url}`);
     } else {
-      history.replace('/NotFound');
+      history.push('/NotFound');
     }
   };
   _checkTabItem = (name, url, param) => {
