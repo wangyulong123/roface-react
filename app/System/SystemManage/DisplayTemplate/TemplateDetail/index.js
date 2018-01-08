@@ -83,7 +83,8 @@ export default Form.create()(class TemplateDetail extends React.Component {
         dataIndex: 'elementUIHint',
         key: 'elementUIHint.visible',
         render: (text, record, index) =>
-          this._renderColumns('elementUIHint.visible', 'CheckBox', text && text.visible ? true : false,
+          this._renderColumns('elementUIHint.visible', 'CheckBox',
+            text === undefined || text.visible === undefined ? true : text && text.visible,
             record, index, []),
       },
       {
@@ -303,7 +304,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
               where: values.where,
               from: values.from,
               groupBy: values.groupBy,
-              orderBy: values.order,
+              orderBy: values.orderBy,
               having: values.having,
             }
           };
