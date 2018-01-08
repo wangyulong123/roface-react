@@ -19,7 +19,14 @@ export const developCompose = (Com) => {
       this.over = false;
     }
     _openNewTab = (id) => {
-      window.open(`/System/SystemManage/DisplayTemplate/TemplateDetail/${id}`);
+      const param = {
+        dataId: id,
+        flag: false,
+        noMenu: true,
+      };
+      const paramStr =  encodeURIComponent(JSON.stringify(param));
+      window.open(`/System/SystemManage/DisplayTemplate/TemplateDetail/?${paramStr}`);
+      // console.log(`/System/SystemManage/DisplayTemplate/TemplateDetail/?${paramStr}`);
     }
     _onKeyDown = (event, id) => {
       if (id === this.uuid && this.over) {

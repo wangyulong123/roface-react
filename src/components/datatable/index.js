@@ -12,7 +12,9 @@ import DataToggle from './datatoggle';
 import DataFilter from './datafilter';
 import Methods from './api-inject';
 import './index.css';
+import { developCompose } from '../developCompose';
 
+@developCompose
 class DataTable extends React.Component {
   constructor(props) {
     super(props);
