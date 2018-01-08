@@ -1,5 +1,7 @@
-const config = {
-    baseUrl: 'http://192.168.64.227:8080/amix',
+import profile from '../../profile';
+
+const defaultConfig = {
+    baseUrl: 'http://127.0.0.1',
     webApi: {
         i18n: '/base/i18n',
         dictList: '/base/dicts',
@@ -14,5 +16,7 @@ const config = {
         // dataFormDataList: '/dataform/data/list/{form}/{param}/{sort}/{index:[]+}-{size:[]+}',
     },
 };
+
+const config = {...defaultConfig, ...profile} ;
 
 export default config;

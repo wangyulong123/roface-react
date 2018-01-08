@@ -31,3 +31,23 @@ export const addOnResize = (fuc, flag = false) => {
       };
   }
 };
+
+const onKeyDowns = {};
+
+export const addOnKeyDown = (fuc, tabId) => {
+  if (!onKeyDowns[tabId]) {
+    onKeyDowns[tabId] = fuc;
+  }
+  document.onkeydown = (e) => {
+   Object.keys(onKeyDowns).forEach((key) => {
+     onKeyDowns[key] && onKeyDowns[key](e, key);
+   });
+  };
+};
+
+export const removeOnKeyDown = (tabId) => {
+  if (onKeyDowns[tabId]) {
+    delete onKeyDowns[tabId];
+  }
+};
+
