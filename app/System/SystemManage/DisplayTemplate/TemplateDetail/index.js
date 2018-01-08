@@ -242,11 +242,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { flexTabs } = this.props;
     const { data } = this.state;
     const tab = {
-      id: Math.uuid(),
       name: `字段:${record.name}`,
       url: 'System/SystemManage/DisplayTemplate/ElementDetail',
     };
-    flexTabs.createTab({
+    flexTabs.open({
       ...tab,
       param: {
         dataId: data.id,
