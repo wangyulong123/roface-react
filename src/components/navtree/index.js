@@ -20,8 +20,7 @@ export default class NavTree extends React.Component {
   }
 
   componentDidMount() {
-    const { prefix = 'ro', dataMount } = this.props;
-    console.log(prefix);
+    const { dataMount } = this.props;
     /* eslint-disable react/no-find-dom-node*/
     this.dom = ReactDom.findDOMNode(this);
     getUserMenuList().then((res) => {
@@ -42,8 +41,7 @@ export default class NavTree extends React.Component {
   _menuClick = (e) => {
     // e.stopPropagation();
     if (e && e.key) {
-      const { menuClick, prefix = 'ro', history } = this.props;
-      console.log(prefix);
+      const { menuClick, history } = this.props;
       const item = this.state.flatMenuData.length && this.state.flatMenuData
           .find(menuItem => menuItem.id === e.key);
       menuClick && menuClick(item, history);
