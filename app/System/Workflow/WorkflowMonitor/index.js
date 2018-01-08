@@ -4,15 +4,22 @@ import {DataTable, Button} from '../../../../src/components';
 
 export default class WorkflowModelList extends React.Component {
     //dataTable(vm),meta,dom
-    formReady(dataTable,meta,dom){
+    formReady = (dataTable,meta,dom) => {
         // console.log('form-ready:',dataTable,meta,dom);
     }
-    dataReady(dataTable,dataList){
-        // console.log('data-ready:',dataTable,dataList);
+    dataReady = (dataTable,dataList) => {
+        console.log('data-ready:',dataTable,dataList);
+        const { flexTabs } = this.props;
+        const { open } = flexTabs;
         function openWorkflowEditor(row){
             //var url = "http://127.0.0.1:8080/amix/diagram-viewer/index.html?modelId="+row.id;
-            var url = "http://127.0.0.1:8080/amix/diagram-viewer/index.html?processInstanceId="+row.procId+"&processDefinitionId="+row.procDefId;
-            window.open(url);
+            // var url = "http://127.0.0.1:8080/amix/diagram-viewer/index.html?processInstanceId="+row.procId+"&processDefinitionId="+row.procDefId;
+            // window.open(url);
+
+        open(`流程实例详情:${row.procName}`, `System/Workflow/WorkflowProcInstInfo/`, {
+            processInstanceId: row.procId,
+                // flag: row.flag || false,
+            });
         }
 
         dataTable.setColumnTemplate('summary', (row, column, index, text) => {
@@ -25,7 +32,9 @@ export default class WorkflowModelList extends React.Component {
 
     render() {
         return (
-            <DataTable dataFormId="workflow-ProcInstList" dataReady={this.dataReady} formReady={this.formReady}/>
+            <DataTable dataFormId="workflow-ProcInstList"
+                       dataReady={this.dataReady}
+                       formReady={this.formReady}/>
         );
     }
 }
