@@ -75,6 +75,9 @@ export const compose = (Com, flexTabs, comProps) => {
       })
     };
     render() {
+      const { history } = comProps;
+      const { location } = history;
+      const param = JSON.parse(decodeURIComponent(location.search).replace(/^\?/g, ''));
       return (
         <div style={{ overflow: 'auto' }}>
           <Spin spinning={this.state.spinning}>
@@ -86,6 +89,7 @@ export const compose = (Com, flexTabs, comProps) => {
               dataform={dataform}
               closeLoading={this.closeLoading}
               openLoading={this.openLoading}
+              param={param}
             />}
           </Spin>
         </div>

@@ -18,11 +18,10 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { dataform, history, closeLoading, openLoading } = this.props;
-    const { location } = history;
-    if (location && location.state) {
+    const { dataform, history, closeLoading, openLoading, param } = this.props;
+    if (param) {
       openLoading && openLoading();
-      dataform.getAdmin(`/dataform/${location.state.dataId}/${location.state.dataCode}`).then((res) => {
+      dataform.getAdmin(`/dataform/${param.dataId}/${param.dataCode}`).then((res) => {
         this.setState({
           data: res,
         }, () => {
@@ -48,13 +47,13 @@ export default Form.create()(class ElementDetail extends React.Component {
     return tempObj;
   };
   _saveData = () => {
-    const { dataform, location } = this.props;
+    const { dataform, param } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({
           loading: true,
         });
-        dataform.postAdmin(`/dataform/${location && location.state && location.state.dataId}/element`,
+        dataform.postAdmin(`/dataform/${param && param.dataId}/element`,
           {
             ...this.state.data,
             ...this._filterField(values,
@@ -87,7 +86,7 @@ export default Form.create()(class ElementDetail extends React.Component {
     };
     const style = { width: '49%' };
     const { getFieldDecorator } = this.props.form;
-    const { prefix = 'ro', location } = this.props;
+    const { prefix = 'ro', param } = this.props;
     return (
       <div className={`${prefix}-element-detail`}>
         <div className={`${prefix}-element-detail-header`}>
@@ -113,7 +112,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('dataFormId', {
                     rules: [{ required: true }],
                     initialValue: this.state.data.dataFormId
-                    || (location && location.state && location.state.dataId),
+                    || (param && param.dataId),
                   })(<Text reading />)}
                 </FormItem>
                 <FormItem
