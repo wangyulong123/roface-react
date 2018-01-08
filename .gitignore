@@ -9,6 +9,7 @@ build
 # build
 static
 autoIndex.js
+profile.js
 
 # misc
 .DS_Store
