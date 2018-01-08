@@ -48,7 +48,8 @@ export default class Tab extends React.Component {
     const { history, data } = this.props;
     if (data !== nextProps.data) {
       const pathname = history.location && history.location.pathname;
-      const param = JSON.parse(decodeURIComponent(history.location.search).replace(/^\?/g, ''));
+      const paramStr = decodeURIComponent(history.location.search).replace(/^\?/g, '');
+      const param = (paramStr && JSON.parse(paramStr)) || {};
       if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname && param && param.id) {
         let allMenus = [];
         depthFirstSearch(nextProps.data, (menuItem) => {
