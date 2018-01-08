@@ -8,7 +8,6 @@ let vm = null;
 export default class MenuConfigList extends React.Component {
   didMounted(_vm) {
     vm = _vm;
-    console.warn(this);
     function prependRow() {
       const time = new Date().getTime();
       vm.prependRow({
@@ -16,7 +15,7 @@ export default class MenuConfigList extends React.Component {
         createdTime: time,
         updatedTime: time
       });
-      vm.setRowReadonly((row, index) => {console.log(row); return !index; }, false);
+      vm.setRowReadonly((row, index) => {return !index; }, false);
     }
 
     vm.setSelectedRows((row, index) => {
@@ -32,7 +31,6 @@ export default class MenuConfigList extends React.Component {
 
     function deleteRow() {
       const rows = vm.getSelectedRows();
-      console.log(rows);
       if (rows && rows.length) {
         Modal.confirm({
           title: '删除确认',
