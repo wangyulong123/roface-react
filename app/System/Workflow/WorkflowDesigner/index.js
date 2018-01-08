@@ -6,7 +6,7 @@ import * as rest from '../../../../src/lib/rest';
 
 export default class WorkflowModelList extends React.Component {
     //dataTable(vm),meta,dom
-    formReady(dataTable,meta,dom){
+    formReady = (dataTable,meta,dom) => {
         // console.log('form-ready:',dataTable,meta,dom);
     }
     // dataReady(dataTable,dataList){
@@ -21,9 +21,9 @@ export default class WorkflowModelList extends React.Component {
     //     });
     // }
 
-    didMounted(vm) {
+    didMounted = (vm) => {
         const resultModal = Modal;
-        function deploy(row) {
+        const deploy = (row) => {
             rest.put("/model/"+row.id+"/deploy")
                 .then((res) => {
                     resultModal.info({
@@ -33,17 +33,18 @@ export default class WorkflowModelList extends React.Component {
                 });
         }
 
-        function refresh()
-        {
-            window.location.reload();
+
+        const refresh = () => {
+            const { refresh } = this.props;
+            refresh && refresh();
         }
 
-        function openWorkflowEditor(row){
+        const openWorkflowEditor = (row) => {
             var url = "http://127.0.0.1:8080/amix/modeler.html?modelId="+row.id;
             window.open(url);
         }
 
-        function addModel() {
+        const addModel = () => {
             rest.put("/model/addModel").then(()=>{
                 refresh()
             })
