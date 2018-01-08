@@ -68,8 +68,14 @@ export const restAjax = (url, type, data) => {
             paramObject = data;
         }
     }
+
+    // 未考虑到数组？做了数据为数组时的兼容，时间紧急，如有问题请自行修改
     let reqData = urlObject.param || {};    //默认URL中参数填充，如果参数列表中有更新的，则使用更新的
-    $.extend(reqData, paramObject);
+    if (paramObject instanceof Object && !(paramObject instanceof Array)) {
+      $.extend(reqData, paramObject);
+    } else {
+      reqData = paramObject;
+    }
     // console.log('url-param:',reqData,$.param(reqData));
     if (type.toLowerCase() === 'get' || type.toLowerCase() === 'delete') {
         reqData = $.param(reqData, true);

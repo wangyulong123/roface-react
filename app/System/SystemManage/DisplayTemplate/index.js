@@ -59,10 +59,10 @@ export default class DisplayTemplate extends React.Component {
     this._getDataformList(pageIndex, pageSize);
   }
 
-  _getDataformList = (index, size, code = 'DESC') => {
+  _getDataformList = (index, size) => {
     const {dataform, closeLoading, openLoading} = this.props;
     openLoading && openLoading();
-    dataform.getAdmin(`/dataform/list/code=${code}/${index}-${size}`)
+    dataform.getAdmin(`/dataform/list/1=1/${index}-${size}`)
       .then((res) => {
         this.setState({
           pageIndex: res.index,

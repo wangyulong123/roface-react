@@ -9,9 +9,10 @@ build
 # build
 static
 autoIndex.js
+profile.js
 
 # misc
 .DS_Store
 npm-debug.log*
 .idea/
-
+src/lib/config.js

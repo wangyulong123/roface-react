@@ -112,13 +112,13 @@ export default class DataListObject {
   init(injects) {
     if (injects && injects instanceof Object) {
       Object.assign(this, injects);
-      console.log(this);
+      // console.log(this);
     }
     const target = this;
     this.state.gridOptions = {
       searchRenderOnly: false,
       loading: false,
-      size: 'default',
+      size: 'small',
       bordered: true,
       requireType: 'remote',
       // rowSelection: {
@@ -236,7 +236,7 @@ export default class DataListObject {
     }
 
     this.on.valueChanged = valueChanged.bind(this);
-    this.lastQuery = {};
+    this.lastQuery = injects.query;
 
     console.log(this.lastQuery);
     this.disabledKeys = [];
@@ -609,42 +609,70 @@ export default class DataListObject {
     return data;
   }
 
+  // renderUI(data) {
+  //   const tplData = data || this.state.columns;
+  //   if (!this.editMode) {
+  //     if (!this.rendered) {
+  //       this.rendered = true;
+  //       const columns = tplData.map((column) => {
+  //         const columnCopy = { ...column };
+  //         columnCopy.readonly = true;
+  //         function render(text, row, index) {
+  //           return this.getTemplate(columnCopy, row, index, text, {});
+  //         }
+  //         if (!columnCopy.static) {
+  //           columnCopy.render = null;
+  //         }
+  //         columnCopy.render = columnCopy.render || render.bind(this);
+  //         return columnCopy;
+  //       });
+  //       this.setState({ columns });
+  //     }
+  //   } else {
+  //     const columnsHint = DataListObject.parseHint(this.columnsHint, tplData, 'dataIndex');
+  //     let rowsHint = null;
+  //     const columns = tplData.map((column) => {
+  //       const columnCopy = Object.assign({ ...column }, columnsHint[column.dataIndex]);
+  //       function render(text, row, index) {
+  //         if (!rowsHint) {
+  //           rowsHint = DataListObject.parseHint(this.rowsHint, this.state.rows, '$$key');
+  //         }
+  //         const rowHint = Object.assign({}, rowsHint.$$all || {}, rowsHint[row.$$key]);
+  //         return this.getTemplate(columnCopy, row, index, text, rowHint);
+  //       }
+  //       columnCopy.render = columnCopy.render ? columnCopy.render.bind(this) : render.bind(this);
+  //       return columnCopy;
+  //     });
+  //     this.setState({ columns });
+  //   }
+  // }
+
   renderUI(data) {
-    const tplData = data || this.state.columns;
-    if (!this.editMode) {
-      if (!this.rendered) {
-        this.rendered = true;
-        const columns = tplData.map((column) => {
-          const columnCopy = { ...column };
-          columnCopy.readonly = true;
-          function render(text, row, index) {
-            return this.getTemplate(columnCopy, row, index, text, {});
-          }
-          if (!columnCopy.static) {
-            columnCopy.render = null;
-          }
-          columnCopy.render = columnCopy.render || render.bind(this);
-          return columnCopy;
-        });
-        this.setState({ columns });
-      }
-    } else {
-      const columnsHint = DataListObject.parseHint(this.columnsHint, tplData, 'dataIndex');
-      let rowsHint = null;
-      const columns = tplData.map((column) => {
-        const columnCopy = Object.assign({ ...column }, columnsHint[column.dataIndex]);
-        function render(text, row, index) {
-          if (!rowsHint) {
-            rowsHint = DataListObject.parseHint(this.rowsHint, this.state.rows, '$$key');
-          }
-          const rowHint = Object.assign({}, rowsHint.$$all || {}, rowsHint[row.$$key]);
-          return this.getTemplate(columnCopy, row, index, text, rowHint);
+    let tplData = data || this.state.columns;
+    // console.log(this.editMode);
+    // tplData = tplData.map((tpl) => {
+    //   const column = tpl;
+    //   column.readonly = !this.editMode;
+    //   return column;
+    // });
+    const columnsHint = DataListObject.parseHint(this.columnsHint, tplData, 'dataIndex');
+    let rowsHint = null;
+    const columns = tplData.map((column) => {
+      const columnCopy = Object.assign({...column}, columnsHint[column.dataIndex]);
+      columnCopy.readonly = !this.editMode;
+
+      function render(text, row, index) {
+        if (!rowsHint) {
+          rowsHint = DataListObject.parseHint(this.rowsHint, this.state.rows, '$$key');
         }
-        columnCopy.render = columnCopy.render ? columnCopy.render.bind(this) : render.bind(this);
-        return columnCopy;
-      });
-      this.setState({ columns });
-    }
+        const rowHint = Object.assign({}, rowsHint.$$all || {}, rowsHint[row.$$key]);
+        return this.getTemplate(columnCopy, row, index, text, rowHint);
+      }
+
+      columnCopy.render = columnCopy.render ? columnCopy.render.bind(this) : render.bind(this);
+      return columnCopy;
+    });
+    this.setState({columns});
   }
 
   static getKey() {
@@ -686,8 +714,7 @@ export default class DataListObject {
     };
 
     const promise = this.queryTplAndData(dono, params, current, pageSize).then((res) => {
-      console.warn(res);
-      this.dataReady && this.dataReady(res);
+      this.dataReady && this.dataReady(this, res.body);
       this.$set('paginationConf.total', res.body.totalRowCount);
       this.fillData(res.body.dataList);
       this.$set('gridOptions.dataLoading', false);
@@ -699,6 +726,45 @@ export default class DataListObject {
     });
     return promise.then(() => {
 
+    });
+  }
+
+  /*eslint-disable consistent-return*/
+  saveData() {
+    if (!this.lastQuery || !this.lastQuery.dono) {
+      console.error('参数错误，显示模板不存在，不能删除');
+      console.error(this.lastQuery);
+    }
+    console.log(JSON.stringify(this.state.rows));
+    this.$set('gridOptions.dataLoading', true);
+    const rows = this.state.rows.map((row) => {
+      const rowCopy = { ...row };
+      delete rowCopy.$$key;
+      return rowCopy;
+    });
+    // console.log(rows, rows instanceof Array);
+    return TableService.saveTableData(this.lastQuery.dono, rows).then(() => {
+      this.$set('gridOptions.dataLoading', false);
+    });
+  }
+
+  /*eslint-disable consistent-return*/
+  deleteData(dataList) {
+    if (!dataList) return;
+    console.log(this.lastQuery);
+    if (!this.lastQuery || !this.lastQuery.dono) {
+      console.error('参数错误，显示模板不存在，不能删除');
+      console.error(this.lastQuery);
+    }
+    this.$set('gridOptions.dataLoading', true);
+    let removeRows = dataList;
+    if (!(removeRows instanceof Array)) {
+      removeRows = [removeRows];
+    }
+
+    const rows = this.removeRows(removeRows);
+    return TableService.deleteTableData(this.lastQuery.dono, rows).then(() => {
+      this.$set('gridOptions.dataLoading', false);
     });
   }
 

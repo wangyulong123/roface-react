@@ -148,7 +148,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '35%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
                   wrapperCol={{span: 16}}
                   label="英文代码"
@@ -159,7 +159,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '35%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
                   wrapperCol={{span: 16}}
                   label="列名"
@@ -170,7 +170,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '30%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
                   wrapperCol={{span: 16}}
                   label="数据表"
@@ -181,10 +181,21 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{...style, width: '35%'}}
+                  style={{...style, width: '33%'}}
                   {...formItemLayout}
                   label="数据类型"
-                  wrapperCol={{span: 12}}
+                  wrapperCol={{span: 16}}
+                >
+                  {getFieldDecorator('dataType', {
+                    rules: [{ required: false }],
+                    initialValue: this.state.data.dataType,
+                  })(<Select options={['String', 'Integer', 'Double', 'Date', 'StringArray', 'Boolean']} />)}
+                </FormItem>
+                <FormItem
+                  style={{...style, width: '33%'}}
+                  {...formItemLayout}
+                  label="数据格式"
+                  wrapperCol={{span: 16}}
                 >
                   {getFieldDecorator('dataFormat', {
                     rules: [{ required: false }],
@@ -193,9 +204,9 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Select options={['String', 'Integer', 'Double', 'Currency', 'Date', 'DateTime', 'Time']} />)}
                 </FormItem>
                 <FormItem
-                    style={{...style, width: '60%'}}
+                    style={{...style, width: '33%'}}
                     {...formItemLayout}
-                    wrapperCol={{span: 8}}
+                    wrapperCol={{span: 16}}
                     label="默认值"
                 >
                     {getFieldDecorator('defaultValue', {
@@ -206,7 +217,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 16}}
                   label="可更新"
                 >
                   {getFieldDecorator('updateable', {
@@ -217,7 +228,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 16}}
                   label="持久化"
                 >
                   {getFieldDecorator('persist', {
@@ -228,7 +239,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                 <FormItem
                   style={{...style, width: '33%'}}
                   {...formItemLayout}
-                  wrapperCol={{span: 17}}
+                  wrapperCol={{span: 16}}
                   label="启用"
                 >
                   {getFieldDecorator('enable', {

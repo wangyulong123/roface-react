@@ -1,22 +1,29 @@
 import React from "react";
 
-import { DataTable } from '../../../../src/components';
+import { DataTable ,Button} from '../../../../src/components';
 
 export default class BaseSimpleTable extends React.Component {
-    didMounted(vm) {
-        vm.run('demo-MapPersonList', {code: 'MenuList'}).then(() => {
-        });
-        vm.setColumnTemplate('name', (row, column, index, text) => {
-            return (<a style={{ backgroundColor: 'green' }}>{text}</a>);
-        });
+    // static DetailInfo = DetailInfo;
+    //dataTable(vm),meta,dom
+    formReady(dataTable,meta,dom){
+        console.log('form-ready:',dataTable,meta,dom);
+    }
+    dataReady(dataTable,dataList){
+        console.log('data-ready:',dataTable,dataList);
+        function clickName(row){
+            console.log(row);
+        }
 
+        dataTable.setColumnTemplate('name', (row, column, index, text) => {
+            return (<a onClick={()=>clickName(row)}>{text}</a>);
+        });
     }
 
-    render() {
-        return (
-            <div>
-                <DataTable didMounted={this.didMounted}/>
-            </div>
-        );
+    clickName = (row) => {
+        const {flexTabs} = this.prop;
+
+        flexTabs.createTab('ShowCase/DataTable/BaseSimpleTable/DetailInfo', '');
+        // flexTabs.createTab(<DetailInfo dataFormId="demo-MapPersonInfo" params={{id: row.id}}/>,'');
+        // console.log(props);
     }
 }

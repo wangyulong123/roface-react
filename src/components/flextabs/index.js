@@ -344,8 +344,9 @@ export default class Tab extends React.Component {
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
+    const { style } = this.props;
     return (
-      <div>
+      <div style={{ width: '100%', height: '100%' }}>
         <div className="ro-page-content-wrapper" id="ro-main-content">
           <div className="ro-page-content" id="ro-main-content-container">
             <div className="ro-main-tabs-container">
