@@ -21,8 +21,6 @@ export default class NavTree extends React.Component {
 
   componentDidMount() {
     const { dataMount } = this.props;
-    /* eslint-disable react/no-find-dom-node*/
-    this.dom = ReactDom.findDOMNode(this);
     getUserMenuList().then((res) => {
       const dataSource = removeLevelMore(flatToTree(res).data);
       dataMount && dataMount(dataSource);
