@@ -7,24 +7,46 @@ export default class WorkflowModelList extends React.Component {
     formReady(dataTable,meta,dom){
         // console.log('form-ready:',dataTable,meta,dom);
     }
-    dataReady(dataTable,dataList){
-        // console.log('data-ready:',dataTable,dataList);
-        function openWorkflowEditor(row){
-          var url = "http://127.0.0.1:8080/amix/modeler.html?modelId="+row.id;
-          window.open(url);
+    // dataReady(dataTable,dataList){
+    //     // console.log('data-ready:',dataTable,dataList);
+    //     function openWorkflowEditor(row){
+    //       var url = "http://127.0.0.1:8080/amix/modeler.html?modelId="+row.id;
+    //       window.open(url);
+    //     }
+    //
+    //     dataTable.setColumnTemplate('name', (row, column, index, text) => {
+    //         return (<a onClick={()=>openWorkflowEditor(row)}>{text}</a>);
+    //     });
+    // }
+
+    didMounted(vm) {
+
+        function deploy() {
         }
 
-        dataTable.setColumnTemplate('name', (row, column, index, text) => {
-            return (<a onClick={()=>openWorkflowEditor(row)}>{text}</a>);
-        });
-    }
+        function openWorkflowEditor(row){
+            var url = "http://127.0.0.1:8080/amix/modeler.html?modelId="+row.id;
+            window.open(url);
+        }
 
-    //   System/Workflow/WorkflowDesigner/WorkflowModelList
+
+        vm.setColumnTemplate('button', (row) => {
+            return (<Button onClick={()=>openWorkflowEditor(row)}>流程设计</Button>,
+                    <Button type="primary">流程部署</Button>);
+        });
+
+        // vm.setColumnTemplate('button', () => {
+        //     return (<Button type="primary">流程部署</Button>);
+        // });
+    }
 
 
     render() {
         return (
-            <DataTable dataFormId="workflow-DesignerModelList" dataReady={this.dataReady} formReady={this.formReady}/>
+            <DataTable dataFormId="workflow-DesignerModelList"
+                       // dataReady={this.dataReady}
+                       formReady={this.formReady}
+                       didMounted={this.didMounted}/>
         );
     }
 }
