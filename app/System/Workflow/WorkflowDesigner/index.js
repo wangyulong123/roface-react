@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {DataTable, Button} from '../../../../src/components';
+import { DataTable, Button, Modal } from '../../../../src/components';
 
 import * as rest from '../../../../src/lib/rest';
 
@@ -22,9 +22,20 @@ export default class WorkflowModelList extends React.Component {
     // }
 
     didMounted(vm) {
-
+        const resultModal = Modal;
         function deploy(row) {
-            rest.post("/model/"+row.id+"/deploy");
+            rest.put("/model/"+row.id+"/deploy")
+                .then((res) => {
+                    resultModal.info({
+                        title: '返回信息提示',
+                        content: res.result
+                    })
+                });
+        }
+
+        function refresh()
+        {
+            window.location.reload();
         }
 
         function openWorkflowEditor(row){
@@ -32,12 +43,25 @@ export default class WorkflowModelList extends React.Component {
             window.open(url);
         }
 
+        function addModel() {
+            rest.put("/model/addModel").then(()=>{
+                refresh()
+            })
+        }
+
 
         vm.setColumnTemplate('button', (row) => {
             return (<div><Button onClick={()=>openWorkflowEditor(row)}>流程设计</Button>
                 <Button onClick={()=>deploy(row)}>流程部署</Button></div>);
         });
+
+        vm.addBtn({
+            type: 'primary',
+            onclick: addModel,
+            name: '新建模型',
+        });
     }
+
 
 
     render() {
