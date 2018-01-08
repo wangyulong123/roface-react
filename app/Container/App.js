@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import * as app from '../autoIndex';
 
-import { NavMega, FlexTabs } from '../../src/components';
+import { NavTree, NavMega, FlexTabs } from '../../src/components';
 import PersonalManager from './NavbarComponents/pernalmanager';
 import Logo from './NavbarComponents/logo';
 import NotFound from './NotFound';
@@ -11,12 +11,25 @@ import { compose } from './compose';
 // import * as showcase from '../../app/showcase';
 // import Home from './Home';
 
+const navTreeStyle = {
+  display: 'flex',
+  overflow: 'hidden',
+  height: '100vh',
+};
+
+
+const megaMenuStyle = {
+  display: '',
+  overflow: 'hidden',
+};
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.flexTabs = null;
     this.state = {
       menuData: [],
+      menuType: 'navTree'
     };
     this.cache = {};
   }
@@ -55,6 +68,7 @@ export default class App extends React.Component {
       menuData: data,
     });
   };
+
   render() {
     return (
       <BrowserRouter>
@@ -62,15 +76,24 @@ export default class App extends React.Component {
           path="/"
           render={(props) => {
             return (
-              <div style={{ overflow: 'hidden' }}>
-                <NavMega
-                  {...props}
-                  menuClick={this._menuClick}
-                  ref={this._getInstance}
-                  dataMount={this._dataMount}
-                  LogoIcon={Logo}
-                  NavRight={PersonalManager}
-                />
+              <div style={ this.state.menuType !== 'navTree' ? megaMenuStyle : navTreeStyle }>
+                {
+                  this.state.menuType !== 'navTree' ?
+                    (<NavMega
+                      {...props}
+                      menuClick={this._menuClick}
+                      ref={this._getInstance}
+                      dataMount={this._dataMount}
+                      LogoIcon={Logo}
+                      NavRight={PersonalManager}
+                    />) : (
+                  <NavTree
+                    {...props}
+                    menuClick={this._menuClick}
+                    ref={this._getInstance}
+                    dataMount={this._dataMount}
+                  />)
+                }
                 <FlexTabs
                   {...props}
                   data={this.state.menuData}
