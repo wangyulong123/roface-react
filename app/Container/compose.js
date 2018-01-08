@@ -75,17 +75,25 @@ export const compose = (Com, flexTabs, comProps) => {
       })
     };
     render() {
+      const { history } = comProps;
+      const { location } = history;
+      const paramStr = decodeURIComponent(location.search).replace(/^\?/g, '');
+      const param = (paramStr && JSON.parse(paramStr)) || {};
       return (
         <div style={{ overflow: 'auto' }}>
           <Spin spinning={this.state.spinning}>
             {this.state.refresh ? null : <Com
               ref={instance => this.instance = instance}
-              flexTabs={flexTabs}
+              flexTabs={{
+                open: flexTabs.createTab,
+                openIframe: flexTabs.createIframeTab
+              }}
               {...comProps}
               rest={rest}
               dataform={dataform}
               closeLoading={this.closeLoading}
               openLoading={this.openLoading}
+              param={param}
             />}
           </Spin>
         </div>

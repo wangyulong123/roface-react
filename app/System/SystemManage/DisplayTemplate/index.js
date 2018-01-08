@@ -59,10 +59,10 @@ export default class DisplayTemplate extends React.Component {
     this._getDataformList(pageIndex, pageSize);
   }
 
-  _getDataformList = (index, size, code = 'DESC') => {
+  _getDataformList = (index, size) => {
     const {dataform, closeLoading, openLoading} = this.props;
     openLoading && openLoading();
-    dataform.getAdmin(`/dataform/list/code=${code}/${index}-${size}`)
+    dataform.getAdmin(`/dataform/list/1=1/${index}-${size}`)
       .then((res) => {
         this.setState({
           pageIndex: res.index,
@@ -133,18 +133,9 @@ export default class DisplayTemplate extends React.Component {
 
   createTab = (record) => {
     const { flexTabs } = this.props;
-    const tab = {
-      id: `System/SystemManage/DisplayTemplate/TemplateDetail/${record.id}`,
-      name: `模板:${record.name}`,
-      url: 'System/SystemManage/DisplayTemplate/TemplateDetail',
-    };
-    flexTabs.createTab({
-      ...tab,
-      state: {
-        ...tab,
-        dataId: record.id,
-        flag: record.flag
-      },
+    flexTabs.open(`模板:${record.name}`, `System/SystemManage/DisplayTemplate/TemplateDetail/`, {
+      dataId: record.id,
+      flag: record.flag || false,
     });
   };
   _addTemplate = (record, index) => {

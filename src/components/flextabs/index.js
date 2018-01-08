@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // import { Route } from 'react-router-dom';
 import Sortable from 'sortablejs';
-import { Icon, Notify, Tooltip } from '../index';
+// import jquery from 'jquery';
+import { Icon, Notify, Tooltip, Iframe } from '../index';
 import TabPanel from './TabPanel';
 import TabContent from './TabContent';
 import { depthFirstSearch } from '../../lib/menutransform';
 import { addOnResize } from '../../lib/listener';
+// import { unserializeURLParam } from '../../lib/rest';
 
 import './mega-tabcontent.css';
 
@@ -43,36 +45,38 @@ export default class Tab extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { history } = this.props;
-    const pathname = history.location && history.location.pathname && history.location.pathname.substr(1);
-    if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname) {
-      let allMenus = [];
-      depthFirstSearch(nextProps.data, (menuItem) => {
-        allMenus.push(menuItem);
-      });
-      let initTab = allMenus.filter(menuItem => menuItem.id === pathname)[0] ||
-        allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
-      if (history.location.state && history.location.state.id) {
-        const tempState = {
-          id: history.location.state && history.location.state.id,
-          name: history.location.state && history.location.state.name,
-          url: history.location.state && history.location.state.url,
-        };
-        initTab = {
-          ...tempState,
-          state: {
-            ...history.location.state
-          },
-        };
+    const { history, data } = this.props;
+    if (data !== nextProps.data) {
+      const pathname = history.location && history.location.pathname;
+      const paramStr = decodeURIComponent(history.location.search).replace(/^\?/g, '');
+      const param = (paramStr && JSON.parse(paramStr)) || {};
+      if (!this.props.data.length && !this.state.tabs.length && nextProps.data.length && pathname && param && param.id) {
+        let allMenus = [];
+        depthFirstSearch(nextProps.data, (menuItem) => {
+          allMenus.push(menuItem);
+        });
+        let initTab = allMenus.filter(menuItem => menuItem.id === param.id)[0];
+        if (initTab) {
+          initTab = {
+            ...initTab,
+            param
+          }
+        } else {
+          initTab = {
+            ...param,
+            url: pathname.replace(/^\//g, ''),
+            param
+          };
+        }
+        this.createTab(initTab);
+      } else {
+        let allMenus = [];
+        depthFirstSearch(nextProps.data, (menuItem) => {
+          allMenus.push(menuItem);
+        });
+        const indexMenu = allMenus.filter(menuItem => (menuItem.id === 'Home'))[0];
+        this.createTab(indexMenu);
       }
-      this.createTab(initTab);
-    } else if (!pathname) {
-      let allMenus = [];
-      depthFirstSearch(nextProps.data, (menuItem) => {
-        allMenus.push(menuItem);
-      });
-      const indexMenu = allMenus.filter(menuItem => (menuItem.id === 'Home' || menuItem.id === '00'))[0];
-      this.createTab(indexMenu);
     }
   }
 
@@ -121,15 +125,63 @@ export default class Tab extends React.Component {
       this.offsetWidth = this.tabsWrapper.offsetWidth;
     }
   };
-
-  createTab = (item) => {
+  replace = (item) => {
     const { history } = this.props;
-    history.replace(`/${item.id}`, {...(item.state || {})});
+    let url = item.url;
+    if (item.url) {
+      let param = {
+        ...(item.param || {}),
+        id: item.id,
+        name: item.name,
+      };
+      param =  encodeURIComponent(JSON.stringify(param));
+      //console.log(decodeURIComponent(encodeURIComponent(JSON.parse(JSON.stringify(param)))))
+      url = item.url + '?' + param;
+    }
+    if (url) {
+      history.replace(`/${url}`);
+    } else {
+      history.replace('/NotFound');
+    }
+  };
+  _checkTabItem = (name, url, param) => {
+    let tab = {
+      id: Math.uuid()
+    };
+    if (typeof name === 'object' && !React.isValidElement(name)) {
+      tab = {
+        ...tab,
+        ...name
+      }
+    } else {
+      tab = {
+        ...tab,
+        name,
+        url,
+        param
+      }
+    }
+    return tab;
+  };
+  createIframeTab = (name, url, param) => {
+    const item = this._checkTabItem(name, url, param);
+    this.replace(item);
+    const Com = React.cloneElement(<Iframe />, { url });
+    this._updateTab(item, Com);
+    return item;
+  };
+  createTab = (name, url, param) => {
+    const item = this._checkTabItem(name, url, param);
+    this.replace(item);
     const Com = this._initCom(item, this.props);
+    this._updateTab(item, Com);
+    return item;
+  };
+  _updateTab = (item, Com) => {
     const isExsitTabsItem = this.state.tabs && this.state.tabs
-        .find(tabsItem => tabsItem.id === item.id);
+      .find(tabsItem => tabsItem.id === item.id);
     const isExsitCollapseItem = this.state.tabsCollapse && this.state.tabsCollapse
-        .find(collapseItem => collapseItem.id === item.id);
+      .find(collapseItem => collapseItem.id === item.id);
     if (isExsitTabsItem && !isExsitCollapseItem) {
       this.setState({
         activeTabId: item.id,
@@ -154,7 +206,6 @@ export default class Tab extends React.Component {
       }
     }
   };
-
   _isExistSpaceIfAdd = () => {
     if (this.tabsWrapper) {
       const tabsLength = (this.state.tabs.length + 1) * (this.tabWidth + this.tabIntervalWidth);
@@ -248,8 +299,7 @@ export default class Tab extends React.Component {
   _clickTab = (currentTabItem) => {
     const { activeTabId } = this.state;
     if (activeTabId !== currentTabItem.id) {
-      const {history} = this.props;
-      history.replace(`/${currentTabItem.id}`, {...(currentTabItem.state || {})});
+     this.replace(currentTabItem);
       this.setState({
         activeTabId: currentTabItem.id,
         isCollapse: false
@@ -275,8 +325,7 @@ export default class Tab extends React.Component {
     const tempTab = this.state.tabs.shift();
     const tempCollapse = this.state.tabsCollapse
       .filter(tabsCollapseItem => collapseItem.id !== tabsCollapseItem.id);
-    const { history } = this.props;
-    history.replace(`/${collapseItem.id}`, {...(collapseItem.state || {})});
+    this.replace(collapseItem);
     this.setState({
       tabs: this.state.tabs.concat(collapseItem),
       activeTabId: collapseItem.id,
@@ -325,8 +374,9 @@ export default class Tab extends React.Component {
   render() {
     const showTab = this.state.tabs && this.state.tabs.filter(activeTab => activeTab.id ===
       this.state.activeTabId);
+    const { style } = this.props;
     return (
-      <div>
+      <div style={{ width: '100%', height: '100%' }}>
         <div className="ro-page-content-wrapper" id="ro-main-content">
           <div className="ro-page-content" id="ro-main-content-container">
             <div className="ro-main-tabs-container">

@@ -13,7 +13,7 @@ class TabContent extends React.Component {
           tabs && tabs.length && tabs.map((tabItem) => {
             const show = activeTabId === tabItem.id ? '' : 'none';
             return (
-              <div style={{ display: show }} key={tabItem.id}>
+              <div style={{ display: show }} key={tabItem.id} className="tab-content">
                 {React.cloneElement(tabItem.Com || <NotFound />, { activeTabId, tabItem, refresh })}
               </div>
             );
