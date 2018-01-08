@@ -17,6 +17,6 @@ const defaultConfig = {
     },
 };
 
-const config = {...defaultConfig,profile} ;
+const config = {...defaultConfig, ...profile} ;
 
 export default config;
