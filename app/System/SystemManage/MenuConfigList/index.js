@@ -13,7 +13,10 @@ export default class MenuConfigList extends React.Component {
     render() {
         return (
             <div>
-                <DataTable onMounted={onMounted}/>
+                <DataTable
+                    dataFormId="system-MenuList"
+                    dataFormParams={{ code: 'MenuList' }}
+                    onMounted={onMounted}/>
             </div>
         );
     }
