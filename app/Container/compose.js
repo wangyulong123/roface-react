@@ -84,7 +84,10 @@ export const compose = (Com, flexTabs, comProps) => {
           <Spin spinning={this.state.spinning}>
             {this.state.refresh ? null : <Com
               ref={instance => this.instance = instance}
-              flexTabs={flexTabs}
+              flexTabs={{
+                open: flexTabs.createTab,
+                openIframe: flexTabs.createIframeTab
+              }}
               {...comProps}
               rest={rest}
               dataform={dataform}

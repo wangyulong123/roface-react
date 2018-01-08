@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 // import { Route } from 'react-router-dom';
 import Sortable from 'sortablejs';
 // import jquery from 'jquery';
-import { Icon, Notify, Tooltip } from '../index';
+import { Icon, Notify, Tooltip, Iframe } from '../index';
 import TabPanel from './TabPanel';
 import TabContent from './TabContent';
 import { depthFirstSearch } from '../../lib/menutransform';
@@ -144,13 +144,44 @@ export default class Tab extends React.Component {
       history.replace('/NotFound');
     }
   };
-  createTab = (item) => {
+  _checkTabItem = (name, url, param) => {
+    let tab = {
+      id: Math.uuid()
+    };
+    if (typeof name === 'object' && !React.isValidElement(name)) {
+      tab = {
+        ...tab,
+        ...name
+      }
+    } else {
+      tab = {
+        ...tab,
+        name,
+        url,
+        param
+      }
+    }
+    return tab;
+  };
+  createIframeTab = (name, url, param) => {
+    const item = this._checkTabItem(name, url, param);
+    this.replace(item);
+    const Com = React.cloneElement(<Iframe />, { url });
+    this._updateTab(item, Com);
+    return item;
+  };
+  createTab = (name, url, param) => {
+    const item = this._checkTabItem(name, url, param);
     this.replace(item);
     const Com = this._initCom(item, this.props);
+    this._updateTab(item, Com);
+    return item;
+  };
+  _updateTab = (item, Com) => {
     const isExsitTabsItem = this.state.tabs && this.state.tabs
-        .find(tabsItem => tabsItem.id === item.id);
+      .find(tabsItem => tabsItem.id === item.id);
     const isExsitCollapseItem = this.state.tabsCollapse && this.state.tabsCollapse
-        .find(collapseItem => collapseItem.id === item.id);
+      .find(collapseItem => collapseItem.id === item.id);
     if (isExsitTabsItem && !isExsitCollapseItem) {
       this.setState({
         activeTabId: item.id,
@@ -175,7 +206,6 @@ export default class Tab extends React.Component {
       }
     }
   };
-
   _isExistSpaceIfAdd = () => {
     if (this.tabsWrapper) {
       const tabsLength = (this.state.tabs.length + 1) * (this.tabWidth + this.tabIntervalWidth);
