@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tree,Row,Col,DataTable,DetailInfo} from '../../../../src/components';
 
-export default class OrgManager extends React.Component {
+export default class UserManager extends React.Component {
     constructor(props){
         super();
         this.state = {
@@ -36,10 +36,10 @@ export default class OrgManager extends React.Component {
                         </Tree>
                     </Col>
                     <Col span={10}>
-                        <DataTable dataFormId="system-AdminOrgList"/>
+                        <DataTable dataFormId="system-AdminUserList"/>
                     </Col>
                     <Col span={8}>
-                        <DetailInfo dataFormId="system-AdminOrgInfo"/>
+                        <DetailInfo dataFormId="system-AdminUserInfo"/>
                     </Col>
                 </Row>
             </div>
