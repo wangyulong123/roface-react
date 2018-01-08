@@ -134,18 +134,15 @@ export default class DisplayTemplate extends React.Component {
   createTab = (record) => {
     const { flexTabs } = this.props;
     const tab = {
-      id: `System/SystemManage/DisplayTemplate/TemplateDetail/${record.id}`,
+      id: Math.uuid(),
       name: `模板:${record.name}`,
-      url: 'System/SystemManage/DisplayTemplate/TemplateDetail',
-    };
-    flexTabs.createTab({
-      ...tab,
-      state: {
-        ...tab,
+      url: `System/SystemManage/DisplayTemplate/TemplateDetail/`,
+      param: {
         dataId: record.id,
-        flag: record.flag
-      },
-    });
+        flag: record.flag || false,
+      }
+    };
+    flexTabs.createTab(tab);
   };
   _addTemplate = (record, index) => {
     const newT = { name: '新增模板', id: `newTemplateDetail${new Date().getTime()}`, flag: true }

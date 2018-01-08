@@ -6,7 +6,9 @@ import * as dataForm from '../../lib/dataform';
 import Form from './Form';
 import './style/index.less';
 import { Modal } from '../index';
+import { developCompose } from '../developCompose';
 
+@developCompose
 export default class Forms extends React.Component {
   constructor(props) {
     super(props);

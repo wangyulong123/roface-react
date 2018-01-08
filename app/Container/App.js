@@ -33,16 +33,13 @@ export default class App extends React.Component {
     };
     this.cache = {};
   }
-  _menuClick = (item, history) => {
-    history.replace(`/${item.id}`);
+  _menuClick = (item) => {
     if (this.flexTabs) {
-      this.flexTabs.createTab({...item,
-        Com: this._renderComponent(history, item),
-      });
+      this.flexTabs.createTab({...item});
     }
   };
   _getObject = (obj, fields) => {
-    return fields.reduce((a, b) => {
+    return fields.filter(field => !!field).reduce((a, b) => {
       const tempB = b.replace(/\W/g, '');
       return a[tempB];
     }, obj);

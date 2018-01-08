@@ -159,11 +159,10 @@ export default Form.create()(class TemplateDetail extends React.Component {
     };
   }
   componentDidMount(){
-    const { dataform, history, closeLoading, openLoading } = this.props;
-    const { location } = history;
-    if (location && location.state && location.state.dataId && !location.state.flag) {
+    const { dataform, closeLoading, openLoading, param } = this.props;
+    if (param && param.dataId && !param.flag) {
       openLoading && openLoading();
-      dataform.getAdmin(`/dataform/${location.state.dataId}`).then((res) => {
+      dataform.getAdmin(`/dataform/${param.dataId}`).then((res) => {
         this.setState({
           data: {
             ...res,
@@ -243,14 +242,13 @@ export default Form.create()(class TemplateDetail extends React.Component {
     const { flexTabs } = this.props;
     const { data } = this.state;
     const tab = {
-      id: `System/SystemManage/DisplayTemplate/ElementDetail/${data.id}/${record.code}`,
+      id: Math.uuid(),
       name: `字段:${record.name}`,
       url: 'System/SystemManage/DisplayTemplate/ElementDetail',
     };
     flexTabs.createTab({
       ...tab,
-      state: {
-        ...tab,
+      param: {
         dataId: data.id,
         dataCode: record.code,
       },
