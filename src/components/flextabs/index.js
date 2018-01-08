@@ -18,7 +18,7 @@ export default class Tab extends React.Component {
     this.dom = null;
     this.tabsWrapper = null;
     this.state = {
-      refresh: false,
+      refreshStatus: false,
       tabs: [],
       tabsCollapse: [],
       showTabsCollapse: 'none',
@@ -163,19 +163,36 @@ export default class Tab extends React.Component {
     }
     return tab;
   };
+  _refresh = (id) => {
+    this.setState({
+      refreshId: id
+    })
+  };
   createIframeTab = (name, url, param) => {
     const item = this._checkTabItem(name, url, param);
     this.replace(item);
     const Com = React.cloneElement(<Iframe />, { url });
     this._updateTab(item, Com);
-    return item;
+    return {
+      ...item,
+      refresh: this._refresh
+    };
   };
   createTab = (name, url, param) => {
     const item = this._checkTabItem(name, url, param);
     this.replace(item);
     const Com = this._initCom(item, this.props);
     this._updateTab(item, Com);
-    return item;
+    return {
+      ...item,
+      refresh: this._refresh
+    };
+  };
+  closeTab = (id) => {
+    this.setState({
+      tabsCollapse: this.state.tabsCollapse
+        .filter(tabsCollapseItem => id !== tabsCollapseItem.id),
+    });
   };
   _updateTab = (item, Com) => {
     const isExsitTabsItem = this.state.tabs && this.state.tabs
@@ -290,9 +307,10 @@ export default class Tab extends React.Component {
     }
   };
 
-  _refreshTab = () => {
+  _refreshTab = (id) => {
     this.setState({
-      refresh: !this.state.refresh
+      refreshStatus: !this.state.refreshStatus,
+      refreshId: id || this.state.activeTabId,
     })
   };
 
@@ -466,7 +484,9 @@ export default class Tab extends React.Component {
               <div>
                 {
                   <TabContent
-                    refresh={this.state.refresh}
+                    refreshStatus={this.state.refreshStatus}
+                    refreshId={this.state.refreshId}
+                    refresh={this._refreshTab}
                     activeTabId={this.state.activeTabId}
                     tabs={this.state.tabs}
                   />

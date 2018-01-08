@@ -6,7 +6,7 @@ import NotFound from '../../../app/Container/NotFound';
 
 class TabContent extends React.Component {
   render() {
-    const { activeTabId, tabs, refresh } = this.props;
+    const { activeTabId, tabs, refresh, refreshId, refreshStatus } = this.props;
     return (
       <div>
         {
@@ -14,7 +14,8 @@ class TabContent extends React.Component {
             const show = activeTabId === tabItem.id ? '' : 'none';
             return (
               <div style={{ display: show }} key={tabItem.id} className="tab-content">
-                {React.cloneElement(tabItem.Com || <NotFound />, { activeTabId, tabItem, refresh })}
+                {React.cloneElement(tabItem.Com || <NotFound />,
+                  { activeTabId, tabItem, refresh, refreshId, refreshStatus })}
               </div>
             );
           })
