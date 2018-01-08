@@ -29,7 +29,8 @@ export default class App extends React.Component {
     this.flexTabs = null;
     this.state = {
       menuData: [],
-      menuType: 'navTree'
+      menuType: 'navTree',
+      // menuType: 'megaMenu',
     };
     this.cache = {};
   }
