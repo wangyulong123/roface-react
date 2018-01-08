@@ -30,22 +30,37 @@ export const compose = (Com, flexTabs, comProps) => {
       return this.update;
     }
     componentWillReceiveProps(nextProps) {
-      if (this.props.refresh !== nextProps.refresh && nextProps.activeTabId === nextProps.tabItem.id) {
+      if (this.props.refreshStatus !== nextProps.refreshStatus) {
         // 点击了刷新按钮
-        this.update = true;
-        this.setState({
-          refresh: true,
-          spinning: true
-        }, () => {
-          this.setState({
-            refresh: false,
-            spinning: false
-          }, () => {
-            this.update = false;
-          })
-        })
+        if (nextProps.activeTabId === nextProps.tabItem.id ||
+          this._checkRefreshId(nextProps.tabItem.id, nextProps.refreshId)) {
+          this.refresh();
+        }
       }
     }
+    _checkRefreshId = (id, refreshId) => {
+      if (refreshId) {
+        if (Array.isArray(refreshId)) {
+          return refreshId.includes(id);
+        }
+        return id === refreshId;
+      }
+      return false;
+    };
+    refresh = () => {
+      this.update = true;
+      this.setState({
+        refresh: true,
+        spinning: true
+      }, () => {
+        this.setState({
+          refresh: false,
+          spinning: false
+        }, () => {
+          this.update = false;
+        })
+      })
+    };
     _checkWidth = () => {
       if (this.flag) {
         this.flag = false;
@@ -75,6 +90,7 @@ export const compose = (Com, flexTabs, comProps) => {
       })
     };
     render() {
+      const { refresh } = this.props;
       const { history } = comProps;
       const { location } = history;
       const paramStr = decodeURIComponent(location.search).replace(/^\?/g, '');
@@ -86,7 +102,8 @@ export const compose = (Com, flexTabs, comProps) => {
               ref={instance => this.instance = instance}
               flexTabs={{
                 open: flexTabs.createTab,
-                openIframe: flexTabs.createIframeTab
+                openIframe: flexTabs.createIframeTab,
+                close: flexTabs.closeTab
               }}
               {...comProps}
               rest={rest}
@@ -94,6 +111,7 @@ export const compose = (Com, flexTabs, comProps) => {
               closeLoading={this.closeLoading}
               openLoading={this.openLoading}
               param={param}
+              refresh={refresh}
             />}
           </Spin>
         </div>
