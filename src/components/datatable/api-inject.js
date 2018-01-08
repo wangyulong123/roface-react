@@ -181,7 +181,6 @@ export default class DataListObject {
         }
       },
       onShowSizeChange(current, size) {
-        console.log(current, size);
         target.$set('paginationConf.pageSize', size);
         target.$set('paginationConf.current', 1);
         target.run(target.lastQuery.dono, target.lastQuery.params, 0, size);
@@ -194,7 +193,6 @@ export default class DataListObject {
       },
       // 用作添加删除数据时单页数据条目数超过默认设置时修改单页显示条目数
       onSizeChange(size) {
-        console.log(this.defaultPageSize, size);
         target.$set('paginationConf.pageSize', Math.max(this.defaultPageSize, size));
       },
     };
@@ -442,7 +440,6 @@ export default class DataListObject {
       //   resolve(_columns);
       // }, 1000);
       rest.get('/detailTableTpl').then((res) => {
-        console.log(res);
         const adapter = this.templateAdapter
         && this.templateAdapter instanceof Function
           ? this.templateAdapter : DataListObject.tplAdapter;
@@ -735,7 +732,6 @@ export default class DataListObject {
       console.error('参数错误，显示模板不存在，不能删除');
       console.error(this.lastQuery);
     }
-    console.log(JSON.stringify(this.state.rows));
     this.$set('gridOptions.dataLoading', true);
     const rows = this.state.rows.map((row) => {
       const rowCopy = { ...row };
@@ -751,7 +747,6 @@ export default class DataListObject {
   /*eslint-disable consistent-return*/
   deleteData(dataList) {
     if (!dataList) return;
-    console.log(this.lastQuery);
     if (!this.lastQuery || !this.lastQuery.dono) {
       console.error('参数错误，显示模板不存在，不能删除');
       console.error(this.lastQuery);
