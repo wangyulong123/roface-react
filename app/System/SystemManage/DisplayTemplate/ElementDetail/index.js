@@ -84,7 +84,7 @@ export default Form.create()(class ElementDetail extends React.Component {
       labelCol: { span: 4},
       wrapperCol: { span: 19 },
     };
-    const style = { width: '49%' };
+    const style = { width: '49%', display: 'flex', minWidth: 200 };
     const { getFieldDecorator } = this.props.form;
     const { prefix = 'ro', param } = this.props;
     return (

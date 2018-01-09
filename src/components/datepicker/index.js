@@ -17,19 +17,19 @@ class RoDatePicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value,
+      value: props.value && this.handleMillisecondValue(props.value),
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ value: nextProps.value });
+    this.setState({ value: nextProps.value && this.handleMillisecondValue(nextProps.value) });
   }
 
   /* eslint-disable */
   handleMillisecondValue = (value) => {
     const { locale } = this.props;
     const lo = locale || 'zh';
-    return (value && moment(new Date(value)).locale(lo)) || null;
+    return (value && moment(value).locale(lo)) || null;
   };
 
   handleFormatDate = (value) => {
@@ -70,7 +70,7 @@ class RoDatePicker extends React.Component {
         <LocaleProvider locale={zhCN}>
           <DatePicker
             {...this.props}
-            value={this.handleMillisecondValue(this.state.value)}
+            value={this.state.value}
             onChange={this.handleDateChange}
           />
         </LocaleProvider>
