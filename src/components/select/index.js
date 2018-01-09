@@ -33,7 +33,7 @@ class RoSelect extends React.Component {
 
   renderOption = () => {
     const optionDefault = (
-      <Option key='' value=''>
+      <Option key={Math.uuid()} value=''>
         { '--请选择--' }
       </Option>
       );
