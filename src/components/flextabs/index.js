@@ -194,6 +194,9 @@ export default class Tab extends React.Component {
         .filter(tabsCollapseItem => id !== tabsCollapseItem.id),
     });
   };
+  getTabs = () => {
+    return this.state.tabs;
+  };
   _updateTab = (item, Com) => {
     const isExsitTabsItem = this.state.tabs && this.state.tabs
       .find(tabsItem => tabsItem.id === item.id);

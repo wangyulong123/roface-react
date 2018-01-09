@@ -103,7 +103,8 @@ export const compose = (Com, flexTabs, comProps) => {
               flexTabs={{
                 open: flexTabs && flexTabs.createTab,
                 openIframe: flexTabs && flexTabs.createIframeTab,
-                close: flexTabs && flexTabs.closeTab
+                close: flexTabs && flexTabs.closeTab,
+                getTabs: flexTabs && flexTabs.getTabs
               }}
               {...comProps}
               rest={rest}
