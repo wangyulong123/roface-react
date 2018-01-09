@@ -55,11 +55,11 @@ export default class WorkflowModelList extends React.Component {
             return (<div><Button onClick={()=>openWorkflowEditor(row)}>流程设计</Button>
                 <Dropdown overlay={
                     <Menu>
-                        <Menu.Item>功能项1</Menu.Item>
-                        <Menu.Item>功能项2</Menu.Item>
+                        <Menu.Item onClick={()=>deploy(row)}>流程部署</Menu.Item>
+                        <Menu.Item>流程导入</Menu.Item>
                     </Menu>
                 }>
-                    <Button onClick={()=>deploy(row)}>流程部署</Button>
+                    <Button>操作</Button>
                 </Dropdown>
                 </div>);
         });
