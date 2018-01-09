@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import * as dataForm from '../../lib/dataform';
 import Form from './Form';
 import './style/index.less';
-import { Modal } from '../index';
+import { Modal, Notify } from '../index';
 import { developCompose } from '../developCompose';
 
 @developCompose
@@ -156,13 +156,31 @@ export default class Forms extends React.Component {
     });
   };
   validate = (cb) => {
-    this.form.validateFields(cb);
+    this.form.validateFieldsAndScroll(cb);
   };
   validateItem = (itemId, cb) => {
-    this.form.validateFields([itemId], cb);
+    this.form.validateFieldsAndScroll([itemId], cb);
   };
-  saveData = () => {
-    console.log('save data');
+  saveData = (cb) => {
+    const { dataFormId } = this.props;
+    this.validate((errors, values) => {
+      if (!errors) {
+        dataForm.saveDataOne(dataFormId, values).then((res) => {
+          cb(res);
+          Notify.success({
+            message: '保存成功',
+          });
+        }).catch((e) => {
+          cb(e);
+          Modal.error({
+            title: '保存失败',
+            content: JSON.stringify(e),
+          });
+        });
+      } else {
+        cb(errors)
+      }
+    });
   };
   render() {
     const { prefix = 'ro', defaultKeys = [], onValuesChange } = this.props;

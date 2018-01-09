@@ -11,6 +11,7 @@ const defaultConfig = {
         dataFormMeta: '/dataform/meta',
         dataFormMethod: '/dataform/method',
         dataFormDataOne: '/dataform/data/one',
+        dataFormDataOneSave: '/dataform/save/one',
         dataFormDataList: '/dataform/data/list',
         // dataFormDataOne: '/dataform/data/one/{form}/{param}',
         // dataFormDataList: '/dataform/data/list/{form}/{param}/{sort}/{index:[]+}-{size:[]+}',
