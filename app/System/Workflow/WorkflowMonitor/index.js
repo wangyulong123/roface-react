@@ -27,6 +27,17 @@ export default class WorkflowModelList extends React.Component {
         });
     }
 
+    didMounted =(vm)=>{
+        const openProcInstSchedule =(row) =>{
+                var url = "http://127.0.0.1:8080/amix/diagram-viewer/index.html?processInstanceId="+row.procId+"&processDefinitionId="+row.procDefId;
+                window.open(url);
+        }
+
+        vm.setColumnTemplate('button',(row) =>{
+            return (<Button onClick={() =>openProcInstSchedule(row)}>查看流程进度</Button>)
+        });
+    }
+
     //   System/Workflow/WorkflowDesigner/WorkflowModelList
 
 
@@ -34,6 +45,7 @@ export default class WorkflowModelList extends React.Component {
         return (
             <DataTable dataFormId="workflow-ProcInstList"
                        dataReady={this.dataReady}
+                       didMounted={this.didMounted}
                        formReady={this.formReady}/>
         );
     }
