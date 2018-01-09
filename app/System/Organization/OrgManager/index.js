@@ -5,7 +5,8 @@ export default class OrgManager extends React.Component {
     constructor(props){
         super();
         this.state = {
-            dataSource:[]
+            dataSource:[],
+            orgId:'_ALL_'
         }
 
         const {rest,openLoading,closeLoading} = props;
@@ -22,12 +23,19 @@ export default class OrgManager extends React.Component {
         console.log('info', info);
         console.log(this);
         this.api.run('system-AdminOrgList', { orgId: selectedKeys[0]}).then(() => {
-           console.log('chenggong')
+           console.log('success')
         });
     };
     _listDidMounted = (api) => {
         this.api = api;
         console.log(this);
+
+        this.api.onSelectRow((keys, rows) => {
+            console.log(keys);
+            console.log(rows);
+            console.log(rows[0].id);
+            this.setState({orgId: rows[0].id});
+        });
     };
 
     render() {
@@ -37,7 +45,7 @@ export default class OrgManager extends React.Component {
                     <Col span={6}>
                         <Tree
                             showLine
-                            defaultExpandedKeys={['0001','0007']}
+                            defaultExpandedKeys={['0001','0002']}
                             onSelect={this.onSelect}
                             dataSource={this.state.dataSource}
                             nodeTitle="value.name" nodeKey="value.id" childrenKey="children"
@@ -47,12 +55,15 @@ export default class OrgManager extends React.Component {
                     <Col span={10}>
                         <DataTable
                             dataFormId="system-AdminOrgList"
-                            dataFormParams={{orgId: '0001'}}
+                            dataFormParams={{orgId: '_ALL_'}}
                             didMounted={this._listDidMounted}
                         />
                     </Col>
                     <Col span={8}>
-                        <DetailInfo dataFormId="system-AdminOrgInfo"/>
+                        <DetailInfo
+                            dataFormId="system-AdminOrgInfo"
+                            params={{orgId: this.state.orgId}}
+                        />
                     </Col>
                 </Row>
             </div>
