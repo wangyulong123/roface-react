@@ -43,6 +43,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
     super(props);
     this.state = {
       data: {},
+      domWidth: 0,
       columns: [{
         title: '#',
         dataIndex: 'number',
@@ -179,10 +180,17 @@ export default Form.create()(class TemplateDetail extends React.Component {
 
    this.checkWidth();
    addOnResize(this.checkWidth);
+
   }
 
   checkWidth = () => {
     this.domWidth = document.body.clientWidth;
+    if (this.domWidth !== this.state.domWidth) {
+      // 判断和state中是否相同，如果不相同，则做更新
+      this.setState({
+        domWidth: document.body.clientWidth,
+      });
+    }
   };
 
   _dataChange = (name, value, key) => {
@@ -355,6 +363,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
       wrapperCol: { span: 16 },
     };
     const { menuType } = this.props;
+    const tempWidth = menuType && menuType === 'navTree' ?  this.state.domWidth - 330 : '100%';
     const { getFieldDecorator, prefix = 'ro' } = this.props.form;
     const style = { width: '100%' };
     return (
@@ -606,7 +615,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   locale={{
                     emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
                   }}
-                  style={{ width: menuType && menuType === 'navTree' ?  this.domWidth - 330 : '100%' }}
+                  style={{ width: tempWidth }}
                 />
               </div>
             </Panel>
