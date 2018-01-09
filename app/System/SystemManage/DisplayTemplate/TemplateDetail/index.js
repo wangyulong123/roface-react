@@ -1,6 +1,8 @@
 import React from  'react';
+import ReactDom from 'react-dom';
 import * as components from '../../../../../src/components';
 import './style/index.less';
+import { addOnResize } from '../../../../../src/lib/listener';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
@@ -174,7 +176,32 @@ export default Form.create()(class TemplateDetail extends React.Component {
         });
       });
     }
+
+    this.dom = ReactDom.findDOMNode(this);
+    // {`${prefix}-template-detail-info-layout`}
+    this.tabContentWrapper = Array.from(this.dom.children).filter(d => d.className === `tab-content`)[0];
+    this.tableWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-template-field-table`)[0];
+    this.detailInfoLayoutWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-template-detail-info-layout`)[0];
+    this.detailCollapseWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-template-detail-collapse`)[0];
+    this.domWidth = document.body.clientWidth;
+    // -template-detail-info-layout
+    // -template-detail-collapse
+    // this.offsetWidth = this.tabsWrapper.offsetWidth;
+    this.clientWidth = this.detailCollapseWrapper.clientWidth;
+   this.checkWidth();
+   addOnResize(this.checkWidth);
   }
+
+  checkWidth = () => {
+    if (this.detailCollapseWrapper) {
+      this.clientWidth = this.detailCollapseWrapper.clientWidth;
+      this.domWidth = document.body.clientWidth;
+      this.setState({
+        collapseWrapperClientWidth: this.domWidth - 256
+      });
+    }
+  };
+
   _dataChange = (name, value, key) => {
     this.setState({
       data: {
@@ -344,6 +371,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
       labelCol: { span: 8},
       wrapperCol: { span: 16 },
     };
+    const { menuType } = this.props;
     const { getFieldDecorator, prefix = 'ro' } = this.props.form;
     const style = { width: '100%' };
     return (
@@ -584,17 +612,20 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </Form>
             </Panel>
             <Panel header="字段信息" key="2">
-              <Table
-                className={`${prefix}-template-field-table`}
-                rowKey={record => record.key}
-                columns={this.state.columns}
-                dataSource={this.state.data.elements || []}
-                pagination={false}
-                scroll={{ x: 2000 }}
-                locale={{
-                  emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
-                }}
-              />
+              <div>
+                <Table
+                  className={`${prefix}-template-field-table`}
+                  rowKey={record => record.key}
+                  columns={this.state.columns}
+                  dataSource={this.state.data.elements || []}
+                  pagination={false}
+                  scroll={{ x: 2000 }}
+                  locale={{
+                    emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
+                  }}
+                  style={{ width: menuType && menuType === 'navTree' ?  this.domWidth - 330 : '100%' }}
+                />
+              </div>
             </Panel>
           </Collapse>
         </div>

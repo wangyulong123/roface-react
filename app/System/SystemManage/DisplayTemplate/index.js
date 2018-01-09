@@ -192,25 +192,27 @@ export default class DisplayTemplate extends React.Component {
     const {pageIndex, pageSize, totalCount } = this.state;
     return (
       <LocaleProvider locale={zhCN}>
-        <Table
-          className={'ro-template-table'}
-          rowKey={record => record.id}
-          columns={this.state.columns}
-          dataSource={this.state.data}
-          pagination={{
-            showSizeChanger: true,
-            showQuickJumper: true,
-            defaultCurrent: 1,
-            total: totalCount,
-            pageSize: pageSize,
-            current: pageIndex + 1,
-            onShowSizeChange: this._paginationShowSizeChange,
-            onChange: this._paginationOnChange
-          }}
-          locale={{
-            emptyText: <Button onClick={this._addTemplate}>添加一个模版</Button>
-          }}
-        />
+        <div style={{ padding: '5px', border: '1px solid gray' }}>
+          <Table
+            className={'ro-template-table'}
+            rowKey={record => record.id}
+            columns={this.state.columns}
+            dataSource={this.state.data}
+            pagination={{
+              showSizeChanger: true,
+              showQuickJumper: true,
+              defaultCurrent: 1,
+              total: totalCount,
+              pageSize: pageSize,
+              current: pageIndex + 1,
+              onShowSizeChange: this._paginationShowSizeChange,
+              onChange: this._paginationOnChange
+            }}
+            locale={{
+              emptyText: <Button onClick={this._addTemplate}>添加一个模版</Button>
+            }}
+          />
+        </div>
       </LocaleProvider>
     );
   }
