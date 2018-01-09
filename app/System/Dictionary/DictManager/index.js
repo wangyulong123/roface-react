@@ -34,6 +34,7 @@ export default class DictManager extends React.Component {
                             didMounted={this._listDidMounted}
                         />
                     </Col>
+
                     <Col span={12}>
                         <DetailInfo
                             dataFormId="system-DictInfo"
