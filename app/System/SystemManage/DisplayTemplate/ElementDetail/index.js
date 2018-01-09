@@ -156,7 +156,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('code', {
                     rules: [{ required: true }],
                     initialValue: this.state.data.code,
-                  })(<Text />)}
+                  })(<Text reading/>)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '33%'}}
