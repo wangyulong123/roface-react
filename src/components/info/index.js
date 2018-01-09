@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import $ from 'jquery';
 
 import * as dataForm from '../../lib/dataform';
 import Form from './Form';
@@ -62,9 +61,32 @@ export default class Forms extends React.Component {
   _getData = () => {
     const { dataFormId, params } = this.props;
     if (params) {
-      return dataForm.getDataOne(dataFormId, $.param(this.props.params))
+      return dataForm.getDataOne(dataFormId, this._serializeParam(params))
     }
     return dataForm.getMeta(dataFormId)
+  };
+  _serializeParam = (params, field) => {
+    let str = '';
+    if (typeof params === 'string') {
+      str = params;
+    } else {
+      if (Array.isArray(params) && field) {
+        params.forEach(p => {
+          if (typeof p === 'string' || typeof p === 'number') {
+            str = `${str}&${field}=${p}`;
+          }
+        })
+      } else {
+        Object.keys(params).forEach(p => {
+          if (Array.isArray(params[p])) {
+            str = `${str}&${this._serializeParam(params[p], p)}`;
+          } else {
+            str = `${str}&${p}=${params[p]}`;
+          }
+        })
+      }
+    }
+    return str.replace(/^&/g, '');
   };
   setValue = (itemId, value) => {
     this.form.setFieldsValue({ [itemId]: value });
@@ -143,13 +165,14 @@ export default class Forms extends React.Component {
     console.log('save data');
   };
   render() {
-    const { prefix = 'ro', defaultKeys = [] } = this.props;
+    const { prefix = 'ro', defaultKeys = [], onValuesChange } = this.props;
     return (
       <Form
         ref={form => this.form = form}
         {...this.state}
         prefix={prefix}
         defaultKeys={defaultKeys}
+        onValuesChange={onValuesChange}
       />
     );
   }
