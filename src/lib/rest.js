@@ -56,6 +56,28 @@ export const parseURL = (url) => {
     return ret;
 };
 
+export const _serializeParam = (params, field) => {
+  let str = '';
+  if (typeof params === 'string') {
+    str = params;
+  } else if(Array.isArray(params) && field) {
+      params.forEach((p) => {
+        if (typeof p === 'string' || typeof p === 'number') {
+          str = `${str}&${field}=${p}`;
+        }
+      });
+  } else {
+    Object.keys(params).forEach((p) => {
+      if (Array.isArray(params[p])) {
+        str = `${str}&${_serializeParam(params[p], p)}`;
+      } else {
+        str = `${str}&${p}=${params[p]}`;
+      }
+    });
+  }
+  return str.replace(/^&/g, '');
+};
+
 export const restAjax = (url, type, data) => {
     // 网络请求
     const urlObject = parseURL(url);
