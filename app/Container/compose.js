@@ -105,9 +105,10 @@ export const compose = (Com, flexTabs, comProps, menuType) => {
             {this.state.refresh ? null : <Com
               ref={instance => this.instance = instance}
               flexTabs={{
-                open: flexTabs.createTab,
-                openIframe: flexTabs.createIframeTab,
-                close: flexTabs.closeTab
+                open: flexTabs && flexTabs.createTab,
+                openIframe: flexTabs && flexTabs.createIframeTab,
+                close: flexTabs && flexTabs.closeTab,
+                getTabs: flexTabs && flexTabs.getTabs
               }}
               {...comProps}
               rest={rest}

@@ -93,7 +93,8 @@ Dual licensed under the MIT and GPL licenses.
   };
 
   //Number 四舍五入
-  Math.round = function (input, radix) {
+  // 避免跟Math.round重复和覆盖
+  Math.rounding = function (input, radix) {
     if(radix < 0 || radix > 100) return input;
       if(+input === +input){
           radix = parseInt(radix);

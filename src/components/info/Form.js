@@ -5,7 +5,12 @@ const { Form, Collapse, Anchor, Tooltip } = component;
 const { Link } = Anchor;
 const { Item } = Form;
 const { Panel } = Collapse;
-export default Form.create()(class Forms extends React.Component {
+export default Form.create({
+  onValuesChange: (props, values) => {
+    const { onValuesChange } = props;
+    onValuesChange && onValuesChange(values);
+  },
+})(class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -130,7 +130,12 @@ export default class MainFunction extends React.Component {
     });
   };
   _saveData = () => {
-    console.log('save data');
+    const { info } = this.state;
+    const { openLoading, closeLoading } = this.props;
+    openLoading && openLoading();
+    info.saveData(() => {
+      closeLoading && closeLoading();
+    });
   };
   // 界面渲染
   _didMount = (info) => {

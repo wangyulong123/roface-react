@@ -30,13 +30,18 @@
 }
 
 .data-searcher-wrapper{
+    display: flex;
+    flex-wrap: wrap;
     width: 50%;
 }
 
 .data-toggle-wrapper{
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
+    width: 100%;
+    margin-top: 10px;
+    text-align: right;
+    /*position: absolute;*/
+    /*bottom: 5px;*/
+    /*right: 10px;*/
 }
 
 .data-filter-wrapper{
@@ -48,4 +53,8 @@
 
 @media screen and (max-width: 1150px) {
 
+}
+
+table{
+    padding: 0!important;
 }

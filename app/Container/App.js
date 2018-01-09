@@ -73,6 +73,16 @@ export default class App extends React.Component {
         <Route
           path="/"
           render={(props) => {
+            const paramStr = decodeURIComponent(props.history.location.search).replace(/^\?/g, '');
+            const param = (paramStr && JSON.parse(paramStr)) || {};
+            if (param.noMenu) {
+              const ComPage = this._renderComponent(props, {
+                id: Math.uuid(),
+                url: props.history.location.pathname,
+                param
+              });
+              return ComPage;
+            }
             return (
               <div style={ this.state.menuType !== 'navTree' ? megaMenuStyle : navTreeStyle }>
                 {
