@@ -192,9 +192,10 @@ export default class DisplayTemplate extends React.Component {
     const {pageIndex, pageSize, totalCount } = this.state;
     return (
       <LocaleProvider locale={zhCN}>
-        <div style={{ padding: '5px', border: '1px solid gray' }}>
+        <div style={{ padding: '5px' }}>
           <Table
             className={'ro-template-table'}
+            bordered
             rowKey={record => record.id}
             columns={this.state.columns}
             dataSource={this.state.data}

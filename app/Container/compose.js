@@ -8,13 +8,12 @@ import * as dataform from '../../src/lib/dataform';
 
 import { addOnResize } from '../../src/lib/listener';
 
-export const compose = (Com, flexTabs, comProps, menuType) => {
+export const compose = (Com, flexTabs, comProps, tab, menuType) => {
   class ComposeCom extends React.Component {
     constructor(props){
       super(props);
       this.megaMenuHeight = 150;
-      // this.navTreeHeight = 150;
-      // this.navTreeHeight = 20;
+      this.navTreeHeight = 72;
       this.flag = true;
       this.update = false;
       this.state = {
@@ -73,8 +72,7 @@ export const compose = (Com, flexTabs, comProps, menuType) => {
       }
     };
     _setComHeight = () => {
-      const { menuType } = this.props;
-      // 设置flextabs中内容的显示高度
+      // 设置flextabs中tabContent组件内容的显示高度
       this.dom.style.height = (document.documentElement.clientHeight - (menuType === 'navTree' ? this.navTreeHeight : this.megaMenuHeight)) + 'px';
     };
     closeLoading = () => {
