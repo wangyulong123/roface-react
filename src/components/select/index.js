@@ -10,6 +10,10 @@ const Option = Select.Option;
 
 @compose
 class RoSelect extends React.Component {
+  static defaultProps = {
+    optionField: 'code',
+    optionName: 'name',
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +33,7 @@ class RoSelect extends React.Component {
 
   renderOption = () => {
     const optionDefault = (
-      <Option key='' value=''>
+      <Option key={Math.uuid()} value=''>
         { '--请选择--' }
       </Option>
       );

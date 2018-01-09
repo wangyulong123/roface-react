@@ -139,9 +139,9 @@ export default class Tab extends React.Component {
       url = item.url + '?' + param;
     }
     if (url) {
-      history.replace(`/${url}`);
+      history.push(`/${url}`);
     } else {
-      history.replace('/NotFound');
+      history.push('/NotFound');
     }
   };
   _checkTabItem = (name, url, param) => {
@@ -193,6 +193,9 @@ export default class Tab extends React.Component {
       tabsCollapse: this.state.tabsCollapse
         .filter(tabsCollapseItem => id !== tabsCollapseItem.id),
     });
+  };
+  getTabs = () => {
+    return this.state.tabs;
   };
   _updateTab = (item, Com) => {
     const isExsitTabsItem = this.state.tabs && this.state.tabs

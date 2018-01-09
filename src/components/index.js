@@ -52,4 +52,4 @@ export { default as showModal } from './modal/ModalWrapper';
 export { default as Tree } from './tree';
 export { default as rest} from '../lib/rest';
 export { default as Iframe } from './iframe';
-
+export { default as RangePicker } from './rangepicker';

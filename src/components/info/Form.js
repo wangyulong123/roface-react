@@ -5,7 +5,12 @@ const { Form, Collapse, Anchor, Tooltip } = component;
 const { Link } = Anchor;
 const { Item } = Form;
 const { Panel } = Collapse;
-export default Form.create()(class Forms extends React.Component {
+export default Form.create({
+  onValuesChange: (props, values) => {
+    const { onValuesChange } = props;
+    onValuesChange && onValuesChange(values);
+  },
+})(class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +29,7 @@ export default Form.create()(class Forms extends React.Component {
     const groups = {};
     if (Object.keys(data).length > 0) {
       let { elements = [] } = data;
-      elements = elements.filter(item => item.elementUIHint.visible);
+      // elements = elements.filter(item => item.elementUIHint.visible);
       if (elements.some(ele => ele.group)) {
         // 如果有分组存在，根据分组进行过滤
         elements.forEach((ele) => {
@@ -62,6 +67,7 @@ export default Form.create()(class Forms extends React.Component {
       prefix: item.elementUIHint.prefix,
       suffix: item.elementUIHint.suffix,
       options: dict[item.code],
+      htmlStyle: item.elementUIHint.htmlStyle,
     };
   };
   _dataType = (type) => {
@@ -74,7 +80,7 @@ export default Form.create()(class Forms extends React.Component {
       case 'Currency': dataType = 'number'; break;
       case 'Date':
       case 'DateTime':
-      case 'Time': dataType = 'integer'; break;
+      case 'Time': dataType = 'string'; break;
       default: dataType = 'string';
     }
     return dataType;
@@ -83,7 +89,7 @@ export default Form.create()(class Forms extends React.Component {
     const { formUIHint = {} } = data;
     const { dataValue } = this.props;
     const { getFieldDecorator } = this.props.form;
-    return (items.filter(item => item.elementUIHint.visible).map((item, index) => {
+    return (items.map((item, index) => {
       const Com = this._getComponent(item.elementUIHint.editStyle);
       const comProps = this._getElementUIHint(item);
       const key = `${index}`;
@@ -91,7 +97,9 @@ export default Form.create()(class Forms extends React.Component {
         <div
           key={key}
           className={`${prefix}-item-container`}
-          style={{ width: `${(100 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan}%` }}
+          style={{
+            width: `${(100 / (formUIHint.columnNumber || 1)) * item.elementUIHint.colspan}%`,
+            display: item.elementUIHint.visible ? '' : 'none' }}
         >
           <Item
             className={`${prefix}-item`}
@@ -116,7 +124,9 @@ export default Form.create()(class Forms extends React.Component {
     }));
   }
   _renderAnchor = (groups) => {
-    return Object.keys(groups).map((group) => {
+    return Object.keys(groups).filter((group) => {
+      return groups[group].filter(item => item.elementUIHint.visible).length > 0;
+    }).map((group) => {
       return <Link href={`#${group}`} key={`#${group}`} title={group.split(':')[1]} />;
     });
   }
@@ -131,13 +141,14 @@ export default Form.create()(class Forms extends React.Component {
             !groups.noGroup ? (
               <Collapse activeKey={keys} onChange={this._panelChange}>
                 {Object.keys(groups).map((group) => {
+                  const display =
+                    groups[group].filter(item => item.elementUIHint.visible).length !== 0 ? '' : 'none';
                   return (
-                    groups[group].length !== 0 ?
-                      <Panel header={group.split(':')[1]} id={group} key={group}>
-                        <div className={`${prefix}-info-container`}>
-                          {this._renderFormItem(groups[group], dataForm, `${prefix}-info`)}
-                        </div>
-                      </Panel> : null
+                    <Panel header={group.split(':')[1]} id={group} key={group} style={{ display: display }}>
+                      <div className={`${prefix}-info-container`}>
+                        {this._renderFormItem(groups[group], dataForm, `${prefix}-info`)}
+                      </div>
+                    </Panel>
                   );
                 })}
               </Collapse>) : (
