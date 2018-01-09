@@ -177,29 +177,12 @@ export default Form.create()(class TemplateDetail extends React.Component {
       });
     }
 
-    this.dom = ReactDom.findDOMNode(this);
-    // {`${prefix}-template-detail-info-layout`}
-    this.tabContentWrapper = Array.from(this.dom.children).filter(d => d.className === `tab-content`)[0];
-    this.tableWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-template-field-table`)[0];
-    this.detailInfoLayoutWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-template-detail-info-layout`)[0];
-    this.detailCollapseWrapper = Array.from(this.dom.children).filter(d => d.className === `ro-template-detail-collapse`)[0];
-    this.domWidth = document.body.clientWidth;
-    // -template-detail-info-layout
-    // -template-detail-collapse
-    // this.offsetWidth = this.tabsWrapper.offsetWidth;
-    this.clientWidth = this.detailCollapseWrapper.clientWidth;
    this.checkWidth();
    addOnResize(this.checkWidth);
   }
 
   checkWidth = () => {
-    if (this.detailCollapseWrapper) {
-      this.clientWidth = this.detailCollapseWrapper.clientWidth;
-      this.domWidth = document.body.clientWidth;
-      this.setState({
-        collapseWrapperClientWidth: this.domWidth - 256
-      });
-    }
+    this.domWidth = document.body.clientWidth;
   };
 
   _dataChange = (name, value, key) => {
