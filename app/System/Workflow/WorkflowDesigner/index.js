@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DataTable, Button, Modal } from '../../../../src/components';
+import { DataTable, Button, Modal, Dropdown,Menu } from '../../../../src/components';
 
 import * as rest from '../../../../src/lib/rest';
 
@@ -24,7 +24,7 @@ export default class WorkflowModelList extends React.Component {
     didMounted = (vm) => {
         const resultModal = Modal;
         const deploy = (row) => {
-            rest.put("/model/"+row.id+"/deploy")
+            rest.put("/workflow/model/"+row.id+"/deploy")
                 .then((res) => {
                     resultModal.info({
                         title: '返回信息提示',
@@ -45,7 +45,7 @@ export default class WorkflowModelList extends React.Component {
         }
 
         const addModel = () => {
-            rest.put("/model/addModel").then(()=>{
+            rest.put("/workflow/model/addModel").then(()=>{
                 refresh()
             })
         }
@@ -53,7 +53,15 @@ export default class WorkflowModelList extends React.Component {
 
         vm.setColumnTemplate('button', (row) => {
             return (<div><Button onClick={()=>openWorkflowEditor(row)}>流程设计</Button>
-                <Button onClick={()=>deploy(row)}>流程部署</Button></div>);
+                <Dropdown overlay={
+                    <Menu>
+                        <Menu.Item>功能项1</Menu.Item>
+                        <Menu.Item>功能项2</Menu.Item>
+                    </Menu>
+                }>
+                    <Button onClick={()=>deploy(row)}>流程部署</Button>
+                </Dropdown>
+                </div>);
         });
 
         vm.addBtn({
