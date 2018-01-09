@@ -1,6 +1,8 @@
 import React from  'react';
+import ReactDom from 'react-dom';
 import * as components from '../../../../../src/components';
 import './style/index.less';
+import { addOnResize } from '../../../../../src/lib/listener';
 
 const {
   Form, Collapse, Text, RadioBox, TextArea, Table,
@@ -174,7 +176,15 @@ export default Form.create()(class TemplateDetail extends React.Component {
         });
       });
     }
+
+   this.checkWidth();
+   addOnResize(this.checkWidth);
   }
+
+  checkWidth = () => {
+    this.domWidth = document.body.clientWidth;
+  };
+
   _dataChange = (name, value, key) => {
     this.setState({
       data: {
@@ -344,6 +354,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
       labelCol: { span: 8},
       wrapperCol: { span: 16 },
     };
+    const { menuType } = this.props;
     const { getFieldDecorator, prefix = 'ro' } = this.props.form;
     const style = { width: '100%' };
     return (
@@ -584,17 +595,20 @@ export default Form.create()(class TemplateDetail extends React.Component {
               </Form>
             </Panel>
             <Panel header="字段信息" key="2">
-              <Table
-                className={`${prefix}-template-field-table`}
-                rowKey={record => record.key}
-                columns={this.state.columns}
-                dataSource={this.state.data.elements || []}
-                pagination={false}
-                scroll={{ x: 2000 }}
-                locale={{
-                  emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
-                }}
-              />
+              <div>
+                <Table
+                  className={`${prefix}-template-field-table`}
+                  rowKey={record => record.key}
+                  columns={this.state.columns}
+                  dataSource={this.state.data.elements || []}
+                  pagination={false}
+                  scroll={{ x: 2000 }}
+                  locale={{
+                    emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
+                  }}
+                  style={{ width: menuType && menuType === 'navTree' ?  this.domWidth - 330 : '100%' }}
+                />
+              </div>
             </Panel>
           </Collapse>
         </div>
