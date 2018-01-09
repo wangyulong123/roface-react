@@ -10,6 +10,10 @@ const Option = Select.Option;
 
 @compose
 class RoSelect extends React.Component {
+  static defaultProps = {
+    optionField: 'code',
+    optionName: 'name',
+  };
   constructor(props) {
     super(props);
     this.state = {
