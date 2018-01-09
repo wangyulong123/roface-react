@@ -18,12 +18,12 @@ export default class UserManager extends React.Component {
 
         this.tabsOptions = [
             {
-                tab:'userDetail',
+                tab:'用户详情',
                 key:"userDetail",
                 content: <DetailInfo dataFormId="system-AdminUserInfo"/>
             },
             {
-                tab:'roleList',
+                tab:'角色列表',
                 key:"roleList",
                 content: <DataTable dataFormId="system-SimpleRoleListForUserManage"/>
             }
