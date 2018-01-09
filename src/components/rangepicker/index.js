@@ -32,7 +32,7 @@ class RoRangePicker extends React.Component {
   handleMillisecondValue = (value) => {
     const { locale } = this.props;
     const lo = locale || 'zh';
-    return (value && moment(new Date(value)).locale(lo)) || null;
+    return (value && moment(value).locale(lo)) || null;
   };
 
   handleFormatDate = (value) => {
