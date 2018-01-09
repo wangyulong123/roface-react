@@ -14,6 +14,7 @@
 
 .ro-page-content-wrapper {
     width: 100%;
+    /*width: calc(100% - 256px);*/
     /*height:calc(100% - 78px);*/
     height:100%;
     z-index: 800;

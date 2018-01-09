@@ -55,7 +55,7 @@ export default class App extends React.Component {
     return NotFound;
   };
   _renderComponent = (props, tab) => {
-    const Com = compose(this._getCom(props, tab), this.flexTabs, props, tab);
+    const Com = compose(this._getCom(props, tab), this.flexTabs, props, tab, this.state.menuType);
     return <Com />;
   };
   _getInstance = (instance) => {
@@ -104,6 +104,7 @@ export default class App extends React.Component {
                 }
                 <FlexTabs
                   {...props}
+                  menuType={this.state.menuType}
                   data={this.state.menuData}
                   ref={this._getInstance}
                   renderComponent={this._renderComponent}
