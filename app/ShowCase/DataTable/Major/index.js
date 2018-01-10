@@ -3,16 +3,25 @@
  */
 import React from 'react';
 import { notification, message, Button } from 'antd';
-import { DataTable } from '../../../../src/components';
+import { DataTable, DataTable1 } from '../../../../src/components';
 
 export default class DataListMajor extends React.Component {
-  dataReady(dataTable, dataList) {
-    console.warn(123, dataTable, dataList);
+  dataReady = (dataTable) => {
+    this.setState({ dataTable });
+    dataTable.setColumnTemplate('url', (text, record, i) => {
+      console.log(text);
+      console.log(record);
+      console.log(i);
+      return <a>{text}</a>
+    });
+
+  };
+
+  formReady(dataTable) {
+    console.warn(dataTable);
   }
 
-  formReady(dataTable, meta, dom) {
-    console.warn(dataTable, meta, dom);
-  }
+
 
   didMounted(api) {
     const vm = api;
@@ -530,19 +539,18 @@ export default class DataListMajor extends React.Component {
       name: '删除',
       icon: 'delete',
     });
-
-
   }
 
   render() {
     return (
       <div>
-        <DataTable
+        <DataTable1
           dataFormId="system-MenuList"
-          dataFormParams={{ code: 'MenuList' }}
+          params={{ code: 'MenuList' }}
           didMounted={this.didMounted}
           dataReady={this.dataReady}
-          formReady={this.formReady} />
+          formReady={this.formReady}
+        />
       </div>
     );
   }
