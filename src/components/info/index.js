@@ -92,20 +92,20 @@ export default class Forms extends React.Component {
       if (Array.isArray(params) && field) {
         params.forEach(p => {
           if (typeof p === 'string' || typeof p === 'number') {
-            str = `${str}&${field}=${p}`;
+            str = `${str};${field}=${p}`;
           }
         })
       } else {
         Object.keys(params).forEach(p => {
           if (Array.isArray(params[p])) {
-            str = `${str}&${this._serializeParam(params[p], p)}`;
+            str = `${str};${this._serializeParam(params[p], p)}`;
           } else {
-            str = `${str}&${p}=${params[p]}`;
+            str = `${str};${p}=${params[p]}`;
           }
         })
       }
     }
-    return str.replace(/^&/g, '');
+    return str.replace(/^;/g, '');
   };
   setValue = (itemId, value) => {
     this.form.setFieldsValue({ [itemId]: value });
