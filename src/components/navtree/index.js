@@ -12,11 +12,8 @@ export default class NavTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: 'inline',
-      theme: 'dark',
       menuData: [],
       flatMenuData: [],
-      bgColor: '',
       collapsed: false,
     };
   }
@@ -29,7 +26,6 @@ export default class NavTree extends React.Component {
       this.setState({
         flatMenuData: res,
         menuData: dataSource,
-        bgColor: '#001529',
       });
     }).catch((e) => {
       Modal.error({
@@ -91,36 +87,21 @@ export default class NavTree extends React.Component {
       </Menu.Item>
     );
   };
-  _changeMenuTheme = (value) => {
-    if (value) {
-      this.setState({
-        theme: 'dark',
-        bgColor: '#001529',
-      });
-    } else {
-      this.setState({
-        theme: 'light',
-        bgColor: '',
-      });
-    }
-  };
-  _changeMenuMode = (value) => {
-    this.setState({
-      mode: value ? 'vertical' : 'inline',
-    });
-  };
   _toggleCollapsed = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
-  }
+  };
   render() {
-    const { menuData, bgColor, collapsed, mode, theme } = this.state;
+    const { menuData, collapsed } = this.state;
     const { prefix = 'ro' } = this.props;
     return (
-      <div className={`${prefix}-container`} style={{ background: bgColor }}>
+      <div className={`${prefix}-container`} style={{ width: collapsed ? '88px' : '256px' }}>
         <div className={`${prefix}-container-logo`}>
-          <span className={`${prefix}-container-logo-icon`} />
+          <span
+            className={`${prefix}-container-logo-icon`}
+            style={{ display: collapsed ? 'none' : 'inline-block' }}
+          />
           <Icon
             className={`${prefix}-container-logo-collapsed`}
             type={collapsed ? 'menu-unfold' : 'menu-fold'}
@@ -128,8 +109,14 @@ export default class NavTree extends React.Component {
           />
         </div>
         <div className={`${prefix}-container-admin`}>
-          <span className={`${prefix}-container-admin-img`} />
-          <span className={`${prefix}-container-admin-container`}>
+          <span
+            className={`${prefix}-container-admin-img`}
+            style={{ display: collapsed ? 'none' : 'inline-block' }}
+          />
+          <span
+            className={`${prefix}-container-admin-container`}
+            style={{ marginLeft: collapsed ? '0' : '20px' }}
+          >
             <span className={`${prefix}-container-admin-container-name`}>admin</span>
             <span className={`${prefix}-container-admin-container-icon`}>
               <span className={`${prefix}-container-admin-container-icon-setup`}/>
@@ -144,26 +131,13 @@ export default class NavTree extends React.Component {
           <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
-            mode={mode}
-            theme={theme}
+            mode={collapsed ? 'vertical' : 'inline'}
+            theme='dark'
             inlineCollapsed={collapsed}
             onClick={e => this._menuClick(e)}
           >
             {menuData.map(menu => this._renderMenu(menu, prefix))}
           </Menu>
-        </div>
-        <div className={`${prefix}-container-switch`}>
-          <Switch
-            unCheckedChildren='light'
-            checkedChildren='dark'
-            disabled
-            onChange={this._changeMenuTheme}
-          />
-          <Switch
-            unCheckedChildren='展开'
-            checkedChildren='弹出'
-            onChange={this._changeMenuMode}
-          />
         </div>
       </div>
     );
