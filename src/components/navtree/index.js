@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon, Modal, Switch } from '../index';
+import { Menu, Icon, Modal } from '../index';
 
 import { getUserMenuList } from '../../lib/base';
 import { removeLevelMore, flatToTree } from '../../lib/menutransform';
