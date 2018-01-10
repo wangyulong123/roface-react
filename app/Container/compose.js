@@ -31,7 +31,7 @@ export const compose = (Com, flexTabs, comProps, tab, menuType) => {
       return this.update;
     }
     componentWillReceiveProps(nextProps) {
-      if (this.props.refreshStatus !== nextProps.refreshStatus) {
+      if (this.props.refreshStatus !== nextProps.refreshStatus && !this.state.spinning) {
         // 点击了刷新按钮
         if (nextProps.activeTabId === nextProps.tabItem.id ||
           this._checkRefreshId(nextProps.tabItem.id, nextProps.refreshId)) {
