@@ -1,12 +1,12 @@
 import React from 'react';
-
 import {DataTable, Button} from '../../../../src/components';
+import * as rest from '../../../../src/lib/rest';
 export default class WorkflowModelList extends React.Component {
     formReady = (dataTable,meta,dom) => {
         // console.log('form-ready:',dataTable,meta,dom);
     }
-    dataReady = (dataTable,dataList) => {
-        console.log('data-ready:',dataTable,dataList);
+    dataReady = (dataTable,dataList,vm) => {
+        console.log('data-ready:',dataTable,dataList,vm);
         const { flexTabs } = this.props;
         const { open } = flexTabs;
         function openWorkflowEditor(row){
@@ -20,12 +20,12 @@ export default class WorkflowModelList extends React.Component {
         });
     }
 
-
     didMounted =(vm)=>{
         const { flexTabs } = this.props;
         const openProcInstSchedule =(row) => {
 
-            var url = "http://127.0.0.1:8080/amix/diagram-viewer/index.html?processInstanceId=" + row.procId + "&processDefinitionId=" + row.procDefId;
+            // var url = "http://127.0.0.1:8080/amix/diagram-viewer/index.html?processInstanceId=" + row.procId + "&processDefinitionId=" + row.procDefId;
+            let url =rest.getRequestURL(`/diagram-viewer/index.html?processInstanceId=${row.procId} &processDefinitionId=${row.procDefId}`)
             flexTabs.openIframe('查看流程进度图', url);
         }
         vm.setColumnTemplate('button',(row) =>{
