@@ -96,11 +96,11 @@ export default class Tab extends React.Component {
       * this.tabIntervalWidth - tabsLength);
       if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth < tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth - (this.state.tabs.length) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
-        const tabWidthNumber = (spaceWidth < this.tabWidth) && spaceWidth % this.tabWidth;
+        const tabWidthNumber = (spaceWidth < this.tabWidth) && spaceWidth / this.tabWidth;
         if (isSpace) {
           console.log('isSpace-1:' + isSpace);
         } else {
-          console.log('isSpace-1:' + isSpace);
+          // console.log('isSpace-1:' + isSpace);
           /*
           * 缩小时空间不足，进行折叠tabs，将最后一个tab页进行折叠
           * 如果最后一个是正在显示的tab,则将正在显示的这个tab的前一个tab进行折叠
@@ -129,9 +129,9 @@ export default class Tab extends React.Component {
       } else if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth > tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
-        const tabWidthNumber = spaceWidth > this.tabWidth && spaceWidth % this.tabWidth;
+        const tabWidthNumber = spaceWidth > this.tabWidth && spaceWidth / this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
-          console.log('isSpace-2:' + isSpace);
+          // console.log('isSpace-2:' + isSpace);
           const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
           this.setState({
             tabsCollapse: this.state.tabsCollapse,
@@ -141,9 +141,6 @@ export default class Tab extends React.Component {
           }, () => {
             tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
           });
-        } else {
-          console.log('isSpace-2:' + isSpace);
-          // 新增时，空间不够，进行对tabs变更，实现思路和缩小时的原理一致,不同的是折叠的是第一个tab页
         }
       }
       this.offsetWidth = this.tabsWrapper.offsetWidth;
