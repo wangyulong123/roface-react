@@ -151,6 +151,13 @@ export default class DataListMajor extends React.Component {
       vm.setValue((row, index) => { return index > 3; }, 'name', '哈哈');
     }
 
+    function setDataRow() {
+
+      vm.setDataRow(0, {
+        name: '呵呵',
+      }, true);
+    }
+
     function setLinkage() {
       vm.setLinkage('name', (row) => {
         // console.warn(row, val, oldVal);
@@ -404,6 +411,11 @@ export default class DataListMajor extends React.Component {
     });
     vm.addBtn({
       type: 'primary',
+      onclick: setDataRow,
+      name: '设置行值',
+    });
+    vm.addBtn({
+      type: 'primary',
       onclick: setLinkage,
       name: '设置行联动',
     });
@@ -526,8 +538,8 @@ export default class DataListMajor extends React.Component {
     return (
       <div>
         <DataTable
-          dataFormId="system-MenuList"
-          dataFormParams={{ code: 'MenuList' }}
+          dataFormId="demo-BeanPersonList"
+          dataFormParams={{ code: 'BeanPersonList' }}
           didMounted={this.didMounted}
           dataReady={this.dataReady}
           formReady={this.formReady} />

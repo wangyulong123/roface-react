@@ -44,3 +44,11 @@ export const deleteAdmin = (url, param) => {
 export const saveDataOne = (dataFormId, param) => {
   return rest.post(`${config.webApi.dataFormDataOneSave}/${dataFormId}`, param);
 };
+
+export const saveDataList = (dataFormId, param) => {
+  return rest.post(`${config.webApi.dataFormDataListSave}/${dataFormId}`, param);
+};
+
+export const deleteDataList = (dataFormId, param) => {
+  return rest.post(`${config.webApi.dataFormDataListDelete}/${dataFormId}`, param);
+};

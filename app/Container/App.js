@@ -36,7 +36,11 @@ export default class App extends React.Component {
   }
   _menuClick = (item) => {
     if (this.flexTabs) {
-      this.flexTabs.createTab({...item});
+      if (item.container && item.container === 'iframe') {
+        this.flexTabs.createIframeTab({ ...item });
+      } else {
+        this.flexTabs.createTab({...item});
+      }
     }
   };
   _getObject = (obj, fields) => {
@@ -102,6 +106,7 @@ export default class App extends React.Component {
                     dataMount={this._dataMount}
                   />)
                 }
+                <div style={{ width: '8px', height: '100vh' }} />
                 <FlexTabs
                   {...props}
                   menuType={this.state.menuType}

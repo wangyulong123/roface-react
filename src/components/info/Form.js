@@ -67,7 +67,7 @@ export default Form.create({
       prefix: item.elementUIHint.prefix,
       suffix: item.elementUIHint.suffix,
       options: dict[item.code],
-      htmlStyle: item.elementUIHint.htmlStyle,
+      htmlstyle: item.elementUIHint.htmlStyle,
     };
   };
   _dataType = (type) => {
@@ -89,10 +89,10 @@ export default Form.create({
     const { formUIHint = {} } = data;
     const { dataValue } = this.props;
     const { getFieldDecorator } = this.props.form;
-    return (items.map((item, index) => {
+    return (items.map((item) => {
       const Com = this._getComponent(item.elementUIHint.editStyle);
       const comProps = this._getElementUIHint(item);
-      const key = `${index}`;
+      const key = item.code;
       return (
         <div
           key={key}
