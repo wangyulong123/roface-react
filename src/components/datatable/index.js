@@ -12,7 +12,9 @@ import DataToggle from './datatoggle';
 import DataFilter from './datafilter';
 import Methods from './api-inject';
 import './index.css';
+import { developCompose } from '../developCompose';
 
+@developCompose
 class DataTable extends React.Component {
   constructor(props) {
     super(props);
@@ -72,9 +74,9 @@ class DataTable extends React.Component {
           </div>
           <div className="data-searcher-wrapper">
             <DataSearcher placeholder="haha" onSearch={this.onQuickSearch} />
-          </div>
-          <div className="data-toggle-wrapper">
-            <DataToggle onChange={this.onSearcherToggle} />
+            <div className="data-toggle-wrapper">
+              <DataToggle onChange={this.onSearcherToggle} />
+            </div>
           </div>
         </div>
         <div className="data-filter-wrapper">

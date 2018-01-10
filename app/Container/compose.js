@@ -8,11 +8,12 @@ import * as dataform from '../../src/lib/dataform';
 
 import { addOnResize } from '../../src/lib/listener';
 
-export const compose = (Com, flexTabs, comProps) => {
+export const compose = (Com, flexTabs, comProps, tab, menuType) => {
   class ComposeCom extends React.Component {
     constructor(props){
       super(props);
-      this.height = 150;
+      this.megaMenuHeight = 150;
+      this.navTreeHeight = 72;
       this.flag = true;
       this.update = false;
       this.state = {
@@ -71,7 +72,8 @@ export const compose = (Com, flexTabs, comProps) => {
       }
     };
     _setComHeight = () => {
-      this.dom.style.height = (document.documentElement.clientHeight - this.height) + 'px';
+      // 设置flextabs中tabContent组件内容的显示高度
+      this.dom.style.height = (document.documentElement.clientHeight - (menuType === 'navTree' ? this.navTreeHeight : this.megaMenuHeight)) + 'px';
     };
     closeLoading = () => {
       this.update = true;
@@ -101,9 +103,10 @@ export const compose = (Com, flexTabs, comProps) => {
             {this.state.refresh ? null : <Com
               ref={instance => this.instance = instance}
               flexTabs={{
-                open: flexTabs.createTab,
-                openIframe: flexTabs.createIframeTab,
-                close: flexTabs.closeTab
+                open: flexTabs && flexTabs.createTab,
+                openIframe: flexTabs && flexTabs.createIframeTab,
+                close: flexTabs && flexTabs.closeTab,
+                getTabs: flexTabs && flexTabs.getTabs
               }}
               {...comProps}
               rest={rest}

@@ -84,7 +84,7 @@ export default Form.create()(class ElementDetail extends React.Component {
       labelCol: { span: 4},
       wrapperCol: { span: 19 },
     };
-    const style = { width: '49%' };
+    const style = { width: '49%', display: 'flex', minWidth: 200 };
     const { getFieldDecorator } = this.props.form;
     const { prefix = 'ro', param } = this.props;
     return (
@@ -156,7 +156,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   {getFieldDecorator('code', {
                     rules: [{ required: true }],
                     initialValue: this.state.data.code,
-                  })(<Text />)}
+                  })(<Text reading/>)}
                 </FormItem>
                 <FormItem
                   style={{...style, width: '33%'}}
@@ -421,7 +421,7 @@ export default Form.create()(class ElementDetail extends React.Component {
                   })(<Select
                     options={[
                       {code: 'Text', name: '文本框'},
-                      {code: 'Textarea', name: '多行文本框'},
+                      {code: 'TextArea', name: '多行文本框'},
                       {code: 'Select', name: '下拉框'},
                       {code: 'Checkbox', name: '复选框'},
                       {code: 'DatePicker', name: '日期选择'},

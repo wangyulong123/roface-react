@@ -151,6 +151,13 @@ export default class DataListMajor extends React.Component {
       vm.setValue((row, index) => { return index > 3; }, 'name', '哈哈');
     }
 
+    function setDataRow() {
+
+      vm.setDataRow(0, {
+        name: '呵呵',
+      }, true);
+    }
+
     function setLinkage() {
       vm.setLinkage('name', (row) => {
         // console.warn(row, val, oldVal);
@@ -401,6 +408,11 @@ export default class DataListMajor extends React.Component {
       type: 'primary',
       onclick: setValue,
       name: '设值',
+    });
+    vm.addBtn({
+      type: 'primary',
+      onclick: setDataRow,
+      name: '设置行值',
     });
     vm.addBtn({
       type: 'primary',

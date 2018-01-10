@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import $ from 'jquery';
 
 import * as dataForm from '../../lib/dataform';
+import * as rest from '../../lib/rest';
 import Form from './Form';
 import './style/index.less';
-import { Modal } from '../index';
+import { Modal, Notify } from '../index';
 import { developCompose } from '../developCompose';
 
 @developCompose
@@ -22,7 +22,7 @@ export default class Forms extends React.Component {
     const { didMount, formReady, dataReady } = this.props;
     /* eslint-disable */
     formReady && formReady(ReactDom.findDOMNode(this));
-    const info = {
+    this.info = {
       setValue: this.setValue,
       getValue: this.getValue,
       setData: this.setData,
@@ -43,14 +43,25 @@ export default class Forms extends React.Component {
       validateItem: this.validateItem,
       saveData: this.saveData,
     };
+    this._updateData(didMount, dataReady);
+  }
+  componentWillReceiveProps(nextProps) {
+    // 只适合对象的浅比较，否则会造成性能问题
+    const nextParams = nextProps.params && rest.serializeParam(nextProps.params);
+    const thisParams = this.props.params && rest.serializeParam(this.props.params);
+    if ((nextParams !== thisParams) || (nextProps.dataFormId !== this.props.dataFormId)) {
+      this._updateData(nextProps.didMount, nextProps.dataReady);
+    }
+  }
+  _updateData = (didMount, dataReady) => {
     this._getData().then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
         dict: res.dict || {},
       }, () => {
-        dataReady && dataReady(info);
-        didMount && didMount(info);
+        dataReady && dataReady(this.info);
+        didMount && didMount(this.info);
       });
     }).catch(e => {
       Modal.error({
@@ -62,9 +73,32 @@ export default class Forms extends React.Component {
   _getData = () => {
     const { dataFormId, params } = this.props;
     if (params) {
-      return dataForm.getDataOne(dataFormId, $.param(this.props.params))
+      return dataForm.getDataOne(dataFormId, this._serializeParam(params))
     }
     return dataForm.getMeta(dataFormId)
+  };
+  _serializeParam = (params, field) => {
+    let str = '';
+    if (typeof params === 'string') {
+      str = params;
+    } else {
+      if (Array.isArray(params) && field) {
+        params.forEach(p => {
+          if (typeof p === 'string' || typeof p === 'number') {
+            str = `${str}&${field}=${p}`;
+          }
+        })
+      } else {
+        Object.keys(params).forEach(p => {
+          if (Array.isArray(params[p])) {
+            str = `${str}&${this._serializeParam(params[p], p)}`;
+          } else {
+            str = `${str}&${p}=${params[p]}`;
+          }
+        })
+      }
+    }
+    return str.replace(/^&/g, '');
   };
   setValue = (itemId, value) => {
     this.form.setFieldsValue({ [itemId]: value });
@@ -134,22 +168,41 @@ export default class Forms extends React.Component {
     });
   };
   validate = (cb) => {
-    this.form.validateFields(cb);
+    this.form.validateFieldsAndScroll(cb);
   };
   validateItem = (itemId, cb) => {
-    this.form.validateFields([itemId], cb);
+    this.form.validateFieldsAndScroll([itemId], cb);
   };
-  saveData = () => {
-    console.log('save data');
+  saveData = (cb) => {
+    const { dataFormId } = this.props;
+    this.validate((errors, values) => {
+      if (!errors) {
+        dataForm.saveDataOne(dataFormId, values).then((res) => {
+          cb(res);
+          Notify.success({
+            message: '保存成功',
+          });
+        }).catch((e) => {
+          cb(e);
+          Modal.error({
+            title: '保存失败',
+            content: JSON.stringify(e),
+          });
+        });
+      } else {
+        cb(errors)
+      }
+    });
   };
   render() {
-    const { prefix = 'ro', defaultKeys = [] } = this.props;
+    const { prefix = 'ro', defaultKeys = [], onValuesChange } = this.props;
     return (
       <Form
         ref={form => this.form = form}
         {...this.state}
         prefix={prefix}
         defaultKeys={defaultKeys}
+        onValuesChange={onValuesChange}
       />
     );
   }
