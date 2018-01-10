@@ -107,6 +107,16 @@ class RoDataTable extends React.Component {
     return str.replace(/^&/g, '');
   };
 
+  _getDictName = (name, value) => {
+    const { dict } = this.state;
+    const options = (dict[name] || []);
+    const dicName = options.filter(op => op.code === value)[0];
+    if (dicName) {
+      return dicName.name || '';
+    }
+    return '';
+  }
+
   _paginationOnChange = (page, pageSize) => {
     this._getDataList(page - 1, pageSize);
   };
