@@ -3,8 +3,7 @@
  */
 
 import React from 'react';
-import { Table } from 'antd';
-import ReactDom from 'react-dom';
+import EasyTable from './easyTable';
 import * as dataForm from '../../lib/dataform';
 import * as components from '../index';
 import { developCompose } from '../developCompose';
@@ -37,6 +36,7 @@ class RoDataTable extends React.Component {
       totalCount: 10,
       dataSource: [],
       columns: [],
+      loading: false,
       // dataMeta: {},
       // dataBody: {},
       // dict: {},
@@ -47,16 +47,23 @@ class RoDataTable extends React.Component {
     const { didMount, formReady, dataReady } = this.props;
     const { pageIndex, pageSize } = this.state;
     /* eslint-disable */
-    formReady && formReady(ReactDom.findDOMNode(this));
     this.table = {
       setColumnTemplate: this.setColumnTemplate,
       addColumn: this.addColumn,
       deleteColumn: this.deleteColumn,
     };
-    this._getDataList(pageIndex, pageSize).then(() => {
-      didMount && didMount(this.table);
-      dataReady && dataReady(this.table);
-    })
+    this._getMeta().then((res) => {
+      this.setState({
+        dict: res.dict || {},
+        columns: (res.meta && this.columnsHandler(res.meta.elements)) || [],
+      }, () => {
+        formReady && formReady(this.table);
+        this._getDataList(pageIndex, pageSize).then(() => {
+          didMount && didMount(this.table);
+          dataReady && dataReady(this.table);
+        });
+      })
+    });
   }
 
   setColumnTemplate = (field, callback) => {
@@ -66,21 +73,29 @@ class RoDataTable extends React.Component {
   addColumn = (i, callback) => {};
   deleteColumn = (i, callback) => {};
 
+  _getMeta = () => {
+    const { dataFormId } = this.props;
+    return dataForm.getMeta(dataFormId).catch(e => {
+      Modal.error({
+        title: '获取列表模版失败',
+        content: JSON.stringify(e)
+      });
+    });
+  };
+
   _getDataList = (index, size) => {
     const { dataFormId, params } = this.props;
     if (params) {
+      this.setState({ loading: true });
       return dataForm.getDataList(dataFormId, this._serializeParam(params), 'sort_code=ASC', index, size)
         .then((res) => {
-        const columns = (res.meta && this.columnsHandler(res.meta.elements)) || [];
         this.setState({
-          dataMeta: res.meta || res,
           dataBody: res.body || {},
-          dict: res.dict || {},
-          columns: (res.meta && res.meta.elements) || [],
           dataSource: (res.body && res.body.dataList) || [],
           pageIndex: res.body && res.body.index,
           pageSize: res.body && res.body.size,
           totalCount: res.body && res.body.totalRowCount,
+          loading: false
         });
       }).catch(e => {
         Modal.error({
@@ -88,8 +103,12 @@ class RoDataTable extends React.Component {
           content: JSON.stringify(e)
         })
       });
+    } else {
+      Modal.error({
+        title: '获取列表数据失败',
+        content: '未传入参数'
+      });
     }
-    return dataForm.getMeta(dataFormId)
   };
 
   _serializeParam = (params, field) => {
@@ -150,7 +169,6 @@ class RoDataTable extends React.Component {
 
   _updateColumnsHandler = (field, callback) => {
     if (field instanceof Number) {}
-
     this.setState({
       columns: this.state.columns.map(ele => {
         if (ele.key === field && callback) {
@@ -180,9 +198,10 @@ class RoDataTable extends React.Component {
   render() {
     const {pageIndex, pageSize, totalCount } = this.state;
     return (
-      <Table
+      <EasyTable
         {...this.props}
-        columns={this.columnsHandler(this.state.columns)}
+        loading={this.state.loading}
+        columns={this.state.columns}
         dataSource={this.state.dataSource}
         rowKey={record => record.id}
         rowSelection={{

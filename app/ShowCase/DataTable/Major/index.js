@@ -8,9 +8,6 @@ import { DataTable, DataTable1 } from '../../../../src/components';
 export default class DataListMajor extends React.Component {
   dataReady = (dataTable) => {
     this.setState({ dataTable });
-    // dataTable.setColumnTemplate('url', (text, record, i) => {
-    //   return <a>{text}</a>
-    // });
   };
 
   formReady(dataTable) {
@@ -538,10 +535,9 @@ export default class DataListMajor extends React.Component {
   render() {
     return (
       <div>
-        <DataTable1
-          dataFormId="system-MenuList"
-          params={{ code: 'MenuList' }}
-          didMounted={this.didMounted}
+        <DataTable
+          dataFormId="demo-BeanPersonList"
+          dataFormParams={{ code: 'BeanPersonList' }}
           dataReady={this.dataReady}
           formReady={this.formReady}
         />
