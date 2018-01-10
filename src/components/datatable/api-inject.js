@@ -4,7 +4,8 @@
 
 import React from 'react';
 // import { Input, InputNumber, Select, DatePicker, TimePicker } from 'antd';
-import { Text, TextArea, NumberInput, Currency, Select, MultiSelect, DatePicker, DateTimePicker, YearMonthPicker, YearPicker, TimePicker } from '../../components';
+import { Text, TextArea, NumberInput, Currency, Select, MultiSelect, DatePicker,
+  DateTimePicker, YearMonthPicker, YearPicker, TimePicker } from '../../components';
 import * as rest from '../../lib/rest';
 import * as TableService from './table-service';
 
@@ -1252,9 +1253,29 @@ export default class DataListObject {
     this.setState({ rows });
   }
 
+  // bool决定是否将设置的dataRow全部替换指定行
+  setDataRow(rowEntry, dataRow, bool) {
+    const rows = this.rowEntryUtil(rowEntry, '', (_row, index) => {
+      const rowCopy = _row;
+      if (rowCopy) {
+        Object.keys(rowCopy).forEach((key) => {
+          // 如果bool为否则判断当前字段是否为undefined
+          const flag = key !== '$$key' && (bool || dataRow[key] !== undefined);
+          if (flag && rowCopy[key] !== dataRow[key]) {
+            if (this.on.valueChanged) {
+              this.on.valueChanged(index, key, dataRow[key], rowCopy[key]);
+            }
+            rowCopy[key] = dataRow[key];
+          }
+        });
+      }
+    });
+    this.setState({ rows });
+  }
+
   rowEntryUtil(rowEntry, field, callback) {
     let rows = this.state.rows.slice(0);
-    if (rowEntry !== undefined && field && callback !== undefined) {
+    if (rowEntry !== undefined && callback !== undefined) {
       if (rowEntry === '$$all') {
         rows = rows.map((row, index) => {
           const _row = row;
