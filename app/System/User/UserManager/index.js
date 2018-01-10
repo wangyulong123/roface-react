@@ -20,7 +20,7 @@ export default class UserManager extends React.Component {
             {
                 tab:'用户详情',
                 key:"userDetail",
-                content: <DetailInfo dataFormId="system-AdminUserInfo"/>
+                content: <DetailInfo dataFormId="system-UserInfo"/>
             },
             {
                 tab:'角色列表',
@@ -34,7 +34,7 @@ export default class UserManager extends React.Component {
         console.log('selectedKeys', selectedKeys);
         console.log('info', info);
         console.log(this);
-        this.api.run('system-AdminUserList', { orgId: selectedKeys[0]}).then(() => {
+        this.api.run('system-UserList', { orgId: selectedKeys[0]}).then(() => {
             console.log('success')
         });
     };
@@ -67,7 +67,7 @@ export default class UserManager extends React.Component {
                     </Col>
                     <Col span={10}>
                         <DataTable
-                            dataFormId="system-AdminUserList"
+                            dataFormId="system-UserList"
                             dataFormParams={{orgId: '_ALL_'}}
                             didMounted={this._listDidMounted}
                         />

@@ -538,8 +538,8 @@ export default class DataListMajor extends React.Component {
     return (
       <div>
         <DataTable
-          dataFormId="system-MenuList"
-          dataFormParams={{ code: 'MenuList' }}
+          dataFormId="demo-BeanPersonList"
+          dataFormParams={{ code: 'BeanPersonList' }}
           didMounted={this.didMounted}
           dataReady={this.dataReady}
           formReady={this.formReady} />
