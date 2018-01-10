@@ -54,17 +54,18 @@ export default class Forms extends React.Component {
       this._updateData(nextProps.didMount, nextProps.dataReady, nextProps);
     }
   }
-  refresh = (params) => {
+  refresh = (params, cd) => {
     const { didMount, dataReady } = this.props;
-    this._updateData(didMount, dataReady, { ...this.props, ...(params || {}) });
+    this._updateData(didMount, dataReady, { ...this.props, ...(params || {}) }, cd);
   }
-  _updateData = (didMount, dataReady, props) => {
+  _updateData = (didMount, dataReady, props, cd) => {
     this._getData(props).then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
         dict: res.dict || {},
       }, () => {
+        cd && cd();
         dataReady && dataReady(this.info);
         didMount && didMount(this.info);
       });
