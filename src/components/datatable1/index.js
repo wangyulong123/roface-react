@@ -50,12 +50,21 @@ class RoDataTable extends React.Component {
     formReady && formReady(ReactDom.findDOMNode(this));
     this.table = {
       setColumnTemplate: this.setColumnTemplate,
+      addColumn: this.addColumn,
+      deleteColumn: this.deleteColumn,
     };
     this._getDataList(pageIndex, pageSize).then(() => {
       didMount && didMount(this.table);
       dataReady && dataReady(this.table);
     })
   }
+
+  setColumnTemplate = (field, callback) => {
+    this._updateColumnsHandler(field, callback);
+  };
+
+  addColumn = (i, callback) => {};
+  deleteColumn = (i, callback) => {};
 
   _getDataList = (index, size) => {
     const { dataFormId, params } = this.props;
@@ -67,7 +76,7 @@ class RoDataTable extends React.Component {
           dataMeta: res.meta || res,
           dataBody: res.body || {},
           dict: res.dict || {},
-          columns: columns,
+          columns: (res.meta && res.meta.elements) || [],
           dataSource: (res.body && res.body.dataList) || [],
           pageIndex: res.body && res.body.index,
           pageSize: res.body && res.body.size,
@@ -112,10 +121,10 @@ class RoDataTable extends React.Component {
     const options = (dict[name] || []);
     const dicName = options.filter(op => op.code === value)[0];
     if (dicName) {
-      return dicName.name || '';
+      return dicName.name || value;
     }
-    return '';
-  }
+    return value;
+  };
 
   _paginationOnChange = (page, pageSize) => {
     this._getDataList(page - 1, pageSize);
@@ -127,25 +136,24 @@ class RoDataTable extends React.Component {
 
   handleChange = (value, key, column) => {};
 
-  renderColumns = (text, comp, record, column) => {
+  renderColumns = (text, comp, record, index, column) => {
+
     return (
       <EditableCell
         editable={false}
-        value={text}
+        value={this._getDictName(column.code, text)}
         comp={comp}
-        onChange={value => this.handleChange(value, record.key, column)}
+        onChange={value => this.handleChange(value, record, column)}
       />
     );
   };
 
-  setColumnTemplate = (field, callback) => {
-    this._updateElementUIHint(ele => ele.key === field, callback);
-  };
+  _updateColumnsHandler = (field, callback) => {
+    if (field instanceof Number) {}
 
-  _updateElementUIHint = (match, callback) => {
     this.setState({
       columns: this.state.columns.map(ele => {
-        if (match(ele) && callback) {
+        if (ele.key === field && callback) {
           return {
             ...ele,
             render: (text, record, index) => callback(text, record, index),
@@ -163,7 +171,7 @@ class RoDataTable extends React.Component {
         dataIndex: item.code,
         key: item.code,
         render: (text, record, index) => this.renderColumns(text,
-          item.elementUIHint.editStyle, record, index),
+          item.elementUIHint.editStyle, record, index, item),
         colSource: item,
       };
     });
@@ -174,7 +182,7 @@ class RoDataTable extends React.Component {
     return (
       <Table
         {...this.props}
-        columns={this.state.columns}
+        columns={this.columnsHandler(this.state.columns)}
         dataSource={this.state.dataSource}
         rowKey={record => record.id}
         rowSelection={{
