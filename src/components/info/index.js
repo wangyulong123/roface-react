@@ -54,17 +54,19 @@ export default class Forms extends React.Component {
       this._updateData(nextProps.didMount, nextProps.dataReady, nextProps);
     }
   }
-  refresh = () => {
+  refresh = (params, cd) => {
     const { didMount, dataReady } = this.props;
-    this._updateData(didMount, dataReady, this.props);
+    this._updateData(didMount, dataReady, { ...this.props, ...(params || {}) }, cd);
   }
-  _updateData = (didMount, dataReady, props) => {
+  _updateData = (didMount, dataReady, props, cd) => {
+    this.form.resetFields();
     this._getData(props).then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
         dict: res.dict || {},
       }, () => {
+        cd && cd();
         dataReady && dataReady(this.info);
         didMount && didMount(this.info);
       });
@@ -90,20 +92,20 @@ export default class Forms extends React.Component {
       if (Array.isArray(params) && field) {
         params.forEach(p => {
           if (typeof p === 'string' || typeof p === 'number') {
-            str = `${str}&${field}=${p}`;
+            str = `${str};${field}=${p}`;
           }
         })
       } else {
         Object.keys(params).forEach(p => {
           if (Array.isArray(params[p])) {
-            str = `${str}&${this._serializeParam(params[p], p)}`;
+            str = `${str};${this._serializeParam(params[p], p)}`;
           } else {
-            str = `${str}&${p}=${params[p]}`;
+            str = `${str};${p}=${params[p]}`;
           }
         })
       }
     }
-    return str.replace(/^&/g, '');
+    return str.replace(/^;/g, '');
   };
   setValue = (itemId, value) => {
     this.form.setFieldsValue({ [itemId]: value });
@@ -183,19 +185,19 @@ export default class Forms extends React.Component {
     this.validate((errors, values) => {
       if (!errors) {
         dataForm.saveDataOne(dataFormId, values).then((res) => {
-          cb(res);
+          cb && cb(null, res);
           Notify.success({
             message: '保存成功',
           });
         }).catch((e) => {
-          cb(e);
+          cb && cb(e);
           Modal.error({
             title: '保存失败',
             content: JSON.stringify(e),
           });
         });
       } else {
-        cb(errors)
+        cb && cb(errors)
       }
     });
   };

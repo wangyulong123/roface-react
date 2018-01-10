@@ -13,6 +13,8 @@ const defaultConfig = {
         dataFormDataOne: '/dataform/data/one',
         dataFormDataOneSave: '/dataform/save/one',
         dataFormDataList: '/dataform/data/list',
+        dataFormDataListSave: '/dataform/save/list',
+        dataFormDataListDelete: '/dataform/delete/list',
         // dataFormDataOne: '/dataform/data/one/{form}/{param}',
         // dataFormDataList: '/dataform/data/list/{form}/{param}/{sort}/{index:[]+}-{size:[]+}',
     },

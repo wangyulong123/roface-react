@@ -7,7 +7,7 @@ export default class Simple extends React.Component {
     console.log(dom)
   };
   _dataReady = (info) => {
-    info.setItemTemplate('chnName', <div>sdssss</div>);
+    info.setValue('chnName', 'sdssss');
   };
   render() {
     return (

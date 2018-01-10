@@ -22,7 +22,7 @@ export default class OrgManager extends React.Component {
         console.log('selectedKeys', selectedKeys);
         console.log('info', info);
         console.log(this);
-        this.api.run('system-AdminOrgList', { orgId: selectedKeys[0]}).then(() => {
+        this.api.run('system-OrgList', { orgId: selectedKeys[0]}).then(() => {
            console.log('success')
         });
     };
@@ -54,14 +54,14 @@ export default class OrgManager extends React.Component {
                     </Col>
                     <Col span={10}>
                         <DataTable
-                            dataFormId="system-AdminOrgList"
+                            dataFormId="system-OrgList"
                             dataFormParams={{orgId: '_ALL_'}}
                             didMounted={this._listDidMounted}
                         />
                     </Col>
                     <Col span={8}>
                         <DetailInfo
-                            dataFormId="system-AdminOrgInfo"
+                            dataFormId="system-OrgInfo"
                             params={{orgId: this.state.orgId}}
                         />
                     </Col>
