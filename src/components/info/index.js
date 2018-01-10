@@ -42,19 +42,24 @@ export default class Forms extends React.Component {
       validate: this.validate,
       validateItem: this.validateItem,
       saveData: this.saveData,
+      refresh: this.refresh
     };
-    this._updateData(didMount, dataReady);
+    this._updateData(didMount, dataReady, this.props);
   }
   componentWillReceiveProps(nextProps) {
     // 只适合对象的浅比较，否则会造成性能问题
     const nextParams = nextProps.params && rest.serializeParam(nextProps.params);
     const thisParams = this.props.params && rest.serializeParam(this.props.params);
     if ((nextParams !== thisParams) || (nextProps.dataFormId !== this.props.dataFormId)) {
-      this._updateData(nextProps.didMount, nextProps.dataReady);
+      this._updateData(nextProps.didMount, nextProps.dataReady, nextProps);
     }
   }
-  _updateData = (didMount, dataReady) => {
-    this._getData().then((res) => {
+  refresh = () => {
+    const { didMount, dataReady } = this.props;
+    this._updateData(didMount, dataReady, this.props);
+  }
+  _updateData = (didMount, dataReady, props) => {
+    this._getData(props).then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
@@ -70,8 +75,8 @@ export default class Forms extends React.Component {
       })
     });
   }
-  _getData = () => {
-    const { dataFormId, params } = this.props;
+  _getData = (props) => {
+    const { dataFormId, params } = props;
     if (params) {
       return dataForm.getDataOne(dataFormId, this._serializeParam(params))
     }
