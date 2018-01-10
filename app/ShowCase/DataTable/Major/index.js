@@ -8,20 +8,14 @@ import { DataTable, DataTable1 } from '../../../../src/components';
 export default class DataListMajor extends React.Component {
   dataReady = (dataTable) => {
     this.setState({ dataTable });
-    dataTable.setColumnTemplate('url', (text, record, i) => {
-      console.log(text);
-      console.log(record);
-      console.log(i);
-      return <a>{text}</a>
-    });
-
+    // dataTable.setColumnTemplate('url', (text, record, i) => {
+    //   return <a>{text}</a>
+    // });
   };
 
   formReady(dataTable) {
     console.warn(dataTable);
   }
-
-
 
   didMounted(api) {
     const vm = api;
@@ -545,8 +539,8 @@ export default class DataListMajor extends React.Component {
     return (
       <div>
         <DataTable1
-          dataFormId="demo-BeanPersonList"
-          params={{ code: 'BeanPersonList' }}
+          dataFormId="system-MenuList"
+          params={{ code: 'MenuList' }}
           didMounted={this.didMounted}
           dataReady={this.dataReady}
           formReady={this.formReady}
