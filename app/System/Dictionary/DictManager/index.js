@@ -118,7 +118,6 @@ export default class DictManager extends React.Component {
         const {rest} = this.props;
         const that = this;
         console.log(that.itemListApi.getSelectedRow())
-        return;
         if (!that.itemListApi.getSelectedRow()) {
             Message.info('请先选择一行！');
             return;
