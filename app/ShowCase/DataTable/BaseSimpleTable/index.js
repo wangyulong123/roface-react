@@ -26,4 +26,11 @@ export default class BaseSimpleTable extends React.Component {
         // flexTabs.createTab(<DetailInfo dataFormId="demo-MapPersonInfo" params={{id: row.id}}/>,'');
         // console.log(props);
     }
+
+    render() {
+        return <DataTable
+          dataFormId="demo-BeanPersonList"
+          params={{ code: 'BeanPersonList' }}
+        />
+    }
 }
