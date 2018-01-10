@@ -54,3 +54,4 @@ export { default as rest} from '../lib/rest';
 export { default as Iframe } from './iframe';
 export { default as RangePicker } from './rangepicker';
 export { default as Switch } from './switch';
+export {default as DataTable1} from './datatable1';
