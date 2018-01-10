@@ -53,3 +53,5 @@ export { default as Tree } from './tree';
 export { default as rest} from '../lib/rest';
 export { default as Iframe } from './iframe';
 export { default as RangePicker } from './rangepicker';
+export { default as Switch } from './switch';
+
