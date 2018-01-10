@@ -1,27 +1,46 @@
 import React from "react";
 
-import {Tree,Row,Col,DataTable,DetailInfo} from '../../../../src/components';
+import { Row, Col, DataTable, DetailInfo, Button} from '../../../../src/components';
 
 export default class DictManager extends React.Component {
 
     constructor(props) {
         super();
         this.state = {
-            dictCode:'_ALL_'
+            dictCode: '_ALL_',
+            infoDisplayType: 'none'
         }
     }
 
-    _listDidMounted = (api) => {
-        this.api = api;
-        console.log(this);
+    infoFormReady = (infoApi) => {
+        this.infoApi = infoApi;
+    };
 
-        this.api.onSelectRow((keys, rows) => {
-            console.log(keys);
-            console.log(rows);
-            console.log(rows[0].code);
-            this.setState({dictCode: rows[0].code});
+    listDidMounted = (tableApi) => {
+        this.tableApi = tableApi;
+
+        this.tableApi.addBtn({
+            type: 'primary',
+            onclick: this.openDetailInfo,
+            name: '新增'
+        });
+
+
+        this.tableApi.onSelectRow((keys, rows) => {
+            this.setState({dictCode: rows[0].code, infoDisplayType: ''});
+            //this.infoApi.refresh();
         });
     };
+
+    openDetailInfo = () => {
+        this.setState({infoDisplayType: ''});
+    }
+
+    infoSave = () => {
+        this.infoApi.saveData((res) => {
+            console.log(res)
+        });
+    }
 
     render() {
         return (
@@ -31,19 +50,23 @@ export default class DictManager extends React.Component {
                         <DataTable
                             dataFormId="system-DictList"
                             dataFormParams={{dictCode: '_ALL_'}}
-                            didMounted={this._listDidMounted}
+                            didMounted={this.listDidMounted}
                         />
                     </Col>
 
                     <Col span={12}>
-                        <DetailInfo
-                            dataFormId="system-DictInfo"
-                            params={{dictCode: this.state.dictCode}}
-                        />
+                        <div style={{display: this.state.infoDisplayType}}>
+                            <DetailInfo
+                                dataFormId="system-DictInfo"
+                                didMount={this.infoFormReady}
+                                params={{dictCode: this.state.dictCode}}
+                            />
+
+                            <Button type='primary' onClick={this.infoSave}>保存</Button>
+                        </div>
                     </Col>
                 </Row>
             </div>
-
         );
     }
 }
