@@ -35,7 +35,6 @@ const EditableCell = ({value, com, onChange, options}) => {
       onChange={onChange}
     />
   );
-  
 };
 
 export default Form.create()(class TemplateDetail extends React.Component {

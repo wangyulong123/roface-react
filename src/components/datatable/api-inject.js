@@ -4,7 +4,8 @@
 
 import React from 'react';
 // import { Input, InputNumber, Select, DatePicker, TimePicker } from 'antd';
-import { Text, TextArea, NumberInput, Currency, Select, MultiSelect, DatePicker, DateTimePicker, YearMonthPicker, YearPicker, TimePicker } from '../../components';
+import { Text, TextArea, NumberInput, Currency, Select, MultiSelect, DatePicker,
+  DateTimePicker, YearMonthPicker, YearPicker, TimePicker } from '../../components';
 import * as rest from '../../lib/rest';
 import * as TableService from './table-service';
 

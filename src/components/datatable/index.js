@@ -40,13 +40,18 @@ class DataTable extends React.Component {
     if (this.props.didMounted) {
       this.props.didMounted(this.methods);
     }
+    /* eslint-disable react/no-find-dom-node*/
+    this.props.formReady && (this.props.formReady(
+      this.methods,
+      this.state.columns,
+      ReactDom.findDOMNode(this),
+    ));
     this.run(this.props.dataFormId, this.props.dataFormParams).then(() => {
-      /* eslint-disable react/no-find-dom-node*/
-      this.props.formReady && (this.props.formReady(
+      this.props.dataReady && this.props.dataReady(
         this.methods,
         this.state.columns,
         ReactDom.findDOMNode(this),
-      ));
+      );
     });
   }
 
