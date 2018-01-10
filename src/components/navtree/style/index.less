@@ -1,23 +1,51 @@
 @import "../../../style/index";
 
 .@{prefix}-container {
+  position: relative;
   overflow-x: hidden;
   overflow-y: auto;
   width: 256px;
   height: 100vh;
-  //background: #1778C1;
-  //background: #001529;
   &-logo {
     width: 100%;
     height: 66px;
-    //background: #0B6EB2 url("./logo.svg") 24px no-repeat;
-    background: url("./logo.svg") 24px no-repeat;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #000B1F;
+    &-icon {
+      display: inline-block;
+      width: 60%;
+      height: 66px;
+      background: url("./logo.svg") no-repeat;
+      background-size: 77% 100%;
+    }
+    &-collapsed {
+      color: #fff;
+      font-size: 25px;
+      cursor: pointer;
+    }
+  }
+  &-menu {
+    width: calc(100% + 3px);
+    &-item {
+      background: #1778C1;
+      &-children {
+        color: #fff;
+        background: #0B6EB2;
+        &:hover {
+          color: #fff;
+          background: #1778C1;
+        }
+      }
+    }
   }
   &-admin {
     display: flex;
     align-items: center;
     width: 100%;
     height: 60px;
+    border-top: 0.5px #ccc solid;
     border-bottom: 0.5px #ccc solid;
     padding: 0 10%;
     &-img {
@@ -81,40 +109,9 @@
       }
     }
   }
-  &-menu {
-    width: calc(100% + 3px);
-    &-item {
-      background: #1778C1;
-      &-children {
-        color: #fff;
-        background: #0B6EB2;
-        &:hover {
-          color: #fff;
-          background: #1778C1;
-        }
-      }
-    }
-  }
   &-switch {
     display: flex;
     justify-content: space-around;
     margin-top: 10vh;
   }
 }
-//.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title {
-//  &:hover {
-//    color: #fff;
-//  }
-//}
-//.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child) {
-//  margin-bottom: 0;
-//}
-//.ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:hover {
-//  color: #fff;
-//}
-//.ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:before {
-//  background: #fff;
-//}
-//.ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:after {
-//  background: #fff;
-//}

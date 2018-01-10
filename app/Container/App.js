@@ -102,6 +102,7 @@ export default class App extends React.Component {
                     dataMount={this._dataMount}
                   />)
                 }
+                <div style={{ width: '8px', height: '100vh' }} />
                 <FlexTabs
                   {...props}
                   menuType={this.state.menuType}

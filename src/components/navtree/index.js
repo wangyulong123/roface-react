@@ -17,6 +17,7 @@ export default class NavTree extends React.Component {
       menuData: [],
       flatMenuData: [],
       bgColor: '',
+      collapsed: false,
     };
   }
 
@@ -108,12 +109,24 @@ export default class NavTree extends React.Component {
       mode: value ? 'vertical' : 'inline',
     });
   };
+  _toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  }
   render() {
-    const { menuData, bgColor } = this.state;
+    const { menuData, bgColor, collapsed, mode, theme } = this.state;
     const { prefix = 'ro' } = this.props;
     return (
       <div className={`${prefix}-container`} style={{ background: bgColor }}>
-        <div className={`${prefix}-container-logo`} />
+        <div className={`${prefix}-container-logo`}>
+          <span className={`${prefix}-container-logo-icon`} />
+          <Icon
+            className={`${prefix}-container-logo-collapsed`}
+            type={collapsed ? 'menu-unfold' : 'menu-fold'}
+            onClick={this._toggleCollapsed}
+          />
+        </div>
         <div className={`${prefix}-container-admin`}>
           <span className={`${prefix}-container-admin-img`} />
           <span className={`${prefix}-container-admin-container`}>
@@ -131,8 +144,9 @@ export default class NavTree extends React.Component {
           <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
-            mode={this.state.mode}
-            theme={this.state.theme}
+            mode={mode}
+            theme={theme}
+            inlineCollapsed={collapsed}
             onClick={e => this._menuClick(e)}
           >
             {menuData.map(menu => this._renderMenu(menu, prefix))}
@@ -146,8 +160,8 @@ export default class NavTree extends React.Component {
             onChange={this._changeMenuTheme}
           />
           <Switch
-            unCheckedChildren='弹出'
-            checkedChildren='展开'
+            unCheckedChildren='展开'
+            checkedChildren='弹出'
             onChange={this._changeMenuMode}
           />
         </div>
