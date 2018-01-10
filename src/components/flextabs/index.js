@@ -88,8 +88,11 @@ export default class Tab extends React.Component {
   checkWidth = () => {
     if (this.tabsWrapper) {
       const tabsLength = this.state.tabs.length * (this.tabWidth + this.tabIntervalWidth);
+      const spaceWidth = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth - (this.state.tabs.length)
+      * this.tabIntervalWidth - tabsLength);
       if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth < tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth - (this.state.tabs.length) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
+        const tabWidthNumber = (spaceWidth < this.tabWidth) && spaceWidth % this.tabWidth;
         if (isSpace) {
           console.log('isSpace-1:' + isSpace);
         } else {
@@ -105,6 +108,8 @@ export default class Tab extends React.Component {
             this.setState({
               tabs: this.state.tabs.filter((tabItem) => tabItem.id !== tempCollapseItems.id),
               tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+            },  () => {
+              tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
             });
           } else {
             // 如果最后一项不是显示的tab页,进行折叠不改变activeTabId
@@ -112,12 +117,15 @@ export default class Tab extends React.Component {
             this.setState({
               tabs: this.state.tabs,
               tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+            },  () => {
+              tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
             });
           }
         }
       } else if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth > tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
+        const tabWidthNumber = spaceWidth > this.tabWidth && spaceWidth % this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
           console.log('isSpace-2:' + isSpace);
           const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
@@ -126,6 +134,8 @@ export default class Tab extends React.Component {
             // activeTabId: tempTabsItems ? tempTabsItems.id : '', //更新显示的tab为刚展开的tab
             tabs: tempTabsItems ? this.state.tabs.concat(tempTabsItems) : this.state.tabs,
             showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
+          }, () => {
+            tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
           });
         } else {
           console.log('isSpace-2:' + isSpace);
@@ -279,7 +289,7 @@ export default class Tab extends React.Component {
       // tabsCollapse为零，没有折叠起来的tab
       if (this.state.activeTabId === isDeteleTab.id) {
         // 删除的是当前显示的tab,并且没有折叠起来的tab
-        // 获取当前删除当前页的索引
+        // 获取当前删除tab页的索引
         const deleteIndex = this.state.tabs && this.state.tabs.findIndex(tabItem => tabItem.id ===
           isDeteleTab.id);
         const nextShowIndex = deleteIndex - 1 >= 0 ? deleteIndex - 1 : 0;
