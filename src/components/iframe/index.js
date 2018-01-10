@@ -22,7 +22,7 @@ export default class Iframe extends React.Component {
   render() {
     /* eslint-disable */
     const { url } = this.props;
-    const tempUrl = url.startsWith('http://') ? url : `${profile.baseUrl}/${url}`;
+    const tempUrl = url.startsWith('http://') ? url : `${profile.baseUrl}${url}`;
     return <iframe
       width="100%"
       height={this.state.clientHeight}

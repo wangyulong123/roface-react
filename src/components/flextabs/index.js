@@ -68,7 +68,11 @@ export default class Tab extends React.Component {
             param
           };
         }
-        this.createTab(initTab);
+        if (param.container && param.container === 'iframe') {
+          this.createIframeTab(param.name, param.url, param)
+        } else {
+          this.createTab(initTab);
+        }
       } else {
         let allMenus = [];
         depthFirstSearch(nextProps.data, (menuItem) => {
@@ -180,9 +184,19 @@ export default class Tab extends React.Component {
   };
   createIframeTab = (name, url, param) => {
     const item = this._checkTabItem(name, url, param);
-    this.replace(item);
+    const tempItem = {
+      ...item,
+      container: 'iframe',
+      url: 'Iframe/',
+      param: {
+        ...param,
+        url,
+        container: 'iframe'
+      }
+    };
+    this.replace(tempItem);
     const Com = React.cloneElement(<Iframe />, { url });
-    this._updateTab(item, Com);
+    this._updateTab(tempItem, Com);
     return {
       ...item,
       refresh: this._refresh
