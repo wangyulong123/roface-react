@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DataTable, Button, Modal, Dropdown,Menu } from '../../../../src/components';
+import { DataTable, Button, Modal, Dropdown,Menu,Icon} from '../../../../src/components';
 
 import * as rest from '../../../../src/lib/rest';
 
@@ -20,7 +20,7 @@ export default class WorkflowModelList extends React.Component {
     //         return (<a onClick={()=>openWorkflowEditor(row)}>{text}</a>);
     //     });
 
-    dataReady = (dataTable,dataList,vm) =>{
+    dataReady = (dataTable,dataList) =>{
         const resultModal = Modal;
         const deploy = (row) => {
             rest.put("/workflow/model/"+row.id+"/deploy")
@@ -101,16 +101,21 @@ export default class WorkflowModelList extends React.Component {
             })
         }
 
+        /*
+        * todo
+        * 流程设计白条未去掉
+        * 按钮大小要调整
+        * */
 
         vm.setColumnTemplate('button', (row) => {
-            return (<div><Button onClick={()=>openWorkflowEditor(row)}>流程设计</Button>
+            return (<div><Button onClick={()=>openWorkflowEditor(row)}><Icon type="edit" />流程设计</Button>
                 <Dropdown overlay={
                     <Menu>
                         <Menu.Item onClick={()=>deploy(row)}>流程部署</Menu.Item>
                         <Menu.Item>流程导入</Menu.Item>
                     </Menu>
                 }>
-                    <Button>操作</Button>
+                    <Button><Icon type="tool" />操作</Button>
                 </Dropdown>
                 </div>);
         });
