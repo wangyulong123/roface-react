@@ -6,7 +6,9 @@ export default class OrgManager extends React.Component {
     constructor() {
         super();
         this.state = {
-            id: 1,
+            roleId: 'none',
+            tabDisplayType: 'none',
+            curkey: "basicInfo"
         };
         this.info = null;
         this.key = null;
@@ -21,9 +23,12 @@ export default class OrgManager extends React.Component {
         console.warn(dataTable, meta, dom);
     };
     roleUserListDidMounted = (api) => {
+        this.roleUserTableData = api;
+    };
 
+    tabsChange = (key) => {
+        this.setState({curkey: key});
     }
-
 
 
     infoDataReady = (infoApi) => {
@@ -31,14 +36,13 @@ export default class OrgManager extends React.Component {
     };
 
     saveData = () => {
-        this.info.saveData((error,values) => {
+        this.info.saveData((error, values) => {
             if (error == null) {
                 this.info.setData(values);
-                this.tableData.run("system-RoleList",{code: 'RoleList'});
+                this.tableData.run("system-RoleList", {code: 'RoleList'});
             }
         });
     };
-
 
 
     listDidMounted = (api) => {
@@ -76,24 +80,31 @@ export default class OrgManager extends React.Component {
         });
 
 
-
         dataTable.onSelectRow((selectedKeys, selectedRows) => {
+
             const {closeLoading, openLoading} = this.props;
             openLoading && openLoading();
             const rows = dataTable.getData();
             const rowsIdx = rows.filter((row) => {
                 return row.$$key === selectedRows[0].$$key;
             })[0];
+            that.setState({
+                tabDisplayType: true,
+                roleId: rowsIdx.id
+            })
             that.key = rowsIdx.$$key;
             console.log(that);
-            //this.setState({id: rowsIdx.id});
-            that.info.refresh({params: {id: rowsIdx.id}},() => {closeLoading && closeLoading()});
-
+            if ("basicInfo" === that.state.curkey) {
+                that.info.refresh({params: {id: rowsIdx.id}}, () => {
+                    closeLoading && closeLoading()
+                });
+            } else if ("userUnderRole" === that.state.curkey) {
+                that.roleUserTableData.run("system-UserListForRoleManage", {roleId: rowsIdx.id}).then(() => {
+                    closeLoading && closeLoading()
+                });
+            }
         });
     };
-
-
-
 
 
     render() {
@@ -109,22 +120,24 @@ export default class OrgManager extends React.Component {
                         />
                     </Col>
                     <Col span={12}>
-                        <Tabs defaultActiveKey="1">
-                            <TabPane tab="基本信息" key="1">
-                               <DetailInfo dataFormId="system-RoleInfo"
-                                           dataReady={this.infoDataReady}
-                                />
-                                <Button type="primary" onClick={() => this.saveData()} >保存</Button>
-                            </TabPane>
-                            <TabPane tab="权限" key="2">Content of Tab Pane 2</TabPane>
-                            <TabPane tab="角色下用户" key="3">
-                                <DataTable dataFormId="system-UserListForRoleManage"
-                                           dataFormParams={{roleId: 1}}
-                                           formReady={this.roleUserListFormReady}
-                                           didMounted={this.roleUserListDidMounted}
-                                />
-                            </TabPane>
-                        </Tabs>
+                        <div style={{display: this.state.tabDisplayType}}>
+                            <Tabs defaultActiveKey="basicInfo" ActiveKey={this.state.curkey} onChange={this.tabsChange}>
+                                <TabPane tab="基本信息" key="basicInfo">
+                                    <DetailInfo dataFormId="system-RoleInfo"
+                                                dataReady={this.infoDataReady}
+                                    />
+                                    <Button type="primary" onClick={() => this.saveData()}>保存</Button>
+                                </TabPane>
+                                <TabPane tab="权限" key="privilege">Content of Tab Pane 2</TabPane>
+                                <TabPane tab="角色下用户" key="userUnderRole">
+                                    <DataTable dataFormId="system-UserListForRoleManage"
+                                               dataFormParams={{roleId: this.state.roleId}}
+                                               formReady={this.roleUserListFormReady}
+                                               didMounted={this.roleUserListDidMounted}
+                                    />
+                                </TabPane>
+                            </Tabs>
+                        </div>
                     </Col>
                 </Row>
             </div>
