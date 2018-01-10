@@ -54,9 +54,9 @@ export default class Forms extends React.Component {
       this._updateData(nextProps.didMount, nextProps.dataReady, nextProps);
     }
   }
-  refresh = () => {
+  refresh = (params) => {
     const { didMount, dataReady } = this.props;
-    this._updateData(didMount, dataReady, this.props);
+    this._updateData(didMount, dataReady, { ...this.props, ...(params || {}) });
   }
   _updateData = (didMount, dataReady, props) => {
     this._getData(props).then((res) => {
@@ -183,19 +183,19 @@ export default class Forms extends React.Component {
     this.validate((errors, values) => {
       if (!errors) {
         dataForm.saveDataOne(dataFormId, values).then((res) => {
-          cb(res);
+          cb && cb(null, res);
           Notify.success({
             message: '保存成功',
           });
         }).catch((e) => {
-          cb(e);
+          cb && cb(e);
           Modal.error({
             title: '保存失败',
             content: JSON.stringify(e),
           });
         });
       } else {
-        cb(errors)
+        cb && cb(errors)
       }
     });
   };
