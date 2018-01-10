@@ -42,6 +42,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
     super(props);
     this.state = {
       data: {},
+      domWidth: 0,
       columns: [{
         title: '#',
         dataIndex: 'number',
@@ -178,10 +179,17 @@ export default Form.create()(class TemplateDetail extends React.Component {
 
    this.checkWidth();
    addOnResize(this.checkWidth);
+
   }
 
   checkWidth = () => {
     this.domWidth = document.body.clientWidth;
+    if (this.domWidth !== this.state.domWidth) {
+      // 判断和state中是否相同，如果不相同，则做更新
+      this.setState({
+        domWidth: document.body.clientWidth,
+      });
+    }
   };
 
   _dataChange = (name, value, key) => {
@@ -354,8 +362,9 @@ export default Form.create()(class TemplateDetail extends React.Component {
       wrapperCol: { span: 16 },
     };
     const { menuType } = this.props;
+    const tempWidth = menuType && menuType === 'navTree' ?  this.state.domWidth - 330 : '100%';
     const { getFieldDecorator, prefix = 'ro' } = this.props.form;
-    const style = { width: '100%' };
+    const style = { width: '100%', display: 'flex', minWidth: 200 };
     return (
       <div className={`${prefix}-template-detail`}>
         <div className={`${prefix}-template-detail-all-save`}>
@@ -373,7 +382,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
             <Panel header="基本信息" key="1">
               <Form className={`${prefix}-template-detail-info-layout`}>
                 <FormItem
-                  style={{ width: '30%' }}
+                  style={{ ...style, width: '30%' }}
                   {...formItemLayout}
                   label="包"
                   wrapperCol={{ span: 13 }}
@@ -386,7 +395,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   </div>
                 </FormItem>
                 <FormItem
-                  style={{ width: '65%' }}
+                  style={{ ...style, width: '65%' }}
                   {...formItemLayout}
                   label="模版代码"
                   wrapperCol={{ span: 12 }}
@@ -399,7 +408,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   </div>
                 </FormItem>
                 <FormItem
-                  style={{ width: '50%' }}
+                  style={{ ...style, width: '50%' }}
                   {...formItemLayout}
                   label="名称"
                   wrapperCol={{ span: 18 }}
@@ -410,7 +419,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{ width: '50%' }}
+                  style={{ ...style, width: '50%' }}
                   {...formItemLayout}
                   label="排序码"
                   wrapperCol={{ span: 8 }}
@@ -421,7 +430,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   })(<Text />)}
                 </FormItem>
                 <FormItem
-                  style={{ width: '50%' }}
+                  style={{ ...style, width: '50%' }}
                   {...formItemLayout}
                   label="显示方式"
                   wrapperCol={{ span: 18 }}
@@ -443,7 +452,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   )}
                 </FormItem>
                 <FormItem
-                  style={{ width: '45%' }}
+                  style={{ ...style, width: '45%' }}
                   {...formItemLayout}
                   label="栏数"
                   wrapperCol={{ span: 18 }}
@@ -605,7 +614,7 @@ export default Form.create()(class TemplateDetail extends React.Component {
                   locale={{
                     emptyText: <Button onClick={this._addTableData}>添加一个字段</Button>
                   }}
-                  style={{ width: menuType && menuType === 'navTree' ?  this.domWidth - 330 : '100%' }}
+                  style={{ width: tempWidth }}
                 />
               </div>
             </Panel>

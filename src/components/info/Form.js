@@ -67,6 +67,7 @@ export default Form.create({
       prefix: item.elementUIHint.prefix,
       suffix: item.elementUIHint.suffix,
       options: dict[item.code],
+      htmlStyle: item.elementUIHint.htmlStyle,
     };
   };
   _dataType = (type) => {

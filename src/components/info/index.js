@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 import * as dataForm from '../../lib/dataform';
+import * as rest from '../../lib/rest';
 import Form from './Form';
 import './style/index.less';
 import { Modal, Notify } from '../index';
@@ -21,7 +22,7 @@ export default class Forms extends React.Component {
     const { didMount, formReady, dataReady } = this.props;
     /* eslint-disable */
     formReady && formReady(ReactDom.findDOMNode(this));
-    const info = {
+    this.info = {
       setValue: this.setValue,
       getValue: this.getValue,
       setData: this.setData,
@@ -42,14 +43,25 @@ export default class Forms extends React.Component {
       validateItem: this.validateItem,
       saveData: this.saveData,
     };
+    this._updateData(didMount, dataReady);
+  }
+  componentWillReceiveProps(nextProps) {
+    // 只适合对象的浅比较，否则会造成性能问题
+    const nextParams = nextProps.params && rest.serializeParam(nextProps.params);
+    const thisParams = this.props.params && rest.serializeParam(this.props.params);
+    if ((nextParams !== thisParams) || (nextProps.dataFormId !== this.props.dataFormId)) {
+      this._updateData(nextProps.didMount, nextProps.dataReady);
+    }
+  }
+  _updateData = (didMount, dataReady) => {
     this._getData().then((res) => {
       this.setState({
         dataForm: res.meta || res,
         dataValue: res.body || {},
         dict: res.dict || {},
       }, () => {
-        dataReady && dataReady(info);
-        didMount && didMount(info);
+        dataReady && dataReady(this.info);
+        didMount && didMount(this.info);
       });
     }).catch(e => {
       Modal.error({
