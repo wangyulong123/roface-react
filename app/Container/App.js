@@ -36,7 +36,11 @@ export default class App extends React.Component {
   }
   _menuClick = (item) => {
     if (this.flexTabs) {
-      this.flexTabs.createTab({...item});
+      if (item.container && item.container === 'iframe') {
+        this.flexTabs.createIframeTab({ ...item });
+      } else {
+        this.flexTabs.createTab({...item});
+      }
     }
   };
   _getObject = (obj, fields) => {
@@ -55,7 +59,7 @@ export default class App extends React.Component {
     return NotFound;
   };
   _renderComponent = (props, tab) => {
-    const Com = compose(this._getCom(props, tab), this.flexTabs, props, tab);
+    const Com = compose(this._getCom(props, tab), this.flexTabs, props, tab, this.state.menuType);
     return <Com />;
   };
   _getInstance = (instance) => {
@@ -102,8 +106,10 @@ export default class App extends React.Component {
                     dataMount={this._dataMount}
                   />)
                 }
+                <div style={{ width: '8px', height: '100vh' }} />
                 <FlexTabs
                   {...props}
+                  menuType={this.state.menuType}
                   data={this.state.menuData}
                   ref={this._getInstance}
                   renderComponent={this._renderComponent}

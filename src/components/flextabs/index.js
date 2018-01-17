@@ -68,7 +68,11 @@ export default class Tab extends React.Component {
             param
           };
         }
-        this.createTab(initTab);
+        if (param.container && param.container === 'iframe') {
+          this.createIframeTab(param.name, param.url, param)
+        } else {
+          this.createTab(initTab);
+        }
       } else {
         let allMenus = [];
         depthFirstSearch(nextProps.data, (menuItem) => {
@@ -85,41 +89,58 @@ export default class Tab extends React.Component {
     return renderComponent(props, tab);
   };
 
-
   checkWidth = () => {
     if (this.tabsWrapper) {
       const tabsLength = this.state.tabs.length * (this.tabWidth + this.tabIntervalWidth);
+      const spaceWidth = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth - (this.state.tabs.length)
+      * this.tabIntervalWidth - tabsLength);
       if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth < tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth - (this.state.tabs.length) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
+        const tabWidthNumber = (spaceWidth < this.tabWidth) && spaceWidth / this.tabWidth;
         if (isSpace) {
           console.log('isSpace-1:' + isSpace);
         } else {
-          console.log('isSpace-1:' + isSpace);
+          // console.log('isSpace-1:' + isSpace);
           /*
           * 缩小时空间不足，进行折叠tabs，将最后一个tab页进行折叠
+          * 如果最后一个是正在显示的tab,则将正在显示的这个tab的前一个tab进行折叠
           * */
-          const tempCollapseItems = this.state.tabs.length ? this.state.tabs.pop() : null;
-          this.setState({
-            tabs: this.state.tabs,
-            activeTabId: this.state.tabs.length && this.state.tabs[this.state.tabs.length -1 ] .id,
-            tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
-          });
+          const lastTabsItem = this.state.tabs.length ? this.state.tabs[this.state.tabs.length - 1] : null;
+          if (lastTabsItem && lastTabsItem.id === this.state.activeTabId) {
+            // 如果最后一项是显示的tab页,折叠倒数第二个
+            const tempCollapseItems = this.state.tabs.length ? this.state.tabs[this.state.tabs.length - 2] : null;
+            this.setState({
+              tabs: this.state.tabs.filter((tabItem) => tabItem.id !== tempCollapseItems.id),
+              tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+            },  () => {
+              tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
+            });
+          } else {
+            // 如果最后一项不是显示的tab页,进行折叠不改变activeTabId
+            const tempCollapseItems = this.state.tabs.length ? this.state.tabs.pop() : null;
+            this.setState({
+              tabs: this.state.tabs,
+              tabsCollapse: tempCollapseItems ? this.state.tabsCollapse.concat(tempCollapseItems) : this.state.tabsCollapse,
+            },  () => {
+              tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
+            });
+          }
         }
       } else if (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth > tabsLength) {
         const isSpace = (this.tabsWrapper.offsetWidth - this.tabsLeftWidth - this.tabsRightWidth -
           (this.state.tabs.length ? this.state.tabs.length -1 : 0) * this.tabIntervalWidth - tabsLength) > this.tabWidth;
+        const tabWidthNumber = spaceWidth > this.tabWidth && spaceWidth / this.tabWidth;
         if (isSpace && this.state.tabsCollapse.length) {
-          console.log('isSpace-2:' + isSpace);
+          // console.log('isSpace-2:' + isSpace);
           const tempTabsItems = this.state.tabsCollapse.length ? this.state.tabsCollapse.pop() : null;
           this.setState({
             tabsCollapse: this.state.tabsCollapse,
-            activeTabId: tempTabsItems ? tempTabsItems.id : '',
+            // activeTabId: tempTabsItems ? tempTabsItems.id : '', //更新显示的tab为刚展开的tab
             tabs: tempTabsItems ? this.state.tabs.concat(tempTabsItems) : this.state.tabs,
             showTabsCollapse: this.state.tabsCollapse.length ? this.state.showTabsCollapse : 'none'
+          }, () => {
+            tabWidthNumber && this.checkWidth(); // 当框口变化较大时,重复调用校验
           });
-        } else {
-          console.log('isSpace-2:' + isSpace);
-          // 新增时，空间不够，进行对tabs变更，实现思路和缩小时的原理一致,不同的是折叠的是第一个tab页
         }
       }
       this.offsetWidth = this.tabsWrapper.offsetWidth;
@@ -170,9 +191,19 @@ export default class Tab extends React.Component {
   };
   createIframeTab = (name, url, param) => {
     const item = this._checkTabItem(name, url, param);
-    this.replace(item);
+    const tempItem = {
+      ...item,
+      container: 'iframe',
+      url: 'Iframe/',
+      param: {
+        ...param,
+        url,
+        container: 'iframe'
+      }
+    };
+    this.replace(tempItem);
     const Com = React.cloneElement(<Iframe />, { url });
-    this._updateTab(item, Com);
+    this._updateTab(tempItem, Com);
     return {
       ...item,
       refresh: this._refresh
@@ -193,6 +224,9 @@ export default class Tab extends React.Component {
       tabsCollapse: this.state.tabsCollapse
         .filter(tabsCollapseItem => id !== tabsCollapseItem.id),
     });
+  };
+  getTabs = () => {
+    return this.state.tabs;
   };
   _updateTab = (item, Com) => {
     const isExsitTabsItem = this.state.tabs && this.state.tabs
@@ -266,7 +300,7 @@ export default class Tab extends React.Component {
       // tabsCollapse为零，没有折叠起来的tab
       if (this.state.activeTabId === isDeteleTab.id) {
         // 删除的是当前显示的tab,并且没有折叠起来的tab
-        // 获取当前删除当前页的索引
+        // 获取当前删除tab页的索引
         const deleteIndex = this.state.tabs && this.state.tabs.findIndex(tabItem => tabItem.id ===
           isDeteleTab.id);
         const nextShowIndex = deleteIndex - 1 >= 0 ? deleteIndex - 1 : 0;

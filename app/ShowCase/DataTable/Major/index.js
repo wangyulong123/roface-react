@@ -3,15 +3,15 @@
  */
 import React from 'react';
 import { notification, message, Button } from 'antd';
-import { DataTable } from '../../../../src/components';
+import { DataTable, DataTable1 } from '../../../../src/components';
 
 export default class DataListMajor extends React.Component {
-  dataReady(dataTable, dataList) {
-    console.warn(123, dataTable, dataList);
-  }
+  dataReady = (dataTable) => {
+    this.setState({ dataTable });
+  };
 
-  formReady(dataTable, meta, dom) {
-    console.warn(dataTable, meta, dom);
+  formReady(dataTable) {
+    console.warn(dataTable);
   }
 
   didMounted(api) {
@@ -149,6 +149,13 @@ export default class DataListMajor extends React.Component {
     function setValue() {
       // debugger;
       vm.setValue((row, index) => { return index > 3; }, 'name', '哈哈');
+    }
+
+    function setDataRow() {
+
+      vm.setDataRow(0, {
+        name: '呵呵',
+      }, true);
     }
 
     function setLinkage() {
@@ -404,6 +411,11 @@ export default class DataListMajor extends React.Component {
     });
     vm.addBtn({
       type: 'primary',
+      onclick: setDataRow,
+      name: '设置行值',
+    });
+    vm.addBtn({
+      type: 'primary',
       onclick: setLinkage,
       name: '设置行联动',
     });
@@ -518,19 +530,17 @@ export default class DataListMajor extends React.Component {
       name: '删除',
       icon: 'delete',
     });
-
-
   }
 
   render() {
     return (
       <div>
         <DataTable
-          dataFormId="system-MenuList"
-          dataFormParams={{ code: 'MenuList' }}
-          didMounted={this.didMounted}
+          dataFormId="demo-BeanPersonList"
+          dataFormParams={{ code: 'BeanPersonList' }}
           dataReady={this.dataReady}
-          formReady={this.formReady} />
+          formReady={this.formReady}
+        />
       </div>
     );
   }

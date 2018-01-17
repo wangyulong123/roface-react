@@ -56,7 +56,7 @@ export const parseURL = (url) => {
     return ret;
 };
 
-export const _serializeParam = (params, field) => {
+export const serializeParam = (params, field) => {
   let str = '';
   if (typeof params === 'string') {
     str = params;
@@ -69,7 +69,7 @@ export const _serializeParam = (params, field) => {
   } else {
     Object.keys(params).forEach((p) => {
       if (Array.isArray(params[p])) {
-        str = `${str}&${_serializeParam(params[p], p)}`;
+        str = `${str}&${serializeParam(params[p], p)}`;
       } else {
         str = `${str}&${p}=${params[p]}`;
       }
@@ -115,9 +115,6 @@ export const restAjax = (url, type, data) => {
                 reject(err);
             },
             success: (result) => {
-                if (result && result.status) {
-                    reject(result);
-                }
                 resolve(result);
             },
         });
